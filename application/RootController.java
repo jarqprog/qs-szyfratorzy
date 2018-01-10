@@ -19,13 +19,14 @@ public class RootController
 
     public void runApplication()
     {
-        view.displayIntro();
-        view.displayLoginScreen();
-        StudentModel student = new StudentModel("Jarek", "Kucharczyk", "123");
-        String message = student.getUserFirstName()+", role: " + student.getUserRole();
-        view.displayMessage(message);
-        view.handlePause();
-        view.displayLogoutScreen();
-        view.displayOutro();
+        // view.displayIntro();
+        // view.displayLoginScreen();
+        // StudentModel student = new StudentModel("Jarek", "Kucharczyk", "123");
+        // String message = student.getUserFirstName()+", role: " + student.getUserRole();
+        // view.displayMessage(message);
+        // view.handlePause();
+        // view.displayLogoutScreen();
+        // view.displayOutro();
+        System.out.println(String.valueOf(dao.checkIfFileExist()));
     }
 }
