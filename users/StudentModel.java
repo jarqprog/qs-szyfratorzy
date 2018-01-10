@@ -11,10 +11,13 @@ public class StudentModel extends UserModel
     private ArrayList inventory;
     private float attendance;
 
-    public StudentModel(String firstName, String lastName, String email, String password)
+    public StudentModel(String firstName, String lastName, String password)
     {
-        super(firstName, lastName, email, password);
-        super.setRole("student");
+        super(firstName, lastName, password);
+        super.setUserRole("student");
+        wallet = 0;
+        expirence = 0;
+        attendance = 100; 
     }
 
     public String getGroup() 
