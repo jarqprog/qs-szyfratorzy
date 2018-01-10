@@ -1,6 +1,6 @@
 package item;
 
-public class ArtifactDAO extends ItemsDAO
+public class QuestDAO extends ItemsDAO
 {
 
 
