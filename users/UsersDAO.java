@@ -8,4 +8,9 @@ public class UsersDAO extends AbstractDAO{
         defaultFileName = "users.csv";
         defaultFilePath = "DataFiles/users.csv";
     }
+
+    public AdminModel createFirstAdmin(){
+        return new AdminModel("admin", "admin", "admin");
+    }
+
 }
