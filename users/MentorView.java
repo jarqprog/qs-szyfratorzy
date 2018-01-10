@@ -20,7 +20,7 @@ public class MentorView extends AbstractView {
             else {
                 System.out.println("Price must be greater than 0!");
             }
-        } catch(Exception e) {
+        } catch(NumberFormatException e) {
             System.out.println("Wrong input!");
         }
     }
