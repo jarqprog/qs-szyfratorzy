@@ -3,6 +3,7 @@ package application;
 import users.UsersDAO;
 // import users.UserCtrl;
 import users.StudentModel;
+import users.AdminModel;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -41,5 +42,7 @@ public class RootController
         view.displayElementsOfCollection(array);
         list.add("Lolo na koniec!");
         dao.saveData(list);
+        // AdminModel admin = dao.createFirstAdmin();
+        // view.displayMessage(admin.getUserFirstName());
     }
 }
