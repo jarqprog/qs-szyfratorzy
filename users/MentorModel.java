@@ -1,19 +1,20 @@
 package users;
 
 public class MentorModel extends UserModel {
+    char groupName;
 
-    public MentorModel(int id, String fname, String lname, String email, String password, String groupName)
+    public MentorModel(int id, String firstName, String lastName, String email, String password, char groupName)
     {
     super(id, firstName, lastName, email, password);
     this.groupName = groupName;
     }
 
-    public String getMentorGroupName()
+    public char getMentorGroupName()
     {
         return groupName;
     }
 
-    public void setMentorGroupName(String newGroupName)
+    public void setMentorGroupName(char newGroupName)
     {
         groupName = newGroupName;
     }

@@ -2,7 +2,7 @@ package users;
 
 public class AdminModel extends UserModel {
 
-    public AdminModel(int id, String fname, String lname, String email, String password)
+    public AdminModel(int id, String firstName, String lastName, String email, String password)
     {
     super(id, firstName, lastName, email, password);
     }
