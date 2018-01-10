@@ -1,4 +1,7 @@
 package application;
+
 public class RootController{
-    private 
+    public static void main(String[] args){
+
+    }
 }
