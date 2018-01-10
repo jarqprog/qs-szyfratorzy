@@ -14,15 +14,15 @@ public class StudentModel extends UserModel
     public StudentModel(String firstName, String lastName, String password)
     {
         super(firstName, lastName, password);
-        super.setUserRole("student");
+        setUserRole("student");
         wallet = 0;
         expirence = 0;
-        attendance = 100; 
+        attendance = 100;
     }
 
-    public char getGroup() 
+    public char getGroup()
     {
-        return groupName;    
+        return groupName;
     }
 
     public void setGroup(char groupName)
@@ -40,9 +40,9 @@ public class StudentModel extends UserModel
         this.team = team;
     }
 
-    public int getWallet() 
+    public int getWallet()
     {
-        return wallet;    
+        return wallet;
     }
 
     public void setWallet(int value)
@@ -50,9 +50,9 @@ public class StudentModel extends UserModel
         this.wallet = value;
     }
 
-    public int getExpirence() 
+    public int getExpirence()
     {
-        return expirence;    
+        return expirence;
     }
 
     public void setExpirence(int value)
@@ -60,12 +60,12 @@ public class StudentModel extends UserModel
         this.expirence = value;
     }
 
-    public float getAttendance() 
+    public float getAttendance()
     {
         return attendance;
     }
 
-    public void setAttendance(float attendance) 
+    public void setAttendance(float attendance)
     {
         this.attendance = attendance;
     }
