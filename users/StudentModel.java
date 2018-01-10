@@ -50,4 +50,14 @@ public class StudentModel extends UserModel
     {
         this.expirence = value;
     }
+
+    public float getAttendance() 
+    {
+        return attendance;
+    }
+
+    public void setAttendance(float attendance) 
+    {
+        this.attendance = attendance;
+    }
 }
