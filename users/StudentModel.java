@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class StudentModel extends UserModel
 {
-    private String group;
+    private char group;
     private String team;
     private int wallet;
     private int expirence;
@@ -20,12 +20,12 @@ public class StudentModel extends UserModel
         attendance = 100; 
     }
 
-    public String getGroup() 
+    public char getGroup() 
     {
         return group;    
     }
 
-    public void setGroup(String group)
+    public void setGroup(char group)
     {
         this.group = group;
     }

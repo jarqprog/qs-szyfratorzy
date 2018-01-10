@@ -1,6 +1,6 @@
 package users;
 
-public class MentorModel extends UserModel 
+public class MentorModel extends UserModel
 {
     char groupName;
 
