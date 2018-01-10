@@ -8,7 +8,6 @@ public class RootView extends AbstractView{
         System.out.println(emptyLines);
         System.out.println("Welcome!!");
         System.out.println(emptyLines);
-        handlePause();
     }
 
     public void displayOutro()

@@ -18,11 +18,8 @@ public class RootController
     public void runApplication()
     {
         view.displayIntro();
-        view.handlePause();
         view.displayLoginScreen();
-        view.handlePause();
         view.displayLogoutScreen();
-        view.handlePause();
         view.displayOutro();
     }
 }
