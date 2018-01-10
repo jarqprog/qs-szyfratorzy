@@ -23,4 +23,13 @@ public class MentorController extends AbstractUserController {
         // studentDao.exportData(newStudent);
 
     }
+
+    public void createArtifact() {
+        char itemType = getInput();
+        String itemName = getInput("Enter an item name:");
+        String itemDescription = getInput("Enter an item name:");
+        int price = getPrice();
+
+        new ArtefactModel(itemType, itemName, itemDescription, price);
+    }
 }
