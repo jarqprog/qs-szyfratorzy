@@ -26,4 +26,21 @@ public class MentorView extends AbstractView {
     }
     return price;
     }
+
+    public void displayMenu() {
+        String[] options = {"      *** Menu ***     ",
+                            "[1] create student",
+                            "[2] create quest",
+                            "[3] edit quest",
+                            "[4] create artefact",
+                            "[5] edit artefact",
+                            "[6] mark student quest",
+                            "[7] display student wallet",
+                            "[8] mark student artefact",
+                            "[0] exit"};
+
+        for(String element : options) {
+            System.out.println(element);
+        }
+    }
 }
