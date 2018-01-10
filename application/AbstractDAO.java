@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.io.File;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 // import java.nio.file.Files;
 // import java.nio.file.Paths;
 // import java.nio.file.Path;
@@ -34,8 +39,33 @@ public abstract class AbstractDAO
     }
 
     public List<String> getDataFromFile(){
-        List<String> outputData = new ArrayList<String>(); // tmp
-        return outputData;
+        List<String> outputData = new ArrayList<String>();
+        BufferedReader br = null;
+        FileReader fr = null;
+        String line;
+        try {
+            fr = new FileReader(defaultFilePath);
+            br = new BufferedReader(fr);
+            int array_index = 0;
+            while ((line = br.readLine()) != null) {
+                outputData.add(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+                if (fr != null) {
+                    fr.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    return outputData;
     }
 
     public Boolean checkIfFileExist(){
@@ -43,12 +73,33 @@ public abstract class AbstractDAO
         return f.exists();
     }
 
-
-
     public void saveData(List<String> collectionToSave){
+        FileWriter fileWriter = null;
+        BufferedWriter bufWriter = null;
+        try{
+            fileWriter = new FileWriter(defaultFilePath);
+            bufWriter = new BufferedWriter(fileWriter);
+            for(String element : collectionToSave) {
+                bufWriter.write(String.join(";", element) +  "\n");
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+            if (bufWriter != null) {
+                bufWriter.close();
+            }
 
-
+                if (fileWriter != null) {
+                    fileWriter.close();
+                }
+            } catch (IOException ex) {
+            ex.printStackTrace();
+            }
+        }
     }
+
     public void createDefaultFile(){
 
 
