@@ -1,6 +1,8 @@
 package users;
 
-public class AbstractDAO
+import application.AbstractDAO;
+
+public class UsersDAO extends AbstractDAO
 {
 
 
