@@ -3,6 +3,11 @@ package application;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.io.File;
+// import java.nio.file.Files;
+// import java.nio.file.Paths;
+// import java.nio.file.Path;
+
 
 
 public abstract class AbstractDAO
@@ -34,11 +39,13 @@ public abstract class AbstractDAO
     }
 
     public Boolean checkIfFileExist(){
-
-        return true;
+        File f = new File(defaultFilePath);
+        return f.exists();
     }
 
-    public void saveData(List<String>){
+
+
+    public void saveData(List<String> collectionToSave){
 
 
     }
