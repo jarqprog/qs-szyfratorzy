@@ -8,24 +8,24 @@ import java.io.IOException;
 
 public abstract class AbstractView{
 
-    String lines = "\n\n";
-    String space = " ";
-    static final String ANSI_CLS = "\u001b[2J";
-    static final String ANSI_HOME = "\u001b[H";
+    protected String emptyLines = "\n\n";
+    protected String space = " ";
+    private static final String ANSI_CLS = "\u001b[2J";
+    private static final String ANSI_HOME = "\u001b[H";
 
-    public void setLines(String newLines)
+    public void setEmptyLines(String newEmptyLines)
     {
-        lines = newLines;
+        emptyLines = newEmptyLines;
     }
 
     public void displayMessage(String message)
     {
-        System.out.println(lines + space + message);
+        System.out.println(emptyLines + space + message);
     }
 
     public void displayHeaderAndElementsOfCollection(String[] collection, String header)
     {
-        System.out.println(lines + space + header);
+        System.out.println(emptyLines + space + header);
         for(String element : collection)
         {
         System.out.println(space + element);
@@ -34,7 +34,7 @@ public abstract class AbstractView{
 
     public void displayEnumeratedElementsOfCollection(String[] collection)
     {
-        System.out.println(lines);
+        System.out.println(emptyLines);
         int number = 0;
         for(String element : collection){
         System.out.println(space + "[" + number + "] " + element);
@@ -44,7 +44,7 @@ public abstract class AbstractView{
 
     public void displayElementsOfCollection(String[] collection)
     {
-        System.out.println(lines);
+        System.out.println(emptyLines);
         for(String element : collection){
         System.out.println(space + element);
         }
@@ -56,7 +56,7 @@ public abstract class AbstractView{
         String userInput = "";
         int minimumUserInputLength = 1;
         while(userInput.length() < minimumUserInputLength){
-            System.out.println(lines + space + message + lines);
+            System.out.println(emptyLines + space + message + emptyLines);
             userInput = scanner.next().trim();
         }
         return userInput;
@@ -83,7 +83,7 @@ public abstract class AbstractView{
 
     public void handlePause()
     {
-        System.out.println(lines + space + "Press enter to continue.. ");
+        System.out.println(emptyLines + space + "Press enter to continue.. ");
         try
         {
             System.in.read();
