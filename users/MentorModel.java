@@ -1,12 +1,19 @@
 package users;
 
-public class MentorModel extends UserModel 
+public class MentorModel extends UserModel
 {
     char groupName;
 
     public MentorModel(String firstName, String lastName, String email, String password, char groupName)
     {
         super(firstName, lastName, email, password);
+        super.setRole("mentor");
+        this.groupName = groupName;
+    }
+
+    public MentorModel(int id, String firstName, String lastName, String email, String password, char groupName)
+    {
+        super(id, firstName, lastName, email, password);
         super.setRole("mentor");
         this.groupName = groupName;
     }
