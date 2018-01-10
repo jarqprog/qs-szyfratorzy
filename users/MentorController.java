@@ -17,6 +17,10 @@ public class MentorController {
 
     }
 
+    public void createQuest() {}
+
+    public void editQuest() {}
+
     public void createStudent() {
         String firstName = mentorView.getUserInput("Enter a first name:");
         String lastName = mentorView.getUserInput("Enter a last name:");
@@ -34,4 +38,12 @@ public class MentorController {
         ArtefactModel artefact = new ArtefactModel(itemType, itemName, itemDescription, price);
         System.out.println(artefact);
     }
+
+    public void editArtefact() {}
+
+    public void markStudentQuest() {}
+
+    public void displayStudentWallet() {}
+
+    public void markStudentArtefacts() {}
 }
