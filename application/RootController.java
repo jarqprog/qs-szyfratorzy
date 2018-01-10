@@ -3,6 +3,9 @@ package application;
 import users.UsersDAO;
 // import users.UserCtrl;
 import users.StudentModel;
+import java.util.List;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 
 public class RootController
@@ -19,6 +22,10 @@ public class RootController
 
     public void runApplication()
     {
+        runTest();
+    }
+
+    private void runTest(){
         // view.displayIntro();
         // view.displayLoginScreen();
         // StudentModel student = new StudentModel("Jarek", "Kucharczyk", "123");
@@ -28,5 +35,11 @@ public class RootController
         // view.displayLogoutScreen();
         // view.displayOutro();
         System.out.println(String.valueOf(dao.checkIfFileExist()));
+        List<String> list = dao.getDataFromFile();
+        String[] array = new String[list.size()];
+        list.toArray(array);
+        view.displayElementsOfCollection(array);
+        list.add("Lolo na koniec!");
+        dao.saveData(list);
     }
 }
