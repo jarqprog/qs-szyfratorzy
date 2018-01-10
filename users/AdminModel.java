@@ -1,9 +1,9 @@
 package users;
 
 public class AdminModel extends UserModel {
-    
-    public AdminModel(int ID, String fname, String lname, String email, String password)
+
+    public AdminModel(int id, String fname, String lname, String email, String password)
     {
-    super(ID, firstName, lastName, email, password);
+    super(id, firstName, lastName, email, password);
     }
 }
