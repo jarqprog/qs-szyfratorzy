@@ -3,20 +3,35 @@ package users;
 public class UserModel
 {
     private static int counter;
-    private int iD;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    private String role;
 
-    public UserModel()
+    public UserModel(String firstName, String lastName, String email, String password)
     {
-        iD = counter++; 
+        id = counter++;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        role = "undefined";
+    }
+    public UserModel(int id, String firstName, String lastName, String email, String password)
+    {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        role = "undefined";
     }
 
     public int getUserID()
     {
-        return iD;
+        return id;
     }
 
     public String getUserFirstName()
@@ -57,5 +72,15 @@ public class UserModel
     public void setPassword(String password)
     {
         this.password = password;
+    }
+
+    public String getRole()
+    {
+        return role;
+    }
+
+    public void setRole(String role)
+    {
+        this.role = role;
     }
 }
