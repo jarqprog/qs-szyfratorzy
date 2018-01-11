@@ -32,6 +32,23 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
         prepareFile(maxUserIdFile);
     }
 
+
+    public void prepareAdmin(){
+        if(! checkIfAdminInData()){
+            saveModelToFile(createFirstAdmin());
+        }
+    }
+
+    protected Boolean checkIfAdminInData(){
+        updateLoadedTables();
+        for(String[] table : loadedTables){
+            if(checkIfDataMatches("admin", ROLE_INDEX, table)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public AdminModel createFirstAdmin(){
         return new AdminModel("admin", "admin", "admin");
     }
@@ -159,8 +176,5 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
         loadedTables.add(table);
         saveData();
     }
-
-
-
 
 }

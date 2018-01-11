@@ -27,6 +27,7 @@ public class RootController{
     public RootController(){
 
         dao = new UsersDAO();
+        dao.prepareAdmin();
         view = new RootView();
     }
 
