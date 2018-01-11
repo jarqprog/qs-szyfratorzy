@@ -56,7 +56,7 @@ public abstract class AbstractView{
         String userInput = "";
         int minimumUserInputLength = 1;
         while(userInput.length() < minimumUserInputLength){
-            System.out.println(emptyLines + space + message + emptyLines);
+            System.out.print(message);
             userInput = scanner.next().trim();
         }
         return userInput;

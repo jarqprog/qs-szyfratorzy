@@ -5,24 +5,22 @@ import java.util.Scanner;
 
 public class MentorController {
     MentorView mentorView;
+    MentorModel mentorModel;
 
-    public static void main(String[] args) {
-        MentorController a = new MentorController();
-        a.handleMainMenu();
-    }
-
-    public MentorController() {
+    public MentorController(MentorModel mentorModel) 
+    {
         mentorView = new MentorView();
-
     }
 
-    public void handleMainMenu(){
+    public void handleMainMenu()
+    {
         boolean exit = false;
         while(!exit){
             String userChoice = "";
             String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "0"};
             Boolean choiceIsReady = false;
-            while(! choiceIsReady){
+            while(! choiceIsReady)
+            {
                 mentorView.clearScreen();
                 mentorView.displayMenu();
                 userChoice = mentorView.getUserInput("Select an option: ");
@@ -62,9 +60,12 @@ public class MentorController {
         }
     }
 
-    public Boolean checkIfElementInArray(String[] array, String element) {
-        for(String item : array){
-            if(item.equals(element)){
+    public Boolean checkIfElementInArray(String[] array, String element) 
+    {
+        for(String item : array)
+        {
+            if(item.equals(element))
+            {
                 return true;
             }
         }
@@ -75,7 +76,8 @@ public class MentorController {
 
     public void editQuest() {}
 
-    public void createStudent() {
+    public void createStudent() 
+    {
         String firstName = mentorView.getUserInput("Enter a first name:");
         String lastName = mentorView.getUserInput("Enter a last name:");
         String password = mentorView.getUserInput("Enter a password:");
@@ -84,7 +86,8 @@ public class MentorController {
 
     }
 
-    public void createArtefact() {
+    public void createArtefact() 
+    {
         char itemType = mentorView.getUserInput("Enter an item type: ").charAt(0);
         String itemName = mentorView.getUserInput("Enter an item name:");
         String itemDescription = mentorView.getUserInput("Enter an item description:");

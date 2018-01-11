@@ -21,10 +21,9 @@ public class RootView extends AbstractView{
         clearScreen();
     }
 
-    public void displayLoginScreen()
+    public String displayLoginScreen(String message)
     {
-        displayMessage("Login.... ;) ");
-        handlePause();
+        return getUserInput(message);
     }
 
     public void displayLogoutScreen()

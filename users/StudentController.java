@@ -2,21 +2,18 @@ package users;
 
 public class StudentController
 {
-    StudentModel student;
+    StudentModel studentModel;
     StudentView studentView;
 
-    public StudentController()
-    {
-        student = new StudentModel("firstName", "lastName", "password");
-    }
+    public StudentController(StudentModel studentModel){}
 
     public void displayMyWallet()
     {
-        studentView.displayWallet(student);
+        studentView.displayWallet(studentModel);
     }
 
     public void displayMyLevelOfExpirence()
     {
-        studentView.displayLevelOfExpirence(student);
+        studentView.displayLevelOfExpirence(studentModel);
     }
 }

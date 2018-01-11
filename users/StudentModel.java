@@ -31,6 +31,7 @@ public class StudentModel extends UserModel
         wallet = 0;
         expirence = 0;
         attendance = 100;
+        groupName = group;
     }
 
     public Character getGroup()
@@ -81,5 +82,9 @@ public class StudentModel extends UserModel
     public void setAttendance(float attendance)
     {
         this.attendance = attendance;
+    }
+    public String toString()
+    {
+        return super.toString()+String.format(" Group name: %s",this.getGroup());
     }
 }

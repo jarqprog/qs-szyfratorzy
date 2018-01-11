@@ -20,7 +20,7 @@ import item.ItemsDAO;
 
 public class RootController{
 
-    private LogableDAO dao;
+    private UsersDAO dao;
     private RootView view;
     // private UserCtrl loggedUser;
     public RootController()
@@ -31,7 +31,33 @@ public class RootController{
 
     public void runApplication()
     {
-        runTest();
+        String [] userData = loggingProcedure();
+        handleUserData(userData);
+    }
+
+    private String [] loggingProcedure() {
+        String login = view.displayLoginScreen("Login: ");
+        String password = view.displayLoginScreen("Password: ");
+        dao.updateLoadedTables();
+        String [] userDate = dao.importUserData(login, password);
+        return userDate;
+    }
+
+    private void handleUserData(String [] userData) {
+        if(userData.length == 0) {
+            view.displayMessage("Invalid login or password!");
+        }
+        else {
+            if(userData[0].equals("admin")){
+                dao.createAdminModel(userData);
+            }
+            else if(userData[0].equals("mentor")){
+                dao.createMentorModel(userData);
+            }
+            else if(userData[0].equals("student")){
+                dao.createStudentModel(userData);
+            }
+        }
     }
 
     private void runTest(){
@@ -54,20 +80,20 @@ public class RootController{
         // view.displayMessage(admin0.getUserFirstName());
 
         /// mentors test:
-        MentorDAO mentorDao = new MentorDAO();
-        List<MentorModel> mentors = mentorDao.getTestMentors();
-        view.displayMessage("Mentors");
-        for(MentorModel mentor : mentors){
-            System.out.println(" -"+mentor);
-        }
+        // MentorDAO mentorDao = new MentorDAO();
+        // List<MentorModel> mentors = mentorDao.getTestMentors();
+        // view.displayMessage("Mentors");
+        // for(MentorModel mentor : mentors){
+        //     System.out.println(" -"+mentor);
+        // }
 
-        /// admins test:
-        AdminDAO adminDao = new AdminDAO();
-        List<AdminModel> admins = adminDao.getTestAdmins();
-        view.displayMessage("Admins");
-        for(AdminModel admin : admins){
-            System.out.println(" -"+admin);
-        }
+        // /// admins test:
+        // AdminDAO adminDao = new AdminDAO();
+        // List<AdminModel> admins = adminDao.getTestAdmins();
+        // view.displayMessage("Admins");
+        // for(AdminModel admin : admins){
+        //     System.out.println(" -"+admin);
+        // }
 
         ///
         /// admins test:
@@ -106,7 +132,6 @@ public class RootController{
         for(StudentModel student00 : studentses){
             System.out.println(student00);
         }
-
-
     }
+
 }
