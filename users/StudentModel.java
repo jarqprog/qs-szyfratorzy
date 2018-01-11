@@ -24,6 +24,15 @@ public class StudentModel extends UserModel
 
     }
 
+    public StudentModel(int id, String firstName, String lastName, String password)
+    {
+        super(id, firstName, lastName, password);
+        setUserRole("student");
+        wallet = 0;
+        expirence = 0;
+        attendance = 100;
+    }
+
     public char getGroup()
     {
         return groupName;
