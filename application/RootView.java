@@ -7,6 +7,7 @@ public class RootView extends AbstractView{
         clearScreen();
         System.out.println(emptyLines);
         System.out.println("Welcome!!");
+        System.out.println(emptyLines);
         System.out.println("[1] login");
         System.out.println("[0] exit");
         System.out.println(emptyLines);

@@ -24,18 +24,16 @@ public class RootController{
 
     private UsersDAO dao;
     private RootView view;
-    // private UserCtrl loggedUser;
-    public RootController()
-    {
+    public RootController(){
+
         dao = new UsersDAO();
         view = new RootView();
     }
 
-    public void runApplication()
-    {
-        boolean running = true;
-        while (running)
-        {
+    public void runApplication(){
+        boolean isDone = false;
+        while (! isDone){
+
             view.displayIntro();
             String userInput = view.displayLoginScreen("Choose: ");
             switch (userInput)
@@ -45,7 +43,7 @@ public class RootController{
                     handleUserData(userData);
                     break;
                 case "0":
-                    running = false;
+                    isDone = true;
             }
         }
     }

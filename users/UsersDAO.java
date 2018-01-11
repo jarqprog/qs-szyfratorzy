@@ -38,7 +38,7 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
 
     public String [] importUserData(String login,String password) {
         for(String [] element : getLoadedTables()) {
-            String loginToCompare = element[FNAME_INDEX] + element[ID_INDEX] + "@cc.com";
+            String loginToCompare = element[FNAME_INDEX] + element[ID_INDEX];
             if((login.equals(loginToCompare)) && (password.equals(element[PASSWORD_INDEX]))) {
                 return element;
             }
