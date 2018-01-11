@@ -42,15 +42,15 @@ public class RootController{
         // view.handlePause();
         // view.displayLogoutScreen();
         // view.displayOutro();
-        System.out.println(String.valueOf(dao.checkIfFileExist()));
-        List<String> list = dao.getDataFromFile();
-        String[] array = new String[list.size()];
-        list.toArray(array);
-        view.displayElementsOfCollection(array);
-        list.add("Lolo na koniec!");
-        dao.saveData(list);
-        AdminModel admin0 = dao.createFirstAdmin();
-        view.displayMessage(admin0.getUserFirstName());
+        // System.out.println(String.valueOf(dao.checkIfFileExist()));
+        // List<String> list = dao.getDataFromFile();
+        // String[] array = new String[list.size()];
+        // list.toArray(array);
+        // view.displayElementsOfCollection(array);
+        // list.add("Lolo na koniec!");
+        // dao.saveData(list);
+        // AdminModel admin0 = dao.createFirstAdmin();
+        // view.displayMessage(admin0.getUserFirstName());
 
         /// mentors test:
         MentorDAO mentorDao = new MentorDAO();
@@ -76,5 +76,6 @@ public class RootController{
         for(StudentModel student : students){
             System.out.println(" -"+student);
         }
+        dao.createDefaultFile();
     }
 }

@@ -7,6 +7,7 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
     public UsersDAO(){
         defaultFileName = "users.csv";
         defaultFilePath = "DataFiles/users.csv";
+        prepareFile();
     }
 
     public AdminModel createFirstAdmin(){

@@ -15,5 +15,7 @@ public interface LogableDAO{
     public void setLoadedTables(List<String[]> tablesCollection);
     public void setLoadedStrings(List<String> stringsCollection);
     public AdminModel createFirstAdmin();
+    public void createDefaultFile();
+    public void prepareFile();
 
 }

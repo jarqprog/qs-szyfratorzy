@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
 
-public class AdminDAO extends UsersDAO
-{
+public class AdminDAO extends UsersDAO {
+
     public List<AdminModel> getTestAdmins(){
 
         List<AdminModel> adminsCollection = new ArrayList<AdminModel>();

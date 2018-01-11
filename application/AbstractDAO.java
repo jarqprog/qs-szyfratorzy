@@ -15,8 +15,7 @@ import java.io.IOException;
 
 
 
-public abstract class AbstractDAO
-{
+public abstract class AbstractDAO{
 
     protected String defaultFileName;
     protected String defaultFilePath;
@@ -55,6 +54,16 @@ public abstract class AbstractDAO
         loadedStrings = stringsCollection;
     }
 
+    public void createDefaultFile(){
+        try {
+            File f = new File(defaultFilePath);
+            f.createNewFile();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<String> getDataFromFile(){
         List<String> outputData = new ArrayList<String>();
         BufferedReader br = null;
@@ -83,6 +92,12 @@ public abstract class AbstractDAO
             }
         }
     return outputData;
+    }
+
+    public void prepareFile(){
+        if(! checkIfFileExist()){
+            createDefaultFile();
+        }
     }
 
     public Boolean checkIfFileExist(){
@@ -115,11 +130,6 @@ public abstract class AbstractDAO
             ex.printStackTrace();
             }
         }
-    }
-
-    public void createDefaultFile(){
-
-
     }
 
 }
