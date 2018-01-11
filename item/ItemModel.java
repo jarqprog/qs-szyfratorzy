@@ -5,11 +5,27 @@ public abstract class ItemModel {
     private String itemName;
     private String itemDescription;
     private String itemFullName;
+    protected String genre;
+    private static int counter;
+    protected int id;
+    private ItemsDAO dao;
 
     public ItemModel(char itemType, String itemName, String itemDescription){
+        dao = new ItemsDAO();
+        counter = dao.loadLastId("DataFiles/maxItemsId.csv");
+        id = counter++;
         this.itemType = itemType;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
+        this.genre = "item";
+    }
+
+    public ItemModel(int id, char itemType, String itemName, String itemDescription){
+        this.id = id;
+        this.itemType = itemType;
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.genre = "item";
     }
 
     public String getItemName(){
