@@ -21,6 +21,10 @@ public abstract class ItemModel {
     public char getItemType(){
         return itemType;
     }
+
+    // public ing getId(){
+    //
+    // }
     public void setItemtype(char newItemType){
         itemType = newItemType;
     }
