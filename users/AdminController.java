@@ -2,15 +2,19 @@ package users;
 
 import java.util.ArrayList;
 
+import school.SchoolModel;
+
 public class AdminController
 {
     private AdminView adminView;
     private MentorDAO mentorDAO;
+    private SchoolModel school;
 
     public AdminController()
     {
         adminView = new AdminView();
         mentorDAO = new MentorDAO();
+        school = new SchoolModel();
     }
 
     public static void main(String[] args) {
@@ -23,7 +27,7 @@ public class AdminController
         boolean exit = false;
         while(!exit){
             String userChoice = "";
-            String[] correctChoices = {"1", "2", "3", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5", "0"};
             Boolean choiceIsReady = false;
             while(! choiceIsReady){
                 adminView.clearScreen();
@@ -43,6 +47,12 @@ public class AdminController
                 case "3":
                    displayMentorProfile();
                    break;
+                case "4":
+                    createGroup();
+                    break;
+                case "5":
+                    createNewLevelOfExpirence();
+                    break;
                 case "0":
                    exit = true;
                    break;
@@ -100,7 +110,7 @@ public class AdminController
                             mentor.setUserEmail(email); 
                             break;
                         case "5" : 
-                            char group = adminView.getUserInput("Enter group: ").charAt(0); 
+                            Character group = adminView.getUserInput("Enter group: ").charAt(0); 
                             mentor.setMentorGroupName(group); 
                             break;
                         case "0":
@@ -122,6 +132,19 @@ public class AdminController
                 adminView.displayMentorProfile(mentor);
             }
         }
+    }
+
+    public void createGroup()
+    {
+        Character newGroup = adminView.getUserInput("Enter group name: ").charAt(0);
+        school.addGroup(newGroup);
+    }
+
+    public void createNewLevelOfExpirence()
+    {
+        String levelName = adminView.getUserInput("Enter level name: ");
+        Integer expirence = Integer.parseInt(adminView.getUserInput("Enter expirence: "));
+        school.addExpirenceLevel(levelName, expirence);
     }
 }
 

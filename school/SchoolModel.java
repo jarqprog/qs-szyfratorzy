@@ -9,27 +9,33 @@ public class SchoolModel
     private ArrayList<Character> groups;
     private ArrayList<String> teams;
 
+    public SchoolModel(){
+        expirenceLevels = new HashMap<String, Integer>();
+        groups = new ArrayList<Character>();
+        teams = new ArrayList<String>();
+    }
+
     public HashMap<String, Integer> getExpirenceLevels() {
         return expirenceLevels;
     }
 
-    public void setExpirenceLevels(HashMap<String, Integer> newLevelsOfExpirence) {
-        this.expirenceLevels = newLevelsOfExpirence;
+    public void addExpirenceLevel(String level, Integer expirence) {
+        this.expirenceLevels.put(level, expirence);
     }
 
     public ArrayList<Character> getGroups() {
         return groups;
     }
 
-    public void setGroups(ArrayList<Character> newGroups) {
-        this.groups = newGroups;
+    public void addGroup(Character newGroup) {
+        this.groups.add(newGroup);
     }
 
     public ArrayList<String> getTeams() {
         return teams;
     }
 
-    public void setTeams(ArrayList<String> newTeams) {
-        this.teams = newTeams;
+    public void addTeam(String newTeam) {
+        this.teams.add(newTeam);
     }
 }
