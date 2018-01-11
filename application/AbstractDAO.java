@@ -20,7 +20,8 @@ public abstract class AbstractDAO
 
     protected String defaultFileName;
     protected String defaultFilePath;
-    protected List<String> loadedData;
+    protected List<String[]> loadedTables;
+    protected List<String> loadedStrings;
 
     public String getDefaultFileName(){
         return defaultFileName;
@@ -36,6 +37,22 @@ public abstract class AbstractDAO
 
     public void setDefaultFilePath(String path){
         defaultFilePath = path;
+    }
+
+    public List<String[]> getLoadedTables(){
+        return loadedTables;
+    }
+
+    public List<String> getLoadedStrings(){
+        return loadedStrings;
+    }
+
+    public void setLoadedTables(List<String[]> tablesCollection){
+        loadedTables = tablesCollection;
+    }
+
+    public void setLoadedStrings(List<String> stringsCollection){
+        loadedStrings = stringsCollection;
     }
 
     public List<String> getDataFromFile(){
