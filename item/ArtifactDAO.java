@@ -13,6 +13,12 @@ public class ArtifactDAO extends ItemsDAO
         prepareFile();
     }
 
+    // public List<ArtifactModel> getArtefactsFromFile(){
+    //     updateLoadedTables();
+    //
+    //
+    // }
+
 
 
 

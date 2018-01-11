@@ -2,7 +2,7 @@ package users;
 
 import java.util.ArrayList;
 import java.util.List;
-import item.ArtefactModel;
+import item.ArtifactModel;
 
 public class StudentModel extends UserModel
 {
@@ -10,7 +10,7 @@ public class StudentModel extends UserModel
     private String team;
     private int wallet;
     private int experience;
-    private List<ArtefactModel> inventory;
+    private List<ArtifactModel> inventory;
     private float attendance;
 
     public StudentModel(String firstName, String lastName, String password)
@@ -19,7 +19,7 @@ public class StudentModel extends UserModel
         setUserRole("student");
         wallet = 0;
         experience = 0;
-        inventory = new ArrayList<ArtefactModel>();
+        inventory = new ArrayList<ArtifactModel>();
         attendance = 100;
         groupName = '0';
 

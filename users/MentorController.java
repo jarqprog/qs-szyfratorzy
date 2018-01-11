@@ -38,10 +38,10 @@ public class MentorController extends UserController{
                    editQuest();
                    break;
                 case "4":
-                   createArtefact();
+                   createArtifact();
                    break;
                 case "5":
-                   editArtefact();
+                   editArtifact();
                    break;
                 case "6":
                    markStudentQuest();
@@ -50,7 +50,7 @@ public class MentorController extends UserController{
                    displayStudentWallet();
                    break;
                 case "8":
-                   markStudentArtefacts();
+                   markStudentArtifacts();
                    break;
                 case "0":
                    isDone = true;
@@ -72,20 +72,20 @@ public class MentorController extends UserController{
         dao.saveModelToFile(newStudent);
     }
 
-    public void createArtefact(){
+    public void createArtifact(){
         char itemType = view.getUserInput("Enter an item type: ").charAt(0);
         String itemName = view.getUserInput("Enter an item name:");
         String itemDescription = view.getUserInput("Enter an item description:");
         int price = view.getPrice();
-        ArtefactModel artefact = new ArtefactModel(itemType, itemName, itemDescription, price);
-        System.out.println(artefact);
+        ArtifactModel artifact = new ArtifactModel(itemType, itemName, itemDescription, price);
+        System.out.println(artifact);
     }
 
-    public void editArtefact() {}
+    public void editArtifact() {}
 
     public void markStudentQuest() {}
 
     public void displayStudentWallet() {}
 
-    public void markStudentArtefacts() {}
+    public void markStudentArtifacts() {}
 }
