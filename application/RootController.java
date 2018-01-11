@@ -16,6 +16,7 @@ import users.AdminDAO;
 import users.AdminModel;
 import users.StudentDAO;
 import users.StudentModel;
+import item.ItemsDAO;
 
 public class RootController{
 
@@ -76,6 +77,6 @@ public class RootController{
         for(StudentModel student : students){
             System.out.println(" -"+student);
         }
-        dao.createDefaultFile();
+        ItemsDAO itemsDao = new ItemsDAO();
     }
 }
