@@ -1,6 +1,8 @@
 package users;
 
 import java.util.ArrayList;
+import java.util.List;
+import item.ArtefactModel;
 
 public class StudentModel extends UserModel
 {
@@ -8,7 +10,7 @@ public class StudentModel extends UserModel
     private String team;
     private int wallet;
     private int expirence;
-    private ArrayList inventory;
+    private List<ArtefactModel> inventory;
     private float attendance;
 
     public StudentModel(String firstName, String lastName, String password)
@@ -17,7 +19,9 @@ public class StudentModel extends UserModel
         setUserRole("student");
         wallet = 0;
         expirence = 0;
+        inventory = new ArrayList<ArtefactModel>();
         attendance = 100;
+
     }
 
     public char getGroup()
