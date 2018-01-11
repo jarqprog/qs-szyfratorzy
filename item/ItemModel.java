@@ -1,63 +1,67 @@
 package item;
 
 public abstract class ItemModel {
-    private char itemType;
-    private String itemName;
-    private String itemDescription;
-    private String itemFullName;
+    protected char type;
+    protected String name;
+    protected String description;
+    protected String fullName;
     protected String genre;
-    private static int counter;
+    protected static int counter;
     protected int id;
-    private ItemsDAO dao;
+    protected ItemsDAO dao;
 
-    public ItemModel(char itemType, String itemName, String itemDescription){
+    public ItemModel(){
         dao = new ItemsDAO();
         counter = dao.loadLastId("DataFiles/maxItemsId.csv");
         id = counter++;
-        this.itemType = itemType;
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
+        this.name = "item";
+        this.type = 'I';
+        this.description = "n/a";
         this.genre = "item";
+        dao.saveLastId(counter, "DataFiles/maxItemsId.csv");
     }
 
-    public ItemModel(int id, char itemType, String itemName, String itemDescription){
+    public ItemModel(int id){
         this.id = id;
-        this.itemType = itemType;
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
+        this.name = "item";
+        this.type = 'I';
+        this.description = "n/a";
         this.genre = "item";
     }
 
     public String getItemName(){
-        return itemName;
+        return name;
     }
     public void setItemName(String newItemName){
-        itemName = newItemName;
+        name = newItemName;
     }
     public char getItemType(){
-        return itemType;
+        return type;
     }
-
-    // public ing getId(){
-    //
-    // }
+    public int getId(){
+        return id;
+    }
     public void setItemtype(char newItemType){
-        itemType = newItemType;
+        type = newItemType;
     }
     public String getItemDescription(){
-        return itemDescription;
+        return description;
     }
     public void setItemDescription(String newItemDescription){
-        itemDescription = newItemDescription;
+        description = newItemDescription;
     }
     public String getItemFullName(){
-        return itemFullName;
+        return fullName;
+    }
+    public String getGenre(){
+        return genre;
     }
     public void setItemFullName(String newItemFullName){
-        itemFullName = newItemFullName;
+        fullName = newItemFullName;
     }
     public String toString(){
-        return String.format("type: %s, item name: %s,", this.itemType, this.itemName);
+        return String.format("genre: %s, type: %s, item name: %s, description: %s", this.genre,
+                            this.type, this.name, this.description);
     }
 
 }
