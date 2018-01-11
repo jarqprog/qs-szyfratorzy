@@ -11,6 +11,6 @@ public class StudentView extends AbstractView
 
     public void displayLevelOfExpirence(StudentModel student)
     {
-        System.out.println(student.getExpirence());
+        System.out.println(student.getExperience());
     }
 }

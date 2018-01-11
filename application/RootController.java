@@ -18,6 +18,7 @@ import users.AdminModel;
 import users.StudentDAO;
 import users.StudentModel;
 import item.ItemsDAO;
+import users.AdminModel;
 
 public class RootController{
 
@@ -34,6 +35,8 @@ public class RootController{
     {
         String [] userData = loggingProcedure();
         handleUserData(userData);
+
+        //runTest();
     }
 
     private String [] loggingProcedure() {
@@ -68,77 +71,8 @@ public class RootController{
     }
 
     private void runTest(){
-        // view.displayIntro();
-        // view.displayLoginScreen();
-        // StudentModel student = new StudentModel("Jarek", "Kucharczyk", "123");
-        // String message = student.getUserFirstName()+", role: " + student.getUserRole();
-        // view.displayMessage(message);
-        // view.handlePause();
-        // view.displayLogoutScreen();
-        // view.displayOutro();
-        // System.out.println(String.valueOf(dao.checkIfFileExist()));
-        // List<String> list = dao.getDataFromFile();
-        // String[] array = new String[list.size()];
-        // list.toArray(array);
-        // view.displayElementsOfCollection(array);
-        // list.add("Lolo na koniec!");
-        // dao.saveData(list);
-        // AdminModel admin0 = dao.createFirstAdmin();
-        // view.displayMessage(admin0.getUserFirstName());
+        System.out.println("Nothing to test...");
 
-        /// mentors test:
-        // MentorDAO mentorDao = new MentorDAO();
-        // List<MentorModel> mentors = mentorDao.getTestMentors();
-        // view.displayMessage("Mentors");
-        // for(MentorModel mentor : mentors){
-        //     System.out.println(" -"+mentor);
-        // }
-
-        // /// admins test:
-        // AdminDAO adminDao = new AdminDAO();
-        // List<AdminModel> admins = adminDao.getTestAdmins();
-        // view.displayMessage("Admins");
-        // for(AdminModel admin : admins){
-        //     System.out.println(" -"+admin);
-        // }
-
-        ///
-        /// admins test:
-        StudentDAO studentDao = new StudentDAO();
-        List<StudentModel> students = studentDao.getTestStudents();
-        view.displayMessage("Students");
-        for(StudentModel student : students){
-            System.out.println(" -"+student);
-        }
-        ItemsDAO itemsDao = new ItemsDAO();
-
-        /// create model by DAO
-        UsersDAO newDao = new UsersDAO();
-        String[] table1 = {"student", "12", "Jarek", "Kuc", "1231415", "A"};
-        String[] table2 = {"mentor", "13", "Konrad", "Lapka", "asad", "B"};
-        String[] table3 = {"admin", "14", "Ryszard", "Kowal", "asad"};
-        StudentModel jarek = newDao.createStudentModel(table1);
-        MentorModel konrad = newDao.createMentorModel(table2);
-        AdminModel adminek = newDao.createAdminModel(table3);
-        System.out.println(jarek);
-        System.out.println(konrad);
-        System.out.println(adminek);
-        newDao.saveLastId(22, "DataFiles/maxUserId.csv");
-        System.out.println(newDao.loadLastId("DataFiles/maxUserId.csv"));
-        System.out.println(newDao.findProperTableByChosenParameter("1", 1));
-        String[] dataTable = newDao.findProperTableByChosenParameter("1", 1);
-        List<AdminModel> adminses = newDao.getAdminsFromFile();
-        for(AdminModel admin00 : adminses){
-            System.out.println(admin00);
-        }
-        List<MentorModel> mentorses = newDao.getMentorsFromFile();
-        for(MentorModel mentor00 : mentorses){
-            System.out.println(mentor00);
-        }
-        List<StudentModel> studentses = newDao.getStudentsFromFile();
-        for(StudentModel student00 : studentses){
-            System.out.println(student00);
-        }
     }
 
 }

@@ -9,15 +9,19 @@ public abstract class UserModel
     private String email;
     private String password;
     private String role;
+    private UsersDAO usersDao;
 
     public UserModel(String firstName, String lastName, String password)
     {
+        usersDao = new UsersDAO();
+        counter = usersDao.loadLastId("DataFiles/maxUserId.csv");
         id = counter++;
         this.firstName = firstName;
         this.lastName = lastName;
         email = firstName + Integer.toString(id) + "@cc.com";
         this.password = password;
         role = "undefined";
+        usersDao.saveLastId(counter, "DataFiles/maxUserId.csv");
     }
 
     public UserModel(int id, String firstName, String lastName, String password)
