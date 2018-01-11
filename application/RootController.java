@@ -78,5 +78,17 @@ public class RootController{
             System.out.println(" -"+student);
         }
         ItemsDAO itemsDao = new ItemsDAO();
+
+        /// create model by DAO
+        UsersDAO newDao = new UsersDAO();
+        String[] table1 = {"student", "12", "Jarek", "Kuc", "1231415", "A"};
+        String[] table2 = {"mentor", "13", "Konrad", "Lapka", "asad", "B"};
+        String[] table3 = {"admin", "14", "Ryszard", "Kowal", "asad"};
+        StudentModel jarek = newDao.createStudentModel(table1);
+        MentorModel konrad = newDao.createMentorModel(table2);
+        AdminModel adminek = newDao.createAdminModel(table3);
+        System.out.println(jarek);
+        System.out.println(konrad);
+        System.out.println(adminek);
     }
 }
