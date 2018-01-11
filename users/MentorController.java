@@ -3,30 +3,30 @@ package users;
 import item.*;
 import java.util.Scanner;
 
-public class MentorController {
-    MentorView mentorView;
-    MentorModel mentorModel;
+public class MentorController extends UserController{
+    MentorView view;
+    MentorModel mentor;
+    MentorDAO dao;
 
-    public MentorController(MentorModel mentorModel) 
-    {
-        mentorView = new MentorView();
+    public MentorController(MentorModel mentorModel){
+        view = new MentorView();
+        mentor = mentorModel;
+        dao = new MentorDAO();
     }
 
-    public void handleMainMenu()
-    {
-        boolean exit = false;
-        while(!exit){
+    public void handleMainMenu(){
+        boolean isDone = false;
+        while(! isDone){
             String userChoice = "";
             String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "0"};
-            Boolean choiceIsReady = false;
-            while(! choiceIsReady)
-            {
-                mentorView.clearScreen();
-                mentorView.displayMenu();
-                userChoice = mentorView.getUserInput("Select an option: ");
-                choiceIsReady = checkIfElementInArray(correctChoices, userChoice);
+            Boolean isChoiceReady = false;
+            while(! isChoiceReady){
+                view.clearScreen();
+                view.displayMenu();
+                userChoice = view.getUserInput("Select an option: ");
+                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
             }
-            mentorView.clearScreen();
+            view.clearScreen();
             switch(userChoice){
                 case "1":
                    createStudent();
@@ -53,45 +53,30 @@ public class MentorController {
                    markStudentArtefacts();
                    break;
                 case "0":
-                   exit = true;
+                   isDone = true;
                    break;
             }
-            mentorView.handlePause();
+            view.handlePause();
         }
-    }
-
-    public Boolean checkIfElementInArray(String[] array, String element) 
-    {
-        for(String item : array)
-        {
-            if(item.equals(element))
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void createQuest() {}
 
     public void editQuest() {}
 
-    public void createStudent() 
-    {
-        String firstName = mentorView.getUserInput("Enter a first name:");
-        String lastName = mentorView.getUserInput("Enter a last name:");
-        String password = mentorView.getUserInput("Enter a password:");
+    public void createStudent(){
+        String firstName = view.getUserInput("Enter a first name:");
+        String lastName = view.getUserInput("Enter a last name:");
+        String password = view.getUserInput("Enter a password:");
         StudentModel newStudent = new StudentModel(firstName, lastName, password);
-        System.out.println(newStudent);
-
+        dao.saveModelToFile(newStudent);
     }
 
-    public void createArtefact() 
-    {
-        char itemType = mentorView.getUserInput("Enter an item type: ").charAt(0);
-        String itemName = mentorView.getUserInput("Enter an item name:");
-        String itemDescription = mentorView.getUserInput("Enter an item description:");
-        int price = mentorView.getPrice();
+    public void createArtefact(){
+        char itemType = view.getUserInput("Enter an item type: ").charAt(0);
+        String itemName = view.getUserInput("Enter an item name:");
+        String itemDescription = view.getUserInput("Enter an item description:");
+        int price = view.getPrice();
         ArtefactModel artefact = new ArtefactModel(itemType, itemName, itemDescription, price);
         System.out.println(artefact);
     }
