@@ -1,4 +1,10 @@
-admin;001,Jarek;Kucharczyk;098
-admin;002,Maciek;Kowalski;123124215
-admin;003,Marcin;Luczyk;12321
-admin;004,Lolek;Swidnicki;245MamaChooj
+admin;1;Jarek;Kucharczyk;098
+admin;2;Maciek;Kowalski;123124215
+admin;3;Marcin;Luczyk;12321
+admin;4;Lolek;Swidnicki;245Chooj
+student;8;Tomek;Kucharczyk;098;a
+student;9;Jan;Kowalski;123124215;a
+student;12;Ludwik;Luczyk;12321;d
+student;14;Rysiu;Swidnicki;245Chooj;a
+mentor;16;Piotr;Sito;12321;d
+mentor;18;Dudus;Konik;245Chooj;a
