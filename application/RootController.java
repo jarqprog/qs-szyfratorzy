@@ -90,5 +90,7 @@ public class RootController{
         System.out.println(jarek);
         System.out.println(konrad);
         System.out.println(adminek);
+        newDao.saveLastId(22, "DataFiles/maxUserId.csv");
+        System.out.println(newDao.loadLastId("DataFiles/maxUserId.csv"));
     }
 }
