@@ -94,9 +94,8 @@ public class MentorController extends UserController{
             }
             view.displayMessage("Artifact does not exist!");
             view.handlePause();
-        }
-
     }
+
 
     private void handleArtifactEditMenu(ArtifactModel artifact){
         boolean isDone = false;

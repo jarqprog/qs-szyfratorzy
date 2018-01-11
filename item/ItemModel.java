@@ -1,8 +1,6 @@
 package item;
 
 public abstract class ItemModel {
-    private static int counter;
-    private int id;
     private char itemType;
     private String itemName;
     private String itemDescription;
