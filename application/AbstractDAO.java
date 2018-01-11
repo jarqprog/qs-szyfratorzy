@@ -227,7 +227,7 @@ public abstract class AbstractDAO{
         }
     }
 
-    public int loadLastId(String filePath){
+    public static int loadLastId(String filePath){
         int id = 0;
         BufferedReader br = null;
         FileReader fr = null;

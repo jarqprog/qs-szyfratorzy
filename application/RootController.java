@@ -18,6 +18,7 @@ import users.AdminModel;
 import users.StudentDAO;
 import users.StudentModel;
 import item.ItemsDAO;
+import users.AdminModel;
 
 public class RootController{
 
@@ -32,8 +33,10 @@ public class RootController{
 
     public void runApplication()
     {
-        String [] userData = loggingProcedure();
-        handleUserData(userData);
+        //String [] userData = loggingProcedure();
+        //handleUserData(userData);
+
+        runTest();
     }
 
     private String [] loggingProcedure() {
@@ -104,41 +107,33 @@ public class RootController{
 
         ///
         /// admins test:
-        StudentDAO studentDao = new StudentDAO();
-        List<StudentModel> students = studentDao.getTestStudents();
-        view.displayMessage("Students");
-        for(StudentModel student : students){
-            System.out.println(" -"+student);
-        }
-        ItemsDAO itemsDao = new ItemsDAO();
+        // StudentDAO studentDao = new StudentDAO();
+        // List<StudentModel> students = studentDao.getTestStudents();
+        // view.displayMessage("Students");
+        // for(StudentModel student : students){
+        //     System.out.println(" -"+student);
+        // }
+        // ItemsDAO itemsDao = new ItemsDAO();
 
-        /// create model by DAO
-        UsersDAO newDao = new UsersDAO();
-        String[] table1 = {"student", "12", "Jarek", "Kuc", "1231415", "A"};
-        String[] table2 = {"mentor", "13", "Konrad", "Lapka", "asad", "B"};
-        String[] table3 = {"admin", "14", "Ryszard", "Kowal", "asad"};
-        StudentModel jarek = newDao.createStudentModel(table1);
-        MentorModel konrad = newDao.createMentorModel(table2);
-        AdminModel adminek = newDao.createAdminModel(table3);
-        System.out.println(jarek);
-        System.out.println(konrad);
-        System.out.println(adminek);
-        newDao.saveLastId(22, "DataFiles/maxUserId.csv");
-        System.out.println(newDao.loadLastId("DataFiles/maxUserId.csv"));
-        System.out.println(newDao.findProperTableByChosenParameter("1", 1));
-        String[] dataTable = newDao.findProperTableByChosenParameter("1", 1);
-        List<AdminModel> adminses = newDao.getAdminsFromFile();
-        for(AdminModel admin00 : adminses){
-            System.out.println(admin00);
-        }
-        List<MentorModel> mentorses = newDao.getMentorsFromFile();
-        for(MentorModel mentor00 : mentorses){
-            System.out.println(mentor00);
-        }
-        List<StudentModel> studentses = newDao.getStudentsFromFile();
-        for(StudentModel student00 : studentses){
-            System.out.println(student00);
-        }
+        // /// create model by DAO
+        // UsersDAO newDao = new UsersDAO();
+        // AdminModel user = new AdminModel("s", "w", "e");
+        // // AdminModel user1 = new AdminModel("s", "w", "e");
+        // // AdminModel user2 = new AdminModel("s", "w", "e");
+        // // System.out.println(user.getUserID());
+        // // System.out.println(user1.getUserID());
+        // // System.out.println(user2.getUserID());
+        // // String[] table1 = {"student", "12", "Jarek", "Kuc", "1231415", "A"};
+        // // String[] table2 = {"mentor", "13", "Konrad", "Lapka", "asad", "B"};
+        // // String[] table3 = {"admin", "14", "Ryszard", "Kowal", "asad"};
+        // // StudentModel jarek = newDao.createStudentModel(table1);
+        // // MentorModel konrad = newDao.createMentorModel(table2);
+        // // AdminModel adminek = newDao.createAdminModel(table3);
+        // // System.out.println(jarek);
+        // // System.out.println(konrad);
+        // // System.out.println(adminek);
+        // System.out.println(newDao.loadLastId("DataFiles/maxUserId.csv"));
+
     }
 
 }
