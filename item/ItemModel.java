@@ -60,7 +60,7 @@ public abstract class ItemModel {
         fullName = newItemFullName;
     }
     public String toString(){
-        return String.format("genre: %s, type: %s, item name: %s, description: %s", this.genre,
+        return String.format("genre: %s, id: %s, type: %s, item name: %s, description: %s", this.genre, this.id,
                             this.type, this.name, this.description);
     }
 
