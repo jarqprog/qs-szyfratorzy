@@ -38,7 +38,8 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
 
     public String [] importUserData(String login,String password) {
         for(String [] element : getLoadedTables()) {
-            if((login.equals(element[2])) && (password.equals(element[4]))) {
+            String loginToCompare = element[FNAME_INDEX] + element[ID_INDEX] + "@cc.com";
+            if((login.equals(loginToCompare)) && (password.equals(element[PASSWORD_INDEX]))) {
                 return element;
             }
         }
@@ -109,17 +110,41 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
 
     public void saveModelToFile(UserModel model){
         if(model.getUserRole().equals("admin")){
-
+            saveAdmin( (AdminModel) model);
         } else if(model.getUserRole().equals("mentor")) {
-
+            saveMentor( (MentorModel) model);
         } else {
-
+            saveStudent( (StudentModel) model);
         }
     }
 
-    protected void saveStudent(StudentModel student){
+    protected void saveAdmin(AdminModel admin){
+        String role = "admin";
+        String id = String.valueOf(admin.getUserID());
+        String fName = admin.getUserFirstName();
+        String lName = admin.getUserLastName();
+        String password = admin.getUserPassword();
+        removeDataIfIdAlreadyExists(id, ID_INDEX);
+        String[] table = {role, id, fName, lName, password};
+        loadedTables.add(table);
+        saveData();
+    }
 
-        String role = "Student";
+    protected void saveMentor(MentorModel mentor){
+        String role = "mentor";
+        String id = String.valueOf(mentor.getUserID());
+        String fName = mentor.getUserFirstName();
+        String lName = mentor.getUserLastName();
+        String password = mentor.getUserPassword();
+        String group = String.valueOf(mentor.getMentorGroupName());
+        removeDataIfIdAlreadyExists(id, ID_INDEX);
+        String[] table = {role, id, fName, lName, password, group};
+        loadedTables.add(table);
+        saveData();
+    }
+
+    protected void saveStudent(StudentModel student){
+        String role = "student";
         String id = String.valueOf(student.getUserID());
         String fName = student.getUserFirstName();
         String lName = student.getUserLastName();
@@ -130,15 +155,12 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
         String attendance = String.valueOf(student.getAttendance());
         String wallet = String.valueOf(student.getWallet());
         removeDataIfIdAlreadyExists(id, ID_INDEX);
-
-
-        // expirence
-
+        String[] table = {role, id, fName, lName, password, group, team, experience, attendance, wallet};
+        loadedTables.add(table);
+        saveData();
     }
 
 
-
-    protected retur
 
 
 }

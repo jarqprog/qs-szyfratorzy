@@ -3,6 +3,7 @@ package application;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.io.File;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -215,7 +216,7 @@ public abstract class AbstractDAO{
         updateLoadedTables();
         for(Iterator<String[]> iterator = loadedTables.iterator(); iterator.hasNext();){
             String[] data = iterator.next();
-            if(checkIfDataMatches(id, idIndex)){
+            if(checkIfDataMatches(id, idIndex, data)){
                 loadedTables.remove(data);
                 break;
             }
