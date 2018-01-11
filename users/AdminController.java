@@ -1,63 +1,113 @@
 package users;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class AdminController
 {
-    private Scanner scanner;
     private ArrayList<MentorModel> list;
+    private AdminView adminView;
 
     public AdminController()
     {
-        scanner = new Scanner(System.in);
         list = new ArrayList<MentorModel>();
+        adminView = new AdminView();
     }
 
     public static void main(String[] args) {
         AdminController a = new AdminController();
-        a.createMentor();
-        a.editMentor();
-        a.displayMentorProfile();
+        a.handleMainMenu();
+    }
+
+    public void handleMainMenu()
+    {
+        boolean exit = false;
+        while(!exit){
+            String userChoice = "";
+            String[] correctChoices = {"1", "2", "3", "0"};
+            Boolean choiceIsReady = false;
+            while(! choiceIsReady){
+                adminView.clearScreen();
+                adminView.displayMenu();
+                userChoice = adminView.getUserInput("Select an option: ");
+                choiceIsReady = checkIfElementInArray(correctChoices, userChoice);
+            }
+            adminView.clearScreen();
+            switch(userChoice)
+            {
+                case "1":
+                   createMentor();
+                   break;
+                case "2":
+                   editMentor();
+                   break;
+                case "3":
+                   displayMentorProfile();
+                   break;
+                case "0":
+                   exit = true;
+                   break;
+            }
+            adminView.handlePause();
+        }
+    }
+
+    public Boolean checkIfElementInArray(String[] array, String element) {
+        for(String item : array){
+            if(item.equals(element)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void createMentor()
     {
-        System.out.print("Enter firstname: ");
-        String firstName = scanner.next();
-        System.out.print("Enter lastname: ");
-        String lastName = scanner.next();
-        System.out.print("Enter password: ");
-        String password = scanner.next();
-        System.out.print("Enter group: ");
-        Character groupName = scanner.next().charAt(0);
-        MentorModel newMentor = new MentorModel(firstName, lastName, password, groupName);
+        String firstName = adminView.getUserInput("Enter firstname: ");
+        String lastName = adminView.getUserInput("Enter lastname: ");
+        String password = adminView.getUserInput("Enter password: ");
+        MentorModel newMentor = new MentorModel(firstName, lastName, password);
         list.add(newMentor);
-        System.out.println("Done");
     }
 
     public void editMentor()
     {
-        System.out.println("Enter email of mentor: ");
-        String emailToSearch = scanner.next();
+        String firstNameToSearch = adminView.getUserInput("Enter firstname: ");
         for (MentorModel mentor : list)
         {
-            if (emailToSearch.equals(mentor.getUserEmail()))
+            if (firstNameToSearch.equals(mentor.getUserFirstName()))
             {
-                System.out.println("Choose: ");
-                System.out.println("1. Edit firstname");
-                System.out.println("2. Edit lastname");
-                System.out.println("3. Edit password");
-                System.out.println("4. Edit email");
-                System.out.println("5. Change group");
-                char userInput = scanner.next().charAt(0);
-                switch(userInput)
+                boolean isFinished = false;
+                while(!isFinished)
                 {
-                    case '1' : System.out.print("Enter new firstname: "); String firstname = scanner.next(); mentor.setUserFirstName(firstname); break;
-                    case '2' : System.out.print("Enter new lastname: "); String lastname = scanner.next(); mentor.setUserLastName(lastname); break;
-                    case '3' : System.out.print("Enter new password: "); String password = scanner.next(); mentor.setUserPassword(password); break;
-                    case '4' : System.out.print("Enter new email: "); String email = scanner.next(); mentor.setUserEmail(email); break;
-                    case '5' : System.out.print("Enter new group: "); Character group = scanner.next().charAt(0); mentor.setMentorGroupName(group); break;
+                    adminView.clearScreen();
+                    adminView.displayEditMenu();
+                    String userChoice = adminView.getUserInput("Select an option: ");
+                    switch(userChoice)
+                    {
+                        case "1" : 
+                            String firstname = adminView.getUserInput("Enter firstname: "); 
+                            mentor.setUserFirstName(firstname); 
+                            break;
+                        case "2" : 
+                            String lastname = adminView.getUserInput("Enter lastname: "); 
+                            mentor.setUserLastName(lastname); 
+                            break;
+                        case "3" : 
+                            String password = adminView.getUserInput("Enter pasword: "); 
+                            mentor.setUserPassword(password); 
+                            break;
+                        case "4" : 
+                            String email = adminView.getUserInput("Enter email: "); 
+                            mentor.setUserEmail(email); 
+                            break;
+                        case "5" : 
+                            char group = adminView.getUserInput("Enter group: ").charAt(0); 
+                            mentor.setMentorGroupName(group); 
+                            break;
+                        case "0":
+                            isFinished = true;
+                            break;
+                    }
                 }
             }
         }
@@ -65,13 +115,12 @@ public class AdminController
 
     public void displayMentorProfile()
     {
-        System.out.println("Enter email of mentor: ");
-        String emailToSearch = scanner.next();
+        String firstNameToSearch = adminView.getUserInput("Enter firstname of mentor: ");
         for (MentorModel mentor : list)
         {
-            if (emailToSearch.equals(mentor.getUserEmail()))
+            if (firstNameToSearch.equals(mentor.getUserFirstName()))
             {
-                System.out.println(String.format("ID: %d, Name: %s %s, Email: %s, Group: %c", mentor.getUserID(), mentor.getUserFirstName(), mentor.getUserLastName(), mentor.getUserEmail(), mentor.getMentorGroupName()));
+                adminView.displayMentorProfile(mentor);
             }
         }
     }

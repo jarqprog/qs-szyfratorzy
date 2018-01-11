@@ -2,10 +2,10 @@ package users;
 import application.AbstractDAO;
 import application.AbstractView;
 
-public class abstract UserController{
+public abstract class  UserController{
 
     AbstractDAO DAO;
     AbstractView view;
 
-    public abstract void handleMainMenu()
+    public abstract void handleMainMenu();
 }

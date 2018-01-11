@@ -11,7 +11,7 @@ public class MentorModel extends UserModel
         this.groupName = '0';
     }
 
-    public MentorModel(int id, String firstName, String lastName, String password, char groupName)
+    public MentorModel(int id, String firstName, String lastName, String password)
     {
         super(id, firstName, lastName, password);
         super.setUserRole("mentor");
@@ -27,4 +27,5 @@ public class MentorModel extends UserModel
     {
         groupName = newGroupName;
     }
+
 }
