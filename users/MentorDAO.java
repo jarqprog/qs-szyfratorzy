@@ -10,11 +10,11 @@ public class MentorDAO extends UsersDAO
     public List<MentorModel> getTestMentors(){
 
         List<MentorModel> mentorsCollection = new ArrayList<MentorModel>();
-        mentorsCollection.add(new MentorModel("Kuba", "Bigos", "123"));
-        mentorsCollection.add(new MentorModel("Marcin", "Kot", "123"));
-        mentorsCollection.add(new MentorModel("Lola", "Szafraniec", "123"));
-        mentorsCollection.add(new MentorModel("Bolek", "Kowalski", "123"));
-        mentorsCollection.add(new MentorModel("Aneta", "Fajna", "123"));
+        mentorsCollection.add(new MentorModel(2, "Kuba", "Bigos", "123",'0'));
+        mentorsCollection.add(new MentorModel(4, "Marcin", "Kot", "123",'A'));
+        mentorsCollection.add(new MentorModel(10, "Lola", "Szafraniec", "123", '0'));
+        mentorsCollection.add(new MentorModel(22, "Bolek", "Kowalski", "123",'A'));
+        mentorsCollection.add(new MentorModel(44, "Aneta", "Fajna", "123",'0'));
 
         return mentorsCollection;
     }

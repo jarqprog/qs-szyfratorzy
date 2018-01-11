@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class AdminController
 {
-    private ArrayList<MentorModel> list;
     private AdminView adminView;
+    private MentorDAO mentorDAO;
 
     public AdminController()
     {
-        list = new ArrayList<MentorModel>();
         adminView = new AdminView();
+        mentorDAO = new MentorDAO();
     }
 
     public static void main(String[] args) {
@@ -66,13 +66,12 @@ public class AdminController
         String lastName = adminView.getUserInput("Enter lastname: ");
         String password = adminView.getUserInput("Enter password: ");
         MentorModel newMentor = new MentorModel(firstName, lastName, password);
-        list.add(newMentor);
     }
 
     public void editMentor()
     {
         String firstNameToSearch = adminView.getUserInput("Enter firstname: ");
-        for (MentorModel mentor : list)
+        for (MentorModel mentor : mentorDAO.getTestMentors())
         {
             if (firstNameToSearch.equals(mentor.getUserFirstName()))
             {
@@ -116,7 +115,7 @@ public class AdminController
     public void displayMentorProfile()
     {
         String firstNameToSearch = adminView.getUserInput("Enter firstname of mentor: ");
-        for (MentorModel mentor : list)
+        for (MentorModel mentor : mentorDAO.getTestMentors())
         {
             if (firstNameToSearch.equals(mentor.getUserFirstName()))
             {
