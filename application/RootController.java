@@ -31,16 +31,33 @@ public class RootController{
 
     public void runApplication()
     {
-        // runTest();
-        loggingProcedure();
+        String [] userData = loggingProcedure();
+        handleUserData(userData);
     }
 
-    private void loggingProcedure() {
+    private String [] loggingProcedure() {
         String login = view.displayLoginScreen("Login: ");
         String password = view.displayLoginScreen("Password: ");
         dao.updateLoadedTables();
         String [] userDate = dao.importUserData(login, password);
-        System.out.println(Arrays.toString(userDate));
+        return userDate;
+    }
+
+    private void handleUserData(String [] userData) {
+        if(userData.length == 0) {
+            view.displayMessage("Invalid login or password!");
+        }
+        else {
+            if(userData[0].equals("admin")){
+                dao.createAdminModel(userData);
+            }
+            else if(userData[0].equals("mentor")){
+                dao.createMentorModel(userData);
+            }
+            else if(userData[0].equals("student")){
+                dao.createStudentModel(userData);
+            }
+        }
     }
 
     private void runTest(){
