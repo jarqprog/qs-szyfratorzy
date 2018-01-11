@@ -74,4 +74,10 @@ public abstract class UserModel
     {
         this.role = role;
     }
+
+    public String toString()
+    {
+        return String.format("Role: %s, Id: %s, First name: %s, Laste name: %s, email: %s",
+                            this.role, this.id, this.firstName, this.lastName, this.email);
+    }
 }
