@@ -13,4 +13,15 @@ public class StudentView extends AbstractView
     {
         System.out.println(student.getExperience());
     }
+
+    public void displayMenu() {
+        String[] options = {"      *** Menu ***     ",
+                            "[1] display wallet",
+                            "[2] display level of expirence",
+                            "[0] exit"};
+
+        for(String element : options) {
+            System.out.println(element);
+        }
+    }
 }
