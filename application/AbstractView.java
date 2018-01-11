@@ -20,7 +20,7 @@ public abstract class AbstractView{
 
     public void displayMessage(String message)
     {
-        System.out.println(emptyLines + space + message);
+        System.out.println(message);
     }
 
     public void displayHeaderAndElementsOfCollection(String[] collection, String header)
@@ -44,9 +44,8 @@ public abstract class AbstractView{
 
     public void displayElementsOfCollection(String[] collection)
     {
-        System.out.println(emptyLines);
         for(String element : collection){
-        System.out.println(space + element);
+        System.out.println(element);
         }
     }
 
