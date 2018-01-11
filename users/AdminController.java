@@ -121,7 +121,7 @@ public class AdminController
     public void displayMentorProfile()
     {
         String firstNameToSearch = adminView.getUserInput("Enter firstname of mentor: ");
-        for (MentorModel mentor : mentorDAO.getTestMentors())
+        for (MentorModel mentor : mentorDAO.getMentorsFromFile())
         {
             if (firstNameToSearch.equals(mentor.getUserFirstName()))
             {
