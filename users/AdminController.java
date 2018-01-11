@@ -8,14 +8,14 @@ public class AdminController
 {
     private AdminModel adminModel;
     private AdminView adminView;
-    private MentorDAO mentorDAO;
     private SchoolModel school;
+    private AdminDAO dao;
 
     public AdminController(AdminModel adminModel)
     {
         adminView = new AdminView();
-        mentorDAO = new MentorDAO();
         school = new SchoolModel();
+        dao = new AdminDAO();
     }
 
     public void handleMainMenu()
@@ -72,12 +72,14 @@ public class AdminController
         String lastName = adminView.getUserInput("Enter lastname: ");
         String password = adminView.getUserInput("Enter password: ");
         MentorModel newMentor = new MentorModel(firstName, lastName, password);
+        dao.saveModelToFile(newMentor);
+
     }
 
     public void editMentor()
     {
         String firstNameToSearch = adminView.getUserInput("Enter firstname: ");
-        for (MentorModel mentor : mentorDAO.getTestMentors())
+        for (MentorModel mentor : dao.getMentorsFromFile())
         {
             if (firstNameToSearch.equals(mentor.getUserFirstName()))
             {
@@ -89,27 +91,28 @@ public class AdminController
                     String userChoice = adminView.getUserInput("Select an option: ");
                     switch(userChoice)
                     {
-                        case "1" : 
-                            String firstname = adminView.getUserInput("Enter firstname: "); 
-                            mentor.setUserFirstName(firstname); 
+                        case "1" :
+                            String firstname = adminView.getUserInput("Enter firstname: ");
+                            mentor.setUserFirstName(firstname);
                             break;
-                        case "2" : 
-                            String lastname = adminView.getUserInput("Enter lastname: "); 
-                            mentor.setUserLastName(lastname); 
+                        case "2" :
+                            String lastname = adminView.getUserInput("Enter lastname: ");
+                            mentor.setUserLastName(lastname);
                             break;
-                        case "3" : 
-                            String password = adminView.getUserInput("Enter pasword: "); 
-                            mentor.setUserPassword(password); 
+                        case "3" :
+                            String password = adminView.getUserInput("Enter pasword: ");
+                            mentor.setUserPassword(password);
                             break;
-                        case "4" : 
-                            String email = adminView.getUserInput("Enter email: "); 
-                            mentor.setUserEmail(email); 
+                        case "4" :
+                            String email = adminView.getUserInput("Enter email: ");
+                            mentor.setUserEmail(email);
                             break;
-                        case "5" : 
-                            Character group = adminView.getUserInput("Enter group: ").charAt(0); 
-                            mentor.setMentorGroupName(group); 
+                        case "5" :
+                            Character group = adminView.getUserInput("Enter group: ").charAt(0);
+                            mentor.setMentorGroupName(group);
                             break;
                         case "0":
+                            dao.saveModelToFile(mentor);
                             isFinished = true;
                             break;
                     }
@@ -121,7 +124,7 @@ public class AdminController
     public void displayMentorProfile()
     {
         String firstNameToSearch = adminView.getUserInput("Enter firstname of mentor: ");
-        for (MentorModel mentor : mentorDAO.getMentorsFromFile())
+        for (MentorModel mentor : dao.getMentorsFromFile())
         {
             if (firstNameToSearch.equals(mentor.getUserFirstName()))
             {
@@ -143,4 +146,3 @@ public class AdminController
         school.addExpirenceLevel(levelName, expirence);
     }
 }
-
