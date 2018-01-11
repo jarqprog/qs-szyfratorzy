@@ -1,6 +1,7 @@
 package users;
 
-import item.*;
+import item.ArtifactDAO;
+import item.ArtifactModel;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
