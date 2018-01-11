@@ -20,6 +20,16 @@ public abstract class UserModel
         role = "undefined";
     }
 
+    public UserModel(int id, String firstName, String lastName, String password)
+    {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        email = firstName + Integer.toString(id) + "@cc.com";
+        this.password = password;
+        role = "undefined";
+    }
+
     public int getUserID()
     {
         return id;
