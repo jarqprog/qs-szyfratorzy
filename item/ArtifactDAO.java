@@ -42,9 +42,17 @@ public class ArtifactDAO extends ItemsDAO{
         return new ArtifactModel(id, type, name, description, price);
     }
 
-    
-
-
-
+    public void saveArtifact(ArtifactModel artifact){
+        String genre = "artifact";
+        String id = String.valueOf(artifact.getId());
+        String type = String.valueOf(artifact.getItemType());
+        String name = artifact.getItemName();
+        String description = artifact.getItemDescription();
+        String price = String.valueOf(artifact.getPrice());
+        removeDataIfIdAlreadyExists(id, ID_INDEX);
+        String[] table = {genre, id, type, name, description, price};
+        loadedTables.add(table);
+        saveData();
+    }
 
 }
