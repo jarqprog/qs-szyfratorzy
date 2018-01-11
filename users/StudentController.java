@@ -10,11 +10,11 @@ public class StudentController extends UserController{
     }
 
     public void showMyWallet(){
-        view.displayWallet(student);
+        view.displayWallet(student.getWallet());
     }
 
     public void showLevelOfExperience(){
-        view.displayLevelOfExperience(student);
+        view.displayLevelOfExperience(student.getExperience());
     }
 
     public void handleMainMenu(){
@@ -45,6 +45,7 @@ public class StudentController extends UserController{
                     isDone = true;
                     break;
             }
+            view.handlePause();
         }
     }
 }

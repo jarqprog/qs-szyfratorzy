@@ -4,12 +4,12 @@ import application.AbstractView;
 
 public class StudentView extends AbstractView{
 
-    public void displayWallet(StudentModel student){
-        System.out.println(student.getWallet());
+    public void displayWallet(int wallet){
+        System.out.println(Integer.toString(wallet));
     }
 
-    public void displayLevelOfExperience(StudentModel student){
-        System.out.println(student.getExperience());
+    public void displayLevelOfExperience(int experience){
+        System.out.println(Integer.toString(experience));
     }
 
     public void displayMenu() {

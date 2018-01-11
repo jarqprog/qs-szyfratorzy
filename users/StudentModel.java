@@ -21,6 +21,7 @@ public class StudentModel extends UserModel
         experience = 0;
         inventory = new ArrayList<ArtefactModel>();
         attendance = 100;
+        groupName = '0';
 
     }
 
@@ -85,6 +86,6 @@ public class StudentModel extends UserModel
     }
     public String toString()
     {
-        return super.toString()+String.format(" Group : %s, Team: %s, Wallet: %dcc, Experience: %d, Attendance: %f",getGroup(), getTeam(), getWallet(), getExperience(), getAttendance());
+        return super.toString()+String.format(" Group : %s, Team: %s, Wallet: %dcc, Experience: %d, Attendance: %.2f",getGroup(), getTeam(), getWallet(), getExperience(), getAttendance());
     }
 }
