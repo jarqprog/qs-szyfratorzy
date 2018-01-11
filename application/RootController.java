@@ -53,29 +53,32 @@ public class RootController{
         // view.displayMessage(admin0.getUserFirstName());
 
         /// mentors test:
-        MentorDAO mentorDao = new MentorDAO();
-        List<MentorModel> mentors = mentorDao.getTestMentors();
-        view.displayMessage("Mentors");
-        for(MentorModel mentor : mentors){
-            System.out.println(" -"+mentor);
-        }
+        // MentorDAO mentorDao = new MentorDAO();
+        // List<MentorModel> mentors = mentorDao.getTestMentors();
+        // view.displayMessage("Mentors");
+        // for(MentorModel mentor : mentors){
+        //     System.out.println(" -"+mentor);
+        // }
 
-        /// admins test:
-        AdminDAO adminDao = new AdminDAO();
-        List<AdminModel> admins = adminDao.getTestAdmins();
-        view.displayMessage("Admins");
-        for(AdminModel admin : admins){
-            System.out.println(" -"+admin);
-        }
+        // /// admins test:
+        // AdminDAO adminDao = new AdminDAO();
+        // List<AdminModel> admins = adminDao.getTestAdmins();
+        // view.displayMessage("Admins");
+        // for(AdminModel admin : admins){
+        //     System.out.println(" -"+admin);
+        // }
 
-        ///
-        /// admins test:
-        StudentDAO studentDao = new StudentDAO();
-        List<StudentModel> students = studentDao.getTestStudents();
-        view.displayMessage("Students");
-        for(StudentModel student : students){
-            System.out.println(" -"+student);
-        }
-        dao.createDefaultFile();
+        // ///
+        // /// admins test:
+        // StudentDAO studentDao = new StudentDAO();
+        // List<StudentModel> students = studentDao.getTestStudents();
+        // view.displayMessage("Students");
+        // for(StudentModel student : students){
+        //     System.out.println(" -"+student);
+        // }
+        // dao.createDefaultFile();
+        // UsersDAO a = new UsersDAO();
+        // a.saveLastID(11, "DataFiles/maxUserId.csv");
+        // // System.out.println(a.loadLastID("DataFiles/maxUserId.csv"));
     }
 }

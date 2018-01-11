@@ -17,5 +17,4 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
     public AdminModel createFirstAdmin(){
         return new AdminModel("admin", "admin", "admin");
     }
-
 }
