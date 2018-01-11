@@ -2,7 +2,7 @@ package users;
 
 import application.AbstractDAO;
 
-public class UsersDAO extends AbstractDAO{
+public class UsersDAO extends AbstractDAO implements LogableDAO{
 
     public UsersDAO(){
         defaultFileName = "users.csv";
