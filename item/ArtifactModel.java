@@ -3,17 +3,23 @@ package item;
 public class ArtifactModel extends ItemModel{
     private int price;
 
-    public ArtifactModel(char itemType, String itemName, String itemDescription, int price){
-        super(itemType, itemName, itemDescription);
+    public ArtifactModel(String itemName, String itemDescription, int price){
+        super();
+        this.name = itemName;
+        this.description = itemDescription;
         this.price = price;
         this.genre = "artifact";
+        this.type = 'B';
     }
 
     public ArtifactModel(int id, char itemType, String itemName, String itemDescription, int price){
-        super(id, itemType, itemName, itemDescription);
-        this.id = id;
-        this.price = price;
+        super(id);
         this.genre = "artifact";
+        this.type = itemType;
+        this.name = itemName;
+        this.description = itemDescription;
+        this.price = price;
+
     }
 
     public int getPrice(){
