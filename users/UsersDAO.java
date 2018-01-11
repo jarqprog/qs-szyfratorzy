@@ -15,6 +15,13 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
     protected final static int LNAME_INDEX = 3;
     protected final static int PASSWORD_INDEX = 4;
 
+    protected final static int STUDENT_GROUP_INDEX = 5;
+    protected final static int STUDENT_TEAM_INDEX = 6;
+    protected final static int STUDENT_EXPERIENCE_INDEX = 7;
+    protected final static int STUDENT_ATTENDANCE_INDEX = 8;
+    protected final static int STUDENT_WALLET_INDEX = 9;
+
+
     protected String maxUserIdFile;
 
     public UsersDAO(){
@@ -99,4 +106,39 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
         }
         return loadedStudents;
     }
+
+    public void saveModelToFile(UserModel model){
+        if(model.getUserRole().equals("admin")){
+
+        } else if(model.getUserRole().equals("mentor")) {
+
+        } else {
+
+        }
+    }
+
+    protected void saveStudent(StudentModel student){
+
+        String role = "Student";
+        String id = String.valueOf(student.getUserID());
+        String fName = student.getUserFirstName();
+        String lName = student.getUserLastName();
+        String password = student.getUserPassword();
+        String group = String.valueOf(student.getGroup());
+        String team = student.getTeam();
+        String experience = String.valueOf(student.getExperience());
+        String attendance = String.valueOf(student.getAttendance());
+        String wallet = String.valueOf(student.getWallet());
+        removeDataIfIdAlreadyExists(id, ID_INDEX);
+
+
+        // expirence
+
+    }
+
+
+
+    protected retur
+
+
 }
