@@ -33,17 +33,21 @@ public class RootController{
 
     public void runApplication()
     {
-        ///
-        // dao.
-
-
-        ////
-
-
-        String [] userData = loggingProcedure();
-        handleUserData(userData);
-
-        //runTest();
+        boolean running = true;
+        while (running)
+        {
+            view.displayIntro();
+            String userInput = view.displayLoginScreen("Choose: ");
+            switch (userInput)
+            {
+                case "1":
+                    String [] userData = loggingProcedure();
+                    handleUserData(userData);
+                    break;
+                case "0":
+                    running = false;
+            }
+        }
     }
 
     private String [] loggingProcedure() {
@@ -55,26 +59,30 @@ public class RootController{
     }
 
     private void handleUserData(String [] userData) {
-        int ROLE_INDEX = 0;
         if(userData.length == 0) {
             view.displayMessage("Invalid login or password!");
         }
         else {
-            if(userData[ROLE_INDEX].equals("admin")){
-                AdminModel admin = dao.createAdminModel(userData);
-                AdminController adminController = new AdminController(admin);
-                adminController.handleMainMenu();
-            }
-            else if(userData[ROLE_INDEX].equals("mentor")){
-                MentorModel mentor = dao.createMentorModel(userData);
-                MentorController mentorController = new MentorController(mentor);
-                mentorController.handleMainMenu();
-            }
-            else if(userData[ROLE_INDEX].equals("student")){
-                StudentModel student = dao.createStudentModel(userData);
-                StudentController studentController = new StudentController(student);
-                studentController.handleMainMenu();
-            }
+            createUser(userData);
+        }
+    }
+
+    public void createUser(String [] userData) {
+        int ROLE_INDEX = 0;
+        if(userData[ROLE_INDEX].equals("admin")){
+            AdminModel admin = dao.createAdminModel(userData);
+            AdminController adminController = new AdminController(admin);
+            adminController.handleMainMenu();
+        }
+        else if(userData[ROLE_INDEX].equals("mentor")){
+            MentorModel mentor = dao.createMentorModel(userData);
+            MentorController mentorController = new MentorController(mentor);
+            mentorController.handleMainMenu();
+        }
+        else if(userData[ROLE_INDEX].equals("student")){
+            StudentModel student = dao.createStudentModel(userData);
+            StudentController studentController = new StudentController(student);
+            studentController.handleMainMenu();
         }
     }
 
