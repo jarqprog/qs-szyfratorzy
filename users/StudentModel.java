@@ -31,6 +31,7 @@ public class StudentModel extends UserModel
         wallet = 0;
         expirence = 0;
         attendance = 100;
+        groupName = group;
     }
 
     public Character getGroup()
