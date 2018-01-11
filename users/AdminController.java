@@ -6,20 +6,16 @@ import school.SchoolModel;
 
 public class AdminController
 {
+    private AdminModel adminModel;
     private AdminView adminView;
     private MentorDAO mentorDAO;
     private SchoolModel school;
 
-    public AdminController()
+    public AdminController(AdminModel adminModel)
     {
         adminView = new AdminView();
         mentorDAO = new MentorDAO();
         school = new SchoolModel();
-    }
-
-    public static void main(String[] args) {
-        AdminController a = new AdminController();
-        a.handleMainMenu();
     }
 
     public void handleMainMenu()

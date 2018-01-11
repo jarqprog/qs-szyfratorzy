@@ -44,6 +44,39 @@ public class RootController{
     }
 
     private void runTest(){
+        // view.displayIntro();
+        // view.displayLoginScreen();
+        // StudentModel student = new StudentModel("Jarek", "Kucharczyk", "123");
+        // String message = student.getUserFirstName()+", role: " + student.getUserRole();
+        // view.displayMessage(message);
+        // view.handlePause();
+        // view.displayLogoutScreen();
+        // view.displayOutro();
+        // System.out.println(String.valueOf(dao.checkIfFileExist()));
+        // List<String> list = dao.getDataFromFile();
+        // String[] array = new String[list.size()];
+        // list.toArray(array);
+        // view.displayElementsOfCollection(array);
+        // list.add("Lolo na koniec!");
+        // dao.saveData(list);
+        // AdminModel admin0 = dao.createFirstAdmin();
+        // view.displayMessage(admin0.getUserFirstName());
+
+        /// mentors test:
+        // MentorDAO mentorDao = new MentorDAO();
+        // List<MentorModel> mentors = mentorDao.getTestMentors();
+        // view.displayMessage("Mentors");
+        // for(MentorModel mentor : mentors){
+        //     System.out.println(" -"+mentor);
+        // }
+
+        // /// admins test:
+        // AdminDAO adminDao = new AdminDAO();
+        // List<AdminModel> admins = adminDao.getTestAdmins();
+        // view.displayMessage("Admins");
+        // for(AdminModel admin : admins){
+        //     System.out.println(" -"+admin);
+        // }
 
         ///
         /// admins test:
