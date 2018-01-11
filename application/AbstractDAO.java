@@ -168,6 +168,28 @@ public abstract class AbstractDAO{
         setLoadedTables(nestedTablesCollection);
     }
 
+    public String[] findProperTableByChosenParameter(String dataToCompare, int indexInTable){
+        updateLoadedTables();
+        String[] properTable = new String[0];
+        for(String[] table : loadedTables){
+            if(checkIfDataMatches(dataToCompare, indexInTable, table)){
+                properTable = table;
+            }
+        }
+        return properTable;
+    }
+
+    public List<String[]> getCollectionTablesByChosenParameters(String dataToCompare, int indexInTable){
+        updateLoadedTables();
+        List<String[]> outputCollection = new ArrayList<String[]>();
+        for(String[] table : loadedTables){
+            if(checkIfDataMatches(dataToCompare, indexInTable, table)){
+                outputCollection.add(table);
+            }
+        }
+        return outputCollection;
+    }
+
     protected Boolean checkIfDataMatches(String dataToCompare, int indexInTable, String[] table){
         return dataToCompare.equals(table[indexInTable]);
     }
