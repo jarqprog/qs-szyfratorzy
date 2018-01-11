@@ -1,15 +1,22 @@
 package item;
 
 public abstract class ItemModel {
+    private static int counter;
+    private int id;
     private char itemType;
     private String itemName;
     private String itemDescription;
     private String itemFullName;
+    private ItemsDAO itemsDAO;
 
     public ItemModel(char itemType, String itemName, String itemDescription){
+        itemsDAO = new ItemsDAO();
+        counter = itemsDAO.loadLastId("DataFiles/maxItemId.csv");
+        id = counter++;
         this.itemType = itemType;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
+        itemsDAO.saveLastId(counter, "DataFiles/maxItemId.csv");
     }
 
     public String getItemName(){
