@@ -9,7 +9,7 @@ public class StudentModel extends UserModel
     private Character groupName;
     private String team;
     private int wallet;
-    private int expirence;
+    private int experience;
     private List<ArtefactModel> inventory;
     private float attendance;
 
@@ -18,7 +18,7 @@ public class StudentModel extends UserModel
         super(firstName, lastName, password);
         setUserRole("student");
         wallet = 0;
-        expirence = 0;
+        experience = 0;
         inventory = new ArrayList<ArtefactModel>();
         attendance = 100;
 
@@ -29,7 +29,7 @@ public class StudentModel extends UserModel
         super(id, firstName, lastName, password);
         setUserRole("student");
         wallet = 0;
-        expirence = 0;
+        experience = 0;
         attendance = 100;
         groupName = group;
     }
@@ -64,14 +64,14 @@ public class StudentModel extends UserModel
         this.wallet = value;
     }
 
-    public int getExpirence()
+    public int getExperience()
     {
-        return expirence;
+        return experience;
     }
 
-    public void setExpirence(int value)
+    public void setExperience(int value)
     {
-        this.expirence = value;
+        this.experience = value;
     }
 
     public float getAttendance()
@@ -85,6 +85,6 @@ public class StudentModel extends UserModel
     }
     public String toString()
     {
-        return super.toString()+String.format(" Group name: %s",this.getGroup());
+        return super.toString()+String.format(" Group : %s, Team: %s, Wallet: %dcc, Experience: %d, Attendance: %f",getGroup(), getTeam(), getWallet(), getExperience(), getAttendance());
     }
 }
