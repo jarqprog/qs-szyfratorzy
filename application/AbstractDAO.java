@@ -63,6 +63,15 @@ public abstract class AbstractDAO{
             e.printStackTrace();
         }
     }
+    public void createNewFile(String filePath){
+        try {
+            File f = new File(filePath);
+            f.createNewFile();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public List<String> getDataFromFile(){
         List<String> outputData = new ArrayList<String>();
@@ -100,8 +109,19 @@ public abstract class AbstractDAO{
         }
     }
 
+    public void prepareFile(String filePath){
+        if(! checkIfFileExist(filePath)){
+            createNewFile(filePath);
+        }
+    }
+
     public Boolean checkIfFileExist(){
         File f = new File(defaultFilePath);
+        return f.exists();
+    }
+
+    public Boolean checkIfFileExist(String filePath){
+        File f = new File(filePath);
         return f.exists();
     }
 
