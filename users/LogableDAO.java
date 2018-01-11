@@ -17,5 +17,9 @@ public interface LogableDAO{
     public AdminModel createFirstAdmin();
     public void createDefaultFile();
     public void prepareFile();
+    public AdminModel createAdminModel(String[] table);
+    public StudentModel createStudentModel(String[] table);
+    public MentorModel createMentorModel(String[] table);
+
 
 }

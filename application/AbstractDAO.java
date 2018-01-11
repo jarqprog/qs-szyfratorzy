@@ -168,4 +168,80 @@ public abstract class AbstractDAO{
         setLoadedTables(nestedTablesCollection);
     }
 
+    protected Boolean checkIfDataMatches(String dataToCompare, int indexInTable, String[] table){
+        return dataToCompare.equals(table[indexInTable]);
+    }
+
+    public void saveLastId(int id, String filePath){
+        FileWriter fileWriter = null;
+        BufferedWriter bufWriter = null;
+        try
+        {
+            fileWriter = new FileWriter(filePath);
+            bufWriter = new BufferedWriter(fileWriter);
+            bufWriter.write(String.valueOf(id));
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if (bufWriter != null)
+                {
+                    bufWriter.close();
+                }
+                if (fileWriter != null)
+                {
+                    fileWriter.close();
+                }
+            }
+            catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public int loadLastId(String filePath){
+        int id = 0;
+        BufferedReader br = null;
+        FileReader fr = null;
+        String line;
+        try
+        {
+            fr = new FileReader(filePath);
+            br = new BufferedReader(fr);
+            int array_index = 0;
+            while ((line = br.readLine()) != null)
+            {
+                id = Integer.parseInt(line);
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+        try
+        {
+            if (br != null)
+            {
+                br.close();
+            }
+            if (fr != null)
+            {
+                fr.close();
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        return id;
+        }
+    }
 }
