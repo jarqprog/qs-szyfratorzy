@@ -15,6 +15,13 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
     protected final static int LNAME_INDEX = 3;
     protected final static int PASSWORD_INDEX = 4;
 
+    protected final static int STUDENT_GROUP_INDEX = 5;
+    protected final static int STUDENT_TEAM_INDEX = 6;
+    protected final static int STUDENT_EXPERIENCE_INDEX = 7;
+    protected final static int STUDENT_ATTENDANCE_INDEX = 8;
+    protected final static int STUDENT_WALLET_INDEX = 9;
+
+
     protected String maxUserIdFile;
 
     public UsersDAO(){
@@ -31,7 +38,8 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
 
     public String [] importUserData(String login,String password) {
         for(String [] element : getLoadedTables()) {
-            if((login.equals(element[2])) && (password.equals(element[4]))) {
+            String loginToCompare = element[FNAME_INDEX] + element[ID_INDEX] + "@cc.com";
+            if((login.equals(loginToCompare)) && (password.equals(element[PASSWORD_INDEX]))) {
                 return element;
             }
         }
@@ -99,4 +107,60 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
         }
         return loadedStudents;
     }
+
+    public void saveModelToFile(UserModel model){
+        if(model.getUserRole().equals("admin")){
+            saveAdmin( (AdminModel) model);
+        } else if(model.getUserRole().equals("mentor")) {
+            saveMentor( (MentorModel) model);
+        } else {
+            saveStudent( (StudentModel) model);
+        }
+    }
+
+    protected void saveAdmin(AdminModel admin){
+        String role = "admin";
+        String id = String.valueOf(admin.getUserID());
+        String fName = admin.getUserFirstName();
+        String lName = admin.getUserLastName();
+        String password = admin.getUserPassword();
+        removeDataIfIdAlreadyExists(id, ID_INDEX);
+        String[] table = {role, id, fName, lName, password};
+        loadedTables.add(table);
+        saveData();
+    }
+
+    protected void saveMentor(MentorModel mentor){
+        String role = "mentor";
+        String id = String.valueOf(mentor.getUserID());
+        String fName = mentor.getUserFirstName();
+        String lName = mentor.getUserLastName();
+        String password = mentor.getUserPassword();
+        String group = String.valueOf(mentor.getMentorGroupName());
+        removeDataIfIdAlreadyExists(id, ID_INDEX);
+        String[] table = {role, id, fName, lName, password, group};
+        loadedTables.add(table);
+        saveData();
+    }
+
+    protected void saveStudent(StudentModel student){
+        String role = "student";
+        String id = String.valueOf(student.getUserID());
+        String fName = student.getUserFirstName();
+        String lName = student.getUserLastName();
+        String password = student.getUserPassword();
+        String group = String.valueOf(student.getGroup());
+        String team = student.getTeam();
+        String experience = String.valueOf(student.getExperience());
+        String attendance = String.valueOf(student.getAttendance());
+        String wallet = String.valueOf(student.getWallet());
+        removeDataIfIdAlreadyExists(id, ID_INDEX);
+        String[] table = {role, id, fName, lName, password, group, team, experience, attendance, wallet};
+        loadedTables.add(table);
+        saveData();
+    }
+
+
+
+
 }

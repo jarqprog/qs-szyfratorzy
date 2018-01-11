@@ -3,6 +3,7 @@ package application;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.io.File;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,6 +19,13 @@ public abstract class AbstractDAO{
     protected String defaultFilePath;
     protected List<String[]> loadedTables;
     protected List<String> loadedStrings;
+
+
+    public void saveData(){
+        prepareFile();
+        setLoadedStringsUsingLoadedTables();
+        saveCollectionToFile(getLoadedStrings());
+    }
 
     public String getDefaultFileName(){
         return defaultFileName;
@@ -49,6 +57,16 @@ public abstract class AbstractDAO{
 
     public void setLoadedStrings(List<String> stringsCollection){
         loadedStrings = stringsCollection;
+    }
+
+    protected void setLoadedStringsUsingLoadedTables(){
+        List<String> outputList = new ArrayList<String>();
+        String elementToAdd;
+        for(String[] table : loadedTables){
+            elementToAdd = String.join(";", table);
+            outputList.add(elementToAdd);
+        }
+        setLoadedStrings(outputList);
     }
 
     public void createDefaultFile(){
@@ -122,7 +140,7 @@ public abstract class AbstractDAO{
         return f.exists();
     }
 
-    public void saveData(List<String> collectionToSave){
+    protected void saveCollectionToFile(List<String> collectionToSave){
         FileWriter fileWriter = null;
         BufferedWriter bufWriter = null;
         try{
@@ -192,6 +210,17 @@ public abstract class AbstractDAO{
 
     protected Boolean checkIfDataMatches(String dataToCompare, int indexInTable, String[] table){
         return dataToCompare.equals(table[indexInTable]);
+    }
+
+    protected void removeDataIfIdAlreadyExists(String id, int idIndex){
+        updateLoadedTables();
+        for(Iterator<String[]> iterator = loadedTables.iterator(); iterator.hasNext();){
+            String[] data = iterator.next();
+            if(checkIfDataMatches(id, idIndex, data)){
+                loadedTables.remove(data);
+                break;
+            }
+        }
     }
 
     public void saveLastId(int id, String filePath){

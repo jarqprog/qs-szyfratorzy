@@ -9,7 +9,7 @@ public interface LogableDAO{
 
     public void updateLoadedTables();
     public Boolean checkIfFileExist();
-    public void saveData(List<String> collectionToSave);
+    public void saveData();
     public List<String[]> getLoadedTables();
     public List<String> getLoadedStrings();
     public void setLoadedTables(List<String[]> tablesCollection);
