@@ -9,9 +9,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-// import java.nio.file.Files;
-// import java.nio.file.Paths;
-// import java.nio.file.Path;
 
 
 
@@ -73,7 +70,7 @@ public abstract class AbstractDAO{
         }
     }
 
-    public List<String> getDataFromFile(){
+    protected List<String> getRawDataFromFile(){
         List<String> outputData = new ArrayList<String>();
         BufferedReader br = null;
         FileReader fr = null;
@@ -151,4 +148,24 @@ public abstract class AbstractDAO{
             }
         }
     }
+    public List<String[]> getNestedTablesCollection(List<String> rawData){
+        String[] nestedTable;
+        List<String[]> outputData = new ArrayList<String[]>();
+        for(String element : rawData){
+            nestedTable = element.split(";");
+            outputData.add(nestedTable);
+        }
+        return outputData;
+    }
+    public void updateLoadedTables(){
+        List<String> rawData = getRawDataFromFile();
+        String[] nestedTable;
+        List<String[]> nestedTablesCollection = new ArrayList<String[]>();
+        for(String element : rawData){
+            nestedTable = element.split(";");
+            nestedTablesCollection.add(nestedTable);
+        }
+        setLoadedTables(nestedTablesCollection);
+    }
+
 }

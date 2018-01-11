@@ -16,6 +16,7 @@ import users.AdminDAO;
 import users.AdminModel;
 import users.StudentDAO;
 import users.StudentModel;
+import item.ItemsDAO;
 
 public class RootController{
 
@@ -68,17 +69,14 @@ public class RootController{
         //     System.out.println(" -"+admin);
         // }
 
-        // ///
-        // /// admins test:
-        // StudentDAO studentDao = new StudentDAO();
-        // List<StudentModel> students = studentDao.getTestStudents();
-        // view.displayMessage("Students");
-        // for(StudentModel student : students){
-        //     System.out.println(" -"+student);
-        // }
-        // dao.createDefaultFile();
-        // UsersDAO a = new UsersDAO();
-        // a.saveLastID(11, "DataFiles/maxUserId.csv");
-        // // System.out.println(a.loadLastID("DataFiles/maxUserId.csv"));
+        ///
+        /// admins test:
+        StudentDAO studentDao = new StudentDAO();
+        List<StudentModel> students = studentDao.getTestStudents();
+        view.displayMessage("Students");
+        for(StudentModel student : students){
+            System.out.println(" -"+student);
+        }
+        ItemsDAO itemsDao = new ItemsDAO();
     }
 }

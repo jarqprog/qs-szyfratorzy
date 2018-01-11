@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface LogableDAO{
 
-    public List<String> getDataFromFile();
+    public void updateLoadedTables();
     public Boolean checkIfFileExist();
     public void saveData(List<String> collectionToSave);
     public List<String[]> getLoadedTables();
