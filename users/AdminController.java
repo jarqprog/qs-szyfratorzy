@@ -53,7 +53,6 @@ public class AdminController
                    exit = true;
                    break;
             }
-            adminView.handlePause();
         }
     }
 
