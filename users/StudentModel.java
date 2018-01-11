@@ -82,4 +82,8 @@ public class StudentModel extends UserModel
     {
         this.attendance = attendance;
     }
+    public String toString()
+    {
+        return super.toString()+String.format(" Group name: %s",this.getGroup());
+    }
 }
