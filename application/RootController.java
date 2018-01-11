@@ -1,6 +1,6 @@
 package application;
 
-import users.UsersDAO;
+import users.*;
 import users.LogableDAO;
 // import users.UserCtrl;
 import users.StudentModel;
@@ -8,6 +8,7 @@ import users.AdminModel;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
+
 
 // testImports:
 import users.MentorDAO;
@@ -49,13 +50,19 @@ public class RootController{
         }
         else {
             if(userData[0].equals("admin")){
-                dao.createAdminModel(userData);
+                AdminModel admin = dao.createAdminModel(userData);
+                AdminController adminController = new AdminController(admin);
+                adminController.handleMainMenu();
             }
             else if(userData[0].equals("mentor")){
-                dao.createMentorModel(userData);
+                MentorModel mentor = dao.createMentorModel(userData);
+                MentorController mentorController = new MentorController(mentor);
+                mentorController.handleMainMenu();
             }
             else if(userData[0].equals("student")){
-                dao.createStudentModel(userData);
+                StudentModel student = dao.createStudentModel(userData);
+                StudentController studentController = new StudentController(student);
+                studentController.handleMainMenu();
             }
         }
     }
