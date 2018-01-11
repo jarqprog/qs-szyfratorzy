@@ -53,6 +53,7 @@ public class AdminController
                    exit = true;
                    break;
             }
+            adminView.handlePause();
         }
     }
 
@@ -71,12 +72,13 @@ public class AdminController
         String lastName = adminView.getUserInput("Enter lastname: ");
         String password = adminView.getUserInput("Enter password: ");
         MentorModel newMentor = new MentorModel(firstName, lastName, password);
+        mentorDAO.saveMentor(newMentor);
     }
 
     public void editMentor()
     {
         String firstNameToSearch = adminView.getUserInput("Enter firstname: ");
-        for (MentorModel mentor : mentorDAO.getTestMentors())
+        for (MentorModel mentor : mentorDAO.getMentorsFromFile())
         {
             if (firstNameToSearch.equals(mentor.getUserFirstName()))
             {
