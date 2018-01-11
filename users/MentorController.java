@@ -10,11 +10,13 @@ public class MentorController extends UserController{
     MentorView view;
     MentorModel mentor;
     MentorDAO dao;
+    ArtifactDAO artifactDao;
 
     public MentorController(MentorModel mentorModel){
         view = new MentorView();
         mentor = mentorModel;
         dao = new MentorDAO();
+        artifactDao = new ArtifactDAO();
     }
 
     public void handleMainMenu(){
@@ -77,15 +79,15 @@ public class MentorController extends UserController{
     }
 
     public void createArtifact(){
-        // String itemName = view.getUserInput("Enter an item name: ");
-        // String itemDescription = view.getUserInput("Enter an item description: ");
-        // int price = view.getPrice();
-        // ArtifactModel artifact = new ArtifactModel(itemName, itemDescription, price);
-        // view.displayMessage("Artifact " + artifact + " created successfully!");
+        String itemName = view.getUserInput("Enter an item name: ");
+        String itemDescription = view.getUserInput("Enter an item description: ");
+        int price = view.getPrice();
+        ArtifactModel artifact = new ArtifactModel(itemName, itemDescription, price);
+        view.displayMessage("Artifact " + artifact + " created successfully!");
+        artifactDao.saveArtifact(artifact);
     }
 
     public void editArtifact() {
-        ArtifactDAO artifactDao = new ArtifactDAO();
         view.displayElementsOfCollection(
                         prepareArtifactsToDisplay(artifactDao.getArtifactsFromFile()));
         String input = view.getUserInput("Enter id of artifact which you would like to edit: ");
@@ -95,8 +97,6 @@ public class MentorController extends UserController{
                 break;
                 }
             }
-            view.displayMessage("Artifact does not exist!");
-            view.handlePause();
     }
 
 
@@ -116,21 +116,24 @@ public class MentorController extends UserController{
             switch(userChoice){
                 case "1":
                    artifact.setItemName(view.getUserInput("Enter new artifact name: "));
+                   artifactDao.saveArtifact(artifact);
                    break;
                 case "2":
                    artifact.setItemType(view.getUserInput("Enter new artifact type: ").charAt(0));
+                   artifactDao.saveArtifact(artifact);
                    break;
                 case "3":
                    artifact.setItemDescription(view.getUserInput("Enter new artifact description: "));
+                   artifactDao.saveArtifact(artifact);
                    break;
                 case "4":
                    artifact.setPrice(view.getPrice());
+                   artifactDao.saveArtifact(artifact);
                    break;
                 case "0":
                    isDone = true;
                    break;
             }
-            view.handlePause();
         }
     }
 
