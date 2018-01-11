@@ -20,7 +20,7 @@ public abstract class AbstractView{
 
     public void displayMessage(String message)
     {
-        System.out.println(emptyLines + space + message);
+        System.out.println(message);
     }
 
     public void displayHeaderAndElementsOfCollection(String[] collection, String header)
