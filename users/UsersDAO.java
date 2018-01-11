@@ -54,4 +54,6 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
 
         return new StudentModel(id, fname, lname, password, group);
     }
+
+
 }
