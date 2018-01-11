@@ -1,6 +1,11 @@
 package users;
 
+
+import java.util.List;
+import java.util.Arrays;
+import java.util.ArrayList;
 import application.AbstractDAO;
+
 
 public class UsersDAO extends AbstractDAO implements LogableDAO{
 
@@ -54,6 +59,37 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
 
         return new StudentModel(id, fname, lname, password, group);
     }
+
+    public List<AdminModel> getAdminsFromFile(){
+        List<AdminModel> loadedAdmins = new ArrayList<AdminModel>();
+        List<String[]> collection = getCollectionTablesByChosenParameters("admin", ROLE_INDEX);
+        for(String[] table : collection){
+            AdminModel admin = createAdminModel(table);
+            loadedAdmins.add(admin);
+        }
+        return loadedAdmins;
+    }
+
+    public List<MentorModel> getMentorsFromFile(){
+        List<MentorModel> loadedMentors = new ArrayList<MentorModel>();
+        List<String[]> collection = getCollectionTablesByChosenParameters("mentor", ROLE_INDEX);
+        for(String[] table : collection){
+            MentorModel mentor = createMentorModel(table);
+            loadedMentors.add(mentor);
+        }
+        return loadedMentors;
+    }
+
+    public List<StudentModel> getStudentsFromFile(){
+        List<StudentModel> loadedStudents = new ArrayList<StudentModel>();
+        List<String[]> collection = getCollectionTablesByChosenParameters("student", ROLE_INDEX);
+        for(String[] table : collection){
+            StudentModel student = createStudentModel(table);
+            loadedStudents.add(student);
+        }
+        return loadedStudents;
+    }
+
 
 
 }
