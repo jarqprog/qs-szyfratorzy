@@ -1,6 +1,7 @@
 package application;
 
 import users.UsersDAO;
+import users.LogableDAO;
 // import users.UserCtrl;
 import users.StudentModel;
 import users.AdminModel;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class RootController
 {
 
-    private AbstractDAO dao;
+    private LogableDAO dao;
     private RootView view;
     // private UserCtrl loggedUser;
     public RootController()
@@ -42,7 +43,7 @@ public class RootController
         view.displayElementsOfCollection(array);
         list.add("Lolo na koniec!");
         dao.saveData(list);
-        // AdminModel admin = dao.createFirstAdmin();
-        // view.displayMessage(admin.getUserFirstName());
+        AdminModel admin = dao.createFirstAdmin();
+        view.displayMessage(admin.getUserFirstName());
     }
 }
