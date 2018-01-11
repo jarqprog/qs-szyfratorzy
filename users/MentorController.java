@@ -1,7 +1,9 @@
 package users;
 
 import item.*;
-import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MentorController extends UserController{
     MentorView view;
@@ -74,17 +76,17 @@ public class MentorController extends UserController{
     }
 
     public void createArtifact(){
-        char itemType = view.getUserInput("Enter an item type: ").charAt(0);
-        String itemName = view.getUserInput("Enter an item name: ");
-        String itemDescription = view.getUserInput("Enter an item description: ");
-        int price = view.getPrice();
-        ArtifactModel artifact = new ArtifactModel(itemType, itemName, itemDescription, price);
-        view.displayMessage("Artifact " + artifact + " created successfully!");
+        // String itemName = view.getUserInput("Enter an item name: ");
+        // String itemDescription = view.getUserInput("Enter an item description: ");
+        // int price = view.getPrice();
+        // ArtifactModel artifact = new ArtifactModel(itemName, itemDescription, price);
+        // view.displayMessage("Artifact " + artifact + " created successfully!");
     }
 
     public void editArtifact() {
-        ArtifactDAO artifactDAO = new ArtifactDAO();
-        view.displayElementsOfCollection(artifactDao.getArtifactsFromFile());
+        ArtifactDAO artifactDao = new ArtifactDAO();
+        view.displayElementsOfCollection(
+                        prepareArtifactsToDisplay(artifactDao.getArtifactsFromFile()));
         String input = view.getUserInput("Enter id of artifact which you would like to edit: ");
         for(ArtifactModel artifact : artifactDao.getArtifactsFromFile()) {
             if(String.valueOf(artifact.getId()).equals(input)) {
@@ -112,10 +114,10 @@ public class MentorController extends UserController{
             view.clearScreen();
             switch(userChoice){
                 case "1":
-                   artifact.setName(view.getUserInput("Enter new artifact name: "));
+                   artifact.setItemName(view.getUserInput("Enter new artifact name: "));
                    break;
                 case "2":
-                   artifact.setItemType(view.getUserInput("Enter new artifact type: "));
+                   artifact.setItemType(view.getUserInput("Enter new artifact type: ").charAt(0));
                    break;
                 case "3":
                    artifact.setItemDescription(view.getUserInput("Enter new artifact description: "));
@@ -136,4 +138,14 @@ public class MentorController extends UserController{
     public void displayStudentWallet() {}
 
     public void markStudentArtifacts() {}
+
+    public String[] prepareArtifactsToDisplay(List<ArtifactModel> artifacts){
+        String[] artifactsToDisplay = new String[artifacts.size()];
+        int index = 0;
+        for(ArtifactModel artifact : artifacts){
+            artifactsToDisplay[index] = artifact.toString();
+            index ++;
+        }
+        return artifactsToDisplay;
+    }
 }

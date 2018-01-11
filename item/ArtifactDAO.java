@@ -20,7 +20,7 @@ public class ArtifactDAO extends ItemsDAO{
         prepareFile();
     }
 
-    public List<ArtifactModel> getArtefactsFromFile(){
+    public List<ArtifactModel> getArtifactsFromFile(){
         List<String[]> filteredData = new ArrayList<String[]>();
         List<ArtifactModel> artifacts = new ArrayList<ArtifactModel>();
         updateLoadedTables();
@@ -41,6 +41,8 @@ public class ArtifactDAO extends ItemsDAO{
 
         return new ArtifactModel(id, type, name, description, price);
     }
+
+    
 
 
 

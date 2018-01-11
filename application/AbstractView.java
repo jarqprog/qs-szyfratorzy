@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
 
+
 public abstract class AbstractView{
 
     protected String emptyLines = "\n\n";
