@@ -41,7 +41,7 @@ public abstract class ItemModel {
     public int getId(){
         return id;
     }
-    public void setItemtype(char newItemType){
+    public void setItemType(char newItemType){
         type = newItemType;
     }
     public String getItemDescription(){
