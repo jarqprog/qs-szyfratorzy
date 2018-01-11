@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public interface LogableDAO{
 
+    public void prepareAdmin();
     public void updateLoadedTables();
     public Boolean checkIfFileExist();
     public void saveData();
@@ -20,6 +21,5 @@ public interface LogableDAO{
     public AdminModel createAdminModel(String[] table);
     public StudentModel createStudentModel(String[] table);
     public MentorModel createMentorModel(String[] table);
-
 
 }
