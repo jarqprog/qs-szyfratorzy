@@ -23,6 +23,16 @@ public class UsersDAO extends AbstractDAO implements LogableDAO{
         return new AdminModel("admin", "admin", "admin");
     }
 
+    public String [] importUserData(String login,String password) {
+        for(String [] element : getLoadedTables()) {
+            if((login.equals(element[2])) && (password.equals(element[4]))) {
+                return element;
+            }
+        }
+        String [] empty = {};
+        return empty;
+    }
+
 
     // public MentorModel createMentorModel(String[] table){
     //
