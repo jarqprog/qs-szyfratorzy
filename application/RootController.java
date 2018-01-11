@@ -40,7 +40,7 @@ public class RootController{
             String userInput = view.displayLoginScreen("Choose: ");
             switch (userInput)
             {
-                case "1": 
+                case "1":
                     String [] userData = loggingProcedure();
                     handleUserData(userData);
                     break;
@@ -48,7 +48,7 @@ public class RootController{
                     running = false;
             }
         }
-        
+
 
         //runTest();
     }
@@ -67,21 +67,25 @@ public class RootController{
             view.handlePause();
         }
         else {
-            if(userData[0].equals("admin")){
-                AdminModel admin = dao.createAdminModel(userData);
-                AdminController adminController = new AdminController(admin);
-                adminController.handleMainMenu();
-            }
-            else if(userData[0].equals("mentor")){
-                MentorModel mentor = dao.createMentorModel(userData);
-                MentorController mentorController = new MentorController(mentor);
-                mentorController.handleMainMenu();
-            }
-            else if(userData[0].equals("student")){
-                StudentModel student = dao.createStudentModel(userData);
-                StudentController studentController = new StudentController(student);
-                studentController.handleMainMenu();
-            }
+            createUser(userData);
+        }
+    }
+
+    public void createUser(String [] userData) {
+        if(userData[0].equals("admin")){
+            AdminModel admin = dao.createAdminModel(userData);
+            AdminController adminController = new AdminController(admin);
+            adminController.handleMainMenu();
+        }
+        else if(userData[0].equals("mentor")){
+            MentorModel mentor = dao.createMentorModel(userData);
+            MentorController mentorController = new MentorController(mentor);
+            mentorController.handleMainMenu();
+        }
+        else if(userData[0].equals("student")){
+            StudentModel student = dao.createStudentModel(userData);
+            StudentController studentController = new StudentController(student);
+            studentController.handleMainMenu();
         }
     }
 
