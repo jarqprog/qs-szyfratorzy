@@ -3,6 +3,7 @@ package users;
 public class StudentController
 {
     StudentModel student;
+    StudentView studentView;
 
     public StudentController()
     {
@@ -11,11 +12,11 @@ public class StudentController
 
     public void displayMyWallet()
     {
-        System.out.println(student.getWallet());
+        studentView.displayWallet(student);
     }
 
     public void displayMyLevelOfExpirence()
     {
-        System.out.println(student.getExpirence());
+        studentView.displayLevelOfExpirence(student);
     }
 }

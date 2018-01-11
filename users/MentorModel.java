@@ -2,7 +2,7 @@ package users;
 
 public class MentorModel extends UserModel
 {
-    char groupName;
+    Character groupName;
 
     public MentorModel(String firstName, String lastName, String password)
     {
@@ -11,19 +11,19 @@ public class MentorModel extends UserModel
         this.groupName = '0';
     }
 
-    public MentorModel(int id, String firstName, String lastName, String password, char groupName)
+    public MentorModel(int id, String firstName, String lastName, String password, Character groupName)
     {
         super(id, firstName, lastName, password);
         super.setUserRole("mentor");
         this.groupName = groupName;
     }
 
-    public char getMentorGroupName()
+    public Character getMentorGroupName()
     {
         return groupName;
     }
 
-    public void setMentorGroupName(char newGroupName)
+    public void setMentorGroupName(Character newGroupName)
     {
         groupName = newGroupName;
     }

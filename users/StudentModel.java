@@ -6,7 +6,7 @@ import item.ArtefactModel;
 
 public class StudentModel extends UserModel
 {
-    private char groupName;
+    private Character groupName;
     private String team;
     private int wallet;
     private int expirence;
@@ -33,12 +33,12 @@ public class StudentModel extends UserModel
         attendance = 100;
     }
 
-    public char getGroup()
+    public Character getGroup()
     {
         return groupName;
     }
 
-    public void setGroup(char groupName)
+    public void setGroup(Character groupName)
     {
         this.groupName = groupName;
     }
