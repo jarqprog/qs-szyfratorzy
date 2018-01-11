@@ -12,4 +12,14 @@ public abstract class  UserController{
         view.displayUsers(users);
 
     }
+
+    protected Boolean checkIfElementInArray(String[] array, String element) {
+        for(String item : array){
+            if(item.equals(element)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

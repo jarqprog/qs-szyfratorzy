@@ -1,59 +1,50 @@
 package users;
 
-public class StudentController
-{
-    StudentModel studentModel;
-    StudentView studentView;
+public class StudentController extends UserController{
+    StudentModel student;
+    StudentView view;
 
-    public StudentController(StudentModel studentModel){}
-
-    public void displayMyWallet()
-    {
-        studentView.displayWallet(studentModel);
+    public StudentController(StudentModel studentModel){
+        student = studentModel;
+        view = new StudentView();
     }
 
-    public void displayMyLevelOfExpirence()
-    {
-        studentView.displayLevelOfExpirence(studentModel);
+    public void showMyWallet(){
+        view.displayWallet(student);
     }
 
-    public void handleMainMenu()
-    {
-        boolean exit = false;
-        while(!exit)
-        {
+    public void showLevelOfExperience(){
+        view.displayLevelOfExperience(student);
+    }
+
+    public void handleMainMenu(){
+        boolean isDone = false;
+        while(! isDone){
+
             String userChoice = "";
             String[] correctChoices = {"1", "2","0"};
-            Boolean choiceIsReady = false;
-            while(! choiceIsReady)
-            {
-                studentView.clearScreen();
-                studentView.displayMenu();
-                userChoice = studentView.getUserInput("Select an option: ");
-                choiceIsReady = checkIfElementInArray(correctChoices, userChoice);
+            Boolean isChoiceReady = false;
+            while(! isChoiceReady){
+
+                view.clearScreen();
+                view.displayMenu();
+                userChoice = view.getUserInput("Select an option: ");
+                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
             }
-            studentView.clearScreen();
+
+            view.clearScreen();
             switch(userChoice)
             {
                 case "1":
-                   displayMyWallet();
-                   break;
+                    showMyWallet();
+                    break;
                 case "2":
-                    displayMyLevelOfExpirence();
-                   break;
+                    showLevelOfExperience();
+                    break;
                 case "0":
-                   exit = true;
-                   break;
+                    isDone = true;
+                    break;
             }
         }
-    }
-
-    public Boolean checkIfElementInArray(String[] array, String element) {
-        for(String item : array){
-            if(item.equals(element)){
-                return true;
-            }
-        }
-        return false;
     }
 }

@@ -48,9 +48,6 @@ public class RootController{
                     running = false;
             }
         }
-
-
-        //runTest();
     }
 
     private String [] loggingProcedure() {
@@ -64,7 +61,6 @@ public class RootController{
     private void handleUserData(String [] userData) {
         if(userData.length == 0) {
             view.displayMessage("Invalid login or password!");
-            view.handlePause();
         }
         else {
             createUser(userData);
@@ -72,17 +68,18 @@ public class RootController{
     }
 
     public void createUser(String [] userData) {
-        if(userData[0].equals("admin")){
+        int ROLE_INDEX = 0;
+        if(userData[ROLE_INDEX].equals("admin")){
             AdminModel admin = dao.createAdminModel(userData);
             AdminController adminController = new AdminController(admin);
             adminController.handleMainMenu();
         }
-        else if(userData[0].equals("mentor")){
+        else if(userData[ROLE_INDEX].equals("mentor")){
             MentorModel mentor = dao.createMentorModel(userData);
             MentorController mentorController = new MentorController(mentor);
             mentorController.handleMainMenu();
         }
-        else if(userData[0].equals("student")){
+        else if(userData[ROLE_INDEX].equals("student")){
             StudentModel student = dao.createStudentModel(userData);
             StudentController studentController = new StudentController(student);
             studentController.handleMainMenu();
