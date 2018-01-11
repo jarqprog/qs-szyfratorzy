@@ -24,7 +24,7 @@ public class StudentModel extends UserModel
 
     }
 
-    public StudentModel(int id, String firstName, String lastName, String password)
+    public StudentModel(int id, String firstName, String lastName, String password, char group)
     {
         super(id, firstName, lastName, password);
         setUserRole("student");
