@@ -9,11 +9,15 @@ public class ArtefactModel extends ItemModel{
 
     }
 
-    // public static void main(String[] args){
-    //     ArtefactModel dupa = new ArtefactModel('M', "Magiczna Pałka", "jest magiczna", 1500);
-    //     System.out.println(dupa.getItemName());
-    //     System.out.println(dupa.getItemDescription());
-    //     System.out.println(dupa.price);
-    //
-    // }
+    public int getPrice(){
+        return price;
+    }
+
+    public void setPrice(int newPrice){
+        price = newPrice;
+    }
+
+    public String toString(){
+        return super.toString() + String.format(" price: %s", getPrice());
+    }
 }

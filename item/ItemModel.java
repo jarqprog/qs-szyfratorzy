@@ -37,9 +37,7 @@ public abstract class ItemModel {
         itemFullName = newItemFullName;
     }
     public String toString(){
-        return String.format("%s %s",this.itemType, this.itemName);
-    }
-    public static void main(String[] args) {
+        return String.format("type: %s, item name: %s,", this.itemType, this.itemName);
     }
 
 }
