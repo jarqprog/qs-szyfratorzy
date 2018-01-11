@@ -1,6 +1,6 @@
 package users;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import school.SchoolModel;
 
@@ -66,10 +66,11 @@ public class AdminController extends UserController{
     }
 
     public void editMentor(){
-        String firstNameToSearch = view.getUserInput("Enter firstname: ");
-        for (MentorModel mentor : dao.getMentorsFromFile()){
-
-            if (firstNameToSearch.equals(mentor.getUserFirstName()))
+        view.showAllMentors(arrayWithAllMentors(dao.getMentorsFromFile()));
+        String id = view.getUserInput("Enter ID of mentor: ");
+        for (MentorModel mentor : dao.getMentorsFromFile())
+        {
+            if (id.equals(Integer.toString(mentor.getUserID())))
             {
                 boolean isFinished = false;
                 while(!isFinished)
@@ -111,10 +112,11 @@ public class AdminController extends UserController{
 
     public void displayMentorProfile()
     {
-        String firstNameToSearch = view.getUserInput("Enter firstname of mentor: ");
+        view.showAllMentors(arrayWithAllMentors(dao.getMentorsFromFile()));
+        String id = view.getUserInput("Enter ID of mentor: ");
         for (MentorModel mentor : dao.getMentorsFromFile())
         {
-            if (firstNameToSearch.equals(mentor.getUserFirstName()))
+            if (id.equals(Integer.toString(mentor.getUserID())))
             {
                 view.displayMentorProfile(mentor);
             }
@@ -130,5 +132,16 @@ public class AdminController extends UserController{
         String levelName = view.getUserInput("Enter level name: ");
         Integer expirence = Integer.parseInt(view.getUserInput("Enter expirence: "));
         school.addExpirenceLevel(levelName, expirence);
+    }
+
+    public String[] arrayWithAllMentors(List<MentorModel> mentors)
+    {
+        String[] mentorsToDisplay = new String[mentors.size()];
+        int index = 0;
+        for(MentorModel mentor : mentors){
+            mentorsToDisplay[index] = mentor.toString();
+            index ++;
+        }
+        return mentorsToDisplay;
     }
 }
