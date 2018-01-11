@@ -92,5 +92,21 @@ public class RootController{
         System.out.println(adminek);
         newDao.saveLastId(22, "DataFiles/maxUserId.csv");
         System.out.println(newDao.loadLastId("DataFiles/maxUserId.csv"));
+        System.out.println(newDao.findProperTableByChosenParameter("1", 1));
+        String[] dataTable = newDao.findProperTableByChosenParameter("1", 1);
+        List<AdminModel> adminses = newDao.getAdminsFromFile();
+        for(AdminModel admin00 : adminses){
+            System.out.println(admin00);
+        }
+        List<MentorModel> mentorses = newDao.getMentorsFromFile();
+        for(MentorModel mentor00 : mentorses){
+            System.out.println(mentor00);
+        }
+        List<StudentModel> studentses = newDao.getStudentsFromFile();
+        for(StudentModel student00 : studentses){
+            System.out.println(student00);
+        }
+
+
     }
 }
