@@ -8,7 +8,8 @@ public abstract class  UserController{
     AbstractView view;
 
     public abstract void handleMainMenu();
-    public String showUsers(){
-        return "";
+    public void showUsers(String[] users){
+        view.displayUsers(users);
+
     }
 }
