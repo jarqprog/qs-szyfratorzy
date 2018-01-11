@@ -2,14 +2,17 @@ package users;
 import application.AbstractDAO;
 import application.AbstractView;
 
+
 public abstract class  UserController{
 
     AbstractDAO DAO;
     AbstractView view;
 
     public abstract void handleMainMenu();
+
     public void showUsers(String[] users){
-        view.displayUsers(users);
+        UsersView userView = new UsersView();
+        userView.displayUsers(users);
 
     }
 
