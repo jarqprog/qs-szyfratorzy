@@ -7,8 +7,9 @@ public class RootView extends AbstractView{
         clearScreen();
         System.out.println(emptyLines);
         System.out.println("Welcome!!");
+        System.out.println("[1] login");
+        System.out.println("[0] exit");
         System.out.println(emptyLines);
-        handlePause();
     }
 
     public void displayOutro()
@@ -17,7 +18,6 @@ public class RootView extends AbstractView{
         System.out.println(emptyLines);
         System.out.println("Bye!");
         System.out.println(emptyLines);
-        handlePause();
         clearScreen();
     }
 
@@ -31,5 +31,4 @@ public class RootView extends AbstractView{
         displayMessage("Logout.... ;( ");
         handlePause();
     }
-
 }

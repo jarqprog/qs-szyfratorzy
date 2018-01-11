@@ -33,8 +33,22 @@ public class RootController{
 
     public void runApplication()
     {
-        String [] userData = loggingProcedure();
-        handleUserData(userData);
+        boolean running = true;
+        while (running)
+        {
+            view.displayIntro();
+            String userInput = view.displayLoginScreen("Choose: ");
+            switch (userInput)
+            {
+                case "1": 
+                    String [] userData = loggingProcedure();
+                    handleUserData(userData);
+                    break;
+                case "0":
+                    running = false;
+            }
+        }
+        
 
         //runTest();
     }
@@ -50,6 +64,7 @@ public class RootController{
     private void handleUserData(String [] userData) {
         if(userData.length == 0) {
             view.displayMessage("Invalid login or password!");
+            view.handlePause();
         }
         else {
             if(userData[0].equals("admin")){
