@@ -16,4 +16,9 @@ public class StudentController
     {
         studentView.displayLevelOfExpirence(studentModel);
     }
+
+    public void handleMainMenu()
+    {
+
+    }
 }
