@@ -1,10 +1,8 @@
 package application;
 
-
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
-
 import users.LogableDAO;
 import users.UsersDAO;
 import users.MentorModel;
@@ -20,8 +18,8 @@ public class RootController{
 
     private UsersDAO dao;
     private RootView view;
-    public RootController(){
 
+    public RootController(){
         dao = new UsersDAO();
         dao.prepareAdmin();
         view = new RootView();
@@ -30,8 +28,8 @@ public class RootController{
     public void runApplication(){
         boolean isDone = false;
         while (! isDone){
-            view.displayIntro();
-            String userInput = view.displayLoginScreen("Choose: ");
+            handleIntro();
+            String userInput = view.displayLoginScreen("Please, choose an option: ");
             switch (userInput)
             {
                 case "1":
@@ -40,6 +38,7 @@ public class RootController{
                     break;
                 case "0":
                     isDone = true;
+                    handleOutro();
             }
         }
     }
@@ -81,6 +80,18 @@ public class RootController{
             StudentController studentController = new StudentController(student);
             studentController.handleMainMenu();
         }
+    }
+
+    private void handleIntro(){
+        IntroOutroDAO ioDao = new IntroOutroDAO();
+        List<String> introData = ioDao.getRawDataFromFile();
+        view.displayIntro(introData);
+    }
+
+    private void handleOutro(){
+        IntroOutroDAO ioDao = new IntroOutroDAO();
+        List<String> outroData = ioDao.getRawDataFromFile("DataFiles/outro.txt");
+        view.displayOutro(outroData);
     }
 
     private void runTest(){
