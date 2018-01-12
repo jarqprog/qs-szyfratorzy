@@ -30,7 +30,6 @@ public class RootController{
     public void runApplication(){
         boolean isDone = false;
         while (! isDone){
-
             view.displayIntro();
             String userInput = view.displayLoginScreen("Choose: ");
             switch (userInput)
@@ -57,7 +56,8 @@ public class RootController{
 
     private void handleUserData(String [] userData) {
         if(userData.length == 0) {
-            view.displayMessage("Invalid login or password!");
+            view.displayMessage("Invalid login or password! Try again!");
+            view.handlePause();
         }
         else {
             createUser(userData);
