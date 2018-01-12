@@ -19,6 +19,7 @@ import users.StudentDAO;
 import users.StudentModel;
 import item.ItemsDAO;
 import users.AdminModel;
+import java.io.Console;
 
 public class RootController{
 
@@ -51,9 +52,11 @@ public class RootController{
 
     private String [] loggingProcedure() {
         String login = view.displayLoginScreen("Login: ");
-        String password = view.displayLoginScreen("Password: ");
+        Console console = System.console();
+        System.out.println("Please enter your password: ");
+        char[] password = console.readPassword();
         dao.updateLoadedTables();
-        String [] userDate = dao.importUserData(login, password);
+        String [] userDate = dao.importUserData(login, String.valueOf(password));
         return userDate;
     }
 
