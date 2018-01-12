@@ -1,10 +1,8 @@
 package application;
 
-
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
-
 import users.LogableDAO;
 import users.UsersDAO;
 import users.MentorModel;
@@ -20,8 +18,8 @@ public class RootController{
 
     private UsersDAO dao;
     private RootView view;
-    public RootController(){
 
+    public RootController(){
         dao = new UsersDAO();
         dao.prepareAdmin();
         view = new RootView();
@@ -30,7 +28,6 @@ public class RootController{
     public void runApplication(){
         boolean isDone = false;
         while (! isDone){
-
             handleIntro();
             String userInput = view.displayLoginScreen("Please, choose an option: ");
             switch (userInput)
@@ -58,7 +55,8 @@ public class RootController{
 
     private void handleUserData(String [] userData) {
         if(userData.length == 0) {
-            view.displayMessage("Invalid login or password!");
+            view.displayMessage("Invalid login or password! Try again!");
+            view.handlePause();
         }
         else {
             createUser(userData);
