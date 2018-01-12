@@ -1,7 +1,6 @@
 package users;
 
 import java.util.List;
-
 import school.SchoolModel;
 
 public class AdminController extends UserController{
@@ -47,7 +46,7 @@ public class AdminController extends UserController{
                     createGroup();
                     break;
                 case "5":
-                    createNewLevelOfExpirence();
+                    createNewLevelOfExperience();
                     break;
                 case "0":
                    isDone = true;
@@ -62,18 +61,22 @@ public class AdminController extends UserController{
         String lastName = view.getUserInput("Enter lastname: ");
         String password = view.getUserInput("Enter password: ");
         MentorModel newMentor = new MentorModel(firstName, lastName, password);
+        String mentorsToDisplay = newMentor.toString();
+        view.clearScreen();
+        view.displayMessage("Mentor created:");
+        view.displayMessage(mentorsToDisplay);
         dao.saveModelToFile(newMentor);
     }
 
     public void editMentor(){
-        view.showAllMentors(arrayWithAllMentors(dao.getMentorsFromFile()));
+        view.showAllMentors(prepareMentorsToDisplay(dao.getMentorsFromFile()));
         String id = view.getUserInput("Enter ID of mentor: ");
         for (MentorModel mentor : dao.getMentorsFromFile())
         {
             if (id.equals(Integer.toString(mentor.getUserID())))
             {
                 boolean isFinished = false;
-                while(!isFinished)
+                while(! isFinished)
                 {
                     view.clearScreen();
                     view.displayEditMenu();
@@ -112,13 +115,16 @@ public class AdminController extends UserController{
 
     public void displayMentorProfile()
     {
-        view.showAllMentors(arrayWithAllMentors(dao.getMentorsFromFile()));
+        view.showAllMentors(prepareMentorsToDisplay(dao.getMentorsFromFile()));
         String id = view.getUserInput("Enter ID of mentor: ");
         for (MentorModel mentor : dao.getMentorsFromFile())
         {
             if (id.equals(Integer.toString(mentor.getUserID())))
             {
-                view.displayMentorProfile(mentor);
+                String mentorToDisplay = mentor.toString();
+                view.clearScreen();
+                view.displayMessage("Mentor's profile:");
+                view.displayMessage(mentorToDisplay);
             }
         }
     }
@@ -126,15 +132,17 @@ public class AdminController extends UserController{
     public void createGroup(){
         Character newGroup = view.getUserInput("Enter group name: ").charAt(0);
         school.addGroup(newGroup);
+        view.clearScreen();
+        view.displayMessage("Group created: " + String.valueOf(newGroup));
     }
 
-    public void createNewLevelOfExpirence(){
+    public void createNewLevelOfExperience(){
         String levelName = view.getUserInput("Enter level name: ");
-        Integer expirence = Integer.parseInt(view.getUserInput("Enter expirence: "));
-        school.addExpirenceLevel(levelName, expirence);
+        Integer expirence = Integer.parseInt(view.getUserInput("Enter experience: "));
+        school.addExperienceLevel(levelName, expirence);
     }
 
-    public String[] arrayWithAllMentors(List<MentorModel> mentors)
+    public String[] prepareMentorsToDisplay(List<MentorModel> mentors)
     {
         String[] mentorsToDisplay = new String[mentors.size()];
         int index = 0;

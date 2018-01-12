@@ -4,9 +4,13 @@ student;8;Tomek;Kucharczyk;098;a
 student;9;Jan;Kowalski;123124215;a
 student;12;Ludwik;Luczyk;12321;d
 student;14;Rysiu;Swidnicki;245Chooj;a
-mentor;16;Piotr;Sito;12321;d
-mentor;1;dupa;duza;123;0
-mentor;2;a;b;1;0
-mentor;19;a;s;2;0
 mentor;20;aaa;aaa;aaa;0
+<<<<<<< HEAD
 student;22;ww;rtyu;fffff;0;null;0;100.0;0
+=======
+mentor;22;Jola;Stach;12321;0
+mentor;19;Jan;s;12322;A
+mentor;16;Piotr;Sito;12321;C
+mentor;1;Mietek;Koniuszy;123;a
+mentor;2;Magda;Zmyslona;magda;0
+>>>>>>> Jarek
