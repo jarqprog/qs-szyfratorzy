@@ -22,6 +22,7 @@ public class StudentModel extends UserModel
         inventory = new ArrayList<ArtifactModel>();
         attendance = 100;
         groupName = '0';
+        team = "undefined";
 
     }
 

@@ -108,6 +108,10 @@ public class AdminController extends UserController{
                             isFinished = true;
                             break;
                     }
+                    if(! isFinished){
+                        view.displayMessage("Edited: " + mentor.toString());
+                        view.handlePause();
+                    }
                 }
             }
         }

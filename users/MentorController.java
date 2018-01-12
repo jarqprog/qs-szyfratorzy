@@ -75,7 +75,7 @@ public class MentorController extends UserController{
         String password = view.getUserInput("Enter a password: ");
         StudentModel newStudent = new StudentModel(firstName, lastName, password);
         dao.saveModelToFile(newStudent);
-        view.displayMessage("Student created successfully!");
+        view.displayMessage("Student created successfully!" + newStudent.toString());
     }
 
     public void createArtifact(){
@@ -133,6 +133,10 @@ public class MentorController extends UserController{
                 case "0":
                    isDone = true;
                    break;
+            }
+            if(! isDone){
+               view.displayMessage(artifact.toString());
+               view.handlePause();
             }
         }
     }

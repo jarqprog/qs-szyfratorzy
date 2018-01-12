@@ -91,7 +91,7 @@ public abstract class UserModel
 
     public String toString()
     {
-        return String.format("Role: %s, Id: %s, First name: %s, Laste name: %s, email: %s",
+        return String.format("Role: %s, Id: %s, First name: %s, Last name: %s, email: %s",
                             this.role, this.id, this.firstName, this.lastName, this.email);
     }
 }

@@ -5,11 +5,13 @@ import application.AbstractView;
 public class StudentView extends AbstractView{
 
     public void displayWallet(int wallet){
-        System.out.println(Integer.toString(wallet));
+        displayMessage("Your wallet:");
+        displayMessage(Integer.toString(wallet));
     }
 
     public void displayLevelOfExperience(int experience){
-        System.out.println(Integer.toString(experience));
+        displayMessage("Your experience:");
+        displayMessage(Integer.toString(experience));
     }
 
     public void displayMenu() {
