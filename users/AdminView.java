@@ -32,11 +32,6 @@ public class AdminView extends AbstractView
         }
     }
 
-    public void displayMentorProfile(MentorModel mentor)
-    {
-        System.out.println(mentor.toString() + " Group: "+ mentor.getMentorGroupName());
-    }
-
     public void showAllMentors(String[] mentors)
     {
         for (String mentor : mentors)

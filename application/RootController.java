@@ -1,24 +1,19 @@
 package application;
 
-import users.*;
-import users.LogableDAO;
-// import users.UserCtrl;
-import users.StudentModel;
-import users.AdminModel;
+
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
 
-
-// testImports:
-import users.MentorDAO;
+import users.LogableDAO;
+import users.UsersDAO;
 import users.MentorModel;
-import users.AdminDAO;
 import users.AdminModel;
-import users.StudentDAO;
 import users.StudentModel;
-import item.ItemsDAO;
-import users.AdminModel;
+import users.MentorController;
+import users.AdminController;
+import users.StudentController;
+
 
 public class RootController{
 

@@ -5,22 +5,22 @@ import java.util.HashMap;
 
 public class SchoolModel
 {
-    private HashMap<String, Integer> expirenceLevels;
+    private HashMap<String, Integer> experienceLevels;
     private ArrayList<Character> groups;
     private ArrayList<String> teams;
 
     public SchoolModel(){
-        expirenceLevels = new HashMap<String, Integer>();
+        experienceLevels = new HashMap<String, Integer>();
         groups = new ArrayList<Character>();
         teams = new ArrayList<String>();
     }
 
-    public HashMap<String, Integer> getExpirenceLevels() {
-        return expirenceLevels;
+    public HashMap<String, Integer> getExperienceLevels() {
+        return experienceLevels;
     }
 
-    public void addExpirenceLevel(String level, Integer expirence) {
-        this.expirenceLevels.put(level, expirence);
+    public void addExperienceLevel(String level, Integer experience) {
+        this.experienceLevels.put(level, experience);
     }
 
     public ArrayList<Character> getGroups() {
