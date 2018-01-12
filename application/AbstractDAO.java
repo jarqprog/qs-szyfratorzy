@@ -118,6 +118,37 @@ public abstract class AbstractDAO{
     return outputData;
     }
 
+    protected List<String> getRawDataFromFile(String filePath){
+        List<String> outputData = new ArrayList<String>();
+        BufferedReader br = null;
+        FileReader fr = null;
+        String line;
+        try {
+            fr = new FileReader(filePath);
+            br = new BufferedReader(fr);
+            int array_index = 0;
+            while ((line = br.readLine()) != null) {
+                outputData.add(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+                if (fr != null) {
+                    fr.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    return outputData;
+    }
+
+
     public void prepareFile(){
         if(! checkIfFileExist()){
             createDefaultFile();
