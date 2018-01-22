@@ -1,1 +1,1 @@
-javac -d bin application/*.java item/*.java school/*.java shop/*.java users/*.java
+javac -d bin src/application/*.java src/item/*.java src/school/*.java src/shop/*.java src/users/*.java
