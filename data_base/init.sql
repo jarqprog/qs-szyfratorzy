@@ -22,4 +22,6 @@ CREATE TABLE IF NOT EXISTS admins(
   last_name text,
   email text,
   password text);
+INSERT INTO admins(first_name, last_name, email, password)
+VALUES(admin, admin, admin@email.com, admin);
 COMMIT;
