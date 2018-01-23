@@ -3,10 +3,10 @@ package users;
 
 import java.util.List;
 import java.util.ArrayList;
-import application.DAO;
+import application.DatabaseDAO;
 
 
-public class UsersDAO extends DAO implements LogableDAO{
+public class UsersDAO extends DatabaseDAO implements LogableDAO{
 
     protected final static int ROLE_INDEX = 0;
     protected final static int ID_INDEX = 1;

@@ -19,11 +19,11 @@ public class RootController{
 
     public RootController(){
         dao = new UsersDAO();
-        dao.prepareAdmin();
         view = new RootView();
     }
 
     public void runApplication(){
+        prepareDatabase();
         boolean isDone = false;
         while (! isDone){
             handleIntro();
@@ -90,6 +90,22 @@ public class RootController{
         IntroOutroDAO ioDao = new IntroOutroDAO();
         List<String> outroData = ioDao.getRawDataFromFile("DataFiles/outro.txt");
         view.displayOutro(outroData);
+    }
+
+    private void prepareDatabase(){
+
+        DatabaseDAO dbDAO = new DatabaseDAO();
+        dbDAO.openConnection();
+        boolean hasConnection = dbDAO.isConnected();
+        if(hasConnection){
+            view.displayMessage("Opened database successfully");
+        }else{
+            view.displayMessage("Problem occured while opening database");
+        }
+        dbDAO.fillDatabase();
+        dbDAO.closeConnection();
+        view.displayMessage("Database prepared");
+        view.handlePause();
     }
 
     private void runTest(){
