@@ -20,8 +20,8 @@ public class AdminView extends AbstractView
 
     public void displayEditMenu() {
         String[] options = {"      *** Menu ***     ",
-                            "[1] edit firstname",
-                            "[2] edit lastname",
+                            "[1] edit first name",
+                            "[2] edit last name",
                             "[3] edit password",
                             "[4] edit email",
                             "[5] edit group",
