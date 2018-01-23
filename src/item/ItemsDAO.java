@@ -1,8 +1,8 @@
 package item;
 
-import application.AbstractDAO;
+import application.DAO;
 
-public class ItemsDAO extends AbstractDAO
+public class ItemsDAO extends DAO
 {
 
     public ItemsDAO(){

@@ -13,8 +13,9 @@ import java.io.IOException;
 
 
 
-public abstract class AbstractDAO{
+public abstract class DAO {
 
+    protected String defaultDatabasePath;
     protected String defaultFileName;
     protected String defaultFilePath;
     protected List<String[]> loadedTables;
@@ -25,6 +26,14 @@ public abstract class AbstractDAO{
         prepareFile();
         setLoadedStringsUsingLoadedTables();
         saveCollectionToFile(getLoadedStrings());
+    }
+
+    public String getDefaultDatabasePath(){
+        return defaultDatabasePath;
+    }
+
+    public void setDefaultDatabasePath(String newDatabasePath){
+        defaultDatabasePath = newDatabasePath;
     }
 
     public String getDefaultFileName(){
