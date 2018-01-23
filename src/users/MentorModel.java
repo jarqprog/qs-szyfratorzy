@@ -18,18 +18,18 @@ public class MentorModel extends UserModel
         this.groupName = groupName;
     }
 
-    public Character getMentorGroupName()
+    public Character getGroupName()
     {
         return groupName;
     }
 
-    public void setMentorGroupName(Character newGroupName)
+    public void setGroupName(Character newGroupName)
     {
         groupName = newGroupName;
     }
     public String toString()
     {
-        return super.toString()+String.format(" Group name: %s",this.getMentorGroupName());
+        return super.toString()+String.format(" Group name: %s",this.getGroupName());
     }
 
 }

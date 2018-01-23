@@ -33,8 +33,7 @@ public class StudentController extends UserController{
             }
 
             view.clearScreen();
-            switch(userChoice)
-            {
+            switch(userChoice){
                 case "1":
                     showMyWallet();
                     break;

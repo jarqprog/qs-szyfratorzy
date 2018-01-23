@@ -158,7 +158,7 @@ public class UsersDAO extends DAO implements LogableDAO{
         String lName = mentor.getLastName();
         String email = mentor.getEmail();
         String password = mentor.getPassword();
-        String group = String.valueOf(mentor.getMentorGroupName());
+        String group = String.valueOf(mentor.getGroupName());
         removeDataIfIdAlreadyExists(id, ID_INDEX);
         String[] table = {role, id, fName, lName, email, password, group};
         loadedTables.add(table);

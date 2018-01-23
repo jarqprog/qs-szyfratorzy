@@ -57,8 +57,8 @@ public class AdminController extends UserController{
     }
 
     public void createMentor(){
-        String firstName = view.getUserInput("Enter firstname: ");
-        String lastName = view.getUserInput("Enter lastname: ");
+        String firstName = view.getUserInput("Enter first name: ");
+        String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
         MentorModel newMentor = new MentorModel(firstName, lastName, password);
         String mentorsToDisplay = newMentor.toString();
@@ -84,15 +84,15 @@ public class AdminController extends UserController{
                     switch(userChoice)
                     {
                         case "1" :
-                            String firstname = view.getUserInput("Enter firstname: ");
-                            mentor.setFirstName(firstname);
+                            String firstName = view.getUserInput("Enter first name: ");
+                            mentor.setFirstName(firstName);
                             break;
                         case "2" :
-                            String lastname = view.getUserInput("Enter lastname: ");
-                            mentor.setLastName(lastname);
+                            String lastName = view.getUserInput("Enter last name: ");
+                            mentor.setLastName(lastName);
                             break;
                         case "3" :
-                            String password = view.getUserInput("Enter pasword: ");
+                            String password = view.getUserInput("Enter password: ");
                             mentor.setPassword(password);
                             break;
                         case "4" :
@@ -101,7 +101,7 @@ public class AdminController extends UserController{
                             break;
                         case "5" :
                             Character group = view.getUserInput("Enter group: ").charAt(0);
-                            mentor.setMentorGroupName(group);
+                            mentor.setGroupName(group);
                             break;
                         case "0":
                             dao.saveModelToFile(mentor);
@@ -142,8 +142,8 @@ public class AdminController extends UserController{
 
     public void createNewLevelOfExperience(){
         String levelName = view.getUserInput("Enter level name: ");
-        Integer expirence = Integer.parseInt(view.getUserInput("Enter experience: "));
-        school.addExperienceLevel(levelName, expirence);
+        Integer experience = Integer.parseInt(view.getUserInput("Enter experience: "));
+        school.addExperienceLevel(levelName, experience);
     }
 
     public String[] prepareMentorsToDisplay(List<MentorModel> mentors)

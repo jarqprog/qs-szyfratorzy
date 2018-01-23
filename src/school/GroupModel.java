@@ -1,7 +1,5 @@
 package school;
 
-import users.StudentModel;
-
 import java.util.ArrayList;
 import java.util.List;
 import users.StudentModel;
