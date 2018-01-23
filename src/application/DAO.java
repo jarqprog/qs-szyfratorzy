@@ -68,6 +68,28 @@ public abstract class DAO {
         loadedStrings = stringsCollection;
     }
 
+    public void prepareFile(){
+        if(! checkIfFileExist()){
+            createDefaultFile();
+        }
+    }
+
+    public void prepareFile(String filePath){
+        if(! checkIfFileExist(filePath)){
+            createNewFile(filePath);
+        }
+    }
+
+    public Boolean checkIfFileExist(){
+        File f = new File(defaultFilePath);
+        return f.exists();
+    }
+
+    public Boolean checkIfFileExist(String filePath){
+        File f = new File(filePath);
+        return f.exists();
+    }
+
     protected void setLoadedStringsUsingLoadedTables(){
         List<String> outputList = new ArrayList<String>();
         String elementToAdd;
@@ -78,7 +100,7 @@ public abstract class DAO {
         setLoadedStrings(outputList);
     }
 
-    public void createDefaultFile(){
+    protected void createDefaultFile(){
         try {
             File f = new File(defaultFilePath);
             f.createNewFile();
@@ -87,7 +109,7 @@ public abstract class DAO {
             e.printStackTrace();
         }
     }
-    public void createNewFile(String filePath){
+    protected void createNewFile(String filePath){
         try {
             File f = new File(filePath);
             f.createNewFile();
@@ -158,27 +180,7 @@ public abstract class DAO {
     }
 
 
-    public void prepareFile(){
-        if(! checkIfFileExist()){
-            createDefaultFile();
-        }
-    }
 
-    public void prepareFile(String filePath){
-        if(! checkIfFileExist(filePath)){
-            createNewFile(filePath);
-        }
-    }
-
-    public Boolean checkIfFileExist(){
-        File f = new File(defaultFilePath);
-        return f.exists();
-    }
-
-    public Boolean checkIfFileExist(String filePath){
-        File f = new File(filePath);
-        return f.exists();
-    }
 
     protected void saveCollectionToFile(List<String> collectionToSave){
         FileWriter fileWriter = null;
@@ -263,6 +265,7 @@ public abstract class DAO {
         }
     }
 
+    // to remove
     public void saveLastId(int id, String filePath){
         FileWriter fileWriter = null;
         BufferedWriter bufWriter = null;
