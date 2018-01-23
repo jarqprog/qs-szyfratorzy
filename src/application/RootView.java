@@ -11,7 +11,8 @@ public class RootView extends AbstractView{
         for(String data : dataToDisplay){
             System.out.println(data);
         }
-        System.out.println("\n\n[1] login");
+        System.out.println(emptyLines);
+        System.out.println("[1] login");
         System.out.println("[0] exit\n");
     }
 

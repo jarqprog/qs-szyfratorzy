@@ -3,8 +3,6 @@ package users;
 import item.ArtifactDAO;
 import item.ArtifactModel;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MentorController extends UserController{
     MentorView view;
@@ -13,8 +11,8 @@ public class MentorController extends UserController{
     ArtifactDAO artifactDao;
 
     public MentorController(MentorModel mentorModel){
-        view = new MentorView();
         mentor = mentorModel;
+        view = new MentorView();
         dao = new MentorDAO();
         artifactDao = new ArtifactDAO();
     }
@@ -85,9 +83,9 @@ public class MentorController extends UserController{
         ArtifactModel artifact = new ArtifactModel(itemName, itemDescription, price);
         view.displayMessage("Artifact " + artifact + " created successfully!");
         artifactDao.saveArtifact(artifact);
-    }
+        }
 
-    public void editArtifact() {
+    public void editArtifact(){
         view.displayElementsOfCollection(
                         prepareArtifactsToDisplay(artifactDao.getArtifactsFromFile()));
         String input = view.getUserInput("Enter id of artifact which you would like to edit: ");
@@ -95,8 +93,8 @@ public class MentorController extends UserController{
             if(String.valueOf(artifact.getId()).equals(input)) {
                 handleArtifactEditMenu(artifact);
                 break;
-                }
             }
+        }
     }
 
 

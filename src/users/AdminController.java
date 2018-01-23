@@ -57,8 +57,8 @@ public class AdminController extends UserController{
     }
 
     public void createMentor(){
-        String firstName = view.getUserInput("Enter firstname: ");
-        String lastName = view.getUserInput("Enter lastname: ");
+        String firstName = view.getUserInput("Enter first name: ");
+        String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
         MentorModel newMentor = new MentorModel(firstName, lastName, password);
         String mentorsToDisplay = newMentor.toString();
@@ -73,7 +73,7 @@ public class AdminController extends UserController{
         String id = view.getUserInput("Enter ID of mentor: ");
         for (MentorModel mentor : dao.getMentorsFromFile())
         {
-            if (id.equals(Integer.toString(mentor.getUserID())))
+            if (id.equals(Integer.toString(mentor.getId())))
             {
                 boolean isFinished = false;
                 while(! isFinished)
@@ -84,24 +84,24 @@ public class AdminController extends UserController{
                     switch(userChoice)
                     {
                         case "1" :
-                            String firstname = view.getUserInput("Enter firstname: ");
-                            mentor.setUserFirstName(firstname);
+                            String firstName = view.getUserInput("Enter first name: ");
+                            mentor.setFirstName(firstName);
                             break;
                         case "2" :
-                            String lastname = view.getUserInput("Enter lastname: ");
-                            mentor.setUserLastName(lastname);
+                            String lastName = view.getUserInput("Enter last name: ");
+                            mentor.setLastName(lastName);
                             break;
                         case "3" :
-                            String password = view.getUserInput("Enter pasword: ");
-                            mentor.setUserPassword(password);
+                            String password = view.getUserInput("Enter password: ");
+                            mentor.setPassword(password);
                             break;
                         case "4" :
                             String email = view.getUserInput("Enter email: ");
-                            mentor.setUserEmail(email);
+                            mentor.setEmail(email);
                             break;
                         case "5" :
                             Character group = view.getUserInput("Enter group: ").charAt(0);
-                            mentor.setMentorGroupName(group);
+                            mentor.setGroupName(group);
                             break;
                         case "0":
                             dao.saveModelToFile(mentor);
@@ -123,7 +123,7 @@ public class AdminController extends UserController{
         String id = view.getUserInput("Enter ID of mentor: ");
         for (MentorModel mentor : dao.getMentorsFromFile())
         {
-            if (id.equals(Integer.toString(mentor.getUserID())))
+            if (id.equals(Integer.toString(mentor.getId())))
             {
                 String mentorToDisplay = mentor.toString();
                 view.clearScreen();
@@ -142,8 +142,8 @@ public class AdminController extends UserController{
 
     public void createNewLevelOfExperience(){
         String levelName = view.getUserInput("Enter level name: ");
-        Integer expirence = Integer.parseInt(view.getUserInput("Enter experience: "));
-        school.addExperienceLevel(levelName, expirence);
+        Integer experience = Integer.parseInt(view.getUserInput("Enter experience: "));
+        school.addExperienceLevel(levelName, experience);
     }
 
     public String[] prepareMentorsToDisplay(List<MentorModel> mentors)
