@@ -1,8 +1,6 @@
 package application;
 
 import java.util.List;
-import java.util.Arrays;
-import java.util.ArrayList;
 import users.LogableDAO;
 import users.UsersDAO;
 import users.MentorModel;
