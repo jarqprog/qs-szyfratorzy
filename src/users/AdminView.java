@@ -10,7 +10,7 @@ public class AdminView extends AbstractView
                             "[2] edit mentor",
                             "[3] display mentor",
                             "[4] create group",
-                            "[5] create level of expirence",
+                            "[5] create level of experience",
                             "[0] exit"};
 
         for(String element : options) {
