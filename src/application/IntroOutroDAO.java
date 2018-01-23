@@ -1,6 +1,6 @@
 package application;
 
-public class IntroOutroDAO extends AbstractDAO{
+public class IntroOutroDAO extends DAO {
 
     String outroFilePath;
 

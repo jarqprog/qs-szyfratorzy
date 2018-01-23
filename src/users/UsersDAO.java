@@ -2,12 +2,11 @@ package users;
 
 
 import java.util.List;
-import java.util.Arrays;
 import java.util.ArrayList;
-import application.AbstractDAO;
+import application.DAO;
 
 
-public class UsersDAO extends AbstractDAO implements LogableDAO{
+public class UsersDAO extends DAO implements LogableDAO{
 
     protected final static int ROLE_INDEX = 0;
     protected final static int ID_INDEX = 1;
