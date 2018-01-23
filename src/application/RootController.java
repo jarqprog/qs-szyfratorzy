@@ -16,7 +16,7 @@ import java.io.Console;
 
 public class RootController{
 
-    private UsersDAO dao;
+    private LogableDAO dao;
     private RootView view;
 
     public RootController(){
