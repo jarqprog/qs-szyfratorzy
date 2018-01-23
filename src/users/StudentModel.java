@@ -16,7 +16,7 @@ public class StudentModel extends UserModel
     public StudentModel(String firstName, String lastName, String password)
     {
         super(firstName, lastName, password);
-        setUserRole("student");
+        setRole("student");
         wallet = 0;
         experience = 0;
         inventory = new ArrayList<ArtifactModel>();
@@ -26,10 +26,10 @@ public class StudentModel extends UserModel
 
     }
 
-    public StudentModel(int id, String firstName, String lastName, String password, char group)
+    public StudentModel(int id, String firstName, String lastName, String email, String password, char group)
     {
-        super(id, firstName, lastName, password);
-        setUserRole("student");
+        super(id, firstName, lastName, email, password);
+        setRole("student");
         wallet = 0;
         experience = 0;
         attendance = 100;

@@ -11,8 +11,7 @@ public abstract class UserModel
     private String role;
     private UsersDAO usersDao;
 
-    public UserModel(String firstName, String lastName, String password)
-    {
+    public UserModel(String firstName, String lastName, String password) {
         usersDao = new UsersDAO();
         counter = usersDao.loadLastId("DataFiles/maxUserId.csv");
         id = counter++;
@@ -24,73 +23,72 @@ public abstract class UserModel
         usersDao.saveLastId(counter, "DataFiles/maxUserId.csv");
     }
 
-    public UserModel(int id, String firstName, String lastName, String password)
+    public UserModel(int id, String firstName, String lastName, String email, String password)
     {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        email = firstName + Integer.toString(id) + "@cc.com";
+        this.email = email;
         this.password = password;
         role = "undefined";
     }
 
-    public int getUserID()
+    public int getId()
     {
         return id;
     }
 
-    public String getUserFirstName()
+    public String getFirstName()
     {
         return firstName;
     }
 
-    public void setUserFirstName(String firstName)
+    public void setFirstName(String firstName)
     {
         this.firstName = firstName;
     }
 
-    public String getUserLastName()
+    public String getLastName()
     {
         return lastName;
     }
 
-    public void setUserLastName(String lastName)
+    public void setLastName(String lastName)
     {
         this.lastName = lastName;
     }
 
-    public String getUserEmail()
+    public String getEmail()
     {
         return email;
     }
 
-    public void setUserEmail(String email)
+    public void setEmail(String email)
     {
         this.email = email;
     }
 
-    public String getUserPassword()
+    public String getPassword()
     {
         return password;
     }
 
-    public void setUserPassword(String password)
+    public void setPassword(String password)
     {
         this.password = password;
     }
 
-    public String getUserRole()
+    public String getRole()
     {
         return role;
     }
 
-    public void setUserRole(String role)
+    public void setRole(String role)
     {
         this.role = role;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return String.format("Role: %s, Id: %s, First name: %s, Last name: %s, email: %s",
                             this.role, this.id, this.firstName, this.lastName, this.email);
     }

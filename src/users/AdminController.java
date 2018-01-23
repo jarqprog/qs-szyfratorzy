@@ -73,7 +73,7 @@ public class AdminController extends UserController{
         String id = view.getUserInput("Enter ID of mentor: ");
         for (MentorModel mentor : dao.getMentorsFromFile())
         {
-            if (id.equals(Integer.toString(mentor.getUserID())))
+            if (id.equals(Integer.toString(mentor.getId())))
             {
                 boolean isFinished = false;
                 while(! isFinished)
@@ -85,19 +85,19 @@ public class AdminController extends UserController{
                     {
                         case "1" :
                             String firstname = view.getUserInput("Enter firstname: ");
-                            mentor.setUserFirstName(firstname);
+                            mentor.setFirstName(firstname);
                             break;
                         case "2" :
                             String lastname = view.getUserInput("Enter lastname: ");
-                            mentor.setUserLastName(lastname);
+                            mentor.setLastName(lastname);
                             break;
                         case "3" :
                             String password = view.getUserInput("Enter pasword: ");
-                            mentor.setUserPassword(password);
+                            mentor.setPassword(password);
                             break;
                         case "4" :
                             String email = view.getUserInput("Enter email: ");
-                            mentor.setUserEmail(email);
+                            mentor.setEmail(email);
                             break;
                         case "5" :
                             Character group = view.getUserInput("Enter group: ").charAt(0);
@@ -123,7 +123,7 @@ public class AdminController extends UserController{
         String id = view.getUserInput("Enter ID of mentor: ");
         for (MentorModel mentor : dao.getMentorsFromFile())
         {
-            if (id.equals(Integer.toString(mentor.getUserID())))
+            if (id.equals(Integer.toString(mentor.getId())))
             {
                 String mentorToDisplay = mentor.toString();
                 view.clearScreen();

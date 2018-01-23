@@ -12,13 +12,14 @@ public class UsersDAO extends DAO implements LogableDAO{
     protected final static int ID_INDEX = 1;
     protected final static int FNAME_INDEX = 2;
     protected final static int LNAME_INDEX = 3;
-    protected final static int PASSWORD_INDEX = 4;
+    protected final static int EMAIL_INDEX = 4;
+    protected final static int PASSWORD_INDEX = 5;
 
-    protected final static int STUDENT_GROUP_INDEX = 5;
-    protected final static int STUDENT_TEAM_INDEX = 6;
-    protected final static int STUDENT_EXPERIENCE_INDEX = 7;
-    protected final static int STUDENT_ATTENDANCE_INDEX = 8;
-    protected final static int STUDENT_WALLET_INDEX = 9;
+//    protected final static int STUDENT_GROUP_INDEX = 5;
+//    protected final static int STUDENT_TEAM_INDEX = 6;
+//    protected final static int STUDENT_EXPERIENCE_INDEX = 7;
+//    protected final static int STUDENT_ATTENDANCE_INDEX = 8;
+//    protected final static int STUDENT_WALLET_INDEX = 9;
 
 
     protected String maxUserIdFile;
@@ -68,19 +69,21 @@ public class UsersDAO extends DAO implements LogableDAO{
         int id = Integer.parseInt(table[ID_INDEX]);
         String fname = table[FNAME_INDEX];
         String lname = table[LNAME_INDEX];
+        String email = table[EMAIL_INDEX];
         String password = table[PASSWORD_INDEX];
         char group = table[groupIndex].charAt(0);
 
-        return new MentorModel(id, fname, lname, password, group);
+        return new MentorModel(id, fname, lname, email, password, group);
     }
 
     public AdminModel createAdminModel(String[] table){
         int id = Integer.parseInt(table[ID_INDEX]);
         String fname = table[FNAME_INDEX];
         String lname = table[LNAME_INDEX];
+        String email = table[EMAIL_INDEX];
         String password = table[PASSWORD_INDEX];
 
-        return new AdminModel(id, fname, lname, password);
+        return new AdminModel(id, fname, lname, email, password);
     }
 
     public StudentModel createStudentModel(String[] table){
@@ -88,10 +91,11 @@ public class UsersDAO extends DAO implements LogableDAO{
         int id = Integer.parseInt(table[ID_INDEX]);
         String fname = table[FNAME_INDEX];
         String lname = table[LNAME_INDEX];
+        String email = table[EMAIL_INDEX];
         String password = table[PASSWORD_INDEX];
         char group = table[groupIndex].charAt(0);
 
-        return new StudentModel(id, fname, lname, password, group);
+        return new StudentModel(id, fname, lname, email, password, group);
     }
 
     public List<AdminModel> getAdminsFromFile(){
@@ -125,9 +129,9 @@ public class UsersDAO extends DAO implements LogableDAO{
     }
 
     public void saveModelToFile(UserModel model){
-        if(model.getUserRole().equals("admin")){
+        if(model.getRole().equals("admin")){
             saveAdmin( (AdminModel) model);
-        } else if(model.getUserRole().equals("mentor")) {
+        } else if(model.getRole().equals("mentor")) {
             saveMentor( (MentorModel) model);
         } else {
             saveStudent( (StudentModel) model);
@@ -136,42 +140,45 @@ public class UsersDAO extends DAO implements LogableDAO{
 
     protected void saveAdmin(AdminModel admin){
         String role = "admin";
-        String id = String.valueOf(admin.getUserID());
-        String fName = admin.getUserFirstName();
-        String lName = admin.getUserLastName();
-        String password = admin.getUserPassword();
+        String id = String.valueOf(admin.getId());
+        String fName = admin.getFirstName();
+        String lName = admin.getLastName();
+        String email = admin.getEmail();
+        String password = admin.getPassword();
         removeDataIfIdAlreadyExists(id, ID_INDEX);
-        String[] table = {role, id, fName, lName, password};
+        String[] table = {role, id, fName, lName, email, password};
         loadedTables.add(table);
         saveData();
     }
 
     protected void saveMentor(MentorModel mentor){
         String role = "mentor";
-        String id = String.valueOf(mentor.getUserID());
-        String fName = mentor.getUserFirstName();
-        String lName = mentor.getUserLastName();
-        String password = mentor.getUserPassword();
+        String id = String.valueOf(mentor.getId());
+        String fName = mentor.getFirstName();
+        String lName = mentor.getLastName();
+        String email = mentor.getEmail();
+        String password = mentor.getPassword();
         String group = String.valueOf(mentor.getMentorGroupName());
         removeDataIfIdAlreadyExists(id, ID_INDEX);
-        String[] table = {role, id, fName, lName, password, group};
+        String[] table = {role, id, fName, lName, email, password, group};
         loadedTables.add(table);
         saveData();
     }
 
     protected void saveStudent(StudentModel student){
         String role = "student";
-        String id = String.valueOf(student.getUserID());
-        String fName = student.getUserFirstName();
-        String lName = student.getUserLastName();
-        String password = student.getUserPassword();
+        String id = String.valueOf(student.getId());
+        String fName = student.getFirstName();
+        String lName = student.getLastName();
+        String email = student.getEmail();
+        String password = student.getPassword();
         String group = String.valueOf(student.getGroup());
         String team = student.getTeam();
         String experience = String.valueOf(student.getExperience());
         String attendance = String.valueOf(student.getAttendance());
         String wallet = String.valueOf(student.getWallet());
         removeDataIfIdAlreadyExists(id, ID_INDEX);
-        String[] table = {role, id, fName, lName, password, group, team, experience, attendance, wallet};
+        String[] table = {role, id, fName, lName, email, password, group, team, experience, attendance, wallet};
         loadedTables.add(table);
         saveData();
     }
