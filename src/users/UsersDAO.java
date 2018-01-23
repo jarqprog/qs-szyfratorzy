@@ -48,7 +48,7 @@ public class UsersDAO extends DAO implements LogableDAO{
         return false;
     }
 
-    public AdminModel createFirstAdmin(){
+    protected AdminModel createFirstAdmin(){
         return new AdminModel("admin", "admin", "admin");
     }
 
