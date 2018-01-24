@@ -5,13 +5,27 @@ import java.util.List;
 import users.StudentModel;
 
 
-public class GroupModel{
+public class GroupModel {
 
     private String name;
     private List<StudentModel> students;
+    private int id;
 
-    private  GroupModel(){
-        students = new ArrayList<StudentModel>();
+    public GroupModel(String name) {
+
+        this.name = name;
+        this.students = new ArrayList<StudentModel>();
+    }
+
+    public GroupModel(int id, String name, List<StudentModel> students) {
+
+        this.id = id;
+        this.name = name;
+        this.students = students;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName(){
@@ -28,5 +42,9 @@ public class GroupModel{
 
     public void addStudent(StudentModel student){
         students.add(student);
+    }
+
+    public void removeStudent(StudentModel student){
+        students.remove(student);
     }
 }
