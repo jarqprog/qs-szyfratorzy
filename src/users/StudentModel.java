@@ -5,13 +5,15 @@ import java.util.List;
 
 import application.Role;
 import item.ArtifactModel;
+import school.GroupModel;
 
 public class StudentModel extends UserModel
 {
-    private Character groupName;
+    private GroupModel groupName;
     private String team;
     private int wallet;
     private int experience;
+    private
     private List<ArtifactModel> inventory;
     private float attendance;
 
@@ -23,21 +25,24 @@ public class StudentModel extends UserModel
         experience = 0;
         inventory = new ArrayList<ArtifactModel>();
         attendance = 100;
-        groupName = '0';
+        groupName = "";
         team = "undefined";
 
     }
 
-    public StudentModel(int id, String firstName, String lastName, String email, String password, char group) {
+    public StudentModel(int id, String firstName, String lastName, String email, String password, GroupModel groupName) {
         super(id, firstName, lastName, email, password);
         role = Role.STUDENT.getName();
         wallet = 0;
         experience = 0;
         attendance = 100;
-        groupName = group;
+        this.groupName = groupName;
+        inventory = new ArrayList<ArtifactModel>;
+
+
     }
 
-    public Character getGroup()
+    public  getGroup()
     {
         return groupName;
     }

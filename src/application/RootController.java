@@ -44,7 +44,7 @@ public class RootController{
     private String [] loggingProcedure() {
         String login = view.displayLoginScreen("Login: ");
         Console console = System.console();
-        System.out.println("Please enter your password: ");
+        view.displayMessage("Please enter your password: ");
         char[] password = console.readPassword();
         dao.updateLoadedTables();
         String [] userDate = dao.importUserData(login, String.valueOf(password));
