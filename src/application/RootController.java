@@ -24,6 +24,7 @@ public class RootController{
 
     public void runApplication(){
         prepareDatabase();
+        runTest();  // TEST!!!
         boolean isDone = false;
         while (! isDone){
             handleIntro();
@@ -109,7 +110,18 @@ public class RootController{
     }
 
     private void runTest(){
+        DbManagerDAO dao = new DbManagerDAO();
+        String query = "SELECT * FROM admins;";
+        String[] labels = {"id", "first_name", "last_name", "email", "password"};
+        List<String[]> dataCollection = dao.getData(query, labels);
+        String [] data = dataCollection.get(0);
+        System.out.println(data.length);
+        for(String text : data){
+
+            System.out.println(text);
+        }
         System.out.println("Nothing to test...");
+        view.handlePause();
 
     }
 

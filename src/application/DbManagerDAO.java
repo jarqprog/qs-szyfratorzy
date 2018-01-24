@@ -1,8 +1,6 @@
 package application;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,16 +10,20 @@ import java.sql.DriverManager;
 import java.sql.Array;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
-import java.sql.Statement;
-import java.sql.ResultSet;
 import java.sql.DatabaseMetaData;
 import java.io.InputStreamReader;
 import java.io.FileNotFoundException;
 import java.io.File;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+
 public class DbManagerDAO extends DatabaseDAO {
 
-    public void executeQuery(String query){
+    public void inputData(String query){
         openConnection();
         Statement stmt = null;
         try {
@@ -36,12 +38,19 @@ public class DbManagerDAO extends DatabaseDAO {
         closeConnection();
     }
 
-    public List<String[]> getDataByColumns(String query, String[] columnLabels){
+    public List<String[]> getData(String query){
+
+        /// implementation
+
+        return new ArrayList<String[]>();
+
+    }
+
+    public List<String[]> getData(String query, String[] columnLabels) {
         openConnection();
-        ResultSet result;
         List<String[]> dataByColumns = new ArrayList<String[]>();
         String[] data;
-        for (String columnLabel : columnLabels){
+        for (String columnLabel : columnLabels) {
             data = getDataByColumn(query, columnLabel);
             dataByColumns.add(data);
         }
@@ -49,25 +58,26 @@ public class DbManagerDAO extends DatabaseDAO {
         return dataByColumns;
     }
 
-    protected String[] getDataByColumn(String query, String columnLabel){
+    private String[] getDataByColumn(String query, String columnLabel) {
+
         try{
             connection.setAutoCommit(false);
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
-            List<String> columnData = new ArrayList<String>();
+            String data;
+            List<String> columnData = new ArrayList<>();
             while(result.next()){
                 Object object = result.getObject(columnLabel);
-                String data = String.valueOf(object);
+                data = String.valueOf(object);
                 columnData.add(data);
             }
             statement.close();
             result.close();
             return columnData.toArray(new String[0]);
+
         } catch(Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             return null;
         }
     }
-
-
 }
