@@ -5,7 +5,7 @@ import java.util.List;
 import application.Table;
 import application.DbManagerDAO;
 
-public class MentorDAO {
+public class MentorDAO extends UsersDAO {
 
 
     private final String DEFAULT_TABLE = Table.MENTORS.getName();

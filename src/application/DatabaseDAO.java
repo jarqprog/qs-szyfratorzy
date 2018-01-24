@@ -72,22 +72,6 @@ public class DatabaseDAO extends DAO{
         }
     }
 
-    public void executeQuery(String query){
-        openConnection();
-        Statement stmt = null;
-        try {
-            connection.setAutoCommit(false);
-            stmt = connection.createStatement();
-            stmt.executeUpdate(query);
-            stmt.close();
-            connection.commit();
-        } catch ( Exception e ){
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-        }
-        closeConnection();
-    }
-
-
     public void executeSqlScript(File inputFile){
         String delimiter = ";";
         Scanner scanner;
@@ -118,39 +102,4 @@ public class DatabaseDAO extends DAO{
         }
         scanner.close();
     }
-
-    public List<String[]> getDataByColumns(String query, String[] columnLabels){
-        openConnection();
-        ResultSet result;
-        List<String[]> dataByColumns = new ArrayList<String[]>();
-        String[] data;
-        for (String columnLabel : columnLabels){
-            data = getDataByColumn(query, columnLabel);
-            dataByColumns.add(data);
-        }
-        closeConnection();
-        return dataByColumns;
-    }
-
-    protected String[] getDataByColumn(String query, String columnLabel){
-        try{
-            connection.setAutoCommit(false);
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(query);
-            List<String> columnData = new ArrayList<String>();
-            while(result.next()){
-                Object object = result.getObject(columnLabel);
-                String data = String.valueOf(object);
-                columnData.add(data);
-            }
-            statement.close();
-            result.close();
-            return columnData.toArray(new String[0]);
-        } catch(Exception e){
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            return null;
-        }
-    }
-
-
 }

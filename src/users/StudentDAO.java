@@ -6,7 +6,7 @@ import application.Table;
 import application.DbManagerDAO;
 
 
-public class StudentDAO {
+public class StudentDAO extends UsersDAO {
 
     private final String DEFAULT_TABLE = Table.STUDENTS.getName();
 

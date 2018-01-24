@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import application.Table;
 import application.DbManagerDAO;
 
-public class AdminDAO {
+public class AdminDAO extends UsersDAO {
 
     private final String DEFAULT_TABLE = Table.ADMINS.getName();
 
