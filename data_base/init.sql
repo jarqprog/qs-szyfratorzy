@@ -1,3 +1,4 @@
+
 PRAGMA  FOREIGN_KEYS = ON;
 
 BEGIN TRANSACTION;
@@ -36,6 +37,7 @@ CREATE TABLE IF NOT EXISTS admins(
   last_name text,
   email text,
   password text);
+<<<<<<< HEAD
 
 CREATE TABLE IF NOT EXISTS artifacts(
   id integer PRIMARY KEY AUTOINCREMENT ,
@@ -73,8 +75,7 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
   FOREIGN KEY (student_id) REFERENCES students(id),
   artefact_id integer,
   FOREIGN KEY (artefact_id) REFERENCES artifacts(id));
-  
-INSERT INTO admins(first_name, last_name, email, password)
-VALUES(admin, admin, admin@email.com, admin);
+
+INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
 
 COMMIT;

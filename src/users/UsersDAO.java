@@ -3,10 +3,10 @@ package users;
 
 import java.util.List;
 import java.util.ArrayList;
-import application.DAO;
+import application.DatabaseDAO;
 
 
-public class UsersDAO extends DAO implements LogableDAO{
+public class UsersDAO extends DatabaseDAO implements LogableDAO{
 
     protected final static int ROLE_INDEX = 0;
     protected final static int ID_INDEX = 1;
@@ -26,8 +26,8 @@ public class UsersDAO extends DAO implements LogableDAO{
 
     public UsersDAO(){
         defaultFileName = "users.csv";
-        defaultFilePath = "DataFiles/users.csv";
-        maxUserIdFile = "DataFiles/maxUserId.csv";
+        defaultFilePath = "data_files/users.csv";
+        maxUserIdFile = "data_files/maxUserId.csv";
         prepareFile();
         prepareFile(maxUserIdFile);
     }
