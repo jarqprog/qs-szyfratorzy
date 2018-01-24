@@ -2,7 +2,9 @@ package application;
 
 public enum Table {
 
-    STUDENTS("students"), MENTORS("mentors"), ADMINS("admins"), TRANSACTIONS("transactions"), GROUPS("groups"), TEAMS("teams");
+    STUDENTS("students"), MENTORS("mentors"), ADMINS("admins"),
+    TRANSACTIONS("transactions"), GROUPS("groups"),
+    TEAMS("teams"), ARTIFACTS("artifacts");
 
     private String name;
 
