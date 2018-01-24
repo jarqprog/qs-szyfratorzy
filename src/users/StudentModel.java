@@ -2,6 +2,8 @@ package users;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import application.Role;
 import item.ArtifactModel;
 
 public class StudentModel extends UserModel
@@ -16,7 +18,7 @@ public class StudentModel extends UserModel
     public StudentModel(String firstName, String lastName, String password)
     {
         super(firstName, lastName, password);
-        setRole("student");
+        role = Role.STUDENT.getName();
         wallet = 0;
         experience = 0;
         inventory = new ArrayList<ArtifactModel>();
@@ -26,10 +28,9 @@ public class StudentModel extends UserModel
 
     }
 
-    public StudentModel(int id, String firstName, String lastName, String email, String password, char group)
-    {
+    public StudentModel(int id, String firstName, String lastName, String email, String password, char group) {
         super(id, firstName, lastName, email, password);
-        setRole("student");
+        role = Role.STUDENT.getName();
         wallet = 0;
         experience = 0;
         attendance = 100;

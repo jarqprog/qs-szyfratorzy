@@ -26,8 +26,8 @@ public class UsersDAO extends DatabaseDAO implements LogableDAO{
 
     public UsersDAO(){
         defaultFileName = "users.csv";
-        defaultFilePath = "DataFiles/users.csv";
-        maxUserIdFile = "DataFiles/maxUserId.csv";
+        defaultFilePath = "data_files/users.csv";
+        maxUserIdFile = "data_files/maxUserId.csv";
         prepareFile();
         prepareFile(maxUserIdFile);
     }
