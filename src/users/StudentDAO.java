@@ -54,14 +54,12 @@ public class StudentDAO extends UsersDAO {
         groupName = studentData[groupIndex].charAt(0);
 
         return new StudentModel(studentId, firstName, lastName, email, password, 0, 0, 100,
-                group, team, inventory  );
-
+                group, team, inventory);
+    }
     public void saveObject(StudentModel student) {
 
     }
 
     public void saveObjects(List<StudentModel> students) {
-
-        //
     }
 }
