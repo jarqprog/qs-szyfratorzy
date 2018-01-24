@@ -1,11 +1,6 @@
 PRAGMA  FOREIGN_KEYS = ON;
 
-CREATE TABLE IF NOT EXISTS mentors(
-  id integer PRIMARY KEY AUTOINCREMENT,
-  first_name text,
-  last_name text,
-  email text,
-  password text);
+
 
 CREATE TABLE IF NOT EXISTS groups(
   id integer PRIMARY KEY AUTOINCREMENT,
@@ -14,6 +9,15 @@ CREATE TABLE IF NOT EXISTS groups(
 CREATE TABLE  IF NOT EXISTS teams(
   id integer PRIMARY KEY AUTOINCREMENT,
   name text UNIQUE);
+
+CREATE TABLE IF NOT EXISTS mentors(
+  id integer PRIMARY KEY AUTOINCREMENT,
+  first_name text,
+  last_name text,
+  email text,
+  password text,
+  group_id integer,
+  FOREIGN KEY (group_id) REFERENCES groups(id));
 
 CREATE TABLE IF NOT EXISTS students(
   id integer PRIMARY KEY AUTOINCREMENT,
@@ -75,7 +79,3 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
 INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
 INSERT OR IGNORE INTO groups VALUES(1,'undefined');
 INSERT OR IGNORE INTO teams VALUES(1,'undefined');
-
-
-
-COMMIT;
