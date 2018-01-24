@@ -48,7 +48,7 @@ public class StudentDAO extends UsersDAO {
         return students;
     }
 
-    public StudentModel u(String[] studentData) {
+    public StudentModel getOneObject(String[] studentData) {
 
         studentId = Integer.parseInt(studentData[ID_INDEX]);
         firstName = studentData[FIRST_NAME_INDEX];
@@ -58,8 +58,8 @@ public class StudentDAO extends UsersDAO {
         wallet = Integer.parseInt(studentData[WALLET_INDEX]);
         experience  = Integer.parseInt(studentData[EXPERIENCE_INDEX]);
         attendance = Float.parseFloat(studentData[ATTENDANCE_INDEX]);
-        group = new GroupModel("undefined");
-        team = new TeamModel("undefined");
+        group = new GroupModel("undefined"); // tmp
+        team = new TeamModel("undefined"); // tmp
         inventory = new ArrayList<>();
 
         return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience, attendance,
