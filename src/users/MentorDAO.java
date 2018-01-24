@@ -11,8 +11,6 @@ public class MentorDAO extends UsersDAO {
 
 
     private final String DEFAULT_TABLE = Table.MENTORS.getName();
-    private DbManagerDAO daoManager = new DbManagerDAO();
-
 
     private final Integer ID_INDEX = 0;
     private final Integer EMAIL_INDEX = 1;
@@ -38,7 +36,7 @@ public class MentorDAO extends UsersDAO {
         String lastName = record[LAST_NAME_INDEX];
         String email = record[EMAIL_INDEX];
         String password = record[PASSWORD_INDEX];
-        GroupModel group = new GroupModel("undified");
+        GroupModel group = new GroupModel("undefined");
 
         return new MentorModel(id, firstName, lastName, email, password, group);
     }
@@ -50,10 +48,12 @@ public class MentorDAO extends UsersDAO {
         String email = mentor.getEmail();
         String password = mentor.getPassword();
 
+        // dodaj grupę!!!
+
         String query = String.format("UPDATE %s SET first_name=%s , last_name=%s, email=%s, password=%s " +
                 "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, mentor_id);
-
-        daoManager.inputData(query);
+        DbManagerDAO dao = new DbManagerDAO();
+        dao.inputData(query);
     }
 
     public void saveObjects(List<MentorModel> mentors) {

@@ -1,9 +1,7 @@
 package item;
 
 import java.util.List;
-import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import application.DbManagerDAO;
 import application.Table;
@@ -11,7 +9,6 @@ import application.Table;
 public class ArtifactDAO {
 
     private final String DEFAULT_TABLE = Table.ARTIFACTS.getName();
-    private DbManagerDAO daoManager = new DbManagerDAO();
 
     private final static int ID_INDEX = 0;
     private final static int TYPE_INDEX = 1;
@@ -21,13 +18,13 @@ public class ArtifactDAO {
 
     public List<ArtifactModel> getObjects(List<String[]> dataCollection) {
 
-        ArrayList<ArtifactModel> inventory = new ArrayList<ArtifactModel>();
+        ArrayList<ArtifactModel> artifacts = new ArrayList<ArtifactModel>();
 
         for (String [] record : dataCollection) {
             ArtifactModel artifact = getObject(record);
-            inventory.add(artifact);
+            artifacts.add(artifact);
         }
-        return inventory;
+        return artifacts;
     }
 
     public ArtifactModel getObject(String[] record) {
@@ -50,7 +47,8 @@ public class ArtifactDAO {
         String query = String.format("UPDATE %s SET name=%s , type=%s, description=%s, price=%s " +
                 "WHERE artifact_id=%s;", DEFAULT_TABLE, itemName, itemType, itemDescription, price, artifact_id);
 
-        daoManager.inputData(query);
+        DbManagerDAO dao = new DbManagerDAO();
+        dao.inputData(query);
     }
 
     public void saveObjects(List<ArtifactModel> artifacts) {
