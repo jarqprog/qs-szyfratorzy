@@ -1,6 +1,7 @@
 package application;
 
 import java.util.List;
+import java.util.Arrays;
 import users.LogableDAO;
 import users.UsersDAO;
 import users.MentorModel;
@@ -111,16 +112,19 @@ public class RootController{
 
     private void runTest(){
         DbManagerDAO dao = new DbManagerDAO();
+        String insertQuery =
+                "INSERT OR IGNORE INTO admins VALUES(5,'Maciek','Jablonowski','maciek@gmail.com','12321');";
+        dao.inputData(insertQuery);
+        String insertQuery01 =
+                "INSERT OR IGNORE INTO admins VALUES(6,'Piotr','Gryzlo','piotrek@cc.pl','12321');";
+        dao.inputData(insertQuery01);
         String query = "SELECT * FROM admins;";
-        String[] labels = {"id", "first_name", "last_name", "email", "password"};
-        List<String[]> dataCollection = dao.getData(query, labels);
-        for (String[] collection : dataCollection) {
-            for (String text : collection) {
 
-                System.out.println(text);
-            }
+        List<String[]> collectionNew = dao.getData("SELECT * FROM admins;");
+        for(String[] lista : collectionNew){
+            System.out.println(Arrays.toString(lista));
         }
-        System.out.println("Nothing to test...");
+
         view.handlePause();
 
     }
