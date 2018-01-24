@@ -5,54 +5,89 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ArtifactDAO extends ItemsDAO{
+import application.DbManagerDAO;
+import application.Table;
 
-    protected final static int GENRE_INDEX = 0;
-    protected final static int ID_INDEX = 1;
-    protected final static int TYPE_INDEX = 2;
-    protected final static int NAME_INDEX = 3;
-    protected final static int DESCRIPTION_INDEX = 4;
-    protected final static int PRICE_INDEX = 5;
+public class ArtifactDAO {
 
-    public ArtifactDAO(){
-        defaultFileName = "artifacts.csv";
-        defaultFilePath = "DataFiles/artifacts.csv";
-        prepareFile();
-    }
+    private final String DEFAULT_TABLE = Table.ARTIFACTS.getName();
+    private DbManagerDAO daoManager = new DbManagerDAO();
 
-    public List<ArtifactModel> getArtifactsFromFile(){
-        List<String[]> filteredData = new ArrayList<String[]>();
-        List<ArtifactModel> artifacts = new ArrayList<ArtifactModel>();
-        updateLoadedTables();
-        for(String[] table : loadedTables){
-            if(checkIfDataMatches("artifact", GENRE_INDEX, table)){
-                artifacts.add(createArtifactFromData(table));
-            }
+    protected final static int ID_INDEX = 0;
+    protected final static int TYPE_INDEX = 1;
+    protected final static int NAME_INDEX = 2;
+    protected final static int DESCRIPTION_INDEX = 3;
+    protected final static int PRICE_INDEX = 4;
+
+    public List<ArtifactModel> getObjects(List<String[]> dataCollection) {
+
+        ArrayList<ArtifactModel> inventory = new ArrayList<ArtifactModel>();
+
+        for (String [] record : dataCollection) {
+            ArtifactModel artifact = getObject(record);
+            inventory.add(artifact);
         }
-        return artifacts;
+        return inventory;
     }
 
-    public ArtifactModel createArtifactFromData(String[] table){
-        int id = Integer.parseInt(table[ID_INDEX]);
-        char type = table[TYPE_INDEX].charAt(0);
-        String name = table[NAME_INDEX];
-        String description = table[DESCRIPTION_INDEX];
-        int price = Integer.parseInt(table[PRICE_INDEX]);
+    public ArtifactModel getObject(String[] record) {
+        int id = Integer.parseInt(record[ID_INDEX]);
+        String itemType = record[TYPE_INDEX];
+        String itemName = record[NAME_INDEX];
+        String itemDescription = record[DESCRIPTION_INDEX];
+        int price = Integer.parseInt(record[PRICE_INDEX]);
 
-        return new ArtifactModel(id, type, name, description, price);
+
+        return new ArtifactModel(id, itemType, itemName, itemDescription, price);
     }
 
-    public void saveArtifact(ArtifactModel artifact){
-        String genre = "artifact";
-        String id = String.valueOf(artifact.getId());
-        String type = String.valueOf(artifact.getItemType());
-        String name = artifact.getItemName();
-        String description = artifact.getItemDescription();
+    public ArtifactModel getObject(String query) {
+
+        String sqlStatement = String.format("SELECT * FROM %s WHERE %s", DEFAULT_TABLE, query);
+        String [] record = daoManager.getData(sqlStatement);
+
+            int id = Integer.parseInt(record[ID_INDEX]);
+            char itemType = record[TYPE_INDEX].charAt(0);
+            String itemName = record[NAME_INDEX];
+            String itemDescription = record[DESCRIPTION_INDEX];
+            int price = Integer.parseInt(record[PRICE_INDEX]);
+
+
+        return new ArtifactModel(id, itemType, itemName, itemDescription, price);
+    }
+
+    public List<ArtifactModel> getObjects(String query) {
+
+        String sqlStatement = String.format("SELECT * FROM %s WHERE %s", DEFAULT_TABLE, query);
+        List<String []> artifacts = daoManager.getData(sqlStatement);
+        ArrayList<ArtifactModel> inventory = new ArrayList<ArtifactModel>();
+
+        for (String [] record : artifacts) {
+            ArtifactModel artifact = getObject(record);
+            inventory.add(artifact);
+        }
+
+        return inventory;
+    }
+
+    public void saveObject(ArtifactModel artifact) {
+        String artifact_id = String.valueOf(artifact.getId());
+        String itemType = String.valueOf(artifact.getItemType());
+        String itemName = artifact.getItemName();
+        String itemDescription = artifact.getItemDescription();
         String price = String.valueOf(artifact.getPrice());
-        removeDataIfIdAlreadyExists(id, ID_INDEX);
-        String[] table = {genre, id, type, name, description, price};
-        loadedTables.add(table);
-        saveData();
+
+        String query = String.format("UPDATE %s SET name=%s , type=%s, description=%s, price=%s " +
+                "WHERE artifact_id=%s;", DEFAULT_TABLE, itemName, itemType, itemDescription, price, artifact_id);
+
+        daoManager.inputData(query);
+    }
+
+    public void saveObjects(List<ArtifactModel> artifacts) {
+
+        for(ArtifactModel artifact : artifacts) {
+            saveObject(artifact);
+        }
     }
 
 }
