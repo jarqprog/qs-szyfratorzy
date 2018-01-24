@@ -98,7 +98,7 @@ public class UsersDAO extends DatabaseDAO implements LogableDAO{
         List<ArtifactModel> inventory = new ArrayList<>();
 
         return new StudentModel(id, fname, lname, email, password, wallet,
-                                experience, attendance, group, team, inventory);
+                                experience, attendance, team, group, inventory);
     }
 
     public List<AdminModel> getAdminsFromFile(){
