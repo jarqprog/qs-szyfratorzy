@@ -46,11 +46,11 @@ public class DbManagerDAO extends DatabaseDAO {
 
     }
 
-    public List<String[]> getData(String query, String[] columnLabels) {
+    public List<String[]> getData(String query, String[] columnLabels){
         openConnection();
         List<String[]> dataByColumns = new ArrayList<String[]>();
         String[] data;
-        for (String columnLabel : columnLabels) {
+        for (String columnLabel : columnLabels){
             data = getDataByColumn(query, columnLabel);
             dataByColumns.add(data);
         }
@@ -58,21 +58,21 @@ public class DbManagerDAO extends DatabaseDAO {
         return dataByColumns;
     }
 
-    private String[] getDataByColumn(String query, String columnLabel) {
 
+    protected String[] getDataByColumn(String query, String columnLabel){
         try{
             connection.setAutoCommit(false);
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
-            String data;
-            List<String> columnData = new ArrayList<>();
+            List<String> columnData = new ArrayList<String>();
             while(result.next()){
                 Object object = result.getObject(columnLabel);
-                data = String.valueOf(object);
+                String data = String.valueOf(object);
                 columnData.add(data);
             }
             statement.close();
             result.close();
+
             return columnData.toArray(new String[0]);
 
         } catch(Exception e){

@@ -114,11 +114,11 @@ public class RootController{
         String query = "SELECT * FROM admins;";
         String[] labels = {"id", "first_name", "last_name", "email", "password"};
         List<String[]> dataCollection = dao.getData(query, labels);
-        String [] data = dataCollection.get(0);
-        System.out.println(data.length);
-        for(String text : data){
+        for (String[] collection : dataCollection) {
+            for (String text : collection) {
 
-            System.out.println(text);
+                System.out.println(text);
+            }
         }
         System.out.println("Nothing to test...");
         view.handlePause();
