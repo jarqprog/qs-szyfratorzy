@@ -4,56 +4,62 @@ import java.util.ArrayList;
 import java.util.List;
 import application.Table;
 import application.DbManagerDAO;
+import item.ArtifactModel;
+import school.GroupModel;
+import school.TeamModel;
 
 
 public class StudentDAO extends UsersDAO {
 
+    private DbManagerDAO daoMenager = new DbManagerDAO();
+    GroupModel group = new GroupModel("A");
+    ArtifactModel axe = new ArtifactModel("Topór","Topór jest zajebisty", 100);
+    List<ArtifactModel> inventory;
+    TeamModel team = new TeamModel("Zajebisty");
+
+
     private final String DEFAULT_TABLE = Table.STUDENTS.getName();
-    private final Integer IdIndex = 0;
+    private final Integer idIndex = 0;
     private final Integer firstNameIndex = 1;
     private final Integer lastNameIndex = 2;
     private final Integer emailIndex = 3;
     private final Integer passwordIndex = 4;
     private final Integer groupIndex = 5;
 
-    private DbManagerDAO daoMenager = new DbManagerDAO();
+    private int studentId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private char groupName;
 
 
-//    public List<StudentModel> getObjects(String query) {
-//
-//        List<StudentModel> students = new ArrayList<StudentModel>();
-//        String sqlStatement = String.format("SELECT * FROM %s %s", DEFAULT_TABLE, query);
-//        List<String[]> data = daoMenager.getData(sqlStatement);
-//
-//        for (String[] record: data){
-//            studentId = Integer.parseInt(record[idIndex]);
-//            firstName = record[firstNameIndex];
-//            lastName = record[lastNameIndex];
-//            email = record[emailIndex]);
-//            password = record[passwordIndex];
-//            group = record[groupIndex];
-//
-//            students.add(new StudentModel(student_id))
-//
-//        }
-//
-//        return students;
-//    }
-//
-//    public StudentModel getObject(String query){
-//
-//        // temporary impl
-//        return new StudentModel(301, "Ania", "Pierog",
-//                "misiaczek@gmail.com", "12321", 'a');
-//    }
-//
-//    public void saveObject(StudentModel student){
-//
-//        //
-//    }
-//
-//    public void saveObjects(List<StudentModel> students){
-//
-//        //
-//    }
+    public List<StudentModel> getManyObjects(List<String[]> dataCollection) {
+
+        List<StudentModel> students = new ArrayList<StudentModel>();
+        for (String[] record : dataCollection) {
+            StudentModel student = getOneObject(record);
+            students.add(student);
+        }
+        return students;
+    }
+
+    public StudentModel getOneObject(String[] studentData) {
+
+        studentId = Integer.parseInt(studentData[idIndex]);
+        firstName = studentData[firstNameIndex];
+        lastName = studentData[lastNameIndex];
+        email = studentData[emailIndex];
+        password = studentData[passwordIndex];
+        groupName = studentData[groupIndex].charAt(0);
+
+        return new StudentModel(studentId, firstName, lastName, email, password, 0, 0, 100,
+                group, team, inventory);
+    }
+    public void saveObject(StudentModel student) {
+
+    }
+
+    public void saveObjects(List<StudentModel> students) {
+    }
 }

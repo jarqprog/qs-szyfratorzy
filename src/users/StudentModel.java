@@ -30,6 +30,7 @@ public class StudentModel extends UserModel {
     public StudentModel(int id, String firstName, String lastName, String email,
                         String password, int wallet, int experience, float attendance,
                         GroupModel group, TeamModel team, List<ArtifactModel> inventory) {
+
         super(id, firstName, lastName, email, password);
         this.wallet = wallet;
         this.experience = experience;
