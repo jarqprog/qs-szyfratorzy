@@ -1,7 +1,4 @@
-
 PRAGMA  FOREIGN_KEYS = ON;
-
-BEGIN TRANSACTION;
 
 CREATE TABLE IF NOT EXISTS mentors(
   id integer PRIMARY KEY AUTOINCREMENT,
@@ -24,12 +21,12 @@ CREATE TABLE IF NOT EXISTS students(
   last_name text,
   email text,
   password text,
-  team_id integer,
-  FOREIGN KEY (team_id) REFERENCES teams(id),
-  group_id integer,
-  FOREIGN KEY (group_id) REFERENCES groups(id),
   wallet integer,
-  expirence integer);
+  expirence integer,
+  team_id integer,
+	group_id integer,
+	FOREIGN KEY (team_id) REFERENCES teams(id),
+	FOREIGN KEY (group_id) REFERENCES groups(id));
 
 CREATE TABLE IF NOT EXISTS admins(
   id integer PRIMARY KEY AUTOINCREMENT,
@@ -37,7 +34,6 @@ CREATE TABLE IF NOT EXISTS admins(
   last_name text,
   email text,
   password text);
-<<<<<<< HEAD
 
 CREATE TABLE IF NOT EXISTS artifacts(
   id integer PRIMARY KEY AUTOINCREMENT ,
@@ -56,26 +52,30 @@ CREATE TABLE IF NOT EXISTS quests(
 CREATE TABLE IF NOT EXISTS teams_transactions(
   id integer PRIMARY KEY AUTOINCREMENT,
   team_id integer,
-  FOREIGN KEY (team_id) REFERENCES teams(id),
   artefact_id integer,
-  FOREIGN KEY (artefact_id) REFERENCES artifacts(id),
-  date text);
+  date text,
+  FOREIGN KEY (team_id) REFERENCES teams(id),
+  FOREIGN KEY (artefact_id) REFERENCES artifacts(id));
   
 CREATE TABLE IF NOT EXISTS students_transactions(
   id integer PRIMARY KEY AUTOINCREMENT,
   student_id integer,
-  FOREIGN KEY (student_id) REFERENCES students(id),
   artefact_id integer,
+  date text,
   FOREIGN KEY (artefact_id) REFERENCES artifacts(id),
-  date text);
+  FOREIGN KEY (student_id) REFERENCES students(id));
   
 CREATE TABLE IF NOT EXISTS students_artifacts(
   id integer PRIMARY KEY AUTOINCREMENT,
   student_id integer,
-  FOREIGN KEY (student_id) REFERENCES students(id),
   artefact_id integer,
-  FOREIGN KEY (artefact_id) REFERENCES artifacts(id));
+  FOREIGN KEY (artefact_id) REFERENCES artifacts(id),
+  FOREIGN KEY (student_id) REFERENCES students(id));
 
 INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
+INSERT OR IGNORE INTO groups VALUES(1,'undefined');
+INSERT OR IGNORE INTO teams VALUES(1,'undefined');
+
+
 
 COMMIT;
