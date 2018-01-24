@@ -11,27 +11,31 @@ import school.TeamModel;
 
 public class StudentDAO extends UsersDAO {
 
-    private DbManagerDAO daoMenager = new DbManagerDAO();
-    GroupModel group = new GroupModel("A");
-    ArtifactModel axe = new ArtifactModel("Topór","Topór jest zajebisty", 100);
-    List<ArtifactModel> inventory;
-    TeamModel team = new TeamModel("Zajebisty");
-
+    private DbManagerDAO daoManager;
 
     private final String DEFAULT_TABLE = Table.STUDENTS.getName();
-    private final Integer idIndex = 0;
-    private final Integer firstNameIndex = 1;
-    private final Integer lastNameIndex = 2;
-    private final Integer emailIndex = 3;
-    private final Integer passwordIndex = 4;
-    private final Integer groupIndex = 5;
+    private final Integer ID_INDEX = 0;
+    private final Integer FIRST_NAME_INDEX = 1;
+    private final Integer LAST_NAME_INDEX = 2;
+    private final Integer EMAIL_INDEX = 3;
+    private final Integer PASSWORD_INDEX = 4;
 
+    private final Integer WALLET_INDEX = 5;
+    private final Integer EXPERIENCE_INDEX = 6;
+    private final Integer ATTENDANCE_INDEX = 7;
+    private final Integer TEAM_INDEX = 8;
+    private final Integer GROUP_INDEX = 9;
     private int studentId;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private char groupName;
+    private int wallet;
+    private int experience;
+    private float attendance;
+    private GroupModel group;
+    private TeamModel team;
+    List<ArtifactModel> inventory;
 
 
     public List<StudentModel> getManyObjects(List<String[]> dataCollection) {
@@ -46,15 +50,20 @@ public class StudentDAO extends UsersDAO {
 
     public StudentModel getOneObject(String[] studentData) {
 
-        studentId = Integer.parseInt(studentData[idIndex]);
-        firstName = studentData[firstNameIndex];
-        lastName = studentData[lastNameIndex];
-        email = studentData[emailIndex];
-        password = studentData[passwordIndex];
-        groupName = studentData[groupIndex].charAt(0);
+        studentId = Integer.parseInt(studentData[ID_INDEX]);
+        firstName = studentData[FIRST_NAME_INDEX];
+        lastName = studentData[LAST_NAME_INDEX];
+        email = studentData[EMAIL_INDEX];
+        password = studentData[PASSWORD_INDEX];
+        wallet = Integer.parseInt(studentData[WALLET_INDEX]);
+        experience  = Integer.parseInt(studentData[EXPERIENCE_INDEX]);
+        attendance = Float.parseFloat(studentData[ATTENDANCE_INDEX]);
+        group = new GroupModel("undefined");
+        team = new TeamModel("undefined");
+        inventory = new ArrayList<>();
 
-        return new StudentModel(studentId, firstName, lastName, email, password, 0, 0, 100,
-                group, team, inventory);
+        return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience, attendance,
+                team, group, inventory);
     }
     public void saveObject(StudentModel student) {
 
