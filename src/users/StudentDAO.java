@@ -48,7 +48,7 @@ public class StudentDAO extends UsersDAO {
         return students;
     }
 
-    public StudentModel getOneObject(String[] studentData) {
+    public StudentModel u(String[] studentData) {
 
         studentId = Integer.parseInt(studentData[ID_INDEX]);
         firstName = studentData[FIRST_NAME_INDEX];
