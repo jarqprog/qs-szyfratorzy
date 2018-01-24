@@ -75,7 +75,3 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
 INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
 INSERT OR IGNORE INTO groups VALUES(1,'undefined');
 INSERT OR IGNORE INTO teams VALUES(1,'undefined');
-
-
-
-COMMIT;
