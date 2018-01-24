@@ -6,14 +6,16 @@ import application.Table;
 import application.DbManagerDAO;
 import item.ArtifactModel;
 import school.GroupModel;
+import school.TeamModel;
 
 
 public class StudentDAO extends UsersDAO {
 
     private DbManagerDAO daoMenager = new DbManagerDAO();
     GroupModel group = new GroupModel("A");
-    ArtifactModel artifact = new ArtifactModel("Topór",
-            "Topór jest zajebisty", 100);
+    ArtifactModel axe = new ArtifactModel("Topór","Topór jest zajebisty", 100);
+    List<ArtifactModel> inventory;
+    TeamModel team = new TeamModel("Zajebisty");
 
 
     private final String DEFAULT_TABLE = Table.STUDENTS.getName();
@@ -51,8 +53,8 @@ public class StudentDAO extends UsersDAO {
         password = studentData[passwordIndex];
         groupName = studentData[groupIndex].charAt(0);
 
-        return new StudentModel(studentId, firstName, lastName, email, password, groupName);
-    }
+        return new StudentModel(studentId, firstName, lastName, email, password, 0, 0, 100,
+                group, team, inventory  );
 
     public void saveObject(StudentModel student) {
 
