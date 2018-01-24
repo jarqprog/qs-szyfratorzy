@@ -18,26 +18,26 @@ public class StudentModel extends UserModel {
 
     public StudentModel(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
-        role = Role.STUDENT.getName();
         wallet = 0;
         experience = 0;
         attendance = 100;
         group = new GroupModel("undefined");
         team = new TeamModel("undefined");
         inventory = new ArrayList<ArtifactModel>();
+        role = Role.STUDENT.getName();
     }
 
     public StudentModel(int id, String firstName, String lastName, String email,
                         String password, int wallet, int experience, float attendance,
-                        GroupModel group, TeamModel team, ArrayList<ArtifactModel> inventory) {
+                        GroupModel group, TeamModel team, List<ArtifactModel> inventory) {
         super(id, firstName, lastName, email, password);
-        role = Role.STUDENT.getName();
         this.wallet = wallet;
         this.experience = experience;
         this.attendance = attendance;
         this.group = group;
         this.team = team;
         this.inventory = inventory;
+        role = Role.STUDENT.getName();
 
     }
 
