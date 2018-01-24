@@ -21,22 +21,22 @@ public class StudentModel extends UserModel {
         wallet = 0;
         experience = 0;
         attendance = 100;
-        group = new GroupModel("undefined");
         team = new TeamModel("undefined");
+        group = new GroupModel("undefined");
         inventory = new ArrayList<ArtifactModel>();
         role = Role.STUDENT.getName();
     }
 
     public StudentModel(int id, String firstName, String lastName, String email,
                         String password, int wallet, int experience, float attendance,
-                        GroupModel group, TeamModel team, List<ArtifactModel> inventory) {
+                        TeamModel team, GroupModel group, List<ArtifactModel> inventory) {
 
         super(id, firstName, lastName, email, password);
         this.wallet = wallet;
         this.experience = experience;
         this.attendance = attendance;
-        this.group = group;
         this.team = team;
+        this.group = group;
         this.inventory = inventory;
         role = Role.STUDENT.getName();
 
