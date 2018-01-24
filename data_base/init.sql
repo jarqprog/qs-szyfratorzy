@@ -1,5 +1,4 @@
 PRAGMA  FOREIGN_KEYS = ON;
-
 BEGIN TRANSACTION;
 
 CREATE TABLE IF NOT EXISTS groups(
@@ -17,7 +16,7 @@ CREATE TABLE IF NOT EXISTS mentors(
   email text,
   password text,
   group_id integer,
-  FOREIGN KEY (group_id) REFERENCES groups(id));
+  FOREIGN KEY (group_id) REFERENCES groups(group_id));
 
 CREATE TABLE IF NOT EXISTS students(
   student_id integer PRIMARY KEY AUTOINCREMENT,
@@ -39,6 +38,7 @@ CREATE TABLE IF NOT EXISTS admins(
   last_name text,
   email text,
   password text);
+INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
 
 CREATE TABLE IF NOT EXISTS artifacts(
   artifact_id integer PRIMARY KEY AUTOINCREMENT ,
@@ -77,8 +77,9 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
   FOREIGN KEY (artefact_id) REFERENCES artifacts(artifact_id),
   FOREIGN KEY (student_id) REFERENCES students(student_id));
 
-INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
-INSERT OR IGNORE INTO groups VALUES(1,'undefined');
-INSERT OR IGNORE INTO teams VALUES(1,'undefined');
+  INSERT OR IGNORE INTO groups VALUES(1,'undefined');
+  INSERT OR IGNORE INTO teams VALUES(1,'undefined');
+
+DELETE FROM sqlite_sequence;
 
 COMMIT;
