@@ -6,8 +6,8 @@ import school.SchoolModel;
 public class AdminController extends UserController{
     private AdminModel admin;
     private AdminView view;
-    private SchoolModel school;
     private AdminDAO dao;
+    private SchoolModel school;
 
     public AdminController(AdminModel adminModel){
 
@@ -57,68 +57,67 @@ public class AdminController extends UserController{
     }
 
     public void createMentor(){
-        String firstName = view.getUserInput("Enter first name: ");
-        String lastName = view.getUserInput("Enter last name: ");
-        String password = view.getUserInput("Enter password: ");
-        MentorModel newMentor = new MentorModel(firstName, lastName, password);
-        String mentorsToDisplay = newMentor.toString();
-        view.clearScreen();
-        view.displayMessage("Mentor created:");
-        view.displayMessage(mentorsToDisplay);
-        dao.saveModelToFile(newMentor);
+//        String firstName = view.getUserInput("Enter first name: ");
+//        String lastName = view.getUserInput("Enter last name: ");
+//        String password = view.getUserInput("Enter password: ");
+//        MentorModel newMentor = new MentorModel(firstName, lastName, password);
+//        String mentorsToDisplay = newMentor.toString();
+//        view.clearScreen();
+//        view.displayMessage("Mentor created:");
+//        view.displayMessage(mentorsToDisplay);
+//        dao.saveModelToFile(newMentor);
     }
 
     public void editMentor(){
-        view.showAllMentors(prepareMentorsToDisplay(dao.getMentorsFromFile()));
-        String id = view.getUserInput("Enter ID of mentor: ");
-        for (MentorModel mentor : dao.getMentorsFromFile())
-        {
-            if (id.equals(Integer.toString(mentor.getId())))
-            {
-                boolean isFinished = false;
-                while(! isFinished)
-                {
-                    view.clearScreen();
-                    view.displayEditMenu();
-                    String userChoice = view.getUserInput("Select an option: ");
-                    switch(userChoice)
-                    {
-                        case "1" :
-                            String firstName = view.getUserInput("Enter first name: ");
-                            mentor.setFirstName(firstName);
-                            break;
-                        case "2" :
-                            String lastName = view.getUserInput("Enter last name: ");
-                            mentor.setLastName(lastName);
-                            break;
-                        case "3" :
-                            String password = view.getUserInput("Enter password: ");
-                            mentor.setPassword(password);
-                            break;
-                        case "4" :
-                            String email = view.getUserInput("Enter email: ");
-                            mentor.setEmail(email);
-                            break;
-                        case "5" :
-                            Character group = view.getUserInput("Enter group: ").charAt(0);
-                            mentor.setGroupName(group);
-                            break;
-                        case "0":
-                            dao.saveModelToFile(mentor);
-                            isFinished = true;
-                            break;
-                    }
-                    if(! isFinished){
-                        view.displayMessage("Edited: " + mentor.toString());
-                        view.handlePause();
-                    }
-                }
-            }
-        }
+//        view.showAllMentors(prepareMentorsToDisplay(dao.getMentorsFromFile()));
+//        String id = view.getUserInput("Enter ID of mentor: ");
+//        for (MentorModel mentor : dao.getMentorsFromFile())
+//        {
+//            if (id.equals(Integer.toString(mentor.getId())))
+//            {
+//                boolean isFinished = false;
+//                while(! isFinished)
+//                {
+//                    view.clearScreen();
+//                    view.displayEditMenu();
+//                    String userChoice = view.getUserInput("Select an option: ");
+//                    switch(userChoice)
+//                    {
+//                        case "1" :
+//                            String firstName = view.getUserInput("Enter first name: ");
+//                            mentor.setFirstName(firstName);
+//                            break;
+//                        case "2" :
+//                            String lastName = view.getUserInput("Enter last name: ");
+//                            mentor.setLastName(lastName);
+//                            break;
+//                        case "3" :
+//                            String password = view.getUserInput("Enter password: ");
+//                            mentor.setPassword(password);
+//                            break;
+//                        case "4" :
+//                            String email = view.getUserInput("Enter email: ");
+//                            mentor.setEmail(email);
+//                            break;
+//                        case "5" :
+//                            Character group = view.getUserInput("Enter group: ").charAt(0);
+//                            mentor.setGroupName(group);
+//                            break;
+//                        case "0":
+//                            dao.saveModelToFile(mentor);
+//                            isFinished = true;
+//                            break;
+//                    }
+//                    if(! isFinished){
+//                        view.displayMessage("Edited: " + mentor.toString());
+//                        view.handlePause();
+//                    }
+//                }
+//            }
+//        }
     }
 
-    public void displayMentorProfile()
-    {
+    public void displayMentorProfile(){
         view.showAllMentors(prepareMentorsToDisplay(dao.getMentorsFromFile()));
         String id = view.getUserInput("Enter ID of mentor: ");
         for (MentorModel mentor : dao.getMentorsFromFile())

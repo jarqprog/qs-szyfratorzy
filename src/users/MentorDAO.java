@@ -16,43 +16,45 @@ public class MentorDAO extends UsersDAO {
     private final Integer passwordIndex = 4;
     private final Integer groupIndex = 5;
 
-    private DbManagerDAO daoManager = new DbManagerDAO();
+//    private DbManagerDAO daoManager = new DbManagerDAO();
 
 
-    public List<MentorModel> getObjects(String query){
-
-        List<MentorModel> mentors = new ArrayList<MentorModel>();
-        String sqlStatement = String.format("SELECT * FROM %s %s", DEFAULT_TABLE, query);
-        List<String[]> data = daoManager.getData(sqlStatement);
-
-        for (String[] record : data){
-            int mentorId = Integer.parseInt(record[idIndex]);
-            String firstName = record[firstNameIndex];
-            String lastName = record[lastNameIndex];
-            String email = record[emailIndex];
-            String password = record[passwordIndex];
-            String group = record[groupIndex];
-
-            mentors.add(new MentorModel(mentorId, firstName, lastName, email, password, group));
-        }
-        return mentors;
-    }
-
-    public MentorModel getObject(String query){
-
-        // temporary
-
-        return new MentorModel(201, "Marian", "Nowak", "nowak@cc.pl", "12321", "a");
-    }
-
-    public void saveObject(MentorModel mentor){
-
-        //
-    }
-
-    public void saveObjects(List<MentorModel> mentors){
-
-        //
-    }
+//    public List<MentorModel> getObjects(String query) {
+//
+//    }
+//
+//        List<MentorModel> mentors = new ArrayList<MentorModel>();
+//        String sqlStatement = String.format("SELECT * FROM %s %s", DEFAULT_TABLE, query);
+//        List<String[]> data = daoManager.getData(sqlStatement);
+//
+//        for (String[] record : data){
+//            int mentorId = Integer.parseInt(record[idIndex]);
+//            String firstName = record[firstNameIndex];
+//            String lastName = record[lastNameIndex];
+//            String email = record[emailIndex];
+//            String password = record[passwordIndex];
+//            String group = record[groupIndex];
+//
+//            mentors.add(new MentorModel(mentorId, firstName, lastName, email, password, group));
+//        }
+//        return mentors;
+//    }
+//
+//    public MentorModel getObject(String query){
+//
+//        // temporary
+//
+//        return new MentorModel(201, "Marian", "Nowak", "nowak@cc.pl", "12321", "a");
+//    }
+//
+//    public void saveObject(MentorModel mentor){
+//
+//        //
+//    }
+//
+//    public void saveObjects(List<MentorModel> mentors){
+//
+//        //
+//    }
 
 }
