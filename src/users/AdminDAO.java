@@ -2,25 +2,32 @@ package users;
 
 import java.util.List;
 import java.util.ArrayList;
+import application.Table;
+import application.DbManagerDAO;
 
+public class AdminDAO {
 
-public class AdminDAO extends UsersDAO {
+    private final String DEFAULT_TABLE = Table.ADMINS.getName();
 
-//    private final static DEFAULT_TABLE = "admins";
-
-    public List<AdminModel> getAllAdmins(){
-
-
-
-        return null;
+    public List<AdminModel> getObjects(String query){
+        List<AdminModel> admins = new ArrayList<AdminModel>();
+        ///
+        return admins;
     }
 
-    public AdminModel getAdmin(String[] adminData){
+    public AdminModel getObject(String query){
 
-
-        return null;
+        // temporary
+        return new AdminModel(200, "Michal", "Lejek", "michal@lejek", "12321");
     }
 
+    public void saveObject(AdminModel admin){
 
+        //
+    }
 
+    public void saveObjects(List<AdminModel> admins){
+
+        //
+    }
 }

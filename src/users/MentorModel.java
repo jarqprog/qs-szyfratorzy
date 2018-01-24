@@ -1,5 +1,7 @@
 package users;
 
+import application.Role;
+
 public class MentorModel extends UserModel
 {
     Character groupName;
@@ -7,14 +9,14 @@ public class MentorModel extends UserModel
     public MentorModel(String firstName, String lastName, String password)
     {
         super(firstName, lastName, password);
-        super.setRole("mentor");
+        role = Role.MENTOR.getName();
         this.groupName = '0';
     }
 
     public MentorModel(int id, String firstName, String lastName, String email, String password, Character groupName)
     {
         super(id, firstName, lastName, email, password);
-        super.setRole("mentor");
+        role = Role.MENTOR.getName();
         this.groupName = groupName;
     }
 

@@ -1,4 +1,4 @@
-PRAGMA FOREIGN_KEYS = OFF;
+PRAGMA foreign_keys = OFF;
 BEGIN TRANSACTION;
 CREATE TABLE IF NOT EXISTS mentors(
   id integer PRIMARY KEY AUTOINCREMENT,
@@ -22,6 +22,5 @@ CREATE TABLE IF NOT EXISTS admins(
   last_name text,
   email text,
   password text);
-INSERT INTO admins(first_name, last_name, email, password)
-VALUES(admin, admin, admin@email.com, admin);
+INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
 COMMIT;

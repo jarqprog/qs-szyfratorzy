@@ -8,7 +8,7 @@ public abstract class UserModel
     private String lastName;
     private String email;
     private String password;
-    private String role;
+    protected String role;
     private UsersDAO usersDao;
 
     public UserModel(String firstName, String lastName, String password) {
@@ -19,7 +19,6 @@ public abstract class UserModel
         this.lastName = lastName;
         email = firstName + Integer.toString(id) + "@cc.com";
         this.password = password;
-        role = "undefined";
         usersDao.saveLastId(counter, "DataFiles/maxUserId.csv");
     }
 
@@ -30,7 +29,6 @@ public abstract class UserModel
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        role = "undefined";
     }
 
     public int getId()
