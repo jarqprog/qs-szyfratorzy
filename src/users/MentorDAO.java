@@ -36,7 +36,7 @@ public class MentorDAO extends UsersDAO {
         return mentors;
     }
 
-    public MentorModel getObject(String[] record) {
+    public MentorModel getOneObject(String[] record) {
         mentorId = Integer.parseInt(record[ID_INDEX]);
         firstName = record[FIRST_NAME_INDEX];
         lastName = record[LAST_NAME_INDEX];
