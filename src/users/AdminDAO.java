@@ -21,13 +21,33 @@ public class AdminDAO extends UsersDAO {
         return new AdminModel(200, "Michal", "Lejek", "michal@lejek", "12321");
     }
 
-    public void saveObject(AdminModel admin){
 
-        //
+    public void saveObject(AdminModel admin) {
+        String adminId = String.valueOf(admin.getId());
+        firstName = admin.getFirstName();
+        lastName = admin.getLastName();
+        email = admin.getEmail();
+        password = admin.getPassword();
+
+        String query;
+        if(adminId.equals("-1")){
+
+            query = String.format(
+                            "INSERT INTO %s " +
+                            "VALUES(null, '%s', '%s', '%s', '%s');",
+                    DEFAULT_TABLE, firstName, lastName, email, password);
+
+        } else{
+
+            query = String.format(
+                            "UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', " +
+                            "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password);
+        }
+
     }
 
     public void saveObjects(List<AdminModel> admins){
 
-        //
+    
     }
 }
