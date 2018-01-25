@@ -2,34 +2,29 @@ package users;
 
 public abstract class UserModel
 {
-    private static int counter;
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
+    protected int id;
+    protected String firstName;
+    protected String lastName;
+    protected String email;
+    protected String password;
     protected String role;
     private UsersDAO usersDao;
 
-    public UserModel(String firstName, String lastName, String password) {
-        usersDao = new UsersDAO();
-        counter = usersDao.loadLastId("DataFiles/maxUserId.csv");
-        id = counter++;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        email = firstName + Integer.toString(id) + "@cc.com";
-        this.password = password;
-        usersDao.saveLastId(counter, "DataFiles/maxUserId.csv");
+    public UserModel(int id, String firstName, String lastName, String email, String password) {
+        this(firstName, lastName, password);
+        this.id = id;
+        this.email = email;
     }
 
-    public UserModel(int id, String firstName, String lastName, String email, String password)
-    {
-        this.id = id;
+    public UserModel(String firstName, String lastName, String password) {
+        this.id = -1;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        email = firstName + lastName + "@cc.com";
         this.password = password;
     }
+
+
 
     public int getId()
     {

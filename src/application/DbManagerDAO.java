@@ -20,8 +20,9 @@ public class DbManagerDAO extends DatabaseDAO {
             connection.commit();
         } catch ( Exception e ){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } finally{
+            closeConnection();
         }
-        closeConnection();
     }
 
     public List<String[]> getData(String query){
@@ -53,6 +54,9 @@ public class DbManagerDAO extends DatabaseDAO {
         } catch(Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             return null;
+
+        } finally {
+          closeConnection();
         }
     }
 }

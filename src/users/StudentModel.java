@@ -25,6 +25,9 @@ public class StudentModel extends UserModel {
         group = new GroupModel("undefined");
         inventory = new ArrayList<ArtifactModel>();
         role = Role.STUDENT.getName();
+        // save:
+        StudentDAO dao = new StudentDAO();
+        dao.saveObject(this);
     }
 
     public StudentModel(int id, String firstName, String lastName, String email,
