@@ -8,7 +8,7 @@ public class TransactionModel {
     private int itemId;
     private int itemPrice;
 
-    private TransactionModel(int studentId, int itemId, int itemPrice) {
+    public TransactionModel(int studentId, int itemId, int itemPrice) {
         this.studentId = studentId;
         this.itemId = itemId;
         this.itemPrice = itemPrice;
