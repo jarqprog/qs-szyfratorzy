@@ -15,6 +15,8 @@ public class TeamModel extends StudentSets{
     public TeamModel(String name) {
         super(name);
         this.students = new ArrayList<StudentModel>();
+        TeamDAO dao = new TeamDAO();
+        dao.saveObject(this);
     }
 
 
