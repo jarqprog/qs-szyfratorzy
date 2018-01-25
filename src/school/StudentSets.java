@@ -21,7 +21,6 @@ public abstract class StudentSets {
         this.id = -1;
         this.name = name;
         this.students = new ArrayList<StudentModel>();
-
     }
 
     public int getId() {
