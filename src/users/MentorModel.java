@@ -10,6 +10,8 @@ public class MentorModel extends UserModel {
         super(firstName, lastName, password);
         this.group = new GroupModel("undefined");
         role = Role.MENTOR.getName();
+        MentorDAO dao = new MentorDAO();
+        dao.saveObject(this);
     }
 
     public MentorModel(int id, String firstName, String lastName,
