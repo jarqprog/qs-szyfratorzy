@@ -18,7 +18,7 @@ public abstract class UserModel {
         this.id = -1;
         this.firstName = firstName;
         this.lastName = lastName;
-        email = firstName + lastName + "@cc.com";
+        email = firstName.toLowerCase() + lastName.toLowerCase() + "@cc.com";
         this.password = password;
     }
 
