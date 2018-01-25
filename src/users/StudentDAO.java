@@ -110,7 +110,7 @@ public class StudentDAO extends UsersDAO {
         int groupId = student.getGroup().getId();
 
         String query;
-        if(student_id.equals("-1")){
+        if(studentId.equals("-1")){
 
             query = String.format(
                             "INSERT INTO %s " +
@@ -124,7 +124,7 @@ public class StudentDAO extends UsersDAO {
                             "UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', " +
                             " wallet=%s, experience=%s, attendance=%s, team_id=%s, group_id=%s " +
                             "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, wallet, experience,
-                    attendance, student_id, teamId, groupId);
+                    attendance, studentId, teamId, groupId);
         }
 
         dao = new DbManagerDAO();
