@@ -91,8 +91,8 @@ public class StudentDAO extends UsersDAO {
         wallet = Integer.parseInt(studentData[WALLET_INDEX]);
         experience  = Integer.parseInt(studentData[EXPERIENCE_INDEX]);
         attendance = Float.parseFloat(studentData[ATTENDANCE_INDEX]);
-        team = new TeamModel("undefined"); // tmp
-        group = new GroupModel("undefined"); // tmp
+        team = new TeamModel(1, "undefined", new ArrayList<StudentModel>()); // tmp
+        group = new GroupModel(1, "undefined", new ArrayList<StudentModel>()); // tmp
         inventory = new ArrayList<>();
 
         return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience, attendance,

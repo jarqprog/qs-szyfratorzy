@@ -2,13 +2,14 @@ package users;
 
 import application.Role;
 import school.GroupModel;
+import java.util.ArrayList;
 
 public class MentorModel extends UserModel {
     private GroupModel group;
 
     public MentorModel(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
-        this.group = new GroupModel("undefined");
+        group = new GroupModel(1,"undefined", new ArrayList<StudentModel>());
         role = Role.MENTOR.getName();
     }
 
