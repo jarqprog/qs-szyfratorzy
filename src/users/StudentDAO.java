@@ -35,6 +35,8 @@ public class StudentDAO extends UsersDAO {
     private float attendance;
     private GroupModel group;
     private TeamModel team;
+    private int groupId;
+    private int teamId;
     List<ArtifactModel> inventory;
 
 
@@ -106,8 +108,8 @@ public class StudentDAO extends UsersDAO {
         wallet = student.getWallet();
         experience = student.getExperience();
         attendance = student.getAttendance();
-        int teamId = student.getTeam().getId();
-        int groupId = student.getGroup().getId();
+        teamId = student.getTeam().getId();
+        groupId = student.getGroup().getId();
 
         String query;
         if(studentId.equals("-1")){
