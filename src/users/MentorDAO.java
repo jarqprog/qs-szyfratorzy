@@ -66,7 +66,7 @@ public class MentorDAO extends UsersDAO {
         lastName = record[LAST_NAME_INDEX];
         email = record[EMAIL_INDEX];
         password = record[PASSWORD_INDEX];
-        group = new GroupModel("undefined");
+        group = new GroupModel(1, "undefined", new ArrayList<StudentModel>());
 
         return new MentorModel(mentorId, firstName, lastName, email, password, group);
     }

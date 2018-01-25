@@ -18,7 +18,4 @@ public class TeamModel extends StudentSets{
         TeamDAO dao = new TeamDAO();
         dao.saveObject(this);
     }
-
-
-
 }
