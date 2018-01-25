@@ -6,9 +6,9 @@ public class IntroOutroDAO extends DAO {
 
     public IntroOutroDAO(){
         defaultFileName = "intro.txt";
-        defaultFilePath = "DataFiles/intro.txt";
-        outroFilePath = "DataFiles/outro.txt";
+        defaultFilePath = "data_files/intro.txt";
+        outroFilePath = "data_files/outro.txt";
         prepareFile();
-        prepareFile("DataFiles/outro.txt");
+        prepareFile("data_files/outro.txt");
     }
 }

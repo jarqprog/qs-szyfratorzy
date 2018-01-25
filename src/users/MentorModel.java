@@ -1,35 +1,37 @@
 package users;
 
-public class MentorModel extends UserModel
-{
-    Character groupName;
+import application.Role;
+import school.GroupModel;
 
-    public MentorModel(String firstName, String lastName, String password)
-    {
+public class MentorModel extends UserModel {
+    private GroupModel group;
+
+    public MentorModel(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
-        super.setRole("mentor");
-        this.groupName = '0';
+        this.group = new GroupModel("undefined");
+        role = Role.MENTOR.getName();
     }
 
-    public MentorModel(int id, String firstName, String lastName, String email, String password, Character groupName)
-    {
+    public MentorModel(int id, String firstName, String lastName,
+                       String email, String password, GroupModel group) {
         super(id, firstName, lastName, email, password);
-        super.setRole("mentor");
-        this.groupName = groupName;
+        this.group = group;
+        role = Role.MENTOR.getName();
     }
 
-    public Character getGroupName()
+    public GroupModel getGroup()
     {
-        return groupName;
+        return group;
     }
 
-    public void setGroupName(Character newGroupName)
+    public void setGroupName(GroupModel group)
     {
-        groupName = newGroupName;
+        this.group = group;
     }
-    public String toString()
-    {
-        return super.toString()+String.format(" Group name: %s",this.getGroupName());
-    }
+
+//    public String toString()
+//    {
+//        return super.toString()+String.format(" Group name: %s",this.getGroupName());
+//    }
 
 }
