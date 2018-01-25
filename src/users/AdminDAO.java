@@ -28,7 +28,7 @@ public class AdminDAO extends UsersDAO {
         List<AdminModel> admins = new ArrayList<AdminModel>();
         for (String[] record : dataCollection) {
             AdminModel admin = getOneObject(record);
-            admins.add(student);
+            admins.add(admin);
         }
         return admins;
     }
@@ -41,7 +41,7 @@ public class AdminDAO extends UsersDAO {
         email = adminData[EMAIL_INDEX];
         password = adminData[PASSWORD_INDEX];
 
-        return new AdminModel(studentId, firstName, lastName, email, password);
+        return new AdminModel(adminId, firstName, lastName, email, password);
     }
 
     public AdminModel getOneObject(String query) {
@@ -53,7 +53,7 @@ public class AdminDAO extends UsersDAO {
         email = adminData[EMAIL_INDEX];
         password = adminData[PASSWORD_INDEX];
 
-        return new AdminModel(studentId, firstName, lastName, email, password);
+        return new AdminModel(adminId, firstName, lastName, email, password);
     }
 
     public void saveObject(AdminModel admin) {
