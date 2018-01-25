@@ -2,14 +2,9 @@ package application;
 
 import java.util.List;
 import java.util.Arrays;
-import users.LogableDAO;
-import users.UsersDAO;
-import users.MentorModel;
-import users.AdminModel;
-import users.StudentModel;
-import users.MentorController;
-import users.AdminController;
-import users.StudentController;
+
+import users.*;
+
 import java.io.Console;
 
 
@@ -125,8 +120,24 @@ public class RootController{
             System.out.println(Arrays.toString(lista));
         }
 
+        StudentModel student;
+        StudentDAO stuDAO = new StudentDAO();
+        List<StudentModel> students = stuDAO.getManyObjects("Select * from students where last_name = 'Kucharczyk';");
+        student = students.get(0);
+        System.out.println(student);
+
+
+        List<String[]> collectionNew1 = dao.getData("SELECT * FROM students;");
+        for(String[] lista1 : collectionNew1){
+            System.out.println(Arrays.toString(lista1));
+        }
+
+        StudentModel Artur = stuDAO.getOneObject("SELECT * FROM students WHERE first_name='Artur';");
+        System.out.println(Artur);
+        Artur.setEmail("arturro@gmail.com");
+        stuDAO.saveObject(Artur);
+        StudentModel Artur1 = stuDAO.getOneObject("SELECT * FROM students WHERE first_name='Artur';");
+        System.out.println(Artur1);
         view.handlePause();
-
     }
-
 }
