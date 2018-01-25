@@ -1,14 +1,12 @@
 package users;
 
-public abstract class UserModel
-{
+public abstract class UserModel {
     protected int id;
     protected String firstName;
     protected String lastName;
     protected String email;
     protected String password;
     protected String role;
-    private UsersDAO usersDao;
 
     public UserModel(int id, String firstName, String lastName, String email, String password) {
         this(firstName, lastName, password);
@@ -20,7 +18,7 @@ public abstract class UserModel
         this.id = -1;
         this.firstName = firstName;
         this.lastName = lastName;
-        email = firstName + lastName + "@cc.com";
+        email = firstName.toLowerCase() + lastName.toLowerCase() + "@cc.com";
         this.password = password;
     }
 
