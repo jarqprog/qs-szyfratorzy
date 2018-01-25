@@ -33,6 +33,17 @@ public class AdminDAO extends UsersDAO {
         return admins;
     }
 
+    public List<AdminModel> getManyObjects(String query) {
+        DbManagerDAO dao = new DbManagerDAO();
+        List<String[]> dataCollection = dao.getData(query);
+        List<AdminModel> admins = new ArrayList<AdminModel>();
+        for (String[] record : dataCollection) {
+            AdminModel admin = getOneObject(record);
+            admins.add(admin);
+        }
+        return admins;
+    }
+
     public AdminModel getOneObject(String[] adminData) {
 
         adminId = Integer.parseInt(adminData[ID_INDEX]);
