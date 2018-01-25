@@ -24,6 +24,7 @@ public class MentorDAO extends UsersDAO {
     private String email;
     private String password;
     private GroupModel group;
+    private int groupId;
 
     public List<MentorModel> getManyObjects(List<String[]> dataCollection) {
 
@@ -55,7 +56,7 @@ public class MentorDAO extends UsersDAO {
         lastName = mentorData[LAST_NAME_INDEX];
         email = mentorData[EMAIL_INDEX];
         password = mentorData[PASSWORD_INDEX];
-        group = new GroupModel("undefined");
+        group = new GroupModel(1, "undefined", new ArrayList<StudentModel>());
 
         return new MentorModel(mentorId, firstName, lastName, email, password, group);
     }
@@ -77,21 +78,19 @@ public class MentorDAO extends UsersDAO {
         lastName = mentor.getLastName();
         email = mentor.getEmail();
         password = mentor.getPassword();
-
-        // dodaj grupę!!!
+        groupId = mentor.getGroup().getId();
 
         String query;
-
         if(mentorId.equals("-1")) {
             query = String.format(
-                    "INSERT INTO %s VALUES('%s', '%s', '%s');",
-                    DEFAULT_TABLE, firstName, lastName, password);
+                    "INSERT INTO %s VALUES(null, '%s', '%s', '%s', '%s', %s);",
+                    DEFAULT_TABLE, firstName, lastName, email, password, groupId);
         } else {
-            query = String.format("UPDATE %s SET first_name=%s , last_name=%s, email=%s, password=%s " +
-                    "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, mentorId);
-            daoManager = new DbManagerDAO();
-            daoManager.inputData(query);
+            query = String.format("UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', group_id=%s " +
+                    "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, groupId, mentorId);
         }
+        daoManager = new DbManagerDAO();
+        daoManager.inputData(query);
     }
 
     public void saveObjects(List<MentorModel> mentors) {
