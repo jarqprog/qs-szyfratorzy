@@ -18,9 +18,10 @@ public abstract class StudentSets {
     }
 
     public StudentSets(String name) {
-
+        this.id = -1;
         this.name = name;
         this.students = new ArrayList<StudentModel>();
+
     }
 
     public int getId() {
@@ -45,6 +46,12 @@ public abstract class StudentSets {
 
     public void removeStudent(StudentModel student){
         students.remove(student);
+    }
+
+    public String toString(){
+
+        return String.format("Id: %s, name: %s, number of students: %s",
+                this.id, this.name, students.size());
     }
 
 }
