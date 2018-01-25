@@ -12,13 +12,13 @@ public abstract class ItemModel {
 
     public ItemModel(){
         dao = new ItemsDAO();
-        counter = dao.loadLastId("DataFiles/maxItemsId.csv");
+        counter = dao.loadLastId("data_files/maxItemsId.csv");
         id = counter++;
         this.name = "item";
         this.type = 'I';
         this.description = "n/a";
         this.genre = "item";
-        dao.saveLastId(counter, "DataFiles/maxItemsId.csv");
+        dao.saveLastId(counter, "data_files/maxItemsId.csv");
     }
 
     public ItemModel(int id){
