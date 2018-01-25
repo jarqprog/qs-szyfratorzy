@@ -2,6 +2,8 @@ package users;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
 import item.ArtifactModel;
@@ -9,11 +11,8 @@ import school.GroupModel;
 import school.TeamModel;
 
 
-public class StudentDAO extends UsersDAO {
+public class StudentDAO extends FactoryDAO {
 
-    private DbManagerDAO dao;
-
-    private final String DEFAULT_TABLE = Table.STUDENTS.getName();
     private final Integer ID_INDEX = 0;
     private final Integer FIRST_NAME_INDEX = 1;
     private final Integer LAST_NAME_INDEX = 2;
@@ -39,9 +38,11 @@ public class StudentDAO extends UsersDAO {
     private int teamId;
     List<ArtifactModel> inventory;
 
+    public StudentDAO(){
+        this.DEFAULT_TABLE = Table.STUDENTS.getName();
+    }
 
     public List<StudentModel> getManyObjects(List<String[]> dataCollection) {
-
         List<StudentModel> students = new ArrayList<StudentModel>();
         for (String[] record : dataCollection) {
             StudentModel student = getOneObject(record);
@@ -53,12 +54,7 @@ public class StudentDAO extends UsersDAO {
     public List<StudentModel> getManyObjects(String query) {
         dao = new DbManagerDAO();
         List<String[]> dataCollection = dao.getData(query);
-        List<StudentModel> students = new ArrayList<StudentModel>();
-        for (String[] record : dataCollection) {
-            StudentModel student = getOneObject(record);
-            students.add(student);
-        }
-        return students;
+        return getManyObjects(dataCollection);
     }
 
     public StudentModel getOneObject(String[] studentData) {
@@ -71,9 +67,8 @@ public class StudentDAO extends UsersDAO {
         wallet = Integer.parseInt(studentData[WALLET_INDEX]);
         experience  = Integer.parseInt(studentData[EXPERIENCE_INDEX]);
         attendance = Float.parseFloat(studentData[ATTENDANCE_INDEX]);
-        team = new TeamModel("undefined"); // tmp
-        group = new GroupModel("undefined"); // tmp
-
+        team = new TeamModel(1,"undefined", new ArrayList<>()); // tmp
+        group = new GroupModel(1, "undefined", new ArrayList<>()); // tmp
         inventory = new ArrayList<>();
 
         return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience, attendance,
@@ -83,20 +78,7 @@ public class StudentDAO extends UsersDAO {
     public StudentModel getOneObject(String query) {
         dao = new DbManagerDAO();
         String[] studentData = dao.getData(query).get(0);
-        studentId = Integer.parseInt(studentData[ID_INDEX]);
-        firstName = studentData[FIRST_NAME_INDEX];
-        lastName = studentData[LAST_NAME_INDEX];
-        email = studentData[EMAIL_INDEX];
-        password = studentData[PASSWORD_INDEX];
-        wallet = Integer.parseInt(studentData[WALLET_INDEX]);
-        experience  = Integer.parseInt(studentData[EXPERIENCE_INDEX]);
-        attendance = Float.parseFloat(studentData[ATTENDANCE_INDEX]);
-        team = new TeamModel(1, "undefined", new ArrayList<StudentModel>()); // tmp
-        group = new GroupModel(1, "undefined", new ArrayList<StudentModel>()); // tmp
-        inventory = new ArrayList<>();
-
-        return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience, attendance,
-                team, group, inventory);
+        return getOneObject(studentData);
     }
 
     public void saveObject(StudentModel student) {
@@ -121,12 +103,13 @@ public class StudentDAO extends UsersDAO {
                     experience, attendance, teamId, groupId);
 
         } else{
+            System.out.println("Jestem tu!!!!!!!!!!!!");
 
             query = String.format(
                             "UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', " +
                             " wallet=%s, experience=%s, attendance=%s, team_id=%s, group_id=%s " +
                             "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, wallet, experience,
-                    attendance, studentId, teamId, groupId);
+                    attendance, teamId, groupId, studentId);
         }
 
         dao = new DbManagerDAO();
