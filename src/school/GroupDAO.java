@@ -14,31 +14,31 @@ public class GroupDAO {
     private final Integer NAME_INDEX = 1;
 
 
-    public List<GroupModel> getObjects(List<String[]> dataCollection) {
+    public List<GroupModel> getManyObjects(List<String[]> dataCollection) {
 
         List<GroupModel> groups = new ArrayList<GroupModel>();
 
         for (String [] record : dataCollection) {
-            GroupModel group = getObject(record);
+            GroupModel group = getOneObject(record);
             groups.add(group);
         }
 
         return groups;
     }
 
-    public List<GroupModel> getObjects(String query) {
+    public List<GroupModel> getManyObjects(String query) {
 
         List<GroupModel> groups = new ArrayList<>();
         dao = new DbManagerDAO();
         List<String[]> dataCollection = dao.getData(query);
         for (String [] record : dataCollection) {
-            GroupModel group = getObject(record);
+            GroupModel group = getOneObject(record);
             groups.add(group);
         }
         return groups;
     }
 
-    public GroupModel getObject(String [] record){
+    public GroupModel getOneObject(String [] record){
 
         int id = Integer.parseInt(record[ID_INDEX]);
         String name = record[NAME_INDEX];
@@ -48,7 +48,7 @@ public class GroupDAO {
         return new GroupModel(id, name, students);
     }
 
-    public GroupModel getObject(String query){
+    public GroupModel getOneObject(String query){
 
         dao = new DbManagerDAO();
         String[] record = dao.getData(query).get(0);
