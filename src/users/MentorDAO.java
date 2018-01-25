@@ -30,13 +30,37 @@ public class MentorDAO extends UsersDAO {
         ArrayList<MentorModel> mentors = new ArrayList<MentorModel>();
 
         for (String [] record : dataCollection) {
-            MentorModel mentor = getObject(record);
+            MentorModel mentor = getOneObject(record);
             mentors.add(mentor);
         }
         return mentors;
     }
 
-    public MentorModel getObject(String[] record) {
+    public List<MentorModel> getManyObjects(String query) {
+        daoManager = new DbManagerDAO();
+        List<String[]> dataCollection = daoManager.getData(query);
+        List<MentorModel> mentors = new ArrayList<MentorModel>();
+        for (String[] record : dataCollection) {
+            MentorModel mentor = getOneObject(record);
+            mentors.add(mentor);
+        }
+        return mentors;
+    }
+
+    public MentorModel getOneObject(String query) {
+        daoManager = new DbManagerDAO();
+        String[] mentorData = daoManager.getData(query).get(0);
+        mentorId = Integer.parseInt(mentorData[ID_INDEX]);
+        firstName = mentorData[FIRST_NAME_INDEX];
+        lastName = mentorData[LAST_NAME_INDEX];
+        email = mentorData[EMAIL_INDEX];
+        password = mentorData[PASSWORD_INDEX];
+        group = new GroupModel("undefined");
+
+        return new MentorModel(mentorId, firstName, lastName, email, password, group);
+    }
+
+    public MentorModel getOneObject(String[] record) {
         mentorId = Integer.parseInt(record[ID_INDEX]);
         firstName = record[FIRST_NAME_INDEX];
         lastName = record[LAST_NAME_INDEX];
@@ -76,5 +100,6 @@ public class MentorDAO extends UsersDAO {
             saveObject(mentor);
         }
     }
+
 
 }

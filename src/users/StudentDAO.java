@@ -11,7 +11,7 @@ import school.TeamModel;
 
 public class StudentDAO extends UsersDAO {
 
-    private DbManagerDAO daoManager;
+    private DbManagerDAO dao;
 
     private final String DEFAULT_TABLE = Table.STUDENTS.getName();
     private final Integer ID_INDEX = 0;
@@ -51,7 +51,7 @@ public class StudentDAO extends UsersDAO {
     }
 
     public List<StudentModel> getManyObjects(String query) {
-        DbManagerDAO dao = new DbManagerDAO();
+        dao = new DbManagerDAO();
         List<String[]> dataCollection = dao.getData(query);
         List<StudentModel> students = new ArrayList<StudentModel>();
         for (String[] record : dataCollection) {
@@ -81,7 +81,7 @@ public class StudentDAO extends UsersDAO {
     }
 
     public StudentModel getOneObject(String query) {
-        DbManagerDAO dao = new DbManagerDAO();
+        dao = new DbManagerDAO();
         String[] studentData = dao.getData(query).get(0);
         studentId = Integer.parseInt(studentData[ID_INDEX]);
         firstName = studentData[FIRST_NAME_INDEX];
@@ -129,8 +129,8 @@ public class StudentDAO extends UsersDAO {
                     attendance, studentId, teamId, groupId);
         }
 
-        daoManager = new DbManagerDAO();
-        daoManager.inputData(query);
+        dao = new DbManagerDAO();
+        dao.inputData(query);
     }
 
     public void saveObjects(List<StudentModel> students) {
