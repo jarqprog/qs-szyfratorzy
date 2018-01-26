@@ -6,19 +6,14 @@ public abstract class ItemModel {
     protected String description;
     protected String fullName;
     protected String genre;
-    protected static int counter;
     protected int id;
-    protected ItemsDAO dao;
 
     public ItemModel(){
-        dao = new ItemsDAO();
-        counter = dao.loadLastId("DataFiles/maxItemsId.csv");
-        id = counter++;
+        this.id = -1;
         this.name = "item";
         this.type = 'I';
         this.description = "n/a";
         this.genre = "item";
-        dao.saveLastId(counter, "DataFiles/maxItemsId.csv");
     }
 
     public ItemModel(int id){
@@ -29,34 +24,34 @@ public abstract class ItemModel {
         this.genre = "item";
     }
 
-    public String getItemName(){
+    public String getName(){
         return name;
     }
-    public void setItemName(String newItemName){
+    public void setName(String newItemName){
         name = newItemName;
     }
-    public char getItemType(){
+    public char getType(){
         return type;
     }
     public int getId(){
         return id;
     }
-    public void setItemType(char newItemType){
+    public void setType(char newItemType){
         type = newItemType;
     }
-    public String getItemDescription(){
+    public String getDescription(){
         return description;
     }
-    public void setItemDescription(String newItemDescription){
+    public void setDescription(String newItemDescription){
         description = newItemDescription;
     }
-    public String getItemFullName(){
+    public String getFullName(){
         return fullName;
     }
     public String getGenre(){
         return genre;
     }
-    public void setItemFullName(String newItemFullName){
+    public void setFullName(String newItemFullName){
         fullName = newItemFullName;
     }
     public String toString(){

@@ -52,15 +52,23 @@ public class ArtifactDAO extends FactoryDAO {
     }
 
     public void saveObject(ArtifactModel artifact) {
-        String artifact_id = String.valueOf(artifact.getId());
-        String itemType = String.valueOf(artifact.getItemType());
-        String itemName = artifact.getItemName();
-        String itemDescription = artifact.getItemDescription();
+        String artifactId = String.valueOf(artifact.getId());
+        String itemType = String.valueOf(artifact.getType());
+        String itemName = artifact.getName();
+        String itemDescription = artifact.getDescription();
         String price = String.valueOf(artifact.getPrice());
 
-        String query = String.format("UPDATE %s SET name=%s , type=%s, description=%s, price=%s " +
-                "WHERE artifact_id=%s;", DEFAULT_TABLE, itemName, itemType, itemDescription, price, artifact_id);
+        String query;
+        if (artifactId.equals("-1")) {
+            query = String.format(
+                    "INSERT INTO %s " +
+                            "VALUES(null, '%s', '%s', '%s', %s);",
+                    DEFAULT_TABLE, itemType, itemName, itemDescription, price);
+        } else {
 
+            query = String.format("UPDATE %s SET name='%s' , type='%s', description='%s', price=%s " +
+                    "WHERE id=%s;", DEFAULT_TABLE, itemName, itemType, itemDescription, price, artifactId);
+        }
         DbManagerDAO dao = new DbManagerDAO();
         dao.inputData(query);
     }

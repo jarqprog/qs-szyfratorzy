@@ -1,6 +1,9 @@
 package users;
 
+import item.ArtifactModel;
+
 import java.util.List;
+import item.ArtifactDAO;
 
 public abstract class  UserController{
 
@@ -26,6 +29,11 @@ public abstract class  UserController{
         return dao.getManyObjects("SELECT * FROM mentors;");
     }
 
+    protected List<ArtifactModel> getArtifacts(){
+        ArtifactDAO dao = new ArtifactDAO();
+        return dao.getManyObjects("SELECT * FROM artifacts;");
+    }
+
     protected void executeNotImplementedInfo() {
         UsersView view = new UsersView();
         view.displayMessage("Not implemented yet");
@@ -39,5 +47,15 @@ public abstract class  UserController{
             index ++;
         }
         return mentorsToDisplay;
+    }
+
+    protected String[] prepareArtifactsToDisplay(List<ArtifactModel> artifacts){
+        String[] artifactsToDisplay = new String[artifacts.size()];
+        int index = 0;
+        for(ArtifactModel artifact : artifacts){
+            artifactsToDisplay[index] = artifact.toString();
+            index ++;
+        }
+        return artifactsToDisplay;
     }
 }
