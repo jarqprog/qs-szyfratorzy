@@ -2,8 +2,7 @@ package users;
 
 import application.AbstractView;
 
-public class AdminView extends AbstractView
-{
+public class AdminView extends AbstractView {
     public void displayMenu() {
         String[] options = {"      *** Menu ***     ",
                             "[1] create mentor",

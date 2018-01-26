@@ -1,17 +1,14 @@
 package users;
-import application.AbstractView;
 
+import java.util.List;
 
 public abstract class  UserController{
-
-    application.DAO DAO;
-    AbstractView view;
 
     public abstract void handleMainMenu();
 
     public void showUsers(String[] users){
-        UsersView userView = new UsersView();
-        userView.displayUsers(users);
+        UsersView view = new UsersView();
+        view.displayUsers(users);
 
     }
 
@@ -24,4 +21,25 @@ public abstract class  UserController{
         return false;
     }
 
+    protected List<MentorModel> getMentors(){
+        MentorDAO dao = new MentorDAO();
+        return dao.getManyObjects("SELECT * FROM mentors;");
+    }
+
+    protected void executeNotImplementedInfo() {
+        UsersView view = new UsersView();
+        view.clearScreen();
+        view.displayMessage("Not implemented yet");
+        view.handlePause();
+    }
+
+    protected String[] prepareMentorsToDisplay(List<MentorModel> mentors) {
+        String[] mentorsToDisplay = new String[mentors.size()];
+        int index = 0;
+        for(MentorModel mentor : mentors){
+            mentorsToDisplay[index] = mentor.toString();
+            index ++;
+        }
+        return mentorsToDisplay;
+    }
 }
