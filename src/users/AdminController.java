@@ -58,13 +58,8 @@ public class AdminController extends UserController{
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
         MentorModel mentor = new MentorModel(firstName, lastName, password);
-//        MentorDAO dao = new MentorDAO();
-////        dao.saveObject(mentor);
-////        mentor =
-        String mentorToDisplay = mentor.toString();
         view.clearScreen();
-        view.displayMessage("Mentor created:");
-        view.displayMessage(mentorToDisplay);
+        view.displayMessage("Mentor created: " + mentor.toString());
     }
 
     public void editMentor() {
@@ -74,8 +69,7 @@ public class AdminController extends UserController{
         for (MentorModel mentor : mentors) {
             if (id.equals(Integer.toString(mentor.getId()))) {
                 boolean isFinished = false;
-                while(! isFinished)
-                {
+                while(! isFinished) {
                     view.clearScreen();
                     view.displayEditMenu();
                     String userChoice = view.getUserInput("Select an option: ");

@@ -68,15 +68,16 @@ public class MentorController extends UserController{
     public void editQuest() {}
 
     public void createStudent(){
-//        String firstName = view.getUserInput("Enter a first name: ");
-//        String lastName = view.getUserInput("Enter a last name: ");
-//        String password = view.getUserInput("Enter a password: ");
-//        StudentModel newStudent = new StudentModel(firstName, lastName, password);
-//        dao.saveModelToFile(newStudent);
-//        view.displayMessage("Student created successfully!" + newStudent.toString());
+        String firstName = view.getUserInput("Enter a first name: ");
+        String lastName = view.getUserInput("Enter a last name: ");
+        String password = view.getUserInput("Enter a password: ");
+        StudentModel newStudent = new StudentModel(firstName, lastName, password);
+        view.displayMessage("Student created successfully!" + newStudent.toString());
     }
 
     public void createArtifact(){
+
+
 //        String itemName = view.getUserInput("Enter an item name: ");
 //        String itemDescription = view.getUserInput("Enter an item description: ");
 //        int price = view.getPrice();
