@@ -27,7 +27,7 @@ public class MentorModel extends UserModel {
         return group;
     }
 
-    public void setGroupName(GroupModel group)
+    public void setGroup(GroupModel group)
     {
         this.group = group;
     }
