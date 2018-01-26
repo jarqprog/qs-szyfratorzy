@@ -2,6 +2,8 @@ package users;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import application.CreatableDAO;
 import application.Role;
 import item.ArtifactModel;
 import school.GroupModel;

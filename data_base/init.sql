@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
   INSERT OR IGNORE INTO teams VALUES(1,'undefined');
   INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
   INSERT OR IGNORE INTO students VALUES(100,'Marcinek','Stasik','lolek@gmail.com','12321', 20, 30, 40, 1, 1);
+  INSERT OR IGNORE INTO mentors VALUES(1,'Jarek','Kucharczyk','jarek@gmail.com','12321', 1);
 
 
 DELETE FROM sqlite_sequence;
