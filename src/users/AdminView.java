@@ -4,7 +4,7 @@ import application.AbstractView;
 
 public class AdminView extends AbstractView {
     public void displayMenu() {
-        String[] options = {"      *** Menu ***     ",
+        String[] options = {"      *** Admin's Menu ***     ",
                             "[1] create mentor",
                             "[2] edit mentor",
                             "[3] display mentor",
@@ -18,7 +18,7 @@ public class AdminView extends AbstractView {
     }
 
     public void displayEditMenu() {
-        String[] options = {"      *** Menu ***     ",
+        String[] options = {"      *** Mentor Editor ***     ",
                             "[1] edit first name",
                             "[2] edit last name",
                             "[3] edit password",

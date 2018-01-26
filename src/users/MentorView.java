@@ -28,7 +28,7 @@ public class MentorView extends AbstractView {
     }
 
     public void displayMenu() {
-        String[] options = {"      *** Menu ***     ",
+        String[] options = {"      *** Mentor's Menu ***     ",
                             "[1] create student",
                             "[2] create quest",
                             "[3] edit quest",
@@ -45,7 +45,7 @@ public class MentorView extends AbstractView {
     }
 
     public void displayArtifactMenu() {
-        String[] options = {"      *** Menu ***     ",
+        String[] options = {"      *** Artifacts Editor ***     ",
                             "[1] edit artifact name",
                             "[2] edit artifact type",
                             "[3] edit artifact description",
