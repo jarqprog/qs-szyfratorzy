@@ -1,6 +1,7 @@
 package item;
 
 public abstract class ItemModel {
+
     protected char type;
     protected String name;
     protected String description;
@@ -8,19 +9,18 @@ public abstract class ItemModel {
     protected String genre;
     protected int id;
 
-    public ItemModel(){
-        this.id = -1;
-        this.name = "item";
-        this.type = 'I';
-        this.description = "n/a";
+    public ItemModel(int id, String name, char type, String description){
+        this(name, description);
+        this.id = id;
+        this.type = type;
         this.genre = "item";
     }
 
-    public ItemModel(int id){
-        this.id = id;
-        this.name = "item";
+    public ItemModel(String name, String description){
+        this.id = -1;
+        this.name = name;
         this.type = 'I';
-        this.description = "n/a";
+        this.description = description;
         this.genre = "item";
     }
 

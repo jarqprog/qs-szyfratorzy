@@ -1,23 +1,25 @@
 package item;
 
 public class ArtifactModel extends ItemModel{
+
     private int price;
 
-    public ArtifactModel(int id, char type, String name, String description, int price){
-        this(name, description, price);
-        this.id = id;
-        this.genre = "artifact";
-        this.type = type;
-    }
-
     public ArtifactModel(String name, String description, int price){
-        this.name = name;
-        this.description = description;
+        super(name, description);
+        this.id = -1;
         this.price = price;
         this.genre = "artifact";
         this.type = 'B';
         ArtifactDAO dao = new ArtifactDAO();
         dao.saveObject(this);
+    }
+
+    public ArtifactModel(int id, char type, String name, String description, int price){
+        super(name, description);
+        this.id = id;
+        this.type = type;
+        this.price = price;
+        this.genre = "artifact";
     }
 
     public int getPrice(){
