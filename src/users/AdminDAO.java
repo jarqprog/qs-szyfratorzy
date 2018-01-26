@@ -67,7 +67,7 @@ public class AdminDAO extends FactoryDAO {
 
             query = String.format(
                             "INSERT INTO %s " +
-                            "VALUES(null, '%s', '%s', '%s', '%s', %s);",
+                            "VALUES(null, '%s', '%s', '%s', '%s');",
                     DEFAULT_TABLE, firstName, lastName, email, password);
         } else{
 

@@ -11,6 +11,8 @@ public class MentorModel extends UserModel {
         super(firstName, lastName, password);
         group = new GroupModel(1,"undefined", new ArrayList<StudentModel>());
         role = Role.MENTOR.getName();
+        MentorDAO dao = new MentorDAO();
+        dao.saveObject(this);
     }
 
     public MentorModel(int id, String firstName, String lastName,

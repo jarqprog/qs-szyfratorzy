@@ -10,8 +10,8 @@ import item.ArtifactModel;
 import school.GroupModel;
 import school.TeamModel;
 
-
 public class StudentDAO extends FactoryDAO {
+
 
     private final Integer ID_INDEX = 0;
     private final Integer FIRST_NAME_INDEX = 1;
@@ -52,7 +52,7 @@ public class StudentDAO extends FactoryDAO {
     }
 
     public List<StudentModel> getManyObjects(String query) {
-        dao = new DbManagerDAO();
+        DbManagerDAO dao = new DbManagerDAO();
         List<String[]> dataCollection = dao.getData(query);
         return getManyObjects(dataCollection);
     }
@@ -76,7 +76,7 @@ public class StudentDAO extends FactoryDAO {
     }
 
     public StudentModel getOneObject(String query) {
-        dao = new DbManagerDAO();
+        DbManagerDAO dao = new DbManagerDAO();
         String[] studentData = dao.getData(query).get(0);
         return getOneObject(studentData);
     }
@@ -103,7 +103,6 @@ public class StudentDAO extends FactoryDAO {
                     experience, attendance, teamId, groupId);
 
         } else{
-            System.out.println("Jestem tu!!!!!!!!!!!!");
 
             query = String.format(
                             "UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', " +

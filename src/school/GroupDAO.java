@@ -46,7 +46,6 @@ public class GroupDAO extends FactoryDAO {
         return getOneObject(record);
     }
 
-
     public void saveObject(GroupModel group){
         String group_id = String.valueOf(group.getId());
         String name = group.getName();

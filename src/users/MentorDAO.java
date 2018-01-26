@@ -69,9 +69,9 @@ public class MentorDAO extends FactoryDAO {
         email = mentor.getEmail();
         password = mentor.getPassword();
         groupId = mentor.getGroup().getId();
-        String query;
 
-        if(mentorId.equals("-1")) {
+        String query;
+        if (mentorId.equals("-1")) {
             query = String.format(
                     "INSERT INTO %s VALUES('%s', '%s', '%s', %s);",
                     DEFAULT_TABLE, firstName, lastName, password, groupId);
@@ -89,5 +89,6 @@ public class MentorDAO extends FactoryDAO {
             saveObject(mentor);
         }
     }
+
 
 }
