@@ -68,12 +68,12 @@ public class MentorController extends UserController{
     public void editQuest() {}
 
     public void createStudent(){
-        String firstName = view.getUserInput("Enter a first name: ");
-        String lastName = view.getUserInput("Enter a last name: ");
-        String password = view.getUserInput("Enter a password: ");
-        StudentModel newStudent = new StudentModel(firstName, lastName, password);
-        dao.saveModelToFile(newStudent);
-        view.displayMessage("Student created successfully!" + newStudent.toString());
+//        String firstName = view.getUserInput("Enter a first name: ");
+//        String lastName = view.getUserInput("Enter a last name: ");
+//        String password = view.getUserInput("Enter a password: ");
+//        StudentModel newStudent = new StudentModel(firstName, lastName, password);
+//        dao.saveModelToFile(newStudent);
+//        view.displayMessage("Student created successfully!" + newStudent.toString());
     }
 
     public void createArtifact(){
@@ -147,11 +147,11 @@ public class MentorController extends UserController{
 
     public String[] prepareArtifactsToDisplay(List<ArtifactModel> artifacts){
         String[] artifactsToDisplay = new String[artifacts.size()];
-        int index = 0;
-        for(ArtifactModel artifact : artifacts){
-            artifactsToDisplay[index] = artifact.toString();
-            index ++;
-        }
+//        int index = 0;
+//        for(ArtifactModel artifact : artifacts){
+//            artifactsToDisplay[index] = artifact.toString();
+//            index ++;
+//        }
         return artifactsToDisplay;
     }
 }
