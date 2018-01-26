@@ -28,6 +28,7 @@ public class AdminController extends UserController{
                 isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
             }
             view.clearScreen();
+
             switch(userChoice) {
                 case "1":
                    createMentor();
@@ -63,7 +64,7 @@ public class AdminController extends UserController{
         view.displayMessage(mentorsToDisplay);
     }
 
-    public void editMentor(){
+    public void editMentor() {
         List<MentorModel> mentors = getMentors();
         view.showAllMentors(prepareMentorsToDisplay(mentors));
         String id = view.getUserInput("Enter ID of mentor: ");
@@ -135,5 +136,4 @@ public class AdminController extends UserController{
     public void createNewLevelOfExperience(){
         executeNotImplementedInfo();
     }
-
 }
