@@ -19,41 +19,41 @@ public class AdminController extends UserController{
 
     public void handleMainMenu(){
 
-        boolean isDone = false;
-        while(! isDone){
-            String userChoice = "";
-            String[] correctChoices = {"1", "2", "3", "4", "5", "0"};
-            Boolean isChoiceReady = false;
-            while(! isChoiceReady){
-                view.clearScreen();
-                view.displayMenu();
-                userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
-            }
-            view.clearScreen();
-            switch(userChoice)
-            {
-                case "1":
-                   createMentor();
-                   break;
-                case "2":
-                   editMentor();
-                   break;
-                case "3":
-                   displayMentorProfile();
-                   break;
-                case "4":
-                    createGroup();
-                    break;
-                case "5":
-                    createNewLevelOfExperience();
-                    break;
-                case "0":
-                   isDone = true;
-                   break;
-            }
-            view.handlePause();
-        }
+//        boolean isDone = false;
+//        while(! isDone){
+//            String userChoice = "";
+//            String[] correctChoices = {"1", "2", "3", "4", "5", "0"};
+//            Boolean isChoiceReady = false;
+//            while(! isChoiceReady){
+//                view.clearScreen();
+//                view.displayMenu();
+//                userChoice = view.getUserInput("Select an option: ");
+//                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
+//            }
+//            view.clearScreen();
+//            switch(userChoice)
+//            {
+//                case "1":
+//                   createMentor();
+//                   break;
+//                case "2":
+//                   editMentor();
+//                   break;
+//                case "3":
+//                   displayMentorProfile();
+//                   break;
+//                case "4":
+//                    createGroup();
+//                    break;
+//                case "5":
+//                    createNewLevelOfExperience();
+//                    break;
+//                case "0":
+//                   isDone = true;
+//                   break;
+//            }
+//            view.handlePause();
+//        }
     }
 
     public void createMentor(){
@@ -118,41 +118,41 @@ public class AdminController extends UserController{
     }
 
     public void displayMentorProfile(){
-        view.showAllMentors(prepareMentorsToDisplay(dao.getMentorsFromFile()));
-        String id = view.getUserInput("Enter ID of mentor: ");
-        for (MentorModel mentor : dao.getMentorsFromFile())
-        {
-            if (id.equals(Integer.toString(mentor.getId())))
-            {
-                String mentorToDisplay = mentor.toString();
-                view.clearScreen();
-                view.displayMessage("Mentor's profile:");
-                view.displayMessage(mentorToDisplay);
-            }
-        }
+//        view.showAllMentors(prepareMentorsToDisplay(dao.getMentorsFromFile()));
+//        String id = view.getUserInput("Enter ID of mentor: ");
+//        for (MentorModel mentor : dao.getMentorsFromFile())
+//        {
+//            if (id.equals(Integer.toString(mentor.getId())))
+//            {
+//                String mentorToDisplay = mentor.toString();
+//                view.clearScreen();
+//                view.displayMessage("Mentor's profile:");
+//                view.displayMessage(mentorToDisplay);
+//            }
+//        }
     }
 
     public void createGroup(){
-        Character newGroup = view.getUserInput("Enter group name: ").charAt(0);
-        school.addGroup(newGroup);
-        view.clearScreen();
-        view.displayMessage("Group created: " + String.valueOf(newGroup));
+//        Character newGroup = view.getUserInput("Enter group name: ").charAt(0);
+//        school.addGroup(newGroup);
+//        view.clearScreen();
+//        view.displayMessage("Group created: " + String.valueOf(newGroup));
     }
 
     public void createNewLevelOfExperience(){
-        String levelName = view.getUserInput("Enter level name: ");
-        Integer experience = Integer.parseInt(view.getUserInput("Enter experience: "));
-        school.addExperienceLevel(levelName, experience);
+//        String levelName = view.getUserInput("Enter level name: ");
+//        Integer experience = Integer.parseInt(view.getUserInput("Enter experience: "));
+//        school.addExperienceLevel(levelName, experience);
     }
 
     public String[] prepareMentorsToDisplay(List<MentorModel> mentors)
     {
         String[] mentorsToDisplay = new String[mentors.size()];
-        int index = 0;
-        for(MentorModel mentor : mentors){
-            mentorsToDisplay[index] = mentor.toString();
-            index ++;
-        }
+//        int index = 0;
+//        for(MentorModel mentor : mentors){
+//            mentorsToDisplay[index] = mentor.toString();
+//            index ++;
+//        }
         return mentorsToDisplay;
     }
 }
