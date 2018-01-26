@@ -63,9 +63,13 @@ public class MentorController extends UserController{
         }
     }
 
-    public void createQuest() {}
+    public void createQuest() {
+        executeNotImplementedInfo();
+    }
 
-    public void editQuest() {}
+    public void editQuest() {
+        executeNotImplementedInfo();
+    }
 
     public void createStudent(){
         String firstName = view.getUserInput("Enter a first name: ");
@@ -146,5 +150,4 @@ public class MentorController extends UserController{
     public void markStudentArtifacts() {
         executeNotImplementedInfo();
     }
-
 }
