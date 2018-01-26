@@ -5,11 +5,12 @@ import school.GroupModel;
 import java.util.ArrayList;
 
 public class MentorModel extends UserModel {
+
     private GroupModel group;
 
     public MentorModel(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
-        group = new GroupModel(1,"undefined", new ArrayList<StudentModel>());
+        group = new GroupModel(1,"undefined", new ArrayList<>());
         role = Role.MENTOR.getName();
         MentorDAO dao = new MentorDAO();
         dao.saveObject(this);
