@@ -31,7 +31,7 @@ public class RootController{
 
     public void runApplication(){
         prepareDatabase();
-        runTest();  // TEST!!!
+//        runTest();  // TEST!!!
         boolean isDone = false;
         while (! isDone){
             handleIntro();
@@ -61,9 +61,6 @@ public class RootController{
                     List<String[]> userData = dbManagerDao.getData(query);
                     if(userData.size() == 1) {
                         createUser(userData.get(0), tableName);
-                        for (String str : userData.get(0)) {
-                            System.out.println(str + " " + tableName);
-                        }
                     }
         }
 
@@ -76,7 +73,6 @@ public class RootController{
 
     public void createUser(String [] userData, String tableName) {
 
-        System.out.println("Wszedłem");
         if(tableName.equals("admins")) {
             AdminModel admin = adminDAO.getOneObject(userData);
             AdminController adminController = new AdminController(admin);
@@ -88,7 +84,6 @@ public class RootController{
             mentorController.handleMainMenu();
 
         } else if(tableName.equals("students")){
-            System.out.println("Wszedłem do else if in student");
             StudentModel student = studentDAO.getOneObject(userData);;
             StudentController studentController = new StudentController(student);
             studentController.handleMainMenu();
