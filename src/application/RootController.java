@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Arrays;
 
 import users.*;
+import application.DbManagerDAO;
+import application.Table;
 
 import java.io.Console;
 
@@ -12,10 +14,19 @@ public class RootController{
 
     private LogableDAO dao;
     private RootView view;
+    private DbManagerDAO dbManagerDao;
+    private AdminDAO adminDAO;
+    private MentorDAO mentorDAO;
+    private StudentDAO studentDAO;
 
     public RootController(){
         dao = new UsersDAO();
         view = new RootView();
+        dbManagerDao = new DbManagerDAO();
+        adminDAO = new AdminDAO();
+        mentorDAO = new MentorDAO();
+        studentDAO = new StudentDAO();
+
     }
 
     public void runApplication(){
@@ -28,8 +39,8 @@ public class RootController{
             switch (userInput)
             {
                 case "1":
-                    String [] userData = loggingProcedure();
-                    handleUserData(userData);
+                    loggingProcedure();
+//                    handleUserData(userData);
                     break;
                 case "0":
                     isDone = true;
@@ -38,40 +49,47 @@ public class RootController{
         }
     }
 
-    private String [] loggingProcedure() {
+    private void loggingProcedure() {
         String login = view.displayLoginScreen("Login: ");
         Console console = System.console();
         view.displayMessage("Please enter your password: ");
         char[] password = console.readPassword();
-        dao.updateLoadedTables();
-        String [] userDate = dao.importUserData(login, String.valueOf(password));
-        return userDate;
+        String [] usersTables = {"admins", "mentors", "students"};
+        for(String tableName : usersTables) {
+            String query = String.format("Select * FROM %s " +
+                    "WHERE first_name || id = '%s' AND password = '%s';", tableName, login, String.valueOf(password));
+                    List<String[]> userData = dbManagerDao.getData(query);
+                    if(userData.size() == 1) {
+                        createUser(userData.get(0), tableName);
+                        for (String str : userData.get(0)) {
+                            System.out.println(str + " " + tableName);
+                        }
+                    }
+        }
+
     }
 
-    private void handleUserData(String [] userData) {
-        if(userData.length == 0) {
-            view.displayMessage("Invalid login or password! Try again!");
-            view.handlePause();
-        }
-        else {
-            createUser(userData);
-        }
+    private void handleUserData(UserModel user) {
+
+//            createUser(user);
     }
 
-    public void createUser(String [] userData) {
-        int ROLE_INDEX = 0;
-        if(userData[ROLE_INDEX].equals("admin")){
-            AdminModel admin = dao.createAdminModel(userData);
+    public void createUser(String [] userData, String tableName) {
+
+        System.out.println("Wszedłem");
+        if(tableName.equals("admins")) {
+            AdminModel admin = adminDAO.getOneObject(userData);
             AdminController adminController = new AdminController(admin);
             adminController.handleMainMenu();
-        }
-        else if(userData[ROLE_INDEX].equals("mentor")){
-            MentorModel mentor = dao.createMentorModel(userData);
+
+        } else if(tableName.equals("mentors")){
+            MentorModel mentor = mentorDAO.getOneObject(userData);
             MentorController mentorController = new MentorController(mentor);
             mentorController.handleMainMenu();
-        }
-        else if(userData[ROLE_INDEX].equals("student")){
-            StudentModel student = dao.createStudentModel(userData);
+
+        } else if(tableName.equals("students")){
+            System.out.println("Wszedłem do else if in student");
+            StudentModel student = studentDAO.getOneObject(userData);;
             StudentController studentController = new StudentController(student);
             studentController.handleMainMenu();
         }
