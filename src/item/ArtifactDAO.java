@@ -63,7 +63,7 @@ public class ArtifactDAO extends FactoryDAO {
             query = String.format(
                     "INSERT INTO %s " +
                             "VALUES(null, '%s', '%s', '%s', %s);",
-                    DEFAULT_TABLE, itemType, itemName, itemDescription, price);
+                    DEFAULT_TABLE, itemName, itemType, itemDescription, price);
         } else {
             query = String.format("UPDATE %s SET name='%s' , type='%s', description='%s', price=%s " +
                     "WHERE id=%s;", DEFAULT_TABLE, itemName, itemType, itemDescription, price, artifactId);
