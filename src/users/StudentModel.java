@@ -96,7 +96,7 @@ public class StudentModel extends UserModel {
         this.attendance = attendance;
     }
 
-//    public String toString() {
-//        return super.toString(); + String.format(" Group : %s, Team: %s, Wallet: %dcc, Experience: %d, Attendance: %.2f",getGroup(), getTeam(), getWallet(), getExperience(), getAttendance());
-//    }
+    public String toString() {
+        return super.toString() + String.format(" Group : %s, Team: %s, Wallet: %dcc, Experience: %d, Attendance: %.2f",getGroup(), getTeam(), getWallet(), getExperience(), getAttendance());
+    }
 }

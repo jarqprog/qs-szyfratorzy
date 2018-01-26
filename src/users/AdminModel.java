@@ -4,6 +4,17 @@ import application.Role;
 
 public class AdminModel extends UserModel {
 
+    @Override
+    public String toString() {
+        return
+
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\''
+                ;
+    }
+
     public AdminModel(String firstName, String lastName, String password)
     {
         super(firstName, lastName, password);
