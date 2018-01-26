@@ -4,6 +4,7 @@ import application.Role;
 
 public class AdminModel extends UserModel {
 
+
     public AdminModel(String firstName, String lastName, String password)
     {
         super(firstName, lastName, password);
@@ -17,4 +18,9 @@ public class AdminModel extends UserModel {
         super(id, firstName, lastName, email, password);
         role = Role.ADMIN.getName();
     }
+
+    public String toString() {
+         return super.toString();
+    }
+
 }
