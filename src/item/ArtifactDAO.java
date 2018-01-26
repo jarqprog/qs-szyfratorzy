@@ -10,8 +10,8 @@ import application.Table;
 public class ArtifactDAO extends FactoryDAO {
 
     private final static int ID_INDEX = 0;
-    private final static int TYPE_INDEX = 1;
-    private final static int NAME_INDEX = 2;
+    private final static int TYPE_INDEX = 2;
+    private final static int NAME_INDEX = 1;
     private final static int DESCRIPTION_INDEX = 3;
     private final static int PRICE_INDEX = 4;
 
