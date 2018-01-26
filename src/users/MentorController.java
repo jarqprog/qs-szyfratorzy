@@ -70,7 +70,7 @@ public class MentorController extends UserController{
         String description = view.getUserInput("Enter quest description: ");
         int reward = view.getValue();
         QuestModel quest = new QuestModel(name, description, reward);
-        view.displayMessage("You've created new something new:\n" + quest);
+        view.displayMessage("You've created something new:\n" + quest);
     }
 
     public void editQuest() {
@@ -100,7 +100,7 @@ public class MentorController extends UserController{
         String description = view.getUserInput("Enter artifact description: ");
         int price = view.getValue();
         ArtifactModel artifact = new ArtifactModel(name, description, price);
-        view.displayMessage("You've created new something new:\n" + artifact);
+        view.displayMessage("You've created something new:\n" + artifact);
         }
 
     public void editArtifact(){

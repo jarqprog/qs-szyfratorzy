@@ -3,7 +3,6 @@ package users;
 import java.util.ArrayList;
 import java.util.List;
 
-import application.CreatableDAO;
 import application.Role;
 import item.ArtifactModel;
 import school.GroupModel;
@@ -23,8 +22,8 @@ public class StudentModel extends UserModel {
         wallet = 0;
         experience = 0;
         attendance = 100;
-        team = new TeamModel(1, "undefined", new ArrayList<StudentModel>());
-        group = new GroupModel(1,"undefined", new ArrayList<StudentModel>());
+        team = new TeamModel(1, "undefined", new ArrayList<>());
+        group = new GroupModel(1,"undefined", new ArrayList<>());
         inventory = new ArrayList<ArtifactModel>();
         role = Role.STUDENT.getName();
         // save:
