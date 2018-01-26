@@ -43,7 +43,7 @@ public class StudentDAO extends FactoryDAO {
     }
 
     public List<StudentModel> getManyObjects(List<String[]> dataCollection) {
-        List<StudentModel> students = new ArrayList<StudentModel>();
+        List<StudentModel> students = new ArrayList<>();
         for (String[] record : dataCollection) {
             StudentModel student = getOneObject(record);
             students.add(student);

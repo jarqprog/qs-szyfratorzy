@@ -57,11 +57,14 @@ public class AdminController extends UserController{
         String firstName = view.getUserInput("Enter first name: ");
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
-        MentorModel newMentor = new MentorModel(firstName, lastName, password);
-        String mentorsToDisplay = newMentor.toString();
+        MentorModel mentor = new MentorModel(firstName, lastName, password);
+//        MentorDAO dao = new MentorDAO();
+////        dao.saveObject(mentor);
+////        mentor =
+        String mentorToDisplay = mentor.toString();
         view.clearScreen();
         view.displayMessage("Mentor created:");
-        view.displayMessage(mentorsToDisplay);
+        view.displayMessage(mentorToDisplay);
     }
 
     public void editMentor() {

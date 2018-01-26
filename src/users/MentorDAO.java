@@ -13,9 +13,9 @@ import school.GroupModel;
 public class MentorDAO extends FactoryDAO {
 
     private final Integer ID_INDEX = 0;
-    private final Integer EMAIL_INDEX = 1;
-    private final Integer FIRST_NAME_INDEX = 2;
-    private final Integer LAST_NAME_INDEX = 3;
+    private final Integer FIRST_NAME_INDEX = 1;
+    private final Integer LAST_NAME_INDEX = 2;
+    private final Integer EMAIL_INDEX = 3;
     private final Integer PASSWORD_INDEX = 4;
 
     private int mentorId;
@@ -73,14 +73,15 @@ public class MentorDAO extends FactoryDAO {
         String query;
         if (mentorId.equals("-1")) {
             query = String.format(
-                    "INSERT INTO %s VALUES('%s', '%s', '%s', %s);",
-                    DEFAULT_TABLE, firstName, lastName, password, groupId);
+                            "INSERT INTO %s " +
+                            "VALUES(null, '%s', '%s', '%s', '%s', %s);",
+                    DEFAULT_TABLE, firstName, lastName, email, password, groupId);
         } else {
             query = String.format("UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', group_id=%s " +
                     "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, groupId, mentorId);
-            dao = new DbManagerDAO();
-            dao.inputData(query);
         }
+        dao = new DbManagerDAO();
+        dao.inputData(query);
     }
 
     public void saveObjects(List<MentorModel> mentors) {
