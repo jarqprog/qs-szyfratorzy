@@ -33,9 +33,9 @@ public class MentorModel extends UserModel {
         this.group = group;
     }
 
-//    public String toString()
-//    {
-//        return super.toString()+String.format(" Group name: %s",this.getGroupName());
-//    }
+    public String toString()
+    {
+        return super.toString()+String.format(" Group name: %s",group.getName());
+     }
 
 }
