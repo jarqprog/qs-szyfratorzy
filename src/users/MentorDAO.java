@@ -2,20 +2,20 @@ package users;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
 import school.GroupModel;
 
 
-public class MentorDAO extends UsersDAO {
 
-    private DbManagerDAO daoManager;
+public class MentorDAO extends FactoryDAO {
 
-    private final String DEFAULT_TABLE = Table.MENTORS.getName();
     private final Integer ID_INDEX = 0;
-    private final Integer EMAIL_INDEX = 1;
-    private final Integer FIRST_NAME_INDEX = 2;
-    private final Integer LAST_NAME_INDEX = 3;
+    private final Integer FIRST_NAME_INDEX = 1;
+    private final Integer LAST_NAME_INDEX = 2;
+    private final Integer EMAIL_INDEX = 3;
     private final Integer PASSWORD_INDEX = 4;
 
     private int mentorId;
@@ -24,11 +24,14 @@ public class MentorDAO extends UsersDAO {
     private String email;
     private String password;
     private GroupModel group;
+    private int groupId;
+
+    public MentorDAO(){
+        this.DEFAULT_TABLE = Table.MENTORS.getName();
+    }
 
     public List<MentorModel> getManyObjects(List<String[]> dataCollection) {
-
-        ArrayList<MentorModel> mentors = new ArrayList<MentorModel>();
-
+        List<MentorModel> mentors = new ArrayList<>();
         for (String [] record : dataCollection) {
             MentorModel mentor = getOneObject(record);
             mentors.add(mentor);
@@ -37,27 +40,9 @@ public class MentorDAO extends UsersDAO {
     }
 
     public List<MentorModel> getManyObjects(String query) {
-        daoManager = new DbManagerDAO();
-        List<String[]> dataCollection = daoManager.getData(query);
-        List<MentorModel> mentors = new ArrayList<MentorModel>();
-        for (String[] record : dataCollection) {
-            MentorModel mentor = getOneObject(record);
-            mentors.add(mentor);
-        }
-        return mentors;
-    }
-
-    public MentorModel getOneObject(String query) {
-        daoManager = new DbManagerDAO();
-        String[] mentorData = daoManager.getData(query).get(0);
-        mentorId = Integer.parseInt(mentorData[ID_INDEX]);
-        firstName = mentorData[FIRST_NAME_INDEX];
-        lastName = mentorData[LAST_NAME_INDEX];
-        email = mentorData[EMAIL_INDEX];
-        password = mentorData[PASSWORD_INDEX];
-        group = new GroupModel("undefined");
-
-        return new MentorModel(mentorId, firstName, lastName, email, password, group);
+        dao = new DbManagerDAO();
+        List<String[]> dataCollection = dao.getData(query);
+        return getManyObjects(dataCollection);
     }
 
     public MentorModel getOneObject(String[] record) {
@@ -66,9 +51,15 @@ public class MentorDAO extends UsersDAO {
         lastName = record[LAST_NAME_INDEX];
         email = record[EMAIL_INDEX];
         password = record[PASSWORD_INDEX];
-        group = new GroupModel(1, "undefined", new ArrayList<StudentModel>());
+        group = new GroupModel(1, "undefined", new ArrayList<>());
 
         return new MentorModel(mentorId, firstName, lastName, email, password, group);
+    }
+
+    public MentorModel getOneObject(String query) {
+        dao = new DbManagerDAO();
+        String[] record = dao.getData(query).get(0);
+        return getOneObject(record);
     }
 
     public void saveObject(MentorModel mentor) {
@@ -77,21 +68,20 @@ public class MentorDAO extends UsersDAO {
         lastName = mentor.getLastName();
         email = mentor.getEmail();
         password = mentor.getPassword();
-
-        // dodaj grupę!!!
+        groupId = mentor.getGroup().getId();
 
         String query;
-
-        if(mentorId.equals("-1")) {
+        if (mentorId.equals("-1")) {
             query = String.format(
-                    "INSERT INTO %s VALUES('%s', '%s', '%s');",
-                    DEFAULT_TABLE, firstName, lastName, password);
+                            "INSERT INTO %s " +
+                            "VALUES(null, '%s', '%s', '%s', '%s', %s);",
+                    DEFAULT_TABLE, firstName, lastName, email, password, groupId);
         } else {
-            query = String.format("UPDATE %s SET first_name=%s , last_name=%s, email=%s, password=%s " +
-                    "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, mentorId);
-            daoManager = new DbManagerDAO();
-            daoManager.inputData(query);
+            query = String.format("UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', group_id=%s " +
+                    "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, groupId, mentorId);
         }
+        dao = new DbManagerDAO();
+        dao.inputData(query);
     }
 
     public void saveObjects(List<MentorModel> mentors) {
