@@ -4,11 +4,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 import application.DbManagerDAO;
+import application.FactoryDAO;
 import application.Table;
 
-public class ArtifactDAO {
-
-    private final String DEFAULT_TABLE = Table.ARTIFACTS.getName();
+public class ArtifactDAO extends FactoryDAO {
 
     private final static int ID_INDEX = 0;
     private final static int TYPE_INDEX = 1;
@@ -16,18 +15,33 @@ public class ArtifactDAO {
     private final static int DESCRIPTION_INDEX = 3;
     private final static int PRICE_INDEX = 4;
 
-    public List<ArtifactModel> getObjects(List<String[]> dataCollection) {
+    public ArtifactDAO(){
+        this.DEFAULT_TABLE = Table.ARTIFACTS.getName();
+    }
 
-        ArrayList<ArtifactModel> artifacts = new ArrayList<ArtifactModel>();
+    public List<ArtifactModel> getManyObjects(String query) {
+        dao = new DbManagerDAO();
+        List<String[]> dataCollection = dao.getData(query);
+        return getManyObjects(dataCollection);
+    }
+
+    public List<ArtifactModel> getManyObjects(List<String[]> dataCollection) {
+        ArrayList<ArtifactModel> artifacts = new ArrayList<>();
 
         for (String [] record : dataCollection) {
-            ArtifactModel artifact = getObject(record);
+            ArtifactModel artifact = getOneObject(record);
             artifacts.add(artifact);
         }
         return artifacts;
     }
 
-    public ArtifactModel getObject(String[] record) {
+    public ArtifactModel getOneObject(String query) {
+        dao = new DbManagerDAO();
+        String[] record = dao.getData(query).get(0);
+        return getOneObject(record);
+    }
+
+    public ArtifactModel getOneObject(String[] record) {
         int id = Integer.parseInt(record[ID_INDEX]);
         char itemType = record[TYPE_INDEX].charAt(0);
         String itemName = record[NAME_INDEX];
