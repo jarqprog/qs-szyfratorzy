@@ -28,9 +28,7 @@ public abstract class  UserController{
 
     protected void executeNotImplementedInfo() {
         UsersView view = new UsersView();
-        view.clearScreen();
         view.displayMessage("Not implemented yet");
-        view.handlePause();
     }
 
     protected String[] prepareMentorsToDisplay(List<MentorModel> mentors) {

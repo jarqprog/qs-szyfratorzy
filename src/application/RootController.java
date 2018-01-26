@@ -50,6 +50,12 @@ public class RootController{
     }
 
     private void loggingProcedure() {
+        FactoryDAO dao = new AdminDAO();
+        List<Object> lista = dao.getObjects();
+        for (Object obj : lista){
+            AdminModel admin = (AdminModel) obj;
+            System.out.println(admin);
+        }
         String login = view.displayLoginScreen("Login: ");
         Console console = System.console();
         view.displayMessage("Please enter your password: ");
@@ -57,12 +63,14 @@ public class RootController{
         String [] usersTables = {"admins", "mentors", "students"};
         for(String tableName : usersTables) {
             String query = String.format("Select * FROM %s " +
-                    "WHERE first_name || id = '%s' AND password = '%s';", tableName, login, String.valueOf(password));
-                    List<String[]> userData = dbManagerDao.getData(query);
-                    if(userData.size() == 1) {
-                        createUser(userData.get(0), tableName);
-                    }
-        }
+                "WHERE first_name || id = '%s' AND password = '%s';", tableName, login, String.valueOf(password));
+                List<String[]> userData = dbManagerDao.getData(query);
+                if(userData.size() == 1) {
+                    System.out.println("Jestem w warunku");
+                    createUser(userData.get(0), tableName);
+                    break;
+                }
+            }
 
     }
 
@@ -72,6 +80,9 @@ public class RootController{
     }
 
     public void createUser(String [] userData, String tableName) {
+        for(String elem : userData){
+            System.out.println(elem);
+        }
 
         if(tableName.equals("admins")) {
             AdminModel admin = adminDAO.getOneObject(userData);
