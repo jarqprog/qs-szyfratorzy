@@ -1,9 +1,11 @@
 package users;
 
-import item.ArtifactModel;
 
 import java.util.List;
 import item.ArtifactDAO;
+import item.ArtifactModel;
+import item.QuestDAO;
+import item.QuestModel;
 
 public abstract class  UserController{
 
@@ -34,6 +36,11 @@ public abstract class  UserController{
         return dao.getManyObjects("SELECT * FROM artifacts;");
     }
 
+    protected List<QuestModel> getQuests(){
+        QuestDAO dao = new QuestDAO();
+        return dao.getManyObjects("SELECT * FROM quests;");
+    }
+
     protected void executeNotImplementedInfo() {
         UsersView view = new UsersView();
         view.displayMessage("Not implemented yet");
@@ -57,5 +64,15 @@ public abstract class  UserController{
             index ++;
         }
         return artifactsToDisplay;
+    }
+
+    protected String[] prepareQuestsToDisplay(List<QuestModel> quests){
+        String[] questsToDisplay = new String[quests.size()];
+        int index = 0;
+        for(QuestModel quest : quests){
+            questsToDisplay[index] = quest.toString();
+            index ++;
+        }
+        return questsToDisplay;
     }
 }
