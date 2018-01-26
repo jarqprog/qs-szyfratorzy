@@ -19,41 +19,41 @@ public class AdminController extends UserController{
 
     public void handleMainMenu(){
 
-//        boolean isDone = false;
-//        while(! isDone){
-//            String userChoice = "";
-//            String[] correctChoices = {"1", "2", "3", "4", "5", "0"};
-//            Boolean isChoiceReady = false;
-//            while(! isChoiceReady){
-//                view.clearScreen();
-//                view.displayMenu();
-//                userChoice = view.getUserInput("Select an option: ");
-//                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
-//            }
-//            view.clearScreen();
-//            switch(userChoice)
-//            {
-//                case "1":
-//                   createMentor();
-//                   break;
-//                case "2":
-//                   editMentor();
-//                   break;
-//                case "3":
-//                   displayMentorProfile();
-//                   break;
-//                case "4":
-//                    createGroup();
-//                    break;
-//                case "5":
-//                    createNewLevelOfExperience();
-//                    break;
-//                case "0":
-//                   isDone = true;
-//                   break;
-//            }
-//            view.handlePause();
-//        }
+        boolean isDone = false;
+        while(! isDone){
+            String userChoice = "";
+            String[] correctChoices = {"1", "2", "3", "4", "5", "0"};
+            Boolean isChoiceReady = false;
+            while(! isChoiceReady){
+                view.clearScreen();
+                view.displayMenu();
+                userChoice = view.getUserInput("Select an option: ");
+                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
+            }
+            view.clearScreen();
+            switch(userChoice)
+            {
+                case "1":
+                   createMentor();
+                   break;
+                case "2":
+                   editMentor();
+                   break;
+                case "3":
+                   displayMentorProfile();
+                   break;
+                case "4":
+                    createGroup();
+                    break;
+                case "5":
+                    createNewLevelOfExperience();
+                    break;
+                case "0":
+                   isDone = true;
+                   break;
+            }
+            view.handlePause();
+        }
     }
 
     public void createMentor(){
