@@ -15,7 +15,7 @@ public class StudentView extends AbstractView{
     }
 
     public void displayMenu() {
-        String[] options = {"      *** Menu ***     ",
+        String[] options = {"      *** Student's Menu ***     ",
                             "[1] display wallet",
                             "[2] display level of experience",
                             "[0] exit"};
