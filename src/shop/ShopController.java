@@ -3,15 +3,20 @@ package shop;
 import java.util.List;
 import item.ArtifactDAO;
 import item.ArtifactModel;
+import users.StudentDAO;
+import users.StudentModel;
 
 public class ShopController {
     Shop shop;
     ShopView view;
     ArtifactDAO artifactDao;
+    StudentDAO studentDAO;
+    StudentModel student;
 //    ArtifactModel artifact;
 
-    public ShopController (Shop shop) {
+    public ShopController (Shop shop, StudentModel student) {
         this.shop = shop;
+        this.student = student;
         view = new ShopView();
         artifactDao = new ArtifactDAO();
         List<ArtifactModel> artifacts = artifactDao.getManyObjects("SELECT * FROM artifacts;");
@@ -35,6 +40,9 @@ public class ShopController {
                 case "1":
                     view.displayListOfArtifacts(shop.getStore());
                     break;
+                case "2":
+                    buyArtifact();
+                    break;
                 case "0":
                     isDone = true;
                     break;
@@ -50,5 +58,24 @@ public class ShopController {
             }
         }
         return false;
+    }
+
+    public void buyArtifact() {
+        view.displayListOfArtifacts(shop.getStore());
+        int id = view.getUserChoice("Enter artifact id: ");
+        for(ArtifactModel artifact : shop.getStore()) {
+            if(id == artifact.getId()) {
+                if(artifact.getPrice() <= student.getWallet()) {
+                    student.getInventory().add(artifact);
+                    student.setWallet(student.getWallet()-artifact.getPrice());
+                    view.displayMessage("You bought " + artifact.getName() + "!");
+//                    save
+                } else {
+                    view.displayMessage("This artifact is to expensive!");
+                }
+            }
+        }
+        view.displayMessage("Bye");
+
     }
 }
