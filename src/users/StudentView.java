@@ -18,7 +18,7 @@ public class StudentView extends AbstractView{
     }
 
     public void displayInventory(List<ArtifactModel> inventory) {
-        if(inventory.size() < 1) {
+        if(inventory.isEmpty()) {
             displayMessage("Your inventory is empty");
         } else {
             displayMessage("Your Inventory: \n");
