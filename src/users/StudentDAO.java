@@ -7,7 +7,9 @@ import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
 import item.ArtifactModel;
+import school.GroupDAO;
 import school.GroupModel;
+import school.TeamDAO;
 import school.TeamModel;
 
 public class StudentDAO extends FactoryDAO {
@@ -59,6 +61,7 @@ public class StudentDAO extends FactoryDAO {
 
     public StudentModel getOneObject(String[] studentData) {
 
+
         studentId = Integer.parseInt(studentData[ID_INDEX]);
         firstName = studentData[FIRST_NAME_INDEX];
         lastName = studentData[LAST_NAME_INDEX];
@@ -67,8 +70,17 @@ public class StudentDAO extends FactoryDAO {
         wallet = Integer.parseInt(studentData[WALLET_INDEX]);
         experience  = Integer.parseInt(studentData[EXPERIENCE_INDEX]);
         attendance = Float.parseFloat(studentData[ATTENDANCE_INDEX]);
-        team = new TeamModel(1,"undefined", new ArrayList<>()); // tmp
-        group = new GroupModel(1, "undefined", new ArrayList<>()); // tmp
+        teamId = Integer.parseInt(studentData[TEAM_INDEX]);
+        groupId = Integer.parseInt(studentData[GROUP_INDEX]);
+
+        final String teamQuery = String.format("SELECT * FROM teams WHERE id=%s;", teamId);
+        TeamDAO teamDAO = new TeamDAO();
+        team = teamDAO.getOneObject(teamQuery);
+
+        final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
+        GroupDAO groupDAO = new GroupDAO();
+        group = groupDAO.getOneObject(groupQuery);
+
         inventory = new ArrayList<>();
 
         return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience, attendance,
@@ -119,6 +131,19 @@ public class StudentDAO extends FactoryDAO {
 
         for(StudentModel student : students) {
             saveObject(student);
+        }
+    }
+
+    public int saveObjectAndGetId(StudentModel student){
+        String[] idsBefore = getCurrentIdCollection();
+        saveObject(student);
+        String[] idsAfter = getCurrentIdCollection();
+        String id = getNewId(idsBefore, idsAfter);
+        try {
+            return Integer.parseInt(id);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return -1;
         }
     }
 }

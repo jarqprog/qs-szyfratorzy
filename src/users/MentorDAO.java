@@ -6,6 +6,7 @@ import java.util.List;
 import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
+import school.GroupDAO;
 import school.GroupModel;
 
 
@@ -17,6 +18,7 @@ public class MentorDAO extends FactoryDAO {
     private final Integer LAST_NAME_INDEX = 2;
     private final Integer EMAIL_INDEX = 3;
     private final Integer PASSWORD_INDEX = 4;
+    private final Integer GROUP_INDEX = 5;
 
     private int mentorId;
     private String firstName;
@@ -51,7 +53,11 @@ public class MentorDAO extends FactoryDAO {
         lastName = record[LAST_NAME_INDEX];
         email = record[EMAIL_INDEX];
         password = record[PASSWORD_INDEX];
-        group = new GroupModel(1, "undefined", new ArrayList<>());
+        groupId = Integer.parseInt(record[GROUP_INDEX]);
+
+        final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
+        GroupDAO groupDAO = new GroupDAO();
+        group = groupDAO.getOneObject(groupQuery);
 
         return new MentorModel(mentorId, firstName, lastName, email, password, group);
     }
@@ -91,5 +97,17 @@ public class MentorDAO extends FactoryDAO {
         }
     }
 
+    public int saveObjectAndGetId(MentorModel mentor){
+        String[] idsBefore = getCurrentIdCollection();
+        saveObject(mentor);
+        String[] idsAfter = getCurrentIdCollection();
+        String id = getNewId(idsBefore, idsAfter);
+        try {
+            return Integer.parseInt(id);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return -1;
+        }
+    }
 
 }

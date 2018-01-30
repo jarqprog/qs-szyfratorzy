@@ -62,9 +62,21 @@ public class GroupDAO extends FactoryDAO {
     }
 
     public void saveObjects(List<GroupModel> groups){
-
         for(GroupModel group : groups) {
             saveObject(group);
+        }
+    }
+
+    public int saveObjectAndGetId(GroupModel group){
+        String[] idsBefore = getCurrentIdCollection();
+        saveObject(group);
+        String[] idsAfter = getCurrentIdCollection();
+        String id = getNewId(idsBefore, idsAfter);
+        try {
+            return Integer.parseInt(id);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return -1;
         }
     }
 }

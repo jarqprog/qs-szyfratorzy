@@ -69,4 +69,17 @@ public class TeamDAO extends FactoryDAO {
             saveObject(team);
         }
     }
+
+    public int saveObjectAndGetId(TeamModel team){
+        String[] idsBefore = getCurrentIdCollection();
+        saveObject(team);
+        String[] idsAfter = getCurrentIdCollection();
+        String id = getNewId(idsBefore, idsAfter);
+        try {
+            return Integer.parseInt(id);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return -1;
+        }
+    }
 }

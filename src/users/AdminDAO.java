@@ -84,4 +84,17 @@ public class AdminDAO extends FactoryDAO {
             saveObject(admin);
         }
     }
+
+    public int saveObjectAndGetId(AdminModel admin){
+        String[] idsBefore = getCurrentIdCollection();
+        saveObject(admin);
+        String[] idsAfter = getCurrentIdCollection();
+        String id = getNewId(idsBefore, idsAfter);
+        try {
+            return Integer.parseInt(id);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return -1;
+        }
+    }
 }
