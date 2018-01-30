@@ -12,7 +12,7 @@ public class Shop{
         store = new ArrayList<>();
         }
 
-    public List getStore() { return store;}
+    public List<ArtifactModel> getStore() { return store;}
 
     public void setStore(List<ArtifactModel> store) {this.store = store;}
 
