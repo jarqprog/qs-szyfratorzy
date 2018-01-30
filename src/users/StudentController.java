@@ -1,5 +1,6 @@
 package users;
 
+import item.ArtifactModel;
 import shop.*;
 
 public class StudentController extends UserController{
@@ -21,9 +22,11 @@ public class StudentController extends UserController{
 
     public void showMyInventory() { view.displayInventory(student.getInventory()); }
 
+    public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
+
     public void executeShopping() {
         Shop shop = new Shop();
-        ShopController controller = new ShopController(shop);
+        ShopController controller = new ShopController(shop, student);
         controller.executeShoppingMenu();
         }
 
