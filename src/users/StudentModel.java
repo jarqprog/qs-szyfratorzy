@@ -95,8 +95,11 @@ public class StudentModel extends UserModel {
         this.attendance = attendance;
     }
 
+    public List<ArtifactModel> getInventory() { return inventory; }
+
     public String toString() {
         return super.toString() + String.format(" Group : %s, Team: %s, Wallet: %dcc, Experience: %d, Attendance: %.2f"
                                                 ,getGroup(), getTeam(), getWallet(), getExperience(), getAttendance());
     }
+
 }
