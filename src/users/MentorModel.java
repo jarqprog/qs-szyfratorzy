@@ -13,7 +13,7 @@ public class MentorModel extends UserModel {
         group = new GroupModel(1,"undefined", new ArrayList<>());
         role = Role.MENTOR.getName();
         MentorDAO dao = new MentorDAO();
-        dao.saveObject(this);
+        this.id = saveNewObjectGetId();
     }
 
     public MentorModel(int id, String firstName, String lastName,
@@ -21,21 +21,36 @@ public class MentorModel extends UserModel {
         super(id, firstName, lastName, email, password);
         this.group = group;
         role = Role.MENTOR.getName();
+
     }
 
-    public GroupModel getGroup()
-    {
+    public GroupModel getGroup() {
+        setGroup();
         return group;
     }
 
-    public void setGroup(GroupModel group)
-    {
+    public void setGroup(GroupModel group) {
         this.group = group;
+        saveObject();
+    }
+
+    public void setGroup() {
+        this.group.setStudents();
     }
 
     public String toString()
     {
         return super.toString()+String.format(" Group name: %s",group.getName());
      }
+
+    public void saveObject(){
+        MentorDAO dao = new MentorDAO();
+        dao.saveObject(this);
+    }
+
+    public int saveNewObjectGetId(){
+        MentorDAO dao = new MentorDAO();
+        return dao.saveObjectAndGetId(this);
+    }
 
 }
