@@ -77,4 +77,16 @@ public abstract class AbstractView {
             System.out.println(e);
         }
     }
+
+    public int getUserChoice(String message) {
+        Scanner scanner = new Scanner(System.in);
+        int input = -1;
+        try {
+            System.out.println(message);
+            input = Integer.parseInt(scanner.nextLine());
+        } catch( NumberFormatException e) {
+            System.out.println("Wrong input!");
+        }
+        return input;
+    }
 }
