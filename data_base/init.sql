@@ -80,10 +80,21 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
 
   INSERT OR IGNORE INTO groups VALUES(1,'undefined');
   INSERT OR IGNORE INTO teams VALUES(1,'undefined');
+  INSERT OR IGNORE INTO groups VALUES(2,'A');
+  INSERT OR IGNORE INTO teams VALUES(2,'meduzy');
+  INSERT OR IGNORE INTO groups VALUES(3,'B');
+  INSERT OR IGNORE INTO teams VALUES(3,'koniki');
   INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
   INSERT OR IGNORE INTO admins VALUES(6,'Piotr','Gryzlo','piotr@cc.com','12321');
-  INSERT OR IGNORE INTO students VALUES(100,'Marcinek','Stasik','lolek@gmail.com','12321', 20, 30, 40, 1, 1);
-  INSERT OR IGNORE INTO mentors VALUES(1,'Jarek','Kucharczyk','jarek@gmail.com','12321', 1);
+  INSERT OR IGNORE INTO students VALUES(100,'Marcinek','Stasik','lolek@gmail.com','12321', 20, 30, 40, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(101,'Jadzia','Piernik','jadzia@cc.com','12321', 20, 30, 40, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(102,'Maciek','Jankowicz','maciek99@cc.com','12321', 20, 30, 40, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(103,'Balbina','Karp','karpik007@cc.com','12321', 20, 30, 40, 3, 3);
+  INSERT OR IGNORE INTO students VALUES(104,'Alfred','Szlarski','pan.samochodzik@cc.com','12321', 20, 30, 40, 3, 3);
+  INSERT OR IGNORE INTO students VALUES(105,'Jakub','Wedrowycz','bimbrownik@gmail.com','12321', 20, 30, 40, 3, 3);
+  INSERT OR IGNORE INTO mentors VALUES(10,'Jarek','Kucharczyk','jarek@gmail.com','12321', 2);
+  INSERT OR IGNORE INTO mentors VALUES(11,'Dominik','Strazak','pogromca@cc.com','12321', 3);
+  INSERT OR IGNORE INTO mentors VALUES(12,'Konrad','Mazina','kondzio999999@cc.com','12321', 3);
 
 
 DELETE FROM sqlite_sequence;
