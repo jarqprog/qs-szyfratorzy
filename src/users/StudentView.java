@@ -34,6 +34,8 @@ public class StudentView extends AbstractView{
                             "[2] display level of experience",
                             "[3] shop online",
                             "[4] display inventory",
+                            "[5] display group name",
+                            "[6] display team name",
                             "[0] exit"};
 
         for(String element : options) {

@@ -16,6 +16,14 @@ public class StudentController extends UserController{
         view.displayWallet(student.getWallet());
     }
 
+    public void showMyGroupName(){
+        view.displayMessage(student.getGroup().getName());
+    }
+
+    public void showMyTeamName(){
+        view.displayMessage(student.getTeam().getName());
+    }
+
     public void showLevelOfExperience(){
         view.displayLevelOfExperience(student.getExperience());
     }
@@ -35,7 +43,7 @@ public class StudentController extends UserController{
         while(! isDone){
 
             String userChoice = "";
-            String[] correctChoices = {"1", "2", "3", "4", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "0"};
             Boolean isChoiceReady = false;
             while(! isChoiceReady){
 
@@ -58,6 +66,12 @@ public class StudentController extends UserController{
                     break;
                 case "4":
                     showMyInventory();
+                    break;
+                case "5":
+                    showMyGroupName();
+                    break;
+                case "6":
+                    showMyTeamName();
                     break;
                 case "0":
                     isDone = true;
