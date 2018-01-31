@@ -3,14 +3,21 @@ package users;
 import item.ArtifactModel;
 import shop.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StudentController extends UserController{
     StudentModel student;
     StudentView view;
+    InventoryDAO inventoryDAO;
 
     public StudentController(StudentModel studentModel){
         student = studentModel;
         view = new StudentView();
+        updateInventory();
     }
+
+
 
     public void showMyWallet(){
         view.displayWallet(student.getWallet());
@@ -31,6 +38,13 @@ public class StudentController extends UserController{
     public void showMyInventory() { view.displayInventory(student.getInventory()); }
 
     public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
+
+    public void updateInventory() {
+        inventoryDAO = new InventoryDAO();
+        List<String []> artifacts =  inventoryDAO.findStudentArtifacts(student.getId());
+        student.setInventory(inventoryDAO.loadInventory(artifacts));
+        inventoryDAO.saveInventory(student.getId(), student.getInventory());
+    }
 
     public void executeShopping() {
         Shop shop = new Shop();
@@ -63,6 +77,7 @@ public class StudentController extends UserController{
                     break;
                 case "3":
                     executeShopping();
+                    updateInventory();
                     break;
                 case "4":
                     showMyInventory();

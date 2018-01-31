@@ -106,6 +106,8 @@ public class StudentModel extends UserModel {
 
     public List<ArtifactModel> getInventory() { return inventory; }
 
+    public void setInventory(List<ArtifactModel> inventory) { this.inventory = inventory; }
+
     public String toString() {
         // potrzeba będzie poprawić!
         return super.toString() + String.format(" Group : %s, Team: %s, Wallet: %dcc, Experience: %d, Attendance: %.2f"
