@@ -68,7 +68,8 @@ public class MentorDAO extends FactoryDAO {
         return getOneObject(record);
     }
 
-    public void saveObject(MentorModel mentor) {
+    public <T> void saveObject(T t){
+        MentorModel mentor = (MentorModel) t;
         String mentorId = String.valueOf(mentor.getId());
         firstName = mentor.getFirstName();
         lastName = mentor.getLastName();
@@ -89,25 +90,4 @@ public class MentorDAO extends FactoryDAO {
         dao = new DbManagerDAO();
         dao.inputData(query);
     }
-
-    public void saveObjects(List<MentorModel> mentors) {
-
-        for(MentorModel mentor : mentors) {
-            saveObject(mentor);
-        }
-    }
-
-    public int saveObjectAndGetId(MentorModel mentor){
-        String[] idsBefore = getCurrentIdCollection();
-        saveObject(mentor);
-        String[] idsAfter = getCurrentIdCollection();
-        String id = getNewId(idsBefore, idsAfter);
-        try {
-            return Integer.parseInt(id);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
-            return -1;
-        }
-    }
-
 }

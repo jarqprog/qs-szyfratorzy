@@ -93,7 +93,8 @@ public class StudentDAO extends FactoryDAO {
         return getOneObject(studentData);
     }
 
-    public void saveObject(StudentModel student) {
+    public <T> void saveObject(T t){
+        StudentModel student = (StudentModel) t;
         String studentId = String.valueOf(student.getId());
         firstName = student.getFirstName();
         lastName = student.getLastName();
@@ -125,25 +126,5 @@ public class StudentDAO extends FactoryDAO {
 
         dao = new DbManagerDAO();
         dao.inputData(query);
-    }
-
-    public void saveObjects(List<StudentModel> students) {
-
-        for(StudentModel student : students) {
-            saveObject(student);
-        }
-    }
-
-    public int saveObjectAndGetId(StudentModel student){
-        String[] idsBefore = getCurrentIdCollection();
-        saveObject(student);
-        String[] idsAfter = getCurrentIdCollection();
-        String id = getNewId(idsBefore, idsAfter);
-        try {
-            return Integer.parseInt(id);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
-            return -1;
-        }
     }
 }

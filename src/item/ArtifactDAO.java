@@ -51,7 +51,8 @@ public class ArtifactDAO extends FactoryDAO {
         return new ArtifactModel(id, itemType, itemName, itemDescription, price);
     }
 
-    public void saveObject(ArtifactModel artifact) {
+    public <T> void saveObject(T t){
+        ArtifactModel artifact = (ArtifactModel) t;
         String artifactId = String.valueOf(artifact.getId());
         String itemType = String.valueOf(artifact.getType());
         String itemName = artifact.getName();
@@ -71,12 +72,4 @@ public class ArtifactDAO extends FactoryDAO {
         DbManagerDAO dao = new DbManagerDAO();
         dao.inputData(query);
     }
-
-    public void saveObjects(List<ArtifactModel> artifacts) {
-
-        for(ArtifactModel artifact : artifacts) {
-            saveObject(artifact);
-        }
-    }
-
 }

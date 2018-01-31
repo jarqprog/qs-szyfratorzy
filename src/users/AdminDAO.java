@@ -56,7 +56,8 @@ public class AdminDAO extends FactoryDAO {
         return getOneObject(record);
     }
 
-    public void saveObject(AdminModel admin) {
+    public <T> void saveObject(T t){
+        AdminModel admin = (AdminModel) t;
         String adminId = String.valueOf(admin.getId());
         firstName = admin.getFirstName();
         lastName = admin.getLastName();
@@ -77,24 +78,5 @@ public class AdminDAO extends FactoryDAO {
         }
         dao = new DbManagerDAO();
         dao.inputData(query);
-    }
-
-    public void saveObjects(List<AdminModel> admins){
-        for(AdminModel admin : admins) {
-            saveObject(admin);
-        }
-    }
-
-    public int saveObjectAndGetId(AdminModel admin){
-        String[] idsBefore = getCurrentIdCollection();
-        saveObject(admin);
-        String[] idsAfter = getCurrentIdCollection();
-        String id = getNewId(idsBefore, idsAfter);
-        try {
-            return Integer.parseInt(id);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
-            return -1;
-        }
     }
 }

@@ -55,4 +55,26 @@ public abstract class FactoryDAO implements CreatableDAO {
         }
         return null;
     }
+
+    public abstract <T> void saveObject(T t);
+
+    public <T> void saveObjects(List<T> objects) {
+
+        for(T object : objects) {
+            saveObject(object);
+        }
+    }
+
+    public <T> int saveObjectAndGetId(T t){
+        String[] idsBefore = getCurrentIdCollection();
+        saveObject(t);
+        String[] idsAfter = getCurrentIdCollection();
+        String id = getNewId(idsBefore, idsAfter);
+        try {
+            return Integer.parseInt(id);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return -1;
+        }
+    }
 }
