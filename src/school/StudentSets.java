@@ -57,7 +57,7 @@ public abstract class StudentSets {
 
     public String toString(){
         return String.format("Id: %s, name: %s, number of students: %s",
-                this.id, this.name, students.size());
+                this.id, this.name, getStudents().size());
     }
 
     public abstract void saveObject();
