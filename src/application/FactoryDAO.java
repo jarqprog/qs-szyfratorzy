@@ -4,30 +4,45 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import users.*;
+
 public abstract class FactoryDAO implements CreatableDAO {
 
     protected String DEFAULT_TABLE;
     protected DbManagerDAO dao;
 
-    public Object getObjectById(int id) {
+    public <T> T getObjectById(int id) {
         String query = "Select * from " + DEFAULT_TABLE + " WHERE id=" + id + ";";
-        return getOneObject(query);
+        try{
+            @SuppressWarnings("unchecked")
+            T object = (T) getOneObject(query);
+            return object;
+        } catch (Exception e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            return null;
+        }
     }
 
-    public List<Object> getObjects() {
+    public <T> List<T> getObjects() {
         String query = "Select * from " + DEFAULT_TABLE + ";";
         return getAllObjects(query);
     }
 
-    protected List<Object> getAllObjects(String query) {
+    protected <T> List<T> getAllObjects(String query) {
         DbManagerDAO dao = new DbManagerDAO();
         List<String[]> dataCollection = dao.getData(query);
-        List<Object> objects = new ArrayList<>();
-        for (String[] record : dataCollection) {
-            Object object = getOneObject(record);
-            objects.add(object);
+        List<T> objects = new ArrayList<>();
+        try {
+            for (String[] record : dataCollection) {
+                @SuppressWarnings("unchecked")
+                T object = (T) getOneObject(record);
+                objects.add(object);
+            }
+            return objects;
+        } catch (Exception e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            return null;
         }
-        return objects;
     }
 
     public abstract Object getOneObject(String[] data);
