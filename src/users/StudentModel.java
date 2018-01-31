@@ -24,8 +24,8 @@ public class StudentModel extends UserModel {
         wallet = 0;
         experience = 0;
         attendance = 100;
-        team = new TeamModel(1, "undefined", new ArrayList<>());
-        group = new GroupModel(1,"undefined", new ArrayList<>());
+        team = new TeamModel(1, "undefined");
+        group = new GroupModel(1,"undefined");
         inventory = new ArrayList<>();
         role = Role.STUDENT.getName();
         this.id = saveNewObjectGetId();
@@ -99,8 +99,8 @@ public class StudentModel extends UserModel {
         return attendance;
     }
 
-    public void setAttendance(float attendance)
-    {
+    public void setAttendance(float attendance) {
+        // temporary!!!
         this.attendance = attendance;
     }
 

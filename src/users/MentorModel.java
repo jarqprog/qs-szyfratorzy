@@ -2,7 +2,6 @@ package users;
 
 import application.Role;
 import school.GroupModel;
-import java.util.ArrayList;
 
 public class MentorModel extends UserModel {
 
@@ -10,9 +9,8 @@ public class MentorModel extends UserModel {
 
     public MentorModel(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
-        group = new GroupModel(1,"undefined", new ArrayList<>());
+        group = new GroupModel(1,"undefined");
         role = Role.MENTOR.getName();
-        MentorDAO dao = new MentorDAO();
         this.id = saveNewObjectGetId();
     }
 
@@ -40,7 +38,7 @@ public class MentorModel extends UserModel {
 
     public String toString()
     {
-        return super.toString()+String.format(" Group name: %s",group.getName());
+        return super.toString()+String.format(" Group name: %s", group.getName());
      }
 
     public void saveObject(){
