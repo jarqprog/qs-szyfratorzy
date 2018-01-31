@@ -104,11 +104,14 @@ public class StudentModel extends UserModel {
         this.attendance = attendance;
     }
 
+    public List<ArtifactModel> getInventory() { return inventory; }
+
     public String toString() {
         // potrzeba będzie poprawić!
         return super.toString() + String.format(" Group : %s, Team: %s, Wallet: %dcc, Experience: %d, Attendance: %.2f"
                                                 ,getGroup(), getTeam(), getWallet(), getExperience(), getAttendance());
     }
+
     public String[] getFullData() {
         // used to pretty display in view
         String[] fullData = new String[0];
@@ -128,4 +131,5 @@ public class StudentModel extends UserModel {
         StudentDAO dao = new StudentDAO();
         return dao.saveObjectAndGetId(this);
     }
+  
 }
