@@ -1,16 +1,13 @@
 package school;
 
-
 import java.util.ArrayList;
-import java.util.List;
-
 import users.StudentDAO;
-import users.StudentModel;
 
 public class TeamModel extends StudentSets{
 
-    public TeamModel(int id, String name, List<StudentModel> students) {
-        super(id, name, students);
+    public TeamModel(int id, String name) {
+        super(id, name);
+        this.students = new ArrayList<>();
     }
 
     public TeamModel(String name) {
@@ -28,5 +25,10 @@ public class TeamModel extends StudentSets{
         StudentDAO dao = new StudentDAO();
         final String query = String.format("SELECT * FROM students WHERE team_id=%s;", id);
         this.students = dao.getManyObjects(query);
+    }
+
+    public void saveObject(){
+        TeamDAO dao = new TeamDAO();
+        dao.saveObject(this);
     }
 }

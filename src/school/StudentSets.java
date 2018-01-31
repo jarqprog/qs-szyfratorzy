@@ -1,6 +1,5 @@
 package school;
 
-import users.StudentDAO;
 import users.StudentModel;
 
 import java.util.ArrayList;
@@ -12,10 +11,10 @@ public abstract class StudentSets {
     protected List<StudentModel> students;
     protected int id;
 
-    public StudentSets(int id, String name, List<StudentModel> students) {
+    public StudentSets(int id, String name) {
         this(name);
         this.id = id;
-        this.students = students;
+        this.students = new ArrayList<>();
     }
 
     public StudentSets(String name) {
@@ -34,6 +33,7 @@ public abstract class StudentSets {
 
     public void setName(String name){
         this.name = name;
+        saveObject();
     }
 
     public List<StudentModel> getStudents(){
@@ -59,5 +59,7 @@ public abstract class StudentSets {
         return String.format("Id: %s, name: %s, number of students: %s",
                 this.id, this.name, students.size());
     }
+
+    public abstract void saveObject();
 
 }

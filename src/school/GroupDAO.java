@@ -6,7 +6,6 @@ import java.util.List;
 import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
-import users.StudentModel;
 
 public class GroupDAO extends FactoryDAO {
 
@@ -36,8 +35,7 @@ public class GroupDAO extends FactoryDAO {
     public GroupModel getOneObject(String [] record){
         int id = Integer.parseInt(record[ID_INDEX]);
         String name = record[NAME_INDEX];
-        List<StudentModel> students = new ArrayList<>();
-        return new GroupModel(id, name, students);
+        return new GroupModel(id, name);
     }
 
     public GroupModel getOneObject(String query){

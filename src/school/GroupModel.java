@@ -1,16 +1,14 @@
 package school;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import users.StudentDAO;
-import users.StudentModel;
 
 
 public class GroupModel extends StudentSets {
 
-    public GroupModel(int id, String name, List<StudentModel> students) {
-        super(id, name, students);
+    public GroupModel(int id, String name) {
+        super(id, name);
+        this.students = new ArrayList<>();
     }
 
     public GroupModel(String name) {
@@ -28,6 +26,11 @@ public class GroupModel extends StudentSets {
         StudentDAO dao = new StudentDAO();
         final String query = String.format("SELECT * FROM students WHERE group_id=%s;", id);
         this.students = dao.getManyObjects(query);
+    }
+
+    public void saveObject(){
+        GroupDAO dao = new GroupDAO();
+        dao.saveObject(this);
     }
 
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
-import users.StudentModel;
 
 public class TeamDAO extends FactoryDAO {
 
@@ -36,8 +35,7 @@ public class TeamDAO extends FactoryDAO {
     public TeamModel getOneObject(String[] teamData) {
         int id = Integer.parseInt(teamData[ID_INDEX]);
         String name = teamData[NAME_INDEX];
-        List<StudentModel> students = new ArrayList<>();
-        return new TeamModel(id, name, students);
+        return new TeamModel(id, name);
     }
 
     public TeamModel getOneObject(String query) {
