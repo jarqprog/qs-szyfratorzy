@@ -5,6 +5,7 @@ import application.Table;
 import item.ArtifactModel;
 import item.ArtifactDAO;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class ShopDAO {
     protected DbManagerDAO dao;
     protected ArtifactDAO artifactDAO;
     protected String DEFAULT_TABLE;
+    private Date date;
 
     public ShopDAO(){ this.DEFAULT_TABLE = Table.STUDENTS_ARTIFACTS.getName(); }
 
@@ -68,5 +70,14 @@ public class ShopDAO {
                     "VALUES(null, %s, %s);", studentId, artifactId);
             dao.inputData(query);
         }
+    }
+
+    public void saveStudentTransaction(int studentID, int artifactID) {
+        dao = new DbManagerDAO();
+        date = new Date();
+        String transactionDate = date.toString();
+        String query = String.format("INSERT INTO students_transactions " +
+                        "VALUES(null, %s, %s, '%s');", studentID, artifactID, transactionDate);
+        dao.inputData(query);
     }
 }
