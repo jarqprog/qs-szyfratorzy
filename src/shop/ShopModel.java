@@ -5,10 +5,10 @@ import item.ArtifactModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Shop{
+public class ShopModel {
     List<ArtifactModel> store;
 
-    public Shop() {
+    public ShopModel() {
         store = new ArrayList<>();
         }
 

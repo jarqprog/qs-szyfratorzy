@@ -56,24 +56,24 @@ CREATE TABLE IF NOT EXISTS quests(
 CREATE TABLE IF NOT EXISTS teams_transactions(
   id integer PRIMARY KEY AUTOINCREMENT,
   team_id integer,
-  artefact_id integer,
+  artifact_id integer,
   date text,
   FOREIGN KEY (team_id) REFERENCES teams(id),
-  FOREIGN KEY (artefact_id) REFERENCES artifacts(id));
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id));
 
 CREATE TABLE IF NOT EXISTS students_transactions(
   id integer PRIMARY KEY AUTOINCREMENT,
   student_id integer,
-  artefact_id integer,
+  artifact_id integer,
   date text,
-  FOREIGN KEY (artefact_id) REFERENCES artifacts(id),
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
   FOREIGN KEY (student_id) REFERENCES students(id));
 
 CREATE TABLE IF NOT EXISTS students_artifacts(
   id integer PRIMARY KEY AUTOINCREMENT,
   student_id integer,
-  artefact_id integer,
-  FOREIGN KEY (artefact_id) REFERENCES artifacts(id),
+  artifact_id integer,
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
   FOREIGN KEY (student_id) REFERENCES students(id));
 
 -- add data

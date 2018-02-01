@@ -3,13 +3,12 @@ package users;
 import item.ArtifactModel;
 import shop.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StudentController extends UserController{
     StudentModel student;
     StudentView view;
-    InventoryDAO inventoryDAO;
+    ShopDAO shopDAO;
 
     public StudentController(StudentModel studentModel){
         student = studentModel;
@@ -40,24 +39,43 @@ public class StudentController extends UserController{
     public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
 
     public void updateInventory() {
-        inventoryDAO = new InventoryDAO();
-        List<String []> artifacts =  inventoryDAO.findStudentArtifacts(student.getId());
-        student.setInventory(inventoryDAO.loadInventory(artifacts));
-        inventoryDAO.saveInventory(student.getId(), student.getInventory());
+        shopDAO = new ShopDAO();
+        List<String []> artifacts =  shopDAO.findStudentArtifacts(student.getId());
+        student.setInventory(shopDAO.loadInventory(artifacts));
+        shopDAO.saveInventory(student.getId(), student.getInventory());
     }
 
     public void executeShopping() {
-        Shop shop = new Shop();
+        ShopModel shop = new ShopModel();
         ShopController controller = new ShopController(shop, student);
         controller.executeShoppingMenu();
         }
+
+    public void useArtifacts() {
+        showMyInventory();
+        if(student.getInventory().isEmpty()){
+            view.displayMessage("Sorry, You have nothing to use!");
+            view.handlePause();
+        } else {
+            int id = view.getUserChoice("Enter artifact id: ");
+            for(ArtifactModel artifact : student.getInventory()) {
+                if(id == artifact.getId()) {
+                    student.getInventory().remove(artifact);
+                    view.displayMessage("Artifact used!");
+                    shopDAO.deleteFromInventory(student.getId(), id);
+                    updateInventory();
+                    break;
+                }
+            }
+        }
+    }
 
     public void handleMainMenu(){
         boolean isDone = false;
         while(! isDone){
 
             String userChoice = "";
-            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "0"};
             Boolean isChoiceReady = false;
             while(! isChoiceReady){
 
@@ -87,6 +105,9 @@ public class StudentController extends UserController{
                     break;
                 case "6":
                     showMyTeamName();
+                    break;
+                case "7":
+                    useArtifacts();
                     break;
                 case "0":
                     isDone = true;
