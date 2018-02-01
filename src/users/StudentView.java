@@ -36,6 +36,7 @@ public class StudentView extends AbstractView{
                             "[4] display inventory",
                             "[5] display group name",
                             "[6] display team name",
+                            "[7] use artifact",
                             "[0] exit"};
 
         for(String element : options) {
