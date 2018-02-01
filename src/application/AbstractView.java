@@ -1,13 +1,10 @@
 package application;
 
-import java.util.List;
-import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
 
 
-public abstract class AbstractView{
+public abstract class AbstractView {
 
     protected String emptyLines = "\n\n";
     protected String space = " ";
@@ -24,17 +21,14 @@ public abstract class AbstractView{
         System.out.println(message);
     }
 
-    public void displayHeaderAndElementsOfCollection(String[] collection, String header)
-    {
+    public void displayHeaderAndElementsOfCollection(String[] collection, String header) {
         System.out.println(emptyLines + space + header);
-        for(String element : collection)
-        {
+        for(String element : collection) {
         System.out.println(space + element);
         }
     }
 
-    public void displayEnumeratedElementsOfCollection(String[] collection)
-    {
+    public void displayEnumeratedElementsOfCollection(String[] collection) {
         System.out.println(emptyLines);
         int number = 0;
         for(String element : collection){
@@ -43,15 +37,13 @@ public abstract class AbstractView{
         }
     }
 
-    public void displayElementsOfCollection(String[] collection)
-    {
+    public void displayElementsOfCollection(String[] collection) {
         for(String element : collection){
         System.out.println(element);
         }
     }
 
-    public String getUserInput(String message)
-    {
+    public String getUserInput(String message) {
         Scanner scanner = new Scanner(System.in);
         String userInput = "";
         int minimumUserInputLength = 1;
@@ -62,34 +54,39 @@ public abstract class AbstractView{
         return userInput;
     }
 
-    public static void clearScreen()
-    {
+    public static void clearScreen() {
         try{
-        final String os = System.getProperty("os.name");
-        if (os.contains("Windows"))
-        {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        }
-        else
-        {
-            System.out.print(ANSI_CLS + ANSI_HOME);
-            System.out.flush();
-            System.out.println();
-        }
+            final String os = System.getProperty("os.name");
+            if (os.contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print(ANSI_CLS + ANSI_HOME);
+                System.out.flush();
+                System.out.println();
+            }
         } catch (Exception e){
             System.out.println(e);
         }
     }
 
-    public void handlePause()
-    {
+    public void handlePause() {
         System.out.println(emptyLines + space + "Press enter to continue.. ");
-        try
-        {
+        try {
             System.in.read();
-        }catch(IOException e)
-        {
+        }catch(IOException e) {
             System.out.println(e);
         }
+    }
+
+    public int getUserChoice(String message) {
+        Scanner scanner = new Scanner(System.in);
+        int input = -1;
+        try {
+            System.out.println(message);
+            input = Integer.parseInt(scanner.nextLine());
+        } catch( NumberFormatException e) {
+            System.out.println("Wrong input!");
+        }
+        return input;
     }
 }

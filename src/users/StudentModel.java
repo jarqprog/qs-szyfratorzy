@@ -2,6 +2,9 @@ package users;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
+//import java.util.stream;
+
 import application.Role;
 import item.ArtifactModel;
 import school.GroupModel;
@@ -14,20 +17,19 @@ public class StudentModel extends UserModel {
     private int wallet;
     private int experience;
     private List<ArtifactModel> inventory;
-    private float attendance; // tu będzie obiekt
+    private float attendance;
 
     public StudentModel(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
         wallet = 0;
         experience = 0;
         attendance = 100;
-        team = new TeamModel(1, "undefined", new ArrayList<StudentModel>());
-        group = new GroupModel(1,"undefined", new ArrayList<StudentModel>());
-        inventory = new ArrayList<ArtifactModel>();
+        team = new TeamModel(1, "undefined");
+        group = new GroupModel(1,"undefined");
+        inventory = new ArrayList<>();
         role = Role.STUDENT.getName();
-        // save:
-        StudentDAO dao = new StudentDAO();
-        dao.saveObject(this);
+        this.id = saveNewObjectGetId();
+
     }
 
     public StudentModel(int id, String firstName, String lastName, String email,
@@ -42,26 +44,34 @@ public class StudentModel extends UserModel {
         this.group = group;
         this.inventory = inventory;
         role = Role.STUDENT.getName();
-
     }
 
     public GroupModel getGroup() {
+        setGroup();
         return group;
     }
 
-    public void setGroup(GroupModel group)
-    {
+    public void setGroup(GroupModel group) {
         this.group = group;
+        saveObject();
     }
 
-    public TeamModel getTeam()
-    {
+    public void setGroup() {
+        this.group.setStudents();
+    }
+
+    public TeamModel getTeam() {
+        setTeam();
         return team;
     }
 
-    public void setTeam(TeamModel team)
-    {
+    public void setTeam(TeamModel team) {
         this.team = team;
+        saveObject();
+    }
+
+    public void setTeam(){
+        this.team.setStudents();
     }
 
     public int getWallet()
@@ -69,9 +79,9 @@ public class StudentModel extends UserModel {
         return wallet;
     }
 
-    public void setWallet(int value)
-    {
+    public void setWallet(int value) {
         this.wallet = value;
+        saveObject();
     }
 
     public int getExperience()
@@ -79,9 +89,9 @@ public class StudentModel extends UserModel {
         return experience;
     }
 
-    public void setExperience(int experience)
-    {
+    public void setExperience(int experience) {
         this.experience = experience;
+        saveObject();
     }
 
     public float getAttendance()
@@ -89,12 +99,39 @@ public class StudentModel extends UserModel {
         return attendance;
     }
 
-    public void setAttendance(float attendance)
-    {
+    public void setAttendance(float attendance) {
+        // temporary!!!
         this.attendance = attendance;
     }
 
-//    public String toString() {
-//        return super.toString(); + String.format(" Group : %s, Team: %s, Wallet: %dcc, Experience: %d, Attendance: %.2f",getGroup(), getTeam(), getWallet(), getExperience(), getAttendance());
-//    }
+    public List<ArtifactModel> getInventory() { return inventory; }
+
+    public void setInventory(List<ArtifactModel> inventory) { this.inventory = inventory; }
+
+    public String toString() {
+        // potrzeba będzie poprawić!
+        return super.toString() + String.format(" Group : %s, Team: %s, Wallet: %dcc, Experience: %d, Attendance: %.2f"
+                                                ,getGroup(), getTeam(), getWallet(), getExperience(), getAttendance());
+    }
+
+    public String[] getFullData() {
+        // used to pretty display in view
+        String[] fullData = new String[0];
+        String[] studentData = {this.group.getName(), this.team.getName(), String.valueOf(this.wallet), String.valueOf(this.wallet),
+                String.valueOf(this.experience), String.valueOf(attendance)};
+//        addArrays:
+        System.arraycopy(studentData, 0, fullData, super.getFullData().length, studentData.length);
+        return fullData;
+    }
+
+    public void saveObject(){
+        StudentDAO dao = new StudentDAO();
+        dao.saveObject(this);
+    }
+
+    public int saveNewObjectGetId(){
+        StudentDAO dao = new StudentDAO();
+        return dao.saveObjectAndGetId(this);
+    }
+  
 }

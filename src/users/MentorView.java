@@ -6,29 +6,29 @@ import java.util.Scanner;
 
 public class MentorView extends AbstractView {
 
-    public int getPrice() {
+    public int getValue() {
     Scanner scanner = new Scanner(System.in);
     boolean correctInput = false;
-    int price = -1;
+    int value = -1;
     while(! correctInput) {
         try {
-            System.out.print("Enter a price of artifact: ");
-            price = Integer.parseInt(scanner.nextLine());
-            if(price > 0) {
+            System.out.print("Enter a value of item: ");
+            value = Integer.parseInt(scanner.nextLine());
+            if(value > 0) {
             correctInput = true;
             }
             else {
-                System.out.println("Price must be greater than 0!");
+                System.out.println("Value must be greater than 0!");
             }
         } catch(NumberFormatException e) {
             System.out.println("Wrong input!");
         }
     }
-    return price;
+    return value;
     }
 
     public void displayMenu() {
-        String[] options = {"      *** Menu ***     ",
+        String[] options = {"      *** Mentor's Menu ***     ",
                             "[1] create student",
                             "[2] create quest",
                             "[3] edit quest",
@@ -45,12 +45,25 @@ public class MentorView extends AbstractView {
     }
 
     public void displayArtifactMenu() {
-        String[] options = {"      *** Menu ***     ",
+        String[] options = {"      *** Artifacts Editor ***     ",
                             "[1] edit artifact name",
                             "[2] edit artifact type",
                             "[3] edit artifact description",
                             "[4] edit artifact price",
                             "[0] exit"};
+
+        for(String element : options) {
+            System.out.println(element);
+        }
+    }
+
+    public void displayQuestMenu() {
+        String[] options = {"      *** Quest Editor ***     ",
+                "[1] edit quest name",
+                "[2] edit quest type",
+                "[3] edit quest description",
+                "[4] edit quest reward",
+                "[0] exit"};
 
         for(String element : options) {
             System.out.println(element);

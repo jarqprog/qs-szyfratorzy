@@ -1,7 +1,6 @@
 package application;
 
 import java.util.List;
-import java.util.Arrays;
 
 import users.*;
 
@@ -10,17 +9,18 @@ import java.io.Console;
 
 public class RootController{
 
-    private LogableDAO dao;
     private RootView view;
+    private DbManagerDAO dbManagerDao;
 
-    public RootController(){
-        dao = new UsersDAO();
+    public RootController() {
         view = new RootView();
+        dbManagerDao = new DbManagerDAO();
+
     }
 
     public void runApplication(){
+        RootView.clearScreen();
         prepareDatabase();
-        runTest();  // TEST!!!
         boolean isDone = false;
         while (! isDone){
             handleIntro();
@@ -28,8 +28,8 @@ public class RootController{
             switch (userInput)
             {
                 case "1":
-                    String [] userData = loggingProcedure();
-                    handleUserData(userData);
+                    loggingProcedure();
+//                    handleUserData(userData);
                     break;
                 case "0":
                     isDone = true;
@@ -38,40 +38,42 @@ public class RootController{
         }
     }
 
-    private String [] loggingProcedure() {
+    private void loggingProcedure() {
+
         String login = view.displayLoginScreen("Login: ");
         Console console = System.console();
         view.displayMessage("Please enter your password: ");
         char[] password = console.readPassword();
-        dao.updateLoadedTables();
-        String [] userDate = dao.importUserData(login, String.valueOf(password));
-        return userDate;
+        String [] usersTables = {Table.ADMINS.getName(), Table.MENTORS.getName(), Table.STUDENTS.getName()};
+        for(String tableName : usersTables) {
+            String query = String.format("Select * FROM %s " +
+                "WHERE first_name || id = '%s' AND password = '%s';", tableName, login, String.valueOf(password));
+                List<String[]> userData = dbManagerDao.getData(query);
+                if(userData.size() == 1) {
+                    createUser(userData.get(0), tableName);
+                    break;
+                }
+            }
+
     }
 
-    private void handleUserData(String [] userData) {
-        if(userData.length == 0) {
-            view.displayMessage("Invalid login or password! Try again!");
-            view.handlePause();
-        }
-        else {
-            createUser(userData);
-        }
-    }
+    public void createUser(String [] userData, String tableName) {
 
-    public void createUser(String [] userData) {
-        int ROLE_INDEX = 0;
-        if(userData[ROLE_INDEX].equals("admin")){
-            AdminModel admin = dao.createAdminModel(userData);
+        if(tableName.equals(Table.ADMINS.getName())) {
+            AdminDAO adminDAO = new AdminDAO();
+            AdminModel admin = adminDAO.getOneObject(userData);
             AdminController adminController = new AdminController(admin);
             adminController.handleMainMenu();
-        }
-        else if(userData[ROLE_INDEX].equals("mentor")){
-            MentorModel mentor = dao.createMentorModel(userData);
+
+        } else if(tableName.equals(Table.MENTORS.getName())){
+            MentorDAO mentorDAO = new MentorDAO();
+            MentorModel mentor = mentorDAO.getOneObject(userData);
             MentorController mentorController = new MentorController(mentor);
             mentorController.handleMainMenu();
-        }
-        else if(userData[ROLE_INDEX].equals("student")){
-            StudentModel student = dao.createStudentModel(userData);
+
+        } else if(tableName.equals(Table.STUDENTS.getName())){
+            StudentDAO studentDAO = new StudentDAO();
+            StudentModel student = studentDAO.getOneObject(userData);;
             StudentController studentController = new StudentController(student);
             studentController.handleMainMenu();
         }
@@ -102,42 +104,6 @@ public class RootController{
         dbDAO.fillDatabase();
         dbDAO.closeConnection();
         view.displayMessage("Database prepared");
-        view.handlePause();
-    }
-
-    private void runTest(){
-        DbManagerDAO dao = new DbManagerDAO();
-        String insertQuery =
-                "INSERT OR IGNORE INTO admins VALUES(5,'Maciek','Jablonowski','maciek@gmail.com','12321');";
-        dao.inputData(insertQuery);
-        String insertQuery01 =
-                "INSERT OR IGNORE INTO admins VALUES(6,'Piotr','Gryzlo','piotrek@cc.pl','12321');";
-        dao.inputData(insertQuery01);
-        String query = "SELECT * FROM admins;";
-
-        List<String[]> collectionNew = dao.getData("SELECT * FROM admins;");
-        for(String[] lista : collectionNew){
-            System.out.println(Arrays.toString(lista));
-        }
-
-        StudentModel student;
-        StudentDAO stuDAO = new StudentDAO();
-        List<StudentModel> students = stuDAO.getManyObjects("Select * from students where last_name = 'Kucharczyk';");
-        student = students.get(0);
-        System.out.println(student);
-
-
-        List<String[]> collectionNew1 = dao.getData("SELECT * FROM students;");
-        for(String[] lista1 : collectionNew1){
-            System.out.println(Arrays.toString(lista1));
-        }
-
-        StudentModel Artur = stuDAO.getOneObject("SELECT * FROM students WHERE first_name='Artur';");
-        System.out.println(Artur);
-        Artur.setEmail("arturro@gmail.com");
-        stuDAO.saveObject(Artur);
-        StudentModel Artur1 = stuDAO.getOneObject("SELECT * FROM students WHERE first_name='Artur';");
-        System.out.println(Artur1);
         view.handlePause();
     }
 }

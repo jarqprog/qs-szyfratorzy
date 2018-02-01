@@ -4,7 +4,7 @@ public enum Table {
 
     STUDENTS("students"), MENTORS("mentors"), ADMINS("admins"),
     TRANSACTIONS("transactions"), GROUPS("groups"),
-    TEAMS("teams"), ARTIFACTS("artifacts");
+    TEAMS("teams"), ARTIFACTS("artifacts"), QUESTS("quests");
 
     private String name;
 
