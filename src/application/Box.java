@@ -1,28 +1,32 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class Box<T> {
+public class Box<E> extends ArrayList<E> implements List<E> {
 
-    private List<T> box;
-    private BoxIterator<T> iterator;
+    private List<E> box;
+    private BoxIterator<E> iterator;
 
     public Box(){
-        box = new ArrayList<T>();
-        iterator = new BoxIterator<T>(box);
+        box = new ArrayList<>();
+        iterator = new BoxIterator<>(box);
     }
 
-    public void add(T t) {
-        box.add(t);
+    public boolean add(E e) {
+
+        return box.add(e);
     }
 
-    public List<T> getList() {
+    public List<E> get() {
         return box;
-    }    
+    }
 
-    public BoxIterator<T> getIterator(){
+    public void set(List<E> box) {
+        this.box = box;
+    }
+
+    public BoxIterator<E> getIterator(){
         return iterator;
     }
 
@@ -34,26 +38,23 @@ public class Box<T> {
         return box.size();
     }
 
-    public boolean remove(T t){
-        if (box.remove(t)){
-            return true;
-        }
-        return false;
+    public boolean remove(Object object){
+        return box.remove(object);
     }
 
-    public boolean has(T t){
-        return iterator.hasObject(t);
+    public boolean has(E e){
+        return iterator.hasObject(e);
     }
 
-    public boolean addUnique(T t){
-        if (has(t)){
+    public boolean addUnique(E e){
+        if (has(e)){
             return false;
         }
-        add(t);
+        add(e);
         return true;
     }
 
-    public T get(int index){
+    public E get(int index){
         if (index < size()){
             return box.get(index);
         }
