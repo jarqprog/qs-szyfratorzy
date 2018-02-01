@@ -7,14 +7,14 @@ import users.StudentDAO;
 import users.StudentModel;
 
 public class ShopController {
-    Shop shop;
+    ShopModel shop;
     ShopView view;
     ArtifactDAO artifactDao;
     StudentDAO studentDAO;
     StudentModel student;
-    InventoryDAO inventoryDAO;
+    ShopDAO inventoryDAO;
 
-    public ShopController (Shop shop, StudentModel student) {
+    public ShopController (ShopModel shop, StudentModel student) {
         this.shop = shop;
         this.student = student;
         view = new ShopView();
@@ -70,7 +70,7 @@ public class ShopController {
                     student.getInventory().add(artifact);
                     student.setWallet(student.getWallet()-artifact.getPrice());
                     view.displayMessage("You bought " + artifact.getName() + "!");
-                    inventoryDAO = new InventoryDAO();
+                    inventoryDAO = new ShopDAO();
                     inventoryDAO.saveInventory(student.getId(), student.getInventory());
                 } else {
                     view.displayMessage("This artifact is to expensive!");
