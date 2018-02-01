@@ -21,7 +21,7 @@ public class ShopDAO {
 
     public List<String []> findStudentArtifacts(int student_id) {
         dao = new DbManagerDAO();
-        String query = String.format("SELECT artefact_id, id FROM %s " +
+        String query = String.format("SELECT artifact_id, id FROM %s " +
                                     "WHERE student_id = %s;", DEFAULT_TABLE, student_id );
         return dao.getData(query);
     }
