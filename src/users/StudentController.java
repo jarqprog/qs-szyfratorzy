@@ -51,12 +51,31 @@ public class StudentController extends UserController{
         controller.executeShoppingMenu();
         }
 
+    public void useArtifacts() {
+        showMyInventory();
+        if(student.getInventory().isEmpty()){
+            view.displayMessage("Sorry, You have nothing to use!");
+            view.handlePause();
+        } else {
+            int id = view.getUserChoice("Enter artifact id: ");
+            for(ArtifactModel artifact : student.getInventory()) {
+                if(id == artifact.getId()) {
+                    student.getInventory().remove(artifact);
+                    view.displayMessage("Artifact used!");
+                    shopDAO.deleteFromInventory(student.getId(), id);
+                    updateInventory();
+                    break;
+                }
+            }
+        }
+    }
+
     public void handleMainMenu(){
         boolean isDone = false;
         while(! isDone){
 
             String userChoice = "";
-            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "0"};
             Boolean isChoiceReady = false;
             while(! isChoiceReady){
 
@@ -86,6 +105,9 @@ public class StudentController extends UserController{
                     break;
                 case "6":
                     showMyTeamName();
+                    break;
+                case "7":
+                    useArtifacts();
                     break;
                 case "0":
                     isDone = true;

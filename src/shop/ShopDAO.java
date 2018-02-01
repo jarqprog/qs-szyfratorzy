@@ -19,10 +19,10 @@ public class ShopDAO {
 
     public ShopDAO(){ this.DEFAULT_TABLE = Table.STUDENTS_ARTIFACTS.getName(); }
 
-    public List<String []> findStudentArtifacts(int student_id) {
+    public List<String []> findStudentArtifacts(int studentId) {
         dao = new DbManagerDAO();
         String query = String.format("SELECT artefact_id, id FROM %s " +
-                                    "WHERE student_id = %s;", DEFAULT_TABLE, student_id );
+                                    "WHERE student_id = %s;", DEFAULT_TABLE, studentId );
         return dao.getData(query);
     }
 
@@ -45,6 +45,17 @@ public class ShopDAO {
             dao.inputData(query);
         }
         return inventory;
+    }
+
+    public void deleteFromInventory(int studentId, int artifactId) {
+        List<String []> artifactsId = findStudentArtifacts(studentId);
+        for(String[] record : artifactsId) {
+            int id = Integer.parseInt(record[INDEX_STUDENTS_ARTIFACTS_ID]);
+            String query = String.format("DELETE FROM %s " +
+                    "WHERE id = %s AND artefact_id = %s;", DEFAULT_TABLE, id, artifactId);
+            dao.inputData(query);
+            break;
+        }
     }
 
     public void saveInventory(int studentId, List<ArtifactModel> inventory) {
