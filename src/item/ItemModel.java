@@ -8,23 +8,11 @@ public abstract class ItemModel {
     protected String genre;
     protected int id;
 
-<<<<<<< HEAD
-    public ItemModel(){
-        dao = new ItemsDAO();
-        counter = dao.loadLastId("data_files/maxItemsId.csv");
-        id = counter++;
-        this.name = "item";
-        this.type = 'I';
-        this.description = "n/a";
-        this.genre = "item";
-        dao.saveLastId(counter, "data_files/maxItemsId.csv");
-=======
     public ItemModel(int id, String name, char type, String description){
         this(name, description);
         this.id = id;
         this.type = type;
         this.genre = "item";
->>>>>>> 81f9d5b305039bc966563dd0f21b44d1dd88a3ac
     }
 
     public ItemModel(String name, String description){
