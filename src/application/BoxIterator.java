@@ -19,7 +19,7 @@ class BoxIterator<T> implements Iterator{
         return false;
     }
 
-    public Object next(){
+    public T next(){
         if (this.hasNext()){
             return box.get(index++);
         }

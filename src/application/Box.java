@@ -14,7 +14,6 @@ public class Box<E> extends ArrayList<E> implements List<E> {
     }
 
     public boolean add(E e) {
-
         return box.add(e);
     }
 
@@ -27,7 +26,7 @@ public class Box<E> extends ArrayList<E> implements List<E> {
     }
 
     public BoxIterator<E> getIterator(){
-        return iterator;
+        return new BoxIterator<>(box);
     }
 
     public void clear(){
