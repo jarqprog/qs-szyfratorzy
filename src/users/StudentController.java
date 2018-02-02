@@ -63,6 +63,7 @@ public class StudentController extends UserController{
                     student.getInventory().remove(artifact);
                     view.displayMessage("Artifact used!");
                     shopDAO.deleteFromInventory(student.getId(), id);
+                    shopDAO.saveStudentTransaction(student.getId(), artifact.getId());
                     updateInventory();
                     break;
                 }
