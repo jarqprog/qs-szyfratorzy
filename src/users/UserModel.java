@@ -18,11 +18,9 @@ public abstract class UserModel {
         this.id = -1;
         this.firstName = firstName;
         this.lastName = lastName;
-        email = firstName.toLowerCase() + lastName.toLowerCase() + "@cc.com";
+        email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@cc.com";
         this.password = password;
     }
-
-
 
     public int getId()
     {
@@ -34,9 +32,9 @@ public abstract class UserModel {
         return firstName;
     }
 
-    public void setFirstName(String firstName)
-    {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
+        saveObject();
     }
 
     public String getLastName()
@@ -44,9 +42,9 @@ public abstract class UserModel {
         return lastName;
     }
 
-    public void setLastName(String lastName)
-    {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
+        saveObject();
     }
 
     public String getEmail()
@@ -54,9 +52,9 @@ public abstract class UserModel {
         return email;
     }
 
-    public void setEmail(String email)
-    {
+    public void setEmail(String email) {
         this.email = email;
+        saveObject();
     }
 
     public String getPassword()
@@ -64,9 +62,9 @@ public abstract class UserModel {
         return password;
     }
 
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         this.password = password;
+        saveObject();
     }
 
     public String getRole()
@@ -83,4 +81,12 @@ public abstract class UserModel {
         return String.format("Role: %s, Id: %s, First name: %s, Last name: %s, email: %s",
                             this.role, this.id, this.firstName, this.lastName, this.email);
     }
+
+    protected String[] getFullData() {
+        // used to pretty display in view
+        String[] fullData = {this.role, String.valueOf(this.id), this.firstName, this.lastName, this.email};
+        return fullData;
+    }
+
+    public abstract void saveObject();
 }

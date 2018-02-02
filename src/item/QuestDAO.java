@@ -49,7 +49,8 @@ public class QuestDAO extends FactoryDAO {
         return new QuestModel(id, itemType, itemName, itemDescription, reward);
     }
 
-    public void saveObject(QuestModel quest) {
+    public <T> void saveObject(T t){
+        QuestModel quest = (QuestModel) t;
         String itemId = String.valueOf(quest.getId());
         String itemType = String.valueOf(quest.getType());
         String itemName = quest.getName();
@@ -69,12 +70,4 @@ public class QuestDAO extends FactoryDAO {
         DbManagerDAO dao = new DbManagerDAO();
         dao.inputData(query);
     }
-
-    public void saveObjects(List<QuestModel> quests) {
-
-        for(QuestModel quest : quests) {
-            saveObject(quest);
-        }
-    }
-
 }
