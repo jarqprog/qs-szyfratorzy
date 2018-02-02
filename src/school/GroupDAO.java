@@ -1,47 +1,23 @@
 package school;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
 
 public class GroupDAO extends FactoryDAO {
 
-    private final Integer ID_INDEX = 0;
-    private final Integer NAME_INDEX = 1;
-
     public GroupDAO(){
         this.DEFAULT_TABLE = Table.GROUPS.getName();
     }
 
-
-    public List<GroupModel> getManyObjects(List<String[]> dataCollection) {
-        List<GroupModel> groups = new ArrayList<>();
-        for (String [] record : dataCollection) {
-            GroupModel group = getOneObject(record);
-            groups.add(group);
-        }
-        return groups;
-    }
-
-    public List<GroupModel> getManyObjects(String query) {
-        dao = new DbManagerDAO();
-        List<String[]> dataCollection = dao.getData(query);
-        return getManyObjects(dataCollection);
-    }
-
     public GroupModel getOneObject(String [] record){
+
+        final Integer ID_INDEX = 0;
+        final Integer NAME_INDEX = 1;
+
         int id = Integer.parseInt(record[ID_INDEX]);
         String name = record[NAME_INDEX];
         return new GroupModel(id, name);
-    }
-
-    public GroupModel getOneObject(String query){
-        dao = new DbManagerDAO();
-        String[] record = dao.getData(query).get(0);
-        return getOneObject(record);
     }
 
     public <T> void saveObject(T t){

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import users.*;
-
 public abstract class FactoryDAO implements CreatableDAO {
 
     protected String DEFAULT_TABLE;
@@ -13,43 +11,46 @@ public abstract class FactoryDAO implements CreatableDAO {
 
     public <T> T getObjectById(int id) {
         String query = "Select * from " + DEFAULT_TABLE + " WHERE id=" + id + ";";
-        try{
-            @SuppressWarnings("unchecked")
-            T object = (T) getOneObject(query);
-            return object;
-        } catch (Exception e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            return null;
-        }
+        return getOneObject(query);
     }
 
-    public <T> List<T> getObjects() {
+    public <T> List<T> getAllObjects() {
         String query = "Select * from " + DEFAULT_TABLE + ";";
-        return getAllObjects(query);
+        return getObjects(query);
     }
 
-    protected <T> List<T> getAllObjects(String query) {
-        DbManagerDAO dao = new DbManagerDAO();
-        List<String[]> dataCollection = dao.getData(query);
-        List<T> objects = new ArrayList<>();
-        try {
-            for (String[] record : dataCollection) {
-                @SuppressWarnings("unchecked")
-                T object = (T) getOneObject(record);
-                objects.add(object);
-            }
-            return objects;
-        } catch (Exception e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            return null;
+    private <T> List<T> getManyObjects(List<String[]> dataCollection) {
+        List<T> collection = new ArrayList<>();
+        for (String [] record : dataCollection) {
+            @SuppressWarnings("unchecked")
+            T object = (T) getOneObject(record);
+            collection.add(object);
         }
+        return collection;
+    }
+
+    public <T> List<T> getManyObjects(String query) {
+        dao = new DbManagerDAO();
+        List<String[]> dataCollection = dao.getData(query);
+        return getManyObjects(dataCollection);
     }
 
     public abstract Object getOneObject(String[] data);
 
-    public abstract Object getOneObject(String query);
+    public <T> T getOneObject(String query) {
+        dao = new DbManagerDAO();
+        String[] record = dao.getData(query).get(0);
+        try {
+            @SuppressWarnings("unchecked")
+            T object = (T) getOneObject(record);
+            return object;
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
-    protected String[] getCurrentIdCollection() {
+    private String[] getCurrentIdCollection() {
         final String query = String.format("SELECT id FROM %s;", this.DEFAULT_TABLE);
         int idIndex = 0;
         DbManagerDAO dao = new DbManagerDAO();
@@ -61,7 +62,7 @@ public abstract class FactoryDAO implements CreatableDAO {
         return currentIds;
     }
 
-    protected String getNewId(String[] oldIdCollection, String[] newIdCollection){
+    private String getNewId(String[] oldIdCollection, String[] newIdCollection){
         for(String id : newIdCollection){
             // compare collections: old collection doesn't contain new id:
             if(! Arrays.asList(oldIdCollection).contains(id)){
@@ -90,6 +91,23 @@ public abstract class FactoryDAO implements CreatableDAO {
         } catch(Exception ex){
             System.out.println(ex.getMessage());
             return -1;
+        }
+    }
+
+    private <T> List<T> getObjects(String query) {
+        DbManagerDAO dao = new DbManagerDAO();
+        List<String[]> dataCollection = dao.getData(query);
+        List<T> objects = new ArrayList<>();
+        try {
+            for (String[] record : dataCollection) {
+                @SuppressWarnings("unchecked")
+                T object = (T) getOneObject(record);
+                objects.add(object);
+            }
+            return objects;
+        } catch (Exception e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            return null;
         }
     }
 }

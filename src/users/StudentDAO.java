@@ -14,19 +14,6 @@ import school.TeamModel;
 
 public class StudentDAO extends FactoryDAO {
 
-
-    private final Integer ID_INDEX = 0;
-    private final Integer FIRST_NAME_INDEX = 1;
-    private final Integer LAST_NAME_INDEX = 2;
-    private final Integer EMAIL_INDEX = 3;
-    private final Integer PASSWORD_INDEX = 4;
-
-    private final Integer WALLET_INDEX = 5;
-    private final Integer EXPERIENCE_INDEX = 6;
-    private final Integer ATTENDANCE_INDEX = 7;
-    private final Integer TEAM_INDEX = 8;
-    private final Integer GROUP_INDEX = 9;
-    private int studentId;
     private String firstName;
     private String lastName;
     private String email;
@@ -34,35 +21,31 @@ public class StudentDAO extends FactoryDAO {
     private int wallet;
     private int experience;
     private float attendance;
-    private GroupModel group;
-    private TeamModel team;
     private int groupId;
     private int teamId;
-    List<ArtifactModel> inventory;
 
     public StudentDAO(){
         this.DEFAULT_TABLE = Table.STUDENTS.getName();
     }
 
-    public List<StudentModel> getManyObjects(List<String[]> dataCollection) {
-        List<StudentModel> students = new ArrayList<>();
-        for (String[] record : dataCollection) {
-            StudentModel student = getOneObject(record);
-            students.add(student);
-        }
-        return students;
-    }
-
-    public List<StudentModel> getManyObjects(String query) {
-        DbManagerDAO dao = new DbManagerDAO();
-        List<String[]> dataCollection = dao.getData(query);
-        return getManyObjects(dataCollection);
-    }
 
     public StudentModel getOneObject(String[] studentData) {
 
 
-        studentId = Integer.parseInt(studentData[ID_INDEX]);
+        final Integer ID_INDEX = 0;
+        final Integer FIRST_NAME_INDEX = 1;
+        final Integer LAST_NAME_INDEX = 2;
+        final Integer EMAIL_INDEX = 3;
+        final Integer PASSWORD_INDEX = 4;
+
+        final Integer WALLET_INDEX = 5;
+        final Integer EXPERIENCE_INDEX = 6;
+        final Integer ATTENDANCE_INDEX = 7;
+        final Integer TEAM_INDEX = 8;
+        final Integer GROUP_INDEX = 9;
+
+
+        int studentId = Integer.parseInt(studentData[ID_INDEX]);
         firstName = studentData[FIRST_NAME_INDEX];
         lastName = studentData[LAST_NAME_INDEX];
         email = studentData[EMAIL_INDEX];
@@ -75,22 +58,16 @@ public class StudentDAO extends FactoryDAO {
 
         final String teamQuery = String.format("SELECT * FROM teams WHERE id=%s;", teamId);
         TeamDAO teamDAO = new TeamDAO();
-        team = teamDAO.getOneObject(teamQuery);
+        TeamModel team = teamDAO.getOneObject(teamQuery);
 
         final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
         GroupDAO groupDAO = new GroupDAO();
-        group = groupDAO.getOneObject(groupQuery);
+        GroupModel group = groupDAO.getOneObject(groupQuery);
 
-        inventory = new ArrayList<>();
+        List<ArtifactModel> inventory = new ArrayList<>();
 
         return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience, attendance,
                 team, group, inventory);
-    }
-
-    public StudentModel getOneObject(String query) {
-        DbManagerDAO dao = new DbManagerDAO();
-        String[] studentData = dao.getData(query).get(0);
-        return getOneObject(studentData);
     }
 
     public <T> void saveObject(T t){
@@ -105,8 +82,8 @@ public class StudentDAO extends FactoryDAO {
         attendance = student.getAttendance();
         teamId = student.getTeam().getId();
         groupId = student.getGroup().getId();
-
         String query;
+
         if(studentId.equals("-1")){
 
             query = String.format(

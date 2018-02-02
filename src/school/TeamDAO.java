@@ -1,47 +1,26 @@
 package school;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
 
 public class TeamDAO extends FactoryDAO {
 
-    private final Integer ID_INDEX = 0;
-    private final Integer NAME_INDEX = 1;
     private String name;
 
     public TeamDAO(){
         this.DEFAULT_TABLE = Table.TEAMS.getName();
     }
 
-    public List<TeamModel> getManyObjects(List<String[]> dataCollection) {
-        List<TeamModel> teams = new ArrayList<>();
-        for (String[] record : dataCollection) {
-            TeamModel team = getOneObject(record);
-            teams.add(team);
-        }
-        return teams;
-    }
-
-    public List<TeamModel> getManyObjects(String query) {
-        dao = new DbManagerDAO();
-        List<String[]> dataCollection = dao.getData(query);
-        return getManyObjects(dataCollection);
-    }
-
     public TeamModel getOneObject(String[] teamData) {
-        int id = Integer.parseInt(teamData[ID_INDEX]);
-        String name = teamData[NAME_INDEX];
-        return new TeamModel(id, name);
-    }
 
-    public TeamModel getOneObject(String query) {
-        dao = new DbManagerDAO();
-        String[] teamData = dao.getData(query).get(0);
-        return getOneObject(teamData) ;
+        final Integer ID_INDEX = 0;
+        final Integer NAME_INDEX = 1;
+
+        int id = Integer.parseInt(teamData[ID_INDEX]);
+        name = teamData[NAME_INDEX];
+
+        return new TeamModel(id, name);
     }
 
     public <T> void saveObject(T t){

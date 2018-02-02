@@ -1,46 +1,23 @@
 package item;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import application.DbManagerDAO;
 import application.FactoryDAO;
 import application.Table;
 
 public class QuestDAO extends FactoryDAO {
 
-    private final static int ID_INDEX = 0;
-    private final static int NAME_INDEX = 1;
-    private final static int TYPE_INDEX = 2;
-    private final static int DESCRIPTION_INDEX = 3;
-    private final static int REWARD_INDEX = 4;
-
     public QuestDAO(){
         this.DEFAULT_TABLE = Table.QUESTS.getName();
     }
 
-    public List<QuestModel> getManyObjects(String query) {
-        dao = new DbManagerDAO();
-        List<String[]> dataCollection = dao.getData(query);
-        return getManyObjects(dataCollection);
-    }
-
-    public List<QuestModel> getManyObjects(List<String[]> dataCollection) {
-        ArrayList<QuestModel> quests = new ArrayList<>();
-        for (String [] record : dataCollection) {
-            QuestModel quest = getOneObject(record);
-            quests.add(quest);
-        }
-        return quests;
-    }
-
-    public QuestModel getOneObject(String query) {
-        dao = new DbManagerDAO();
-        String[] record = dao.getData(query).get(0);
-        return getOneObject(record);
-    }
-
     public QuestModel getOneObject(String[] record) {
+
+        final int ID_INDEX = 0;
+        final int NAME_INDEX = 1;
+        final int TYPE_INDEX = 2;
+        final int DESCRIPTION_INDEX = 3;
+        final int REWARD_INDEX = 4;
+
         int id = Integer.parseInt(record[ID_INDEX]);
         char itemType = record[TYPE_INDEX].charAt(0);
         String itemName = record[NAME_INDEX];
