@@ -8,7 +8,7 @@ public enum Table {
 
     private String name;
 
-    private Table(String name){
+    Table(String name){
         this.name = name;
     }
 
