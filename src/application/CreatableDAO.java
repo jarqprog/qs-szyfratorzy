@@ -6,7 +6,7 @@ public interface CreatableDAO {
 
     <T> T getObjectById(int id);
     <T> List<T> getAllObjects();
-    Object getOneObject(String[] data);
-    Object getOneObject(String query);
+    <T> T getOneObject(String query);
+    <T> List<T> getManyObjects(String query);
 
 }
