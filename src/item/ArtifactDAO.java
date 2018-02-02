@@ -10,12 +10,6 @@ public class ArtifactDAO extends FactoryDAO {
         this.DEFAULT_TABLE = Table.ARTIFACTS.getName();
     }
 
-    public ArtifactModel getOneObject(String query) {
-        dao = new DbManagerDAO();
-        String[] record = dao.getData(query).get(0);
-        return getOneObject(record);
-    }
-
     public ArtifactModel getOneObject(String[] record) {
 
         final int ID_INDEX = 0;

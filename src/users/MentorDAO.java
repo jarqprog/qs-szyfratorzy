@@ -1,24 +1,17 @@
 package users;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
 import school.GroupDAO;
 import school.GroupModel;
 
-
-
 public class MentorDAO extends FactoryDAO {
 
-    private int mentorId;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private GroupModel group;
     private int groupId;
 
     public MentorDAO(){
@@ -34,7 +27,7 @@ public class MentorDAO extends FactoryDAO {
         final Integer PASSWORD_INDEX = 4;
         final Integer GROUP_INDEX = 5;
 
-        mentorId = Integer.parseInt(record[ID_INDEX]);
+        int mentorId = Integer.parseInt(record[ID_INDEX]);
         firstName = record[FIRST_NAME_INDEX];
         lastName = record[LAST_NAME_INDEX];
         email = record[EMAIL_INDEX];
@@ -43,15 +36,9 @@ public class MentorDAO extends FactoryDAO {
 
         final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
         GroupDAO groupDAO = new GroupDAO();
-        group = groupDAO.getOneObject(groupQuery);
+        GroupModel group = groupDAO.getOneObject(groupQuery);
 
         return new MentorModel(mentorId, firstName, lastName, email, password, group);
-    }
-
-    public MentorModel getOneObject(String query) {
-        dao = new DbManagerDAO();
-        String[] record = dao.getData(query).get(0);
-        return getOneObject(record);
     }
 
     public <T> void saveObject(T t){

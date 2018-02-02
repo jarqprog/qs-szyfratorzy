@@ -7,7 +7,6 @@ import application.DbManagerDAO;
 
 public class AdminDAO extends FactoryDAO {
 
-    private int adminId;
     private String firstName;
     private String lastName;
     private String email;
@@ -26,18 +25,12 @@ public class AdminDAO extends FactoryDAO {
         final Integer EMAIL_INDEX = 3;
         final Integer PASSWORD_INDEX = 4;
 
-        adminId = Integer.parseInt(adminData[ID_INDEX]);
+        int adminId = Integer.parseInt(adminData[ID_INDEX]);
         firstName = adminData[FIRST_NAME_INDEX];
         lastName = adminData[LAST_NAME_INDEX];
         email = adminData[EMAIL_INDEX];
         password = adminData[PASSWORD_INDEX];
         return new AdminModel(adminId, firstName, lastName, email, password);
-    }
-
-    public AdminModel getOneObject(String query) {
-        dao = new DbManagerDAO();
-        String[] record = dao.getData(query).get(0);
-        return getOneObject(record);
     }
 
     public <T> void saveObject(T t){

@@ -10,12 +10,6 @@ public class QuestDAO extends FactoryDAO {
         this.DEFAULT_TABLE = Table.QUESTS.getName();
     }
 
-    public QuestModel getOneObject(String query) {
-        dao = new DbManagerDAO();
-        String[] record = dao.getData(query).get(0);
-        return getOneObject(record);
-    }
-
     public QuestModel getOneObject(String[] record) {
 
         final int ID_INDEX = 0;

@@ -14,7 +14,6 @@ import school.TeamModel;
 
 public class StudentDAO extends FactoryDAO {
 
-    private int studentId;
     private String firstName;
     private String lastName;
     private String email;
@@ -22,11 +21,8 @@ public class StudentDAO extends FactoryDAO {
     private int wallet;
     private int experience;
     private float attendance;
-    private GroupModel group;
-    private TeamModel team;
     private int groupId;
     private int teamId;
-    List<ArtifactModel> inventory;
 
     public StudentDAO(){
         this.DEFAULT_TABLE = Table.STUDENTS.getName();
@@ -49,7 +45,7 @@ public class StudentDAO extends FactoryDAO {
         final Integer GROUP_INDEX = 9;
 
 
-        studentId = Integer.parseInt(studentData[ID_INDEX]);
+        int studentId = Integer.parseInt(studentData[ID_INDEX]);
         firstName = studentData[FIRST_NAME_INDEX];
         lastName = studentData[LAST_NAME_INDEX];
         email = studentData[EMAIL_INDEX];
@@ -62,22 +58,16 @@ public class StudentDAO extends FactoryDAO {
 
         final String teamQuery = String.format("SELECT * FROM teams WHERE id=%s;", teamId);
         TeamDAO teamDAO = new TeamDAO();
-        team = teamDAO.getOneObject(teamQuery);
+        TeamModel team = teamDAO.getOneObject(teamQuery);
 
         final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
         GroupDAO groupDAO = new GroupDAO();
-        group = groupDAO.getOneObject(groupQuery);
+        GroupModel group = groupDAO.getOneObject(groupQuery);
 
-        inventory = new ArrayList<>();
+        List<ArtifactModel> inventory = new ArrayList<>();
 
         return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience, attendance,
                 team, group, inventory);
-    }
-
-    public StudentModel getOneObject(String query) {
-        DbManagerDAO dao = new DbManagerDAO();
-        String[] studentData = dao.getData(query).get(0);
-        return getOneObject(studentData);
     }
 
     public <T> void saveObject(T t){
@@ -92,8 +82,8 @@ public class StudentDAO extends FactoryDAO {
         attendance = student.getAttendance();
         teamId = student.getTeam().getId();
         groupId = student.getGroup().getId();
-
         String query;
+
         if(studentId.equals("-1")){
 
             query = String.format(
