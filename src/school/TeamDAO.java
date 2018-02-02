@@ -17,21 +17,6 @@ public class TeamDAO extends FactoryDAO {
         this.DEFAULT_TABLE = Table.TEAMS.getName();
     }
 
-    public List<TeamModel> getManyObjects(List<String[]> dataCollection) {
-        List<TeamModel> teams = new ArrayList<>();
-        for (String[] record : dataCollection) {
-            TeamModel team = getOneObject(record);
-            teams.add(team);
-        }
-        return teams;
-    }
-
-    public List<TeamModel> getManyObjects(String query) {
-        dao = new DbManagerDAO();
-        List<String[]> dataCollection = dao.getData(query);
-        return getManyObjects(dataCollection);
-    }
-
     public TeamModel getOneObject(String[] teamData) {
         int id = Integer.parseInt(teamData[ID_INDEX]);
         String name = teamData[NAME_INDEX];

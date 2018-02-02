@@ -14,18 +14,6 @@ import school.TeamModel;
 
 public class StudentDAO extends FactoryDAO {
 
-
-    private final Integer ID_INDEX = 0;
-    private final Integer FIRST_NAME_INDEX = 1;
-    private final Integer LAST_NAME_INDEX = 2;
-    private final Integer EMAIL_INDEX = 3;
-    private final Integer PASSWORD_INDEX = 4;
-
-    private final Integer WALLET_INDEX = 5;
-    private final Integer EXPERIENCE_INDEX = 6;
-    private final Integer ATTENDANCE_INDEX = 7;
-    private final Integer TEAM_INDEX = 8;
-    private final Integer GROUP_INDEX = 9;
     private int studentId;
     private String firstName;
     private String lastName;
@@ -44,22 +32,21 @@ public class StudentDAO extends FactoryDAO {
         this.DEFAULT_TABLE = Table.STUDENTS.getName();
     }
 
-    public List<StudentModel> getManyObjects(List<String[]> dataCollection) {
-        List<StudentModel> students = new ArrayList<>();
-        for (String[] record : dataCollection) {
-            StudentModel student = getOneObject(record);
-            students.add(student);
-        }
-        return students;
-    }
-
-    public List<StudentModel> getManyObjects(String query) {
-        DbManagerDAO dao = new DbManagerDAO();
-        List<String[]> dataCollection = dao.getData(query);
-        return getManyObjects(dataCollection);
-    }
 
     public StudentModel getOneObject(String[] studentData) {
+
+
+        final Integer ID_INDEX = 0;
+        final Integer FIRST_NAME_INDEX = 1;
+        final Integer LAST_NAME_INDEX = 2;
+        final Integer EMAIL_INDEX = 3;
+        final Integer PASSWORD_INDEX = 4;
+
+        final Integer WALLET_INDEX = 5;
+        final Integer EXPERIENCE_INDEX = 6;
+        final Integer ATTENDANCE_INDEX = 7;
+        final Integer TEAM_INDEX = 8;
+        final Integer GROUP_INDEX = 9;
 
 
         studentId = Integer.parseInt(studentData[ID_INDEX]);

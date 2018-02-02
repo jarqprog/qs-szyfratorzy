@@ -23,26 +23,25 @@ public abstract class FactoryDAO implements CreatableDAO {
         }
     }
 
-    public <T> List<T> getObjects() {
+    public <T> List<T> getAllObjects() {
         String query = "Select * from " + DEFAULT_TABLE + ";";
-        return getAllObjects(query);
+        return getObjects(query);
     }
 
-    protected <T> List<T> getAllObjects(String query) {
-        DbManagerDAO dao = new DbManagerDAO();
-        List<String[]> dataCollection = dao.getData(query);
-        List<T> objects = new ArrayList<>();
-        try {
-            for (String[] record : dataCollection) {
-                @SuppressWarnings("unchecked")
-                T object = (T) getOneObject(record);
-                objects.add(object);
-            }
-            return objects;
-        } catch (Exception e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            return null;
+    public <T> List<T> getManyObjects(List<String[]> dataCollection) {
+        List<T> collection = new ArrayList<>();
+        for (String [] record : dataCollection) {
+            @SuppressWarnings("unchecked")
+            T object = (T) getOneObject(record);
+            collection.add(object);
         }
+        return collection;
+    }
+
+    public <T> List<T> getManyObjects(String query) {
+        dao = new DbManagerDAO();
+        List<String[]> dataCollection = dao.getData(query);
+        return getManyObjects(dataCollection);
     }
 
     public abstract Object getOneObject(String[] data);
@@ -90,6 +89,23 @@ public abstract class FactoryDAO implements CreatableDAO {
         } catch(Exception ex){
             System.out.println(ex.getMessage());
             return -1;
+        }
+    }
+
+    private <T> List<T> getObjects(String query) {
+        DbManagerDAO dao = new DbManagerDAO();
+        List<String[]> dataCollection = dao.getData(query);
+        List<T> objects = new ArrayList<>();
+        try {
+            for (String[] record : dataCollection) {
+                @SuppressWarnings("unchecked")
+                T object = (T) getOneObject(record);
+                objects.add(object);
+            }
+            return objects;
+        } catch (Exception e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            return null;
         }
     }
 }

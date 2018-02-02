@@ -1,8 +1,5 @@
 package school;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
@@ -14,22 +11,6 @@ public class GroupDAO extends FactoryDAO {
 
     public GroupDAO(){
         this.DEFAULT_TABLE = Table.GROUPS.getName();
-    }
-
-
-    public List<GroupModel> getManyObjects(List<String[]> dataCollection) {
-        List<GroupModel> groups = new ArrayList<>();
-        for (String [] record : dataCollection) {
-            GroupModel group = getOneObject(record);
-            groups.add(group);
-        }
-        return groups;
-    }
-
-    public List<GroupModel> getManyObjects(String query) {
-        dao = new DbManagerDAO();
-        List<String[]> dataCollection = dao.getData(query);
-        return getManyObjects(dataCollection);
     }
 
     public GroupModel getOneObject(String [] record){
