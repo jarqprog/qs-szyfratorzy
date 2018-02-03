@@ -19,7 +19,7 @@ public class RootController{
     }
 
     public void runApplication(){
-        RootView.clearScreen();
+        view.clearScreen();
         prepareDatabase();
         boolean isDone = false;
         while (! isDone){
