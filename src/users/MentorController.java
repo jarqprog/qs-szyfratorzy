@@ -1,5 +1,6 @@
 package users;
 
+import application.DataTool;
 import item.ArtifactDAO;
 import item.ArtifactModel;
 import item.QuestDAO;
@@ -29,7 +30,7 @@ public class MentorController extends UserController{
                 view.clearScreen();
                 view.displayMenu();
                 userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
+                isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
             }
             view.clearScreen();
             switch(userChoice){
@@ -126,7 +127,7 @@ public class MentorController extends UserController{
                 view.clearScreen();
                 view.displayArtifactMenu();
                 userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
+                isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
             }
             view.clearScreen();
             switch(userChoice){
@@ -165,7 +166,7 @@ public class MentorController extends UserController{
                 view.clearScreen();
                 view.displayQuestMenu();
                 userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
+                isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
             }
             view.clearScreen();
             switch(userChoice){

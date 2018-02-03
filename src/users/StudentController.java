@@ -1,5 +1,6 @@
 package users;
 
+import application.DataTool;
 import item.ArtifactModel;
 import shop.*;
 
@@ -83,7 +84,7 @@ public class StudentController extends UserController{
                 view.clearScreen();
                 view.displayMenu();
                 userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
+                isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
             }
 
             view.clearScreen();

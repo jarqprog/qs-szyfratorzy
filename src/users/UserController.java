@@ -17,15 +17,6 @@ public abstract class  UserController{
 
     }
 
-    protected Boolean checkIfElementInArray(String[] array, String element) {
-        for(String item : array){
-            if(item.equals(element)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     protected List<MentorModel> getMentors(){
         MentorDAO dao = new MentorDAO();
         return dao.getManyObjects("SELECT * FROM mentors;");
