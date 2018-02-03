@@ -49,8 +49,12 @@ public class DatabaseDAO extends DAO{
     }
 
     public void updateDatabase(String sqlFilePath){
+        if(connection == null){
+            openConnection();
+        }
         File sqlFile = new File(sqlFilePath);
         executeSqlScript(sqlFile);
+        closeConnection();
     }
 
     public void openConnection(){
