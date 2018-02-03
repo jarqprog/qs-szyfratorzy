@@ -54,7 +54,7 @@ public abstract class AbstractView {
         return userInput;
     }
 
-    public static void clearScreen() {
+    public void clearScreen() {
         try{
             final String os = System.getProperty("os.name");
             if (os.contains("Windows")) {
@@ -65,7 +65,7 @@ public abstract class AbstractView {
                 System.out.println();
             }
         } catch (Exception e){
-            System.out.println(e);
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
     }
 
@@ -74,7 +74,7 @@ public abstract class AbstractView {
         try {
             System.in.read();
         }catch(IOException e) {
-            System.out.println(e);
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
     }
 
