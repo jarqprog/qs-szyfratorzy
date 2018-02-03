@@ -2,6 +2,7 @@ package users;
 
 import java.util.List;
 
+import application.DataTool;
 import school.ExperienceLevels;
 import school.GroupModel;
 import school.SchoolController;
@@ -27,7 +28,7 @@ public class AdminController extends UserController{
                 view.clearScreen();
                 view.displayMenu();
                 userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
+                isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
             }
             view.clearScreen();
 
@@ -45,7 +46,7 @@ public class AdminController extends UserController{
                     createGroup();
                     break;
                 case "5":
-                    createNewLevelOfExperience();
+                    runExpLevelManager();
                     break;
                 case "0":
                    isDone = true;
@@ -55,7 +56,7 @@ public class AdminController extends UserController{
         }
     }
 
-    public void createMentor(){
+    private void createMentor(){
         String firstName = view.getUserInput("Enter first name: ");
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
@@ -64,7 +65,7 @@ public class AdminController extends UserController{
         view.displayMessage("Mentor created: " + mentor.toString());
     }
 
-    public void editMentor() {
+    private void editMentor() {
         List<MentorModel> mentors = getMentors();
         view.showAllMentors(prepareMentorsToDisplay(mentors));
         String id = view.getUserInput("Enter ID of mentor: ");
@@ -111,7 +112,7 @@ public class AdminController extends UserController{
         }
     }
 
-    public void displayMentorProfile(){
+    private void displayMentorProfile(){
         List<MentorModel> mentors = getMentors();
         view.showAllMentors(prepareMentorsToDisplay(mentors));
         String id = view.getUserInput("Enter ID of mentor: ");
@@ -125,17 +126,15 @@ public class AdminController extends UserController{
         }
     }
 
-    public void createGroup(){
+    private void createGroup(){
         String groupName = view.getUserInput("Enter group name: ");
         GroupModel group = new GroupModel(groupName);
         view.clearScreen();
         view.displayMessage("Group created: " + group);
     }
 
-    public void createNewLevelOfExperience(){
+    private void runExpLevelManager(){
         SchoolController school = new SchoolController();
-        ExperienceLevels experienceLevels = school.getExperienceLevels();
-        view.displayMessage(experienceLevels.toString());
-        view.displayMessage("That's all for now :P ");
+        school.manageExperienceLevels();
     }
 }
