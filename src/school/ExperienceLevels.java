@@ -1,9 +1,8 @@
 package school;
 
+import application.DataTool;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.LinkedHashMap;
-import java.util.stream.Collectors;
 import java.util.Map.Entry;
 
 public class ExperienceLevels {
@@ -34,16 +33,14 @@ public class ExperienceLevels {
     }
 
     public String toString(){
-        Map<String,Integer> sorted = levels.entrySet().stream() // sort map - result LinkedHashMap
-                .sorted(Map.Entry.comparingByValue())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+        Map<String,Integer> sorted = DataTool.sortMapByValue(levels); // sort map - result LinkedHashMap
 
         StringBuilder sb = new StringBuilder();
         sb.append("\n  Experience levels:\n\n\tlevel: required experience\n");
+
         int lineMultiplier = 30;
-        String line = new String(new char[lineMultiplier]).replace("\0", "-");
-        sb.append("\t" + line + "\n");
+        String line = "\t" + new String(new char[lineMultiplier]).replace("\0", "-") + "\n";
+        sb.append(line);
         for (Entry<String, Integer> entry : sorted.entrySet()) {
             String key = entry.getKey();
             String value = String.valueOf(entry.getValue());
