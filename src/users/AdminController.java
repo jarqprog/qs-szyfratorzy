@@ -2,7 +2,9 @@ package users;
 
 import java.util.List;
 
+import school.ExperienceLevels;
 import school.GroupModel;
+import school.SchoolController;
 
 public class AdminController extends UserController{
 
@@ -131,6 +133,9 @@ public class AdminController extends UserController{
     }
 
     public void createNewLevelOfExperience(){
-        executeNotImplementedInfo();
+        SchoolController school = new SchoolController();
+        ExperienceLevels experienceLevels = school.getExperienceLevels();
+        view.displayMessage(experienceLevels.toString());
+        view.displayMessage("That's all for now :P ");
     }
 }
