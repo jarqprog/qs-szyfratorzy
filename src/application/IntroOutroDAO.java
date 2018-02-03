@@ -2,13 +2,10 @@ package application;
 
 public class IntroOutroDAO extends DAO {
 
-    String outroFilePath;
-
     public IntroOutroDAO(){
-        defaultFileName = "intro.txt";
-        defaultFilePath = "data_files/intro.txt";
-        outroFilePath = "data_files/outro.txt";
+        defaultFilePath = FilePath.INTRO.getPath();
+        String outroFilePath = FilePath.OUTRO.getPath();
         prepareFile();
-        prepareFile("data_files/outro.txt");
+        prepareFile(outroFilePath);
     }
 }

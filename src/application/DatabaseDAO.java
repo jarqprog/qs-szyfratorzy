@@ -22,8 +22,8 @@ import java.io.File;
 public class DatabaseDAO extends DAO{
 
 
-    protected final static String SQL_SCRIPT_PATH = "data_base/init.sql";
-    protected final static String DATA_BASE_PATH = "data_base/quest_store.db";
+    private final static String SQL_SCRIPT_PATH = FilePath.SQL_SCRIPT.getPath();
+    private final static String DATA_BASE_PATH = FilePath.DATA_BASE.getPath();
 
     protected Connection connection = null;
 
@@ -45,6 +45,11 @@ public class DatabaseDAO extends DAO{
 
     public void fillDatabase(){
         File sqlFile = new File(SQL_SCRIPT_PATH);
+        executeSqlScript(sqlFile);
+    }
+
+    public void updateDatabase(String sqlFilePath){
+        File sqlFile = new File(sqlFilePath);
         executeSqlScript(sqlFile);
     }
 
