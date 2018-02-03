@@ -89,12 +89,6 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
   INSERT OR IGNORE INTO teams VALUES(2,'meduzy');
   INSERT OR IGNORE INTO groups VALUES(3,'B');
   INSERT OR IGNORE INTO teams VALUES(3,'koniki');
-  INSERT OR IGNORE INTO experience_levels VALUES(1,'novice',0);
-  INSERT OR IGNORE INTO experience_levels VALUES(2,'apprentice',100);
-  INSERT OR IGNORE INTO experience_levels VALUES(3,'junior programmer',1000);
-  INSERT OR IGNORE INTO experience_levels VALUES(4,'programmer',10000);
-  INSERT OR IGNORE INTO experience_levels VALUES(5,'senior programmer',100000);
-  INSERT OR IGNORE INTO experience_levels VALUES(6,'almost mentor',1000000);
   INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
   INSERT OR IGNORE INTO admins VALUES(6,'Piotr','Gryzlo','piotr@cc.com','12321');
   INSERT OR IGNORE INTO students VALUES(100,'Marcinek','Stasik','lolek@gmail.com','12321', 20, 30, 40, 2, 2);
