@@ -1,41 +1,56 @@
 package school;
 
+import java.util.Map;
+import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class SchoolModel
-{
-    private HashMap<String, Integer> experienceLevels;
-    private ArrayList<Character> groups;
-    private ArrayList<String> teams;
+public class SchoolModel {
+
+    private String name;
+    private List<GroupModel> groups;
+    private List<TeamModel> teams;
+    private List<String> groupNames;
+    private List<String> teamNames;
+    private ExperienceLevels experienceLevels;
 
     public SchoolModel(){
-        experienceLevels = new HashMap<String, Integer>();
-        groups = new ArrayList<Character>();
-        teams = new ArrayList<String>();
+        name = "Codecool Krakow";
     }
 
-    public HashMap<String, Integer> getExperienceLevels() {
-        return experienceLevels;
+    public String getName() {
+        return name;
     }
 
-    public void addExperienceLevel(String level, Integer experience) {
-        this.experienceLevels.put(level, experience);
+    public void setName(String newName) {
+        this.name = newName;
     }
 
-    public ArrayList<Character> getGroups() {
+    public List<GroupModel> getGroups() {
+        groups = new ArrayList<>();
         return groups;
     }
 
-    public void addGroup(Character newGroup) {
-        this.groups.add(newGroup);
-    }
-
-    public ArrayList<String> getTeams() {
+    public List<TeamModel> getTeams() {
+        teams = new ArrayList<>();
         return teams;
     }
 
-    public void addTeam(String newTeam) {
-        this.teams.add(newTeam);
+    public List<String> getGroupNames() {
+        groupNames = new ArrayList<>();
+        return groupNames;
+    }
+
+    public List<String> getTeamNames() {
+        teamNames = new ArrayList<>();
+        return teamNames;
+    }
+
+    public ExperienceLevels getExperienceLevels() {
+        experienceLevels = new ExperienceLevels();
+        return experienceLevels;
+    }
+
+    public void setExperienceLexels(Map<String, Integer> newExpLevels) {
+        experienceLevels.setLevels(newExpLevels);
     }
 }
