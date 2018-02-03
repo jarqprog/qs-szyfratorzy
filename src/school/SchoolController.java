@@ -22,6 +22,10 @@ public class SchoolController {
         return school.getTeams();
     }
 
+    public ExperienceLevels getExperienceLevels(){
+        return school.getExperienceLevels();
+    }
+
     public SchoolModel getSchool(){
         return school;
     }
