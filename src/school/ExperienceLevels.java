@@ -38,6 +38,14 @@ public class ExperienceLevels {
         return levels;
     }
 
+    public Map<String, Integer> getUpdatedLevels(){
+        setLevels();  // update levels
+        if(! levels.containsValue(0)){
+            levels.put("basic", 0);  // exp levels always should have level with value 0
+        }
+        return levels;
+    }
+
     public void addLevel(String levelName, Integer levelValue){
         this.levels.put(levelName, levelValue);
         saveObject();
@@ -53,11 +61,6 @@ public class ExperienceLevels {
 
     public void removeLevel(String levelName){
         this.levels.remove (levelName, this.levels.get(levelName));
-    }
-
-    public Map<String, Integer> getUpdatedLevels(){
-        setLevels();  // update levels
-        return levels;
     }
 
     public String toString(){
