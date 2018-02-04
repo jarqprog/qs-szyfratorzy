@@ -32,4 +32,8 @@ public class DataTool {
         }
         return null;
     }
+
+    public static String getMultipliedString(String string, int multiplier){
+        return new String(new char[multiplier]).replace("\0", string);
+    }
 }
