@@ -1,11 +1,11 @@
 package users;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import application.Role;
 import item.ArtifactModel;
 import school.GroupModel;
+import school.SchoolController;
 import school.TeamModel;
 
 public class StudentModel extends UserModel {
@@ -16,6 +16,7 @@ public class StudentModel extends UserModel {
     private int experience;
     private List<ArtifactModel> inventory;
     private float attendance;
+    private String experienceLevel;
 
     public StudentModel(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
@@ -102,14 +103,27 @@ public class StudentModel extends UserModel {
         this.attendance = attendance;
     }
 
+    public void incrementExperience(int pointsToAdd) {
+        this.experience += pointsToAdd;
+    }
+
+    public void setExperienceLevel(String level, int experienceToNextLevel){
+        experienceLevel = String.format("%s (%s/%s)", level, experience, experienceToNextLevel);
+    }
+
+    public String getExperienceLevel(){
+        new SchoolController().setStudentExperienceLevel(this);
+        return experienceLevel;
+    }
+
     public List<ArtifactModel> getInventory() { return inventory; }
 
     public void setInventory(List<ArtifactModel> inventory) { this.inventory = inventory; }
 
     public String toString() {
         // potrzeba będzie poprawić!
-        return super.toString() + String.format(" Group : %s, Team: %s, Wallet: %dcc, Experience: %d, Attendance: %.2f"
-                                                ,getGroup(), getTeam(), getWallet(), getExperience(), getAttendance());
+        return super.toString() + String.format(" Group : %s, Team: %s, Wallet: %dcc, \nExperience: %s\n, Attendance: %.2f"
+                                                ,getGroup(), getTeam(), getWallet(), getExperienceLevel(), getAttendance());
     }
 
     public String[] getFullData() {
