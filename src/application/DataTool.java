@@ -3,6 +3,8 @@ package application;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
+import java.util.Map.Entry;
+import java.util.Objects;
 
 public class DataTool {
 
@@ -20,5 +22,14 @@ public class DataTool {
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                 (oldValue, newValue) -> oldValue, LinkedHashMap::new));
 
+    }
+
+    public static <K, V> K getKeyByValue(Map<K, V> map, V value) {
+        for (Entry<K, V> entry : map.entrySet()) {
+            if (Objects.equals(value, entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 }
