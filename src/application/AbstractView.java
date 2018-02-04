@@ -3,9 +3,6 @@ package application;
 import java.util.Scanner;
 import java.io.IOException;
 
-import users.UserModel;
-
-
 public abstract class AbstractView {
 
     protected String emptyLines = "\n\n";
@@ -128,9 +125,5 @@ public abstract class AbstractView {
             System.out.println("Wrong input!");
         }
         return input;
-    }
-
-    public <T extends UserModel> void displayUserUsingFullData(T user){
-        System.out.println(space + user.getFullDataToString());
     }
 }

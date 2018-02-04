@@ -42,6 +42,7 @@ public class ExperienceLevels {
         setLevels();  // update levels
         if(! levels.containsValue(0)){
             levels.put("basic", 0);  // exp levels always should have level with value 0
+            saveObject();
         }
         return levels;
     }
