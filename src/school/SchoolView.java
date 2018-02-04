@@ -8,7 +8,7 @@ public class SchoolView extends AbstractView{
         String[] options = {"      *** Experience level manager ***     \n",
                 " [1] display experience levels",
                 " [2] restore default experience levels",
-                " [3] create new experience level",
+                " [3] modify experience level",
                 " [4] create new experience level",
                 " [5] delete experience level",
                 " [0] exit manager\n"};
