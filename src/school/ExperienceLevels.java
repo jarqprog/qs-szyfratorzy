@@ -11,7 +11,7 @@ public class ExperienceLevels {
 
     public ExperienceLevels(Map<String, Integer> levels){
         this.levels = levels;
-        save();
+        saveObject();
     }
 
     public ExperienceLevels(){
@@ -21,7 +21,7 @@ public class ExperienceLevels {
 
     public void setLevels(Map<String, Integer> levels){
         this.levels = levels;
-        save();
+        saveObject();
     }
 
     public void setLevels(){
@@ -31,7 +31,7 @@ public class ExperienceLevels {
 
     public void clearLevels(){
         this.levels.clear();
-        save();
+        saveObject();
     }
 
     public Map<String, Integer> getLevels(){
@@ -40,7 +40,7 @@ public class ExperienceLevels {
 
     public void addLevel(String levelName, Integer levelValue){
         this.levels.put(levelName, levelValue);
-        save();
+        saveObject();
     }
 
     public int getValue(String levelName){
@@ -78,7 +78,7 @@ public class ExperienceLevels {
         return sb.toString();
     }
 
-    private void save(){
+    private void saveObject(){
         SchoolDAO dao = new SchoolDAO();
         dao.saveExperienceLevels(this);
     }
