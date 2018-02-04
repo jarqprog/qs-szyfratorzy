@@ -38,19 +38,23 @@ public class SchoolController {
         List<Integer> expValues = new ArrayList<>(levels.values());
         Collections.sort(expValues);
         int studentExperience = student.getExperience();
-        int currentLevelExp;
-        int nextLevelExp = 0;
-        String currentLevel = "beginner";
-        for(Iterator<Integer> it = expValues.iterator(); it.hasNext();) {
-            int value = it.next();
-            if(studentExperience < value){
-                currentLevelExp = value;
-                nextLevelExp = it.next(); // use iterator to get next level
-                currentLevel = DataTool.getKeyByValue(levels, currentLevelExp);
+        int index = 0;
+        int currentExpLevel = 0;
+        int nextExpLevel = studentExperience;  // if the student has exceeded the maximum level
+        for(int value : expValues) {
+            if(value > studentExperience) {
                 break;
             }
+            index++;
         }
-        student.setExperienceLevel(currentLevel, nextLevelExp);
+        if(index > 0) {
+            currentExpLevel = expValues.get(index-1);
+        }
+        if(index < expValues.size()) {  // protection with a single element list
+            nextExpLevel = expValues.get(index);
+        }
+        String level = DataTool.getKeyByValue(levels, currentExpLevel);
+        student.setExperienceLevel(level, nextExpLevel);
     }
 
     public void manageExperienceLevels() {
