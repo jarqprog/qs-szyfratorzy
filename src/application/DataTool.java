@@ -3,7 +3,6 @@ package application;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
-import java.util.Map.Entry;
 
 public class DataTool {
 
@@ -22,5 +21,4 @@ public class DataTool {
                 (oldValue, newValue) -> oldValue, LinkedHashMap::new));
 
     }
-
 }
