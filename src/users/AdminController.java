@@ -22,7 +22,7 @@ public class AdminController extends UserController{
         boolean isDone = false;
         while(! isDone){
             String userChoice = "";
-            String[] correctChoices = {"1", "2", "3", "4", "5", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "0"};
             Boolean isChoiceReady = false;
             while(! isChoiceReady){
                 view.clearScreen();
@@ -34,23 +34,26 @@ public class AdminController extends UserController{
 
             switch(userChoice) {
                 case "1":
-                   createMentor();
-                   break;
+                    showProfile(admin);
+                    break;
                 case "2":
-                   editMentor();
-                   break;
+                    createMentor();
+                    break;
                 case "3":
-                   displayMentorProfile();
-                   break;
+                    editMentor();
+                    break;
                 case "4":
-                    createGroup();
+                    displayMentorProfile();
                     break;
                 case "5":
+                    createGroup();
+                    break;
+                case "6":
                     runExpLevelManager();
                     break;
                 case "0":
-                   isDone = true;
-                   break;
+                    isDone = true;
+                    break;
             }
             view.handlePause();
         }
@@ -67,7 +70,7 @@ public class AdminController extends UserController{
 
     private void editMentor() {
         List<MentorModel> mentors = getMentors();
-        view.showAllMentors(prepareMentorsToDisplay(mentors));
+        view.displayUsers(mentors);
         String id = view.getUserInput("Enter ID of mentor: ");
         for (MentorModel mentor : mentors) {
             if (id.equals(Integer.toString(mentor.getId()))) {
@@ -104,7 +107,8 @@ public class AdminController extends UserController{
                             break;
                     }
                     if(! isFinished){
-                        view.displayMessage("Edited: " + mentor.toString());
+                        view.displayMessage("Edited:");
+                        view.displayUserWithDetails(mentor);
                         view.handlePause();
                     }
                 }
@@ -114,14 +118,14 @@ public class AdminController extends UserController{
 
     private void displayMentorProfile(){
         List<MentorModel> mentors = getMentors();
-        view.showAllMentors(prepareMentorsToDisplay(mentors));
-        String id = view.getUserInput("Enter ID of mentor: ");
+        view.displayMessage("Mentors:\n");
+        view.displayUsers(mentors);
+        String id = view.getUserInput("Select mentor by id: ");
         for (MentorModel mentor : mentors) {
             if (id.equals(Integer.toString(mentor.getId()))) {
-                String mentorToDisplay = mentor.toString();
                 view.clearScreen();
-                view.displayMessage("Mentor's profile:");
-                view.displayMessage(mentorToDisplay);
+                view.displayMessage("Mentor's profile:\n");
+                view.displayUserWithDetails(mentor);
             }
         }
     }
