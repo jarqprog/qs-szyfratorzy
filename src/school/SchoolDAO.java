@@ -5,13 +5,15 @@ import application.Table;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class SchoolDAO {
 
     final private String EXPERIENCE_LEVELS_TABLE = Table.EXPERIENCE_LEVELS.getName();
     private DbManagerDAO dao;
 
-    public SchoolDAO(){
+    public SchoolDAO() {
          dao = new DbManagerDAO();
     }
 
@@ -26,10 +28,27 @@ public class SchoolDAO {
         List<String[]> dataCollection = dao.getData(query);
         for(String[] data : dataCollection){
             levelName = data[LEVEL_NAME_INDEX];
-//            System.out.println
             levelValue = Integer.parseInt(data[LEVEL_VALUE_INDEX]);
             experienceLevels.put(levelName, levelValue);
         }
         return experienceLevels;
+    }
+
+    public void saveExperienceLevels(ExperienceLevels experienceLevels) {
+        String clearTableQuery = String.format("DELETE FROM %s;", EXPERIENCE_LEVELS_TABLE);
+        dao.inputData(clearTableQuery);
+        Map<String,Integer> levelsAndValues = experienceLevels.getLevels();
+        if(levelsAndValues.size() > 0) {
+            Set<String> levels = levelsAndValues.keySet();
+            Integer[] values = levelsAndValues.values().toArray(new Integer[0]);
+            int index = 0;
+            for(String level : levels) {
+                int value = values[index];
+                String query = String.format("INSERT INTO %s VALUES(null, '%s', %s);",
+                        EXPERIENCE_LEVELS_TABLE, level, value);
+                dao.inputData(query);
+                index++;
+            }
+        }
     }
 }
