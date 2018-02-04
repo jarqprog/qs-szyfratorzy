@@ -57,19 +57,21 @@ public class DatabaseDAO extends DAO{
         closeConnection();
     }
 
-    public void openConnection(){
-        try {
-            String className = "org.sqlite.JDBC";
-            Class.forName(className);
-            String url = "jdbc:sqlite:" + DATA_BASE_PATH;
-            connection = DriverManager.getConnection(url);
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage());
-            connection = null;
+    public void openConnection() {
+        if(connection == null) {
+            try {
+                String className = "org.sqlite.JDBC";
+                Class.forName(className);
+                String url = "jdbc:sqlite:" + DATA_BASE_PATH;
+                connection = DriverManager.getConnection(url);
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                connection = null;
+            }
         }
     }
 
-    public void closeConnection(){
+    public void closeConnection() {
         if(connection != null){
             try{
                 connection.close();
