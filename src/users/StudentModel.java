@@ -83,6 +83,11 @@ public class StudentModel extends UserModel {
         saveObject();
     }
 
+    public void modifyWallet(int value){
+        this.wallet += value;
+        saveObject();
+    }
+
     public int getExperience()
     {
         return experience;
@@ -93,18 +98,9 @@ public class StudentModel extends UserModel {
         saveObject();
     }
 
-    public float getAttendance()
-    {
-        return attendance;
-    }
-
-    public void setAttendance(float attendance) {
-        // temporary!!!
-        this.attendance = attendance;
-    }
-
     public void incrementExperience(int pointsToAdd) {
         this.experience += pointsToAdd;
+        saveObject();
     }
 
     public void setExperienceLevel(String level, int experienceToNextLevel){
@@ -114,6 +110,16 @@ public class StudentModel extends UserModel {
     public String getExperienceLevel(){
         new SchoolController().setStudentExperienceLevel(this);
         return experienceLevel;
+    }
+
+    public float getAttendance()
+    {
+        return attendance;
+    }
+
+    public void setAttendance(float attendance) {
+        // temporary!!!
+        this.attendance = attendance;
     }
 
     public List<ArtifactModel> getInventory() { return inventory; }
