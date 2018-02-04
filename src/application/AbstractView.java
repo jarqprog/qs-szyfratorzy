@@ -16,9 +16,12 @@ public abstract class AbstractView {
         emptyLines = newEmptyLines;
     }
 
-    public void displayMessage(String message)
-    {
+    public void displayMessage(String message) {
         System.out.println(message);
+    }
+
+    public void displayObject(Object object) {
+        System.out.println(object.toString());
     }
 
     public void displayHeaderAndElementsOfCollection(String[] collection, String header) {
@@ -54,6 +57,40 @@ public abstract class AbstractView {
         }
         return userInput;
     }
+
+    public String getNumberFromUser(String message) {
+        Scanner scanner = new Scanner(System.in);
+        String userInput = "";
+        int minimumUserInputLength = 1;
+        while(! userInput.matches(".*\\d+.*") && userInput.length() < minimumUserInputLength){
+            System.out.print(message);
+            scanner.useDelimiter("\n");
+            userInput = scanner.next().trim();
+            if(! userInput.matches(".*\\d+.*")){
+                displayMessage("    - Wrong input (number required)!");
+            }
+        }
+        return userInput;
+    }
+
+    public int getNotNegativeNumberFromUser(String message){
+        int number = -1;
+        while(number < 0) {
+            String input = getNumberFromUser(message);
+            try {
+                number = Integer.parseInt(input);
+                if (number < 0) {
+                    displayMessage("    - Number shouldn't be negative!");
+                }
+            } catch (NumberFormatException e){
+                displayMessage("    - have You type an integer number?");
+                number = -1;
+            }
+        }
+        return number;
+    }
+
+
 
     public void clearScreen() {
         try{
