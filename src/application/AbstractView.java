@@ -55,18 +55,6 @@ public abstract class AbstractView {
         return userInput;
     }
 
-//    public String getPhraseFromUser(String message) {
-//        Scanner scanner = new Scanner(System.in);
-//        String userInput = "";
-//        int minimumUserInputLength = 1;
-//        while(userInput.length() < minimumUserInputLength){
-//            System.out.print(message);
-//
-//            userInput = scanner.next().trim();
-//        }
-//        return userInput;
-//    }
-
     public void clearScreen() {
         try{
             final String os = System.getProperty("os.name");
