@@ -120,20 +120,11 @@ public class StudentModel extends UserModel {
 
     public void setInventory(List<ArtifactModel> inventory) { this.inventory = inventory; }
 
-    public String toString() {
-        // potrzeba będzie poprawić!
-        return super.toString() + String.format(" Group : %s, Team: %s, Wallet: %dcc, \nExperience: %s\n, Attendance: %.2f"
-                                                ,getGroup(), getTeam(), getWallet(), getExperienceLevel(), getAttendance());
-    }
-
-    public String[] getFullData() {
-        // used to pretty display in view
-        String[] fullData = new String[0];
-        String[] studentData = {this.group.getName(), this.team.getName(), String.valueOf(this.wallet), String.valueOf(this.wallet),
-                String.valueOf(this.experience), String.valueOf(attendance)};
-//        addArrays:
-        System.arraycopy(studentData, 0, fullData, super.getFullData().length, studentData.length);
-        return fullData;
+    public String getFullDataToString() {
+        return super.getFullDataToString() + String.format(
+                " \n\t -group: %s\n\t -team: %s\n\t -wallet: %dcc\n\t" +
+                " -level: %s\n\t -attendance: %.2f\n", getGroup(), getTeam(),
+                wallet, getExperienceLevel(), attendance);
     }
 
     public void saveObject(){

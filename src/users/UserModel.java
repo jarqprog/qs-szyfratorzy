@@ -1,5 +1,7 @@
 package users;
 
+import application.DataTool;
+
 public abstract class UserModel {
     protected int id;
     protected String firstName;
@@ -42,6 +44,10 @@ public abstract class UserModel {
         return lastName;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
         saveObject();
@@ -82,10 +88,11 @@ public abstract class UserModel {
                             this.role, this.id, this.firstName, this.lastName, this.email);
     }
 
-    protected String[] getFullData() {
-        // used to pretty display in view
-        String[] fullData = {this.role, String.valueOf(this.id), this.firstName, this.lastName, this.email};
-        return fullData;
+    public String getFullDataToString() {
+        String sign = "-";
+        int signMultiplier = 100;
+        return String.format(" %s, role: %s, id: %s, email: %s\n %s",
+                getFullName(), role, id, getEmail(), DataTool.getMultipliedString(sign, signMultiplier));
     }
 
     public abstract void saveObject();
