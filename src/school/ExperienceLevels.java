@@ -11,6 +11,7 @@ public class ExperienceLevels {
 
     public ExperienceLevels(Map<String, Integer> levels){
         this.levels = levels;
+        save();
     }
 
     public ExperienceLevels(){
@@ -20,6 +21,7 @@ public class ExperienceLevels {
 
     public void setLevels(Map<String, Integer> levels){
         this.levels = levels;
+        save();
     }
 
     public void setLevels(){
@@ -27,12 +29,39 @@ public class ExperienceLevels {
         this.levels = dao.loadExperienceLevels();
     }
 
+    public void clearLevels(){
+        this.levels.clear();
+        save();
+    }
+
     public Map<String, Integer> getLevels(){
+        return levels;
+    }
+
+    public void addLevel(String levelName, Integer levelValue){
+        this.levels.put(levelName, levelValue);
+        save();
+    }
+
+    public int getValue(String levelName){
+        return this.levels.get(levelName);
+    }
+
+    public boolean containsGivenLevel(String level){
+        return this.levels.containsKey(level);
+    }
+
+    public void removeLevel(String levelName){
+        this.levels.remove (levelName, this.levels.get(levelName));
+    }
+
+    public Map<String, Integer> getUpdatedLevels(){
         setLevels();  // update levels
         return levels;
     }
 
     public String toString(){
+        setLevels();
         Map<String,Integer> sorted = DataTool.sortMapByValue(levels); // sort map - result LinkedHashMap
 
         StringBuilder sb = new StringBuilder();
@@ -49,32 +78,8 @@ public class ExperienceLevels {
         return sb.toString();
     }
 
-
-//    public boolean modifyLevel(String level, int value){
-//        if(levels.containsKey(level)) {
-//            levels.put(level, value);
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public boolean addLevel(String level, int value){
-//        if(! levels.containsKey(level)) {
-//            levels.put(level, value);
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public int removeLevel(String levelName){
-//        return levels.remove(levelName);
-//    }
-//
-//    public int size(){
-//        return levels.size();
-//    }
-//
-//    public int getValue(String level){
-//        return levels.get(level);
-//    }
+    private void save(){
+        SchoolDAO dao = new SchoolDAO();
+        dao.saveExperienceLevels(this);
+    }
 }
