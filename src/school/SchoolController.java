@@ -3,7 +3,9 @@ package school;
 import application.DataTool;
 import application.DbManagerDAO;
 import application.FilePath;
-import java.util.List;
+import users.StudentModel;
+
+import java.util.*;
 
 public class SchoolController {
 
@@ -29,6 +31,26 @@ public class SchoolController {
 
     public ExperienceLevels getExperienceLevels() {
         return school.getExperienceLevels();
+    }
+
+    public void setStudentExperienceLevel(StudentModel student) {
+        Map<String,Integer> levels = school.getExperienceLevels().getUpdatedLevels();
+        List<Integer> expValues = new ArrayList<>(levels.values());
+        Collections.sort(expValues);
+        int studentExperience = student.getExperience();
+        int currentLevelExp;
+        int nextLevelExp = 0;
+        String currentLevel = "beginner";
+        for(Iterator<Integer> it = expValues.iterator(); it.hasNext();) {
+            int value = it.next();
+            if(studentExperience < value){
+                currentLevelExp = value;
+                nextLevelExp = it.next(); // use iterator to get next level
+                currentLevel = DataTool.getKeyByValue(levels, currentLevelExp);
+                break;
+            }
+        }
+        student.setExperienceLevel(currentLevel, nextLevelExp);
     }
 
     public void manageExperienceLevels() {
@@ -135,6 +157,7 @@ public class SchoolController {
     public SchoolModel getSchool(){
         return school;
     }
+
 
     private String getUserChoice(String[] correctChoices) {
         String userChoice = "";
