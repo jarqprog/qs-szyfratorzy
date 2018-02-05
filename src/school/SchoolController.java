@@ -11,14 +11,12 @@ public class SchoolController {
 
     private SchoolModel school;
     private SchoolView view;
-    private SchoolDAO dao;
     private ExperienceLevels experienceLevels;
     private boolean shouldExit = false;
 
     public SchoolController() {
         this.school = new SchoolModel();
         this.view = new SchoolView();
-        this.dao = new SchoolDAO();
     }
 
     public List<GroupModel> getGroups() {
@@ -27,6 +25,14 @@ public class SchoolController {
 
     public List<TeamModel> getTeams() {
         return school.getTeams();
+    }
+
+    public List<String> getGroupNames() {
+        return school.getGroupNames();
+    }
+
+    public List<String> getTeamNames() {
+        return school.getTeamNames();
     }
 
     public ExperienceLevels getExperienceLevels() {
