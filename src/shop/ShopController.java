@@ -41,15 +41,16 @@ public class ShopController {
             switch(userChoice){
                 case "1":
                     view.displayListOfArtifacts(shop.getStore());
+                    view.handlePause();
                     break;
                 case "2":
                     buyArtifact();
+                    view.handlePause();
                     break;
                 case "0":
                     isDone = true;
                     break;
             }
-            view.handlePause();
         }
     }
 
