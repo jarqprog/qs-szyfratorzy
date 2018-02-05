@@ -1,6 +1,5 @@
 package users;
 
-import application.DataTool;
 import item.ArtifactModel;
 import shop.*;
 
@@ -82,16 +81,10 @@ public class StudentController extends UserController{
         boolean isDone = false;
         while(! isDone){
 
-            String userChoice = "";
             String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
-            Boolean isChoiceReady = false;
-            while(! isChoiceReady){
-
-                view.clearScreen();
-                view.displayMenu();
-                userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
-            }
+            view.clearScreen();
+            view.displayMenu();
+            String userChoice = view.getMenuChoice(correctChoices);
 
             view.clearScreen();
             switch(userChoice){

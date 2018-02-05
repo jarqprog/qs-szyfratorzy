@@ -1,6 +1,5 @@
 package users;
 
-import application.DataTool;
 import item.ArtifactDAO;
 import item.ArtifactModel;
 import item.QuestDAO;
@@ -23,15 +22,10 @@ public class MentorController extends UserController{
     public void handleMainMenu(){
         boolean isDone = false;
         while(! isDone){
-            String userChoice = "";
             String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "0"};
-            Boolean isChoiceReady = false;
-            while(! isChoiceReady){
-                view.clearScreen();
-                view.displayMenu();
-                userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
-            }
+            view.clearScreen();
+            view.displayMenu();
+            String userChoice = view.getMenuChoice(correctChoices);
             view.clearScreen();
             switch(userChoice){
                 case "1":
@@ -122,19 +116,13 @@ public class MentorController extends UserController{
         }
     }
 
-
     private void handleArtifactEditMenu(ArtifactModel artifact){
         boolean isDone = false;
         while(! isDone){
-            String userChoice = "";
             String[] correctChoices = {"1", "2", "3", "4", "0"};
-            Boolean isChoiceReady = false;
-            while(! isChoiceReady){
-                view.clearScreen();
-                view.displayArtifactMenu();
-                userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
-            }
+            view.clearScreen();
+            view.displayArtifactMenu();
+            String userChoice = view.getMenuChoice(correctChoices);
             view.clearScreen();
             switch(userChoice){
                 case "1":
@@ -165,15 +153,10 @@ public class MentorController extends UserController{
     private void handleQuestEditMenu(QuestModel quest){
         boolean isDone = false;
         while(! isDone){
-            String userChoice = "";
             String[] correctChoices = {"1", "2", "3", "4", "0"};
-            Boolean isChoiceReady = false;
-            while(! isChoiceReady){
-                view.clearScreen();
-                view.displayQuestMenu();
-                userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
-            }
+            view.clearScreen();
+            view.displayQuestMenu();
+            String userChoice = view.getMenuChoice(correctChoices);
             view.clearScreen();
             switch(userChoice){
                 case "1":

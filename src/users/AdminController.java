@@ -2,10 +2,8 @@ package users;
 
 import java.util.List;
 
-import application.DataTool;
-import school.ExperienceLevels;
+import school.ExperienceLevelsController;
 import school.GroupModel;
-import school.SchoolController;
 
 public class AdminController extends UserController{
 
@@ -20,16 +18,11 @@ public class AdminController extends UserController{
     public void handleMainMenu(){
 
         boolean isDone = false;
-        while(! isDone){
-            String userChoice = "";
+        while(! isDone) {
             String[] correctChoices = {"1", "2", "3", "4", "5", "6", "0"};
-            Boolean isChoiceReady = false;
-            while(! isChoiceReady){
-                view.clearScreen();
-                view.displayMenu();
-                userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
-            }
+            view.clearScreen();
+            view.displayMenu();
+            String userChoice = view.getMenuChoice(correctChoices);
             view.clearScreen();
 
             switch(userChoice) {
@@ -138,7 +131,7 @@ public class AdminController extends UserController{
     }
 
     private void runExpLevelManager(){
-        SchoolController school = new SchoolController();
-        school.manageExperienceLevels();
+        ExperienceLevelsController controller = new ExperienceLevelsController();
+        controller.manageExperienceLevels();
     }
 }

@@ -4,8 +4,8 @@ import java.util.*;
 
 import application.Role;
 import item.ArtifactModel;
+import school.ExperienceLevelsController;
 import school.GroupModel;
-import school.SchoolController;
 import school.TeamModel;
 
 public class StudentModel extends UserModel {
@@ -108,7 +108,7 @@ public class StudentModel extends UserModel {
     }
 
     public String getExperienceLevel(){
-        new SchoolController().setStudentExperienceLevel(this);
+        new ExperienceLevelsController().setStudentExperienceLevel(this);
         return experienceLevel;
     }
 
