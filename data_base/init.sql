@@ -56,35 +56,74 @@ CREATE TABLE IF NOT EXISTS quests(
 CREATE TABLE IF NOT EXISTS teams_transactions(
   id integer PRIMARY KEY AUTOINCREMENT,
   team_id integer,
-  artefact_id integer,
+  artifact_id integer,
   date text,
   FOREIGN KEY (team_id) REFERENCES teams(id),
-  FOREIGN KEY (artefact_id) REFERENCES artifacts(id));
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id));
 
 CREATE TABLE IF NOT EXISTS students_transactions(
   id integer PRIMARY KEY AUTOINCREMENT,
   student_id integer,
-  artefact_id integer,
+  artifact_id integer,
   date text,
-  FOREIGN KEY (artefact_id) REFERENCES artifacts(id),
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
   FOREIGN KEY (student_id) REFERENCES students(id));
+
+CREATE TABLE IF NOT EXISTS experience_levels(
+  id integer PRIMARY KEY AUTOINCREMENT,
+  level_name text UNIQUE,
+  level_value integer);
 
 CREATE TABLE IF NOT EXISTS students_artifacts(
   id integer PRIMARY KEY AUTOINCREMENT,
   student_id integer,
-  artefact_id integer,
-  FOREIGN KEY (artefact_id) REFERENCES artifacts(id),
+  artifact_id integer,
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
   FOREIGN KEY (student_id) REFERENCES students(id));
 
 -- add data
 
   INSERT OR IGNORE INTO groups VALUES(1,'undefined');
   INSERT OR IGNORE INTO teams VALUES(1,'undefined');
+  INSERT OR IGNORE INTO groups VALUES(2,'A');
+  INSERT OR IGNORE INTO teams VALUES(2,'meduzy');
+  INSERT OR IGNORE INTO groups VALUES(3,'B');
+  INSERT OR IGNORE INTO teams VALUES(3,'koniki');
   INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
   INSERT OR IGNORE INTO admins VALUES(6,'Piotr','Gryzlo','piotr@cc.com','12321');
-  INSERT OR IGNORE INTO students VALUES(100,'Marcinek','Stasik','lolek@gmail.com','12321', 20, 30, 40, 1, 1);
-  INSERT OR IGNORE INTO mentors VALUES(1,'Jarek','Kucharczyk','jarek@gmail.com','12321', 1);
+  INSERT OR IGNORE INTO students VALUES(100,'Marcinek','Stasik','lolek@gmail.com','12321', 200000, 300, 40, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(101,'Jadzia','Piernik','jadzia@cc.com','12321', 2000, 101, 100, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(102,'Maciek','Jankowicz','maciek99@cc.com','12321', 20, 3000, 71, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(103,'Balbina','Karp','karpik007@cc.com','12321', 20, 0, 10, 3, 3);
+  INSERT OR IGNORE INTO students VALUES(104,'Alfred','Szlarski','pan.samochodzik@cc.com','12321', 200, 3000, 40, 3, 3);
+  INSERT OR IGNORE INTO students VALUES(105,'Jakub','Wedrowycz','bimbrownik@gmail.com','12321', 20, 40000, 100, 3, 3);
+  INSERT OR IGNORE INTO mentors VALUES(10,'Jarek','Kucharczyk','jarek@gmail.com','12321', 2);
+  INSERT OR IGNORE INTO mentors VALUES(11,'Dominik','Strazak','pogromca@cc.com','12321', 3);
+  INSERT OR IGNORE INTO mentors VALUES(12,'Konrad','Mazina','kondzio999999@cc.com','12321', 3);
 
+  INSERT OR IGNORE INTO quests VALUES(1,'Exploring a dungeon','Q','Finishing a Teamwork week', 100);
+  INSERT OR IGNORE INTO quests VALUES(2,'Solving the magic puzzle','Q','Finishing an SI assignment', 100);
+  INSERT OR IGNORE INTO quests VALUES(3,'Slaying a dragon','Q','Passing a Checkpoint in the first attempt', 500);
+  INSERT OR IGNORE INTO quests VALUES(4,'Spot trap','Q','Spot a major mistake in the assignment', 50);
+  INSERT OR IGNORE INTO quests VALUES(5,'Taming a pet','Q','Doing a demo about a pet project', 100);
+  INSERT OR IGNORE INTO quests VALUES(6,'Recruiting some n00bs','Q','Taking part in the student screening process', 100);
+  INSERT OR IGNORE INTO quests VALUES(7,'Forging weapons','Q','Organizing a workshop for other students', 400);
+  INSERT OR IGNORE INTO quests VALUES(8,'Master the mornings','Q','Attend 1 months without being late', 300);
+  INSERT OR IGNORE INTO quests VALUES(9,'Fast as an unicorn','Q','deliver 4 consecutive SI week assignments on time', 500);
+  INSERT OR IGNORE INTO quests VALUES(10,'Achiever','Q','set up a SMART goal accepted by a mentor, then achieve it', 1000);
+  INSERT OR IGNORE INTO quests VALUES(11,'Fortune','Q','students choose the best project of the week. Selected team scores', 500);
+  INSERT OR IGNORE INTO quests VALUES(12,'Creating an enchanteds scroll','Q','Creating extra material for the current TW/SI topic (should be revised by mentors)', 500);
+  INSERT OR IGNORE INTO quests VALUES(13,'Enter the arena','Q','Do a presentation on a meet-up', 500);
+
+  INSERT OR IGNORE INTO artifacts VALUES(1,'Combat training','S','Private mentoring', 50);
+  INSERT OR IGNORE INTO artifacts VALUES(2,'Sanctuary','S','You can spend a day in home office', 1000);
+  INSERT OR IGNORE INTO artifacts VALUES(3,'Time Travel','S','extend SI week assignment deadline by one day', 750);
+  INSERT OR IGNORE INTO artifacts VALUES(4,'Circle of Sorcery','S','60 min workshop by a mentor(s) of the chosen topic', 6000);
+  INSERT OR IGNORE INTO artifacts VALUES(5,'Summon Code Elemental','S','mentor joins a students team for a one hour', 2500);
+  INSERT OR IGNORE INTO artifacts VALUES(6,'Tome of knowledge','S','Extra material for the current topic', 1500);
+  INSERT OR IGNORE INTO artifacts VALUES(7,'Transform mentors','S','All mentors should dress up as pirates (or just funny) for the day', 5000);
+  INSERT OR IGNORE INTO artifacts VALUES(8,'Teleport','S','The whole course goes to an off-school program instead for a day', 30000);
+  INSERT OR IGNORE INTO artifacts VALUES(9,'Coffe','S','brain buff', 5);
 
 DELETE FROM sqlite_sequence;
 

@@ -56,7 +56,7 @@ public abstract class DAO {
         return loadedTables;
     }
 
-    public List<String> getLoadedStrings(){
+    protected List<String> getLoadedStrings(){
         return loadedStrings;
     }
 

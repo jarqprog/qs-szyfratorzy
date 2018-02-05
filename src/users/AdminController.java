@@ -2,6 +2,7 @@ package users;
 
 import java.util.List;
 
+import school.ExperienceLevelsController;
 import school.GroupModel;
 
 public class AdminController extends UserController{
@@ -17,43 +18,41 @@ public class AdminController extends UserController{
     public void handleMainMenu(){
 
         boolean isDone = false;
-        while(! isDone){
-            String userChoice = "";
-            String[] correctChoices = {"1", "2", "3", "4", "5", "0"};
-            Boolean isChoiceReady = false;
-            while(! isChoiceReady){
-                view.clearScreen();
-                view.displayMenu();
-                userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
-            }
+        while(! isDone) {
+            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "0"};
+            view.clearScreen();
+            view.displayMenu();
+            String userChoice = view.getMenuChoice(correctChoices);
             view.clearScreen();
 
             switch(userChoice) {
                 case "1":
-                   createMentor();
-                   break;
+                    showProfile(admin);
+                    break;
                 case "2":
-                   editMentor();
-                   break;
+                    createMentor();
+                    break;
                 case "3":
-                   displayMentorProfile();
-                   break;
+                    editMentor();
+                    break;
                 case "4":
-                    createGroup();
+                    displayMentorProfile();
                     break;
                 case "5":
-                    createNewLevelOfExperience();
+                    createGroup();
+                    break;
+                case "6":
+                    runExpLevelManager();
                     break;
                 case "0":
-                   isDone = true;
-                   break;
+                    isDone = true;
+                    break;
             }
             view.handlePause();
         }
     }
 
-    public void createMentor(){
+    private void createMentor(){
         String firstName = view.getUserInput("Enter first name: ");
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
@@ -62,9 +61,9 @@ public class AdminController extends UserController{
         view.displayMessage("Mentor created: " + mentor.toString());
     }
 
-    public void editMentor() {
+    private void editMentor() {
         List<MentorModel> mentors = getMentors();
-        view.showAllMentors(prepareMentorsToDisplay(mentors));
+        view.displayUsers(mentors);
         String id = view.getUserInput("Enter ID of mentor: ");
         for (MentorModel mentor : mentors) {
             if (id.equals(Integer.toString(mentor.getId()))) {
@@ -101,7 +100,8 @@ public class AdminController extends UserController{
                             break;
                     }
                     if(! isFinished){
-                        view.displayMessage("Edited: " + mentor.toString());
+                        view.displayMessage("Edited:");
+                        view.displayUserWithDetails(mentor);
                         view.handlePause();
                     }
                 }
@@ -109,28 +109,29 @@ public class AdminController extends UserController{
         }
     }
 
-    public void displayMentorProfile(){
+    private void displayMentorProfile(){
         List<MentorModel> mentors = getMentors();
-        view.showAllMentors(prepareMentorsToDisplay(mentors));
-        String id = view.getUserInput("Enter ID of mentor: ");
+        view.displayMessage("Mentors:\n");
+        view.displayUsers(mentors);
+        String id = view.getUserInput("Select mentor by id: ");
         for (MentorModel mentor : mentors) {
             if (id.equals(Integer.toString(mentor.getId()))) {
-                String mentorToDisplay = mentor.toString();
                 view.clearScreen();
-                view.displayMessage("Mentor's profile:");
-                view.displayMessage(mentorToDisplay);
+                view.displayMessage("Mentor's profile:\n");
+                view.displayUserWithDetails(mentor);
             }
         }
     }
 
-    public void createGroup(){
+    private void createGroup(){
         String groupName = view.getUserInput("Enter group name: ");
         GroupModel group = new GroupModel(groupName);
         view.clearScreen();
         view.displayMessage("Group created: " + group);
     }
 
-    public void createNewLevelOfExperience(){
-        executeNotImplementedInfo();
+    private void runExpLevelManager(){
+        ExperienceLevelsController controller = new ExperienceLevelsController();
+        controller.manageExperienceLevels();
     }
 }

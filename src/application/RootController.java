@@ -19,7 +19,7 @@ public class RootController{
     }
 
     public void runApplication(){
-        RootView.clearScreen();
+        view.clearScreen();
         prepareDatabase();
         boolean isDone = false;
         while (! isDone){
@@ -87,7 +87,8 @@ public class RootController{
 
     private void handleOutro(){
         IntroOutroDAO ioDao = new IntroOutroDAO();
-        List<String> outroData = ioDao.getRawDataFromFile("DataFiles/outro.txt");
+        String filePath = FilePath.OUTRO.getPath();
+        List<String> outroData = ioDao.getRawDataFromFile(filePath);
         view.displayOutro(outroData);
     }
 

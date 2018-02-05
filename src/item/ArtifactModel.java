@@ -10,8 +10,7 @@ public class ArtifactModel extends ItemModel{
         this.price = price;
         this.genre = "artifact";
         this.type = 'B';
-        ArtifactDAO dao = new ArtifactDAO();
-        dao.saveObject(this);
+        this.id = saveNewObjectGetId();
     }
 
     public ArtifactModel(int id, char type, String name, String description, int price){
@@ -28,9 +27,20 @@ public class ArtifactModel extends ItemModel{
 
     public void setPrice(int newPrice){
         price = newPrice;
+        saveObject();
     }
 
     public String toString(){
         return super.toString() + String.format(" price: %s", getPrice());
+    }
+
+    public int saveNewObjectGetId(){
+        ArtifactDAO dao = new ArtifactDAO();
+        return dao.saveObjectAndGetId(this);
+    }
+
+    public void saveObject(){
+        ArtifactDAO dao = new ArtifactDAO();
+        dao.saveObject(this);
     }
 }

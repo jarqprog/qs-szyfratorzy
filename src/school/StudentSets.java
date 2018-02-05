@@ -1,9 +1,8 @@
 package school;
 
 import users.StudentModel;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public abstract class StudentSets {
 
@@ -11,16 +10,16 @@ public abstract class StudentSets {
     protected List<StudentModel> students;
     protected int id;
 
-    public StudentSets(int id, String name, List<StudentModel> students) {
+    public StudentSets(int id, String name) {
         this(name);
         this.id = id;
-        this.students = students;
+        this.students = new ArrayList<>();
     }
 
     public StudentSets(String name) {
         this.id = -1;
         this.name = name;
-        this.students = new ArrayList<StudentModel>();
+        this.students = new ArrayList<>();
     }
 
     public int getId() {
@@ -33,11 +32,19 @@ public abstract class StudentSets {
 
     public void setName(String name){
         this.name = name;
+        saveObject();
     }
 
     public List<StudentModel> getStudents(){
-        return  students;
+        setStudents();
+        return students;
     }
+
+    public void setStudents(List<StudentModel> students) {
+        this.students = students;
+    }
+
+    public abstract void setStudents();
 
     public void addStudent(StudentModel student){
         students.add(student);
@@ -48,9 +55,10 @@ public abstract class StudentSets {
     }
 
     public String toString(){
-
         return String.format("Id: %s, name: %s, number of students: %s",
-                this.id, this.name, students.size());
+                this.id, this.name, getStudents().size());
     }
+
+    public abstract void saveObject();
 
 }

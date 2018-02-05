@@ -10,8 +10,7 @@ public class QuestModel extends ItemModel {
         this.reward = reward;
         this.genre = "quest";
         this.type = 'R';
-        QuestDAO dao = new QuestDAO();
-        dao.saveObject(this);
+        this.id = saveNewObjectGetId();
     }
 
     public QuestModel(int id, char type, String name, String description, int reward){
@@ -32,5 +31,15 @@ public class QuestModel extends ItemModel {
 
     public String toString(){
         return super.toString() + String.format(" reward: %s", getReward());
+    }
+
+    public int saveNewObjectGetId(){
+        QuestDAO dao = new QuestDAO();
+        return dao.saveObjectAndGetId(this);
+    }
+
+    public void saveObject(){
+        QuestDAO dao = new QuestDAO();
+        dao.saveObject(this);
     }
 }

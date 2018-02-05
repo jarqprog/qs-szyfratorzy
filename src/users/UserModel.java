@@ -1,5 +1,7 @@
 package users;
 
+import application.DataTool;
+
 public abstract class UserModel {
     protected int id;
     protected String firstName;
@@ -18,11 +20,9 @@ public abstract class UserModel {
         this.id = -1;
         this.firstName = firstName;
         this.lastName = lastName;
-        email = firstName.toLowerCase() + lastName.toLowerCase() + "@cc.com";
+        email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@cc.com";
         this.password = password;
     }
-
-
 
     public int getId()
     {
@@ -34,9 +34,9 @@ public abstract class UserModel {
         return firstName;
     }
 
-    public void setFirstName(String firstName)
-    {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
+        saveObject();
     }
 
     public String getLastName()
@@ -44,9 +44,13 @@ public abstract class UserModel {
         return lastName;
     }
 
-    public void setLastName(String lastName)
-    {
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    public void setLastName(String lastName) {
         this.lastName = lastName;
+        saveObject();
     }
 
     public String getEmail()
@@ -54,9 +58,9 @@ public abstract class UserModel {
         return email;
     }
 
-    public void setEmail(String email)
-    {
+    public void setEmail(String email) {
         this.email = email;
+        saveObject();
     }
 
     public String getPassword()
@@ -64,9 +68,9 @@ public abstract class UserModel {
         return password;
     }
 
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         this.password = password;
+        saveObject();
     }
 
     public String getRole()
@@ -83,4 +87,13 @@ public abstract class UserModel {
         return String.format("Role: %s, Id: %s, First name: %s, Last name: %s, email: %s",
                             this.role, this.id, this.firstName, this.lastName, this.email);
     }
+
+    public String getFullDataToString() {
+        String sign = "-";
+        int signMultiplier = 100;
+        return String.format(" %s, role: %s, id: %s, email: %s\n %s",
+                getFullName(), role, id, getEmail(), DataTool.getMultipliedString(sign, signMultiplier));
+    }
+
+    public abstract void saveObject();
 }
