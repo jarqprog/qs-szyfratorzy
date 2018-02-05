@@ -101,8 +101,16 @@ public class ExperienceLevelsController {
         levelName = view.getUserInput(" Type:\n\n - new level name to add level\n" +
                 " - or existing level name to modify level\n" +
                 " - or press '0' to quit process ---> ");
-        if(! levelName.equals("0")){
-            int levelValue = view.getNotNegativeNumberFromUser(" - type required experience level ---> ");
+        if(! levelName.equals("0")) {
+            int levelValue = 0;
+            boolean shouldContinue = true;
+            while(shouldContinue) {
+                levelValue = view.getNotNegativeNumberFromUser(" - type required experience level ---> ");
+                shouldContinue = experienceLevels.containsGivenValue(levelValue);
+                if(shouldContinue){
+                    view.displayMessage("   - Chosen value already exists! Type new value..");
+                }
+            }
             experienceLevels.addLevel(levelName, levelValue);
             view.clearScreen();
             view.displayMessage("Added:");

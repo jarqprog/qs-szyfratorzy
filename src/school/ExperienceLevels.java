@@ -1,7 +1,6 @@
 package school;
 
 import application.DataTool;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -9,13 +8,8 @@ public class ExperienceLevels {
 
     private Map<String, Integer> levels;
 
-    public ExperienceLevels(Map<String, Integer> levels){
-        this.levels = levels;
-        saveObject();
-    }
-
     public ExperienceLevels(){
-        this.levels = new HashMap<>();
+        this.levels = getUpdatedLevels();
         setLevels();
     }
 
@@ -47,9 +41,11 @@ public class ExperienceLevels {
         return levels;
     }
 
-    public void addLevel(String levelName, Integer levelValue){
-        this.levels.put(levelName, levelValue);
-        saveObject();
+    public void addLevel(String levelName, Integer levelValue) {
+        if(! levels.containsValue(levelValue)) {
+            this.levels.put(levelName, levelValue);
+            saveObject();
+        }
     }
 
     public int getValue(String levelName){
@@ -57,11 +53,16 @@ public class ExperienceLevels {
     }
 
     public boolean containsGivenLevel(String level){
-        return this.levels.containsKey(level);
+        return levels.containsKey(level);
+    }
+
+    public boolean containsGivenValue(Integer value){
+        return levels.containsValue(value);
     }
 
     public void removeLevel(String levelName){
         this.levels.remove (levelName, this.levels.get(levelName));
+        saveObject();
     }
 
     public String toString(){
@@ -83,6 +84,9 @@ public class ExperienceLevels {
     }
 
     private void saveObject(){
+        if(! levels.containsValue(0)){
+            levels.put("basic", 0);  // exp levels always should have level with value 0
+        }
         SchoolDAO dao = new SchoolDAO();
         dao.saveExperienceLevels(this);
     }
