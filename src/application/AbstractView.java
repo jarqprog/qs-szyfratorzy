@@ -126,4 +126,14 @@ public abstract class AbstractView {
         }
         return input;
     }
+
+    public String getMenuChoice(String[] correctChoices) {
+        String menuChoice = "";
+        Boolean isChoiceReady = false;
+        while (!isChoiceReady) {
+            menuChoice = getUserInput("Select an option: ");
+            isChoiceReady = DataTool.checkIfElementInArray(correctChoices, menuChoice);
+        }
+        return menuChoice;
+    }
 }
