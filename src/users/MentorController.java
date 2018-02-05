@@ -4,8 +4,11 @@ import item.ArtifactDAO;
 import item.ArtifactModel;
 import item.QuestDAO;
 import item.QuestModel;
+import school.SchoolController;
 
 import java.util.List;
+
+import application.CreatableDAO;
 
 public class MentorController extends UserController{
     MentorView view;
@@ -22,7 +25,7 @@ public class MentorController extends UserController{
     public void handleMainMenu(){
         boolean isDone = false;
         while(! isDone){
-            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "0"};
             view.clearScreen();
             view.displayMenu();
             String userChoice = view.getMenuChoice(correctChoices);
@@ -35,27 +38,32 @@ public class MentorController extends UserController{
                     createStudent();
                     break;
                 case "3":
-                    createQuest();
+                    assignStudentToGroup();
                     break;
                 case "4":
-                    editQuest();
                     break;
                 case "5":
-                    createArtifact();
+                    createQuest();
                     break;
                 case "6":
-                    editArtifact();
+                    editQuest();
                     break;
                 case "7":
-                    markStudentQuest();
+                    createArtifact();
                     break;
                 case "8":
-                    displayStudentWallet();
+                    editArtifact();
                     break;
                 case "9":
-                    markStudentArtifacts();
+                    markStudentQuest();
                     break;
                 case "10":
+                    displayStudentWallet();
+                    break;
+                case "11":
+                    markStudentArtifacts();
+                    break;
+                case "12":
                     showStudentsFromMyGroup();
                     break;
                 case "0":
@@ -200,5 +208,29 @@ public class MentorController extends UserController{
         List<StudentModel> students = mentor.getGroup().getStudents();
         view.displayMessage("Your students:\n");
         view.displayUsersWithDetails(students);
+    }
+
+    private void assignStudentToGroup(){
+        CreatableDAO dao = new StudentDAO();
+        List<StudentModel> students = dao.getAllObjects();
+        StudentModel student = pickStudentFromCollection(students);
+        if (student != null){
+            new SchoolController().assignStudentToGroup(student);
+            view.displayMessage("Done");
+        } else {
+            view.displayMessage("Student does not exist...");
+        }
+        
+    }
+
+    private StudentModel pickStudentFromCollection(List<StudentModel> students){
+        view.displayObjects(students);
+        String chosenStudent = view.getUserInput("Choose student by ID: ");
+        for (StudentModel student : students){
+            if (chosenStudent.equals(String.valueOf(student.getId()))){
+                return student;
+            }
+        }
+        return null;
     }
 }
