@@ -2,6 +2,7 @@ package application;
 
 import java.util.Scanner;
 import java.io.IOException;
+import java.util.List;
 
 public abstract class AbstractView {
 
@@ -19,8 +20,14 @@ public abstract class AbstractView {
         System.out.println(message);
     }
 
-    public void displayObject(Object object) {
+    public <T extends Object> void displayObject(T object) {
         System.out.println(object.toString());
+    }
+
+    public <T extends Object> void displayObjects(List<T> objects) {
+        for (T object : objects){
+            displayObject(object);
+        }
     }
 
     public void displayHeaderAndElementsOfCollection(String[] collection, String header) {
