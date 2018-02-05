@@ -3,10 +3,7 @@ package school;
 import application.DbManagerDAO;
 import application.Table;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SchoolDAO {
 
@@ -50,5 +47,16 @@ public class SchoolDAO {
                 index++;
             }
         }
+    }
+
+    List<String> getStudentsSetsNames(String studentSetTable) {
+        List<String> names = new ArrayList<>();
+        String query = "SELECT name FROM " + studentSetTable + ";";
+        List<String[]> data = dao.getData(query);
+        int NAME_INDEX = 0;
+        for(String[] table : data){
+            names.add(table[NAME_INDEX]);
+        }
+        return names;
     }
 }
