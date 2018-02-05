@@ -92,13 +92,12 @@ public class UsersDAO extends DatabaseDAO implements LogableDAO{
         String password = table[PASSWORD_INDEX];
         int wallet = 100;
         int experience = 1000;
-        float attendance = 50;
         GroupModel group = new GroupModel("undefined");
         TeamModel team = new TeamModel("undefined");
         List<ArtifactModel> inventory = new ArrayList<>();
 
         return new StudentModel(id, fname, lname, email, password, wallet,
-                                experience, attendance, team, group, inventory);
+                                experience, team, group, inventory);
     }
 
     public List<AdminModel> getAdminsFromFile(){
