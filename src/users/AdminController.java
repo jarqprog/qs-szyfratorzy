@@ -92,7 +92,7 @@ public class AdminController extends UserController{
                             mentor.setEmail(email);
                             break;
                         case "5" :
-                            assignMentorToGroup(mentor);
+                            new SchoolController().assignMentorToGroup(mentor);
                             break;
                         case "0":
                             MentorDAO dao = new MentorDAO();
@@ -135,27 +135,5 @@ public class AdminController extends UserController{
     private void runExpLevelManager(){
         ExperienceLevelsController controller = new ExperienceLevelsController();
         controller.manageExperienceLevels();
-    }
-
-    private void assignMentorToGroup(MentorModel mentor){
-        SchoolController school = new SchoolController();
-        List<GroupModel> groups = school.getGroups();
-        boolean isMentorAssigned = false;
-        String chosenGroupName = "";
-        while (!isMentorAssigned && !chosenGroupName.equals("0")){
-            view.displayObjects(groups);
-            chosenGroupName = view.getUserInput("\nChoose group by name (or type 0 to exit): ");
-            for (GroupModel group : groups){
-                if (chosenGroupName.equals(group.getName())){
-                    mentor.setGroup(group);
-                    isMentorAssigned = true;
-                    break;
-                }
-            }
-            if (!isMentorAssigned && !chosenGroupName.equals("0")){
-                view.displayMessage("   - There is no such group...");
-            }
-        }
-        
     }
 }
