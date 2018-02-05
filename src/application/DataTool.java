@@ -21,7 +21,6 @@ public class DataTool {
         return map.entrySet().stream().sorted(Map.Entry.comparingByValue())
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                 (oldValue, newValue) -> oldValue, LinkedHashMap::new));
-
     }
 
     public static <K, V> K getKeyByValue(Map<K, V> map, V value) {
