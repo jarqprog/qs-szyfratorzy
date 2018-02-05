@@ -35,4 +35,11 @@ public class DataTool {
     public static String getMultipliedString(String string, int multiplier){
         return new String(new char[multiplier]).replace("\0", string);
     }
+
+    public static String getShortText(int cutIndex, String text) {
+        if (text.length() > cutIndex) {
+            return text.substring(0, cutIndex) + "...";
+        }
+        return text;
+    }
 }
