@@ -70,9 +70,9 @@ public class ExperienceLevels {
 
         StringBuilder sb = new StringBuilder();
         sb.append("\n  Experience levels:\n\n\tlevel: required experience\n");
-
-        int lineMultiplier = 30;
-        String line = "\t" + new String(new char[lineMultiplier]).replace("\0", "-") + "\n";
+        int lineMultiplier = 45;
+        String sign = "-";
+        String line = DataTool.getMultipliedString(sign, lineMultiplier) + "\n";
         sb.append(line);
         for (Entry<String, Integer> entry : sorted.entrySet()) {
             String key = entry.getKey();
