@@ -16,42 +16,42 @@ public class StudentController extends UserController{
         updateInventory();
     }
 
-
-
-    public void showMyWallet(){
-        view.displayWallet(student.getWallet());
+    private void showMyWallet(){
+        view.displayMessage("Your wallet: " + String.valueOf(student.getWallet()));
     }
 
-    public void showMyGroupName(){
-        view.displayMessage(student.getGroup().getName());
+    private void showMyGroup(){
+        view.displayMessage("Your Group:\n");
+        view.displayObject(student.getGroup());
     }
 
-    public void showMyTeamName(){
-        view.displayMessage(student.getTeam().getName());
+    private void showMyTeam(){
+        view.displayMessage("Your Team:\n");
+        view.displayObject(student.getTeam());
     }
 
-    public void showLevelOfExperience(){
-        view.displayLevelOfExperience(student.getExperience());
+    private void showLevelOfExperience(){
+        view.displayMessage("Your experience level: " + student.getExperienceLevel());
     }
 
-    public void showMyInventory() { view.displayInventory(student.getInventory()); }
+    private void showMyInventory() { view.displayInventory(student.getInventory()); }
 
     public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
 
-    public void updateInventory() {
+    private void updateInventory() {
         shopDAO = new ShopDAO();
         List<String []> artifacts =  shopDAO.findStudentArtifacts(student.getId());
         student.setInventory(shopDAO.loadInventory(artifacts));
         shopDAO.saveInventory(student.getId(), student.getInventory());
     }
 
-    public void executeShopping() {
+    private void executeShopping() {
         ShopModel shop = new ShopModel();
         ShopController controller = new ShopController(shop, student);
         controller.executeShoppingMenu();
         }
 
-    public void useArtifacts() {
+    private void useArtifacts() {
         showMyInventory();
         if(student.getInventory().isEmpty()){
             view.displayMessage("Sorry, You have nothing to use!");
@@ -71,44 +71,50 @@ public class StudentController extends UserController{
         }
     }
 
-    public void handleMainMenu(){
+    private void showStudentsFromMyTeam() {
+        List<StudentModel> students = student.getTeam().getStudents();
+        view.displayMessage("Your teammates:\n");
+        view.displayUsersWithDetails(students);
+    }
+
+    public void handleMainMenu() {
         boolean isDone = false;
         while(! isDone){
 
-            String userChoice = "";
-            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "0"};
-            Boolean isChoiceReady = false;
-            while(! isChoiceReady){
-
-                view.clearScreen();
-                view.displayMenu();
-                userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
-            }
+            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+            view.clearScreen();
+            view.displayMenu();
+            String userChoice = view.getMenuChoice(correctChoices);
 
             view.clearScreen();
             switch(userChoice){
                 case "1":
-                    showMyWallet();
+                    showProfile(student);
                     break;
                 case "2":
-                    showLevelOfExperience();
+                    showMyWallet();
                     break;
                 case "3":
+                    showLevelOfExperience();
+                    break;
+                case "4":
                     executeShopping();
                     updateInventory();
                     break;
-                case "4":
+                case "5":
                     showMyInventory();
                     break;
-                case "5":
-                    showMyGroupName();
-                    break;
                 case "6":
-                    showMyTeamName();
+                    showMyGroup();
                     break;
                 case "7":
+                    showMyTeam();
+                    break;
+                case "8":
                     useArtifacts();
+                    break;
+                case "9":
+                    showStudentsFromMyTeam();
                     break;
                 case "0":
                     isDone = true;

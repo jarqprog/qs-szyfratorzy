@@ -11,19 +11,15 @@ public abstract class  UserController{
 
     public abstract void handleMainMenu();
 
-    public void showUsers(String[] users){
+    protected void showUsers(String[] users){
         UsersView view = new UsersView();
         view.displayUsers(users);
 
     }
 
-    protected Boolean checkIfElementInArray(String[] array, String element) {
-        for(String item : array){
-            if(item.equals(element)){
-                return true;
-            }
-        }
-        return false;
+    protected <T extends UserModel> void showProfile(T user){
+        UsersView view = new UsersView();
+        view.displayUserWithDetails(user);
     }
 
     protected List<MentorModel> getMentors(){
@@ -46,33 +42,13 @@ public abstract class  UserController{
         view.displayMessage("Not implemented yet");
     }
 
-    protected String[] prepareMentorsToDisplay(List<MentorModel> mentors) {
-        String[] mentorsToDisplay = new String[mentors.size()];
+    protected <T> String[] prepareObjectsToDisplay(List<T> objects) {
+        String[] objectsToDisplay = new String[objects.size()];
         int index = 0;
-        for(MentorModel mentor : mentors){
-            mentorsToDisplay[index] = mentor.toString();
+        for(T object : objects){
+            objectsToDisplay[index] = object.toString();
             index ++;
         }
-        return mentorsToDisplay;
-    }
-
-    protected String[] prepareArtifactsToDisplay(List<ArtifactModel> artifacts){
-        String[] artifactsToDisplay = new String[artifacts.size()];
-        int index = 0;
-        for(ArtifactModel artifact : artifacts){
-            artifactsToDisplay[index] = artifact.toString();
-            index ++;
-        }
-        return artifactsToDisplay;
-    }
-
-    protected String[] prepareQuestsToDisplay(List<QuestModel> quests){
-        String[] questsToDisplay = new String[quests.size()];
-        int index = 0;
-        for(QuestModel quest : quests){
-            questsToDisplay[index] = quest.toString();
-            index ++;
-        }
-        return questsToDisplay;
+        return objectsToDisplay;
     }
 }

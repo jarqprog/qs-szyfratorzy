@@ -41,6 +41,11 @@ public class MentorModel extends UserModel {
         return super.toString()+String.format(" Group name: %s", group.getName());
      }
 
+    public String getFullDataToString() {
+        return super.getFullDataToString() + String.format(
+                " \n\t -group: %s\n", getGroup());
+    }
+
     public void saveObject(){
         MentorDAO dao = new MentorDAO();
         dao.saveObject(this);

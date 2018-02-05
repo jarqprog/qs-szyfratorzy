@@ -2,24 +2,24 @@ package school;
 
 import users.StudentModel;
 import java.util.List;
-import application.Box;
+import java.util.ArrayList;
 
 public abstract class StudentSets {
 
     protected String name;
-    protected Box<StudentModel> students;
+    protected List<StudentModel> students;
     protected int id;
 
     public StudentSets(int id, String name) {
         this(name);
         this.id = id;
-        this.students = new Box<>();
+        this.students = new ArrayList<>();
     }
 
     public StudentSets(String name) {
         this.id = -1;
         this.name = name;
-        this.students = new Box<>();
+        this.students = new ArrayList<>();
     }
 
     public int getId() {
@@ -41,7 +41,7 @@ public abstract class StudentSets {
     }
 
     public void setStudents(List<StudentModel> students) {
-        this.students.set(students);
+        this.students = students;
     }
 
     public abstract void setStudents();

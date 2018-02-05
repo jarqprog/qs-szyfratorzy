@@ -22,50 +22,51 @@ public class MentorController extends UserController{
     public void handleMainMenu(){
         boolean isDone = false;
         while(! isDone){
-            String userChoice = "";
-            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "0"};
-            Boolean isChoiceReady = false;
-            while(! isChoiceReady){
-                view.clearScreen();
-                view.displayMenu();
-                userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
-            }
+            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "0"};
+            view.clearScreen();
+            view.displayMenu();
+            String userChoice = view.getMenuChoice(correctChoices);
             view.clearScreen();
             switch(userChoice){
                 case "1":
-                   createStudent();
-                   break;
+                    showProfile(mentor);
+                    break;
                 case "2":
-                   createQuest();
-                   break;
+                    createStudent();
+                    break;
                 case "3":
-                   editQuest();
-                   break;
+                    createQuest();
+                    break;
                 case "4":
-                   createArtifact();
-                   break;
+                    editQuest();
+                    break;
                 case "5":
-                   editArtifact();
-                   break;
+                    createArtifact();
+                    break;
                 case "6":
-                   markStudentQuest();
-                   break;
+                    editArtifact();
+                    break;
                 case "7":
-                   displayStudentWallet();
-                   break;
+                    markStudentQuest();
+                    break;
                 case "8":
-                   markStudentArtifacts();
-                   break;
+                    displayStudentWallet();
+                    break;
+                case "9":
+                    markStudentArtifacts();
+                    break;
+                case "10":
+                    showStudentsFromMyGroup();
+                    break;
                 case "0":
-                   isDone = true;
-                   break;
+                    isDone = true;
+                    break;
             }
             view.handlePause();
         }
     }
 
-    public void createQuest() {
+    private void createQuest() {
         String name = view.getUserInput("Enter quest name: ");
         String description = view.getUserInput("Enter quest description: ");
         int reward = view.getValue();
@@ -73,10 +74,10 @@ public class MentorController extends UserController{
         view.displayMessage("You've created something new:\n" + quest);
     }
 
-    public void editQuest() {
+    private void editQuest() {
 
         List<QuestModel> quests = getQuests();
-        view.displayElementsOfCollection(prepareQuestsToDisplay(quests));
+        view.displayElementsOfCollection(prepareObjectsToDisplay(quests));
         String input = view.getUserInput("Enter id of quest which you would like to edit: ");
         for(QuestModel quest : quests) {
             if(String.valueOf(quest.getId()).equals(input)) {
@@ -87,7 +88,7 @@ public class MentorController extends UserController{
 
     }
 
-    public void createStudent(){
+    private void createStudent(){
         String firstName = view.getUserInput("Enter first name: ");
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
@@ -95,7 +96,7 @@ public class MentorController extends UserController{
         view.displayMessage("Student created successfully! \n" + newStudent.toString());
     }
 
-    public void createArtifact(){
+    private void createArtifact(){
         String name = view.getUserInput("Enter artifact name: ");
         String description = view.getUserInput("Enter artifact description: ");
         int price = view.getValue();
@@ -103,9 +104,9 @@ public class MentorController extends UserController{
         view.displayMessage("You've created something new:\n" + artifact);
         }
 
-    public void editArtifact(){
+    private void editArtifact(){
         List<ArtifactModel> artifacts = getArtifacts();
-        view.displayElementsOfCollection(prepareArtifactsToDisplay(artifacts));
+        view.displayElementsOfCollection(prepareObjectsToDisplay(artifacts));
         String input = view.getUserInput("Enter id of artifact which you would like to edit: ");
         for(ArtifactModel artifact : artifacts) {
             if(String.valueOf(artifact.getId()).equals(input)) {
@@ -115,19 +116,13 @@ public class MentorController extends UserController{
         }
     }
 
-
     private void handleArtifactEditMenu(ArtifactModel artifact){
         boolean isDone = false;
         while(! isDone){
-            String userChoice = "";
             String[] correctChoices = {"1", "2", "3", "4", "0"};
-            Boolean isChoiceReady = false;
-            while(! isChoiceReady){
-                view.clearScreen();
-                view.displayArtifactMenu();
-                userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
-            }
+            view.clearScreen();
+            view.displayArtifactMenu();
+            String userChoice = view.getMenuChoice(correctChoices);
             view.clearScreen();
             switch(userChoice){
                 case "1":
@@ -158,15 +153,10 @@ public class MentorController extends UserController{
     private void handleQuestEditMenu(QuestModel quest){
         boolean isDone = false;
         while(! isDone){
-            String userChoice = "";
             String[] correctChoices = {"1", "2", "3", "4", "0"};
-            Boolean isChoiceReady = false;
-            while(! isChoiceReady){
-                view.clearScreen();
-                view.displayQuestMenu();
-                userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
-            }
+            view.clearScreen();
+            view.displayQuestMenu();
+            String userChoice = view.getMenuChoice(correctChoices);
             view.clearScreen();
             switch(userChoice){
                 case "1":
@@ -194,15 +184,21 @@ public class MentorController extends UserController{
         }
     }
 
-    public void markStudentQuest() {
+    private void markStudentQuest() {
         executeNotImplementedInfo();
     }
 
-    public void displayStudentWallet() {
+    private void displayStudentWallet() {
         executeNotImplementedInfo();
     }
 
-    public void markStudentArtifacts() {
+    private void markStudentArtifacts() {
         executeNotImplementedInfo();
+    }
+
+    private void showStudentsFromMyGroup() {
+        List<StudentModel> students = mentor.getGroup().getStudents();
+        view.displayMessage("Your students:\n");
+        view.displayUsersWithDetails(students);
     }
 }

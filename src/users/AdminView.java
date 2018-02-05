@@ -1,16 +1,15 @@
 package users;
 
-import application.AbstractView;
-
-public class AdminView extends AbstractView {
+public class AdminView extends UsersView {
     public void displayMenu() {
-        String[] options = {"      *** Admin's Menu ***     ",
-                            "[1] create mentor",
-                            "[2] edit mentor",
-                            "[3] display mentor",
-                            "[4] create group",
-                            "[5] create level of experience",
-                            "[0] exit"};
+        String[] options = {"      *** Admin's Menu ***     \n",
+                            "[1] display profile",
+                            "[2] create mentor",
+                            "[3] edit mentor",
+                            "[4] display mentor",
+                            "[5] create group",
+                            "[6] manage experience levels",
+                            "[0] exit\n"};
 
         for(String element : options) {
             System.out.println(element);
@@ -18,24 +17,16 @@ public class AdminView extends AbstractView {
     }
 
     public void displayEditMenu() {
-        String[] options = {"      *** Mentor Editor ***     ",
+        String[] options = {"      *** Mentor Editor ***     \n",
                             "[1] edit first name",
                             "[2] edit last name",
                             "[3] edit password",
                             "[4] edit email",
                             "[5] edit group",
-                            "[0] exit"};
+                            "[0] exit\n"};
 
         for(String element : options) {
             System.out.println(element);
-        }
-    }
-
-    public void showAllMentors(String[] mentors)
-    {
-        for (String mentor : mentors)
-        {
-            System.out.println(mentor);
         }
     }
 }

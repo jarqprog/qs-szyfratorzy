@@ -22,8 +22,8 @@ import java.io.File;
 public class DatabaseDAO extends DAO{
 
 
-    protected final static String SQL_SCRIPT_PATH = "data_base/init.sql";
-    protected final static String DATA_BASE_PATH = "data_base/quest_store.db";
+    private final static String SQL_SCRIPT_PATH = FilePath.SQL_SCRIPT.getPath();
+    private final static String DATA_BASE_PATH = FilePath.DATA_BASE.getPath();
 
     protected Connection connection = null;
 
@@ -48,19 +48,30 @@ public class DatabaseDAO extends DAO{
         executeSqlScript(sqlFile);
     }
 
-    public void openConnection(){
-        try {
-            String className = "org.sqlite.JDBC";
-            Class.forName(className);
-            String url = "jdbc:sqlite:" + DATA_BASE_PATH;
-            connection = DriverManager.getConnection(url);
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage());
-            connection = null;
+    public void updateDatabase(String sqlFilePath){
+        if(connection == null){
+            openConnection();
+        }
+        File sqlFile = new File(sqlFilePath);
+        executeSqlScript(sqlFile);
+        closeConnection();
+    }
+
+    public void openConnection() {
+        if(connection == null) {
+            try {
+                String className = "org.sqlite.JDBC";
+                Class.forName(className);
+                String url = "jdbc:sqlite:" + DATA_BASE_PATH;
+                connection = DriverManager.getConnection(url);
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                connection = null;
+            }
         }
     }
 
-    public void closeConnection(){
+    public void closeConnection() {
         if(connection != null){
             try{
                 connection.close();

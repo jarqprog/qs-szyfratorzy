@@ -1,6 +1,8 @@
 package shop;
 
 import java.util.List;
+
+import application.DataTool;
 import item.ArtifactDAO;
 import item.ArtifactModel;
 import users.StudentDAO;
@@ -33,7 +35,7 @@ public class ShopController {
                 view.clearScreen();
                 view.displayMenu();
                 userChoice = view.getUserInput("Select an option: ");
-                isChoiceReady = checkIfElementInArray(correctChoices, userChoice);
+                isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
             }
             view.clearScreen();
             switch(userChoice){
@@ -51,14 +53,6 @@ public class ShopController {
         }
     }
 
-    private Boolean checkIfElementInArray(String[] array, String element) {
-        for(String item : array){
-            if(item.equals(element)){
-                return true;
-            }
-        }
-        return false;
-    }
 
     public void buyArtifact() {
         view.displayListOfArtifacts(shop.getStore());

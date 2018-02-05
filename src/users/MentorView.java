@@ -1,10 +1,8 @@
 package users;
 
-import application.*;
 import java.util.Scanner;
 
-
-public class MentorView extends AbstractView {
+public class MentorView extends UsersView {
 
     public int getValue() {
     Scanner scanner = new Scanner(System.in);
@@ -28,15 +26,17 @@ public class MentorView extends AbstractView {
     }
 
     public void displayMenu() {
-        String[] options = {"      *** Mentor's Menu ***     ",
-                            "[1] create student",
-                            "[2] create quest",
-                            "[3] edit quest",
-                            "[4] create artifact",
-                            "[5] edit artifact",
-                            "[6] mark student quest",
-                            "[7] display student wallet",
-                            "[8] mark student artifact",
+        String[] options = {"      *** Mentor's Menu ***     \n",
+                            "[1] display profile",
+                            "[2] create student",
+                            "[3] create quest",
+                            "[4] edit quest",
+                            "[5] create artifact",
+                            "[6] edit artifact",
+                            "[7] mark student quest",
+                            "[8] display student wallet",
+                            "[9] mark student artifact",
+                            "[10] display students from group",
                             "[0] exit"};
 
         for(String element : options) {

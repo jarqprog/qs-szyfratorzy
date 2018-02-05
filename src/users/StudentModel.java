@@ -1,10 +1,10 @@
 package users;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import application.Role;
 import item.ArtifactModel;
+import school.ExperienceLevelsController;
 import school.GroupModel;
 import school.TeamModel;
 
@@ -16,6 +16,7 @@ public class StudentModel extends UserModel {
     private int experience;
     private List<ArtifactModel> inventory;
     private float attendance;
+    private String experienceLevel;
 
     public StudentModel(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
@@ -82,6 +83,11 @@ public class StudentModel extends UserModel {
         saveObject();
     }
 
+    public void modifyWallet(int value){
+        this.wallet += value;
+        saveObject();
+    }
+
     public int getExperience()
     {
         return experience;
@@ -90,6 +96,20 @@ public class StudentModel extends UserModel {
     public void setExperience(int experience) {
         this.experience = experience;
         saveObject();
+    }
+
+    public void incrementExperience(int pointsToAdd) {
+        this.experience += pointsToAdd;
+        saveObject();
+    }
+
+    public void setExperienceLevel(String level, int experienceToNextLevel){
+        experienceLevel = String.format("%s (%s/%s)", level, experience, experienceToNextLevel);
+    }
+
+    public String getExperienceLevel(){
+        new ExperienceLevelsController().setStudentExperienceLevel(this);
+        return experienceLevel;
     }
 
     public float getAttendance()
@@ -106,20 +126,11 @@ public class StudentModel extends UserModel {
 
     public void setInventory(List<ArtifactModel> inventory) { this.inventory = inventory; }
 
-    public String toString() {
-        // potrzeba będzie poprawić!
-        return super.toString() + String.format(" Group : %s, Team: %s, Wallet: %dcc, Experience: %d, Attendance: %.2f"
-                                                ,getGroup(), getTeam(), getWallet(), getExperience(), getAttendance());
-    }
-
-    public String[] getFullData() {
-        // used to pretty display in view
-        String[] fullData = new String[0];
-        String[] studentData = {this.group.getName(), this.team.getName(), String.valueOf(this.wallet), String.valueOf(this.wallet),
-                String.valueOf(this.experience), String.valueOf(attendance)};
-//        addArrays:
-        System.arraycopy(studentData, 0, fullData, super.getFullData().length, studentData.length);
-        return fullData;
+    public String getFullDataToString() {
+        return super.getFullDataToString() + String.format(
+                " \n\t -group: %s\n\t -team: %s\n\t -wallet: %dcc\n\t" +
+                " -level: %s\n\t -attendance: %.2f\n", getGroup(), getTeam(),
+                wallet, getExperienceLevel(), attendance);
     }
 
     public void saveObject(){

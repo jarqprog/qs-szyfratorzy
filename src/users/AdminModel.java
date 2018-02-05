@@ -16,10 +16,6 @@ public class AdminModel extends UserModel {
         role = Role.ADMIN.getName();
     }
 
-    public String toString() {
-         return super.toString();
-    }
-
     public void saveObject(){
         AdminDAO dao = new AdminDAO();
         dao.saveObject(this);
