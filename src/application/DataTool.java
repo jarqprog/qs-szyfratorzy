@@ -1,10 +1,8 @@
 package application;
 
-import java.util.Map;
-import java.util.LinkedHashMap;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.Map.Entry;
-import java.util.Objects;
 
 public class DataTool {
 
@@ -32,7 +30,17 @@ public class DataTool {
         return null;
     }
 
-    public static String getMultipliedString(String string, int multiplier){
+    public static String getMultipliedString(String string, int multiplier) {
         return new String(new char[multiplier]).replace("\0", string);
+    }
+
+    public static String removeWhitespacesFromString(String string) {
+        String regex = "\\s+";
+        String delimiter = " ";
+        List<String> listToTrim = Arrays.asList(string.split(regex));
+        listToTrim.stream().map(String :: trim);
+        return String.join(delimiter, listToTrim);
+
+
     }
 }
