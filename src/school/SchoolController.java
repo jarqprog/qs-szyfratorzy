@@ -3,44 +3,50 @@ package school;
 import application.DataTool;
 import application.DbManagerDAO;
 import application.FilePath;
+import application.Table;
 import users.StudentModel;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 
 public class SchoolController {
 
-    private SchoolModel school;
     private SchoolView view;
     private ExperienceLevels experienceLevels;
     private boolean shouldExit = false;
 
     public SchoolController() {
-        this.school = new SchoolModel();
         this.view = new SchoolView();
     }
 
     public List<GroupModel> getGroups() {
-        return school.getGroups();
+        return new GroupDAO().getAllObjects();
     }
 
     public List<TeamModel> getTeams() {
-        return school.getTeams();
+        return new TeamDAO().getAllObjects();
     }
 
     public List<String> getGroupNames() {
-        return school.getGroupNames();
+        return new SchoolDAO().getStudentsSetsNames(Table.GROUPS.getName());
     }
 
     public List<String> getTeamNames() {
-        return school.getTeamNames();
+        return new SchoolDAO().getStudentsSetsNames(Table.TEAMS.getName());
     }
 
     public ExperienceLevels getExperienceLevels() {
-        return school.getExperienceLevels();
+        return new ExperienceLevels();
+    }
+
+    public AttendanceModel getAttendance(){
+        return new AttendanceModel();
     }
 
     public void setStudentExperienceLevel(StudentModel student) {
-        Map<String,Integer> levels = school.getExperienceLevels().getUpdatedLevels();
+        Map<String,Integer> levels = new ExperienceLevels().getUpdatedLevels();
         List<Integer> expValues = new ArrayList<>(levels.values());
         Collections.sort(expValues);
         int studentExperience = student.getExperience();
@@ -108,7 +114,7 @@ public class SchoolController {
     }
 
     private void modifyExperienceLevels() {
-        experienceLevels = school.getExperienceLevels();
+        experienceLevels = getExperienceLevels();
         String levelName;
         view.clearScreen();
         view.displayMessage("Current state:");
@@ -126,7 +132,7 @@ public class SchoolController {
     }
 
     private void clearAllExperienceLevels() {
-        experienceLevels = school.getExperienceLevels();
+        experienceLevels = getExperienceLevels();
         experienceLevels.clearLevels();
         view.clearScreen();
         view.displayMessage("Cleared:");
@@ -134,7 +140,7 @@ public class SchoolController {
     }
 
     private void clearChosenExperienceLevel() {
-        experienceLevels = school.getExperienceLevels();
+        experienceLevels = getExperienceLevels();
         view.clearScreen();
         boolean isDone = false;
         String levelName = "";
@@ -163,11 +169,6 @@ public class SchoolController {
         String sqlFilePath = FilePath.UPDATE_EXP_LVL.getPath();
         dao.updateDatabase(sqlFilePath);
     }
-
-    public SchoolModel getSchool(){
-        return school;
-    }
-
 
     private String getUserChoice(String[] correctChoices) {
         String userChoice = "";
