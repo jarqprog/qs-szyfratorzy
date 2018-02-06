@@ -162,7 +162,7 @@ public class SchoolController {
         boolean isDone = false;
         String teamName = "";
         SchoolView view = new SchoolView();
-        while (!isDone && teamName != "0"){
+        while (!isDone){
             teamName = view.getUserInput("Enter team name(or 0 to exit): ");
             if (teamName.equals("0")){
                 isDone = true;
@@ -183,7 +183,7 @@ public class SchoolController {
         boolean isDone = false;
         String groupName = "";
         SchoolView view = new SchoolView();
-        while (!isDone && groupName != "0"){
+        while (!isDone){
             groupName = view.getUserInput("Enter group name(or 0 to exit): ");
             if (groupName.equals("0")){
                 isDone = true;
