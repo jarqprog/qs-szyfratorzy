@@ -87,7 +87,7 @@ public class AttendanceModel {
 
     public String getFullDataToString() {
         setAttendance();
-        Map<LocalDate,Boolean> sorted = DataTool.sortMapByKey(attendace); // sort map - result LinkedHashMap
+        Map<LocalDate,Boolean> sorted = DataTool.sortDateMap(attendace); // sort map - result LinkedHashMap
         String attendancePercentage = getPercentageAttendance();
         StringBuilder sb = new StringBuilder();
         sb.append("\n  Attendance:\n\n\t");

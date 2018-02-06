@@ -9,7 +9,6 @@ public class TeamModel extends StudentSetsModel{
 
     private List<ArtifactModel> inventory;
 
-
     public TeamModel(int id, String name) {
         super(id, name);
         inventory = new ArrayList<>();
