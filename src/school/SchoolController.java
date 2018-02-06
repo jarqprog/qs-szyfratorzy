@@ -2,6 +2,7 @@ package school;
 
 import application.CreatableDAO;
 import application.Table;
+import users.MentorDAO;
 import users.MentorModel;
 import users.StudentModel;
 import users.StudentDAO;
@@ -11,34 +12,24 @@ import java.util.List;
 
 public class SchoolController {
 
-    private SchoolView view;
-
-    public SchoolController() {
-        this.view = new SchoolView();
-    }
-
-    public List<GroupModel> getGroups() {
+    public static List<GroupModel> getGroups() {
         return new GroupDAO().getAllObjects();
     }
 
-    public List<TeamModel> getTeams() {
+    public static List<TeamModel> getTeams() {
         return new TeamDAO().getAllObjects();
     }
 
-    public List<String> getGroupNames() {
+    public static List<String> getGroupNames() {
         return new SchoolDAO().getStudentsSetsNames(Table.GROUPS.getName());
     }
 
-    public List<String> getTeamNames() {
+    public static List<String> getTeamNames() {
         return new SchoolDAO().getStudentsSetsNames(Table.TEAMS.getName());
     }
 
-    protected void executeNotImplementedInfo() {
-        view.displayMessage("Not implemented yet");
-        view.handlePause();
-    }
-
-    public void assignMentorToGroup(MentorModel mentor){
+    public static void assignMentorToGroup(MentorModel mentor){
+        SchoolView view = new SchoolView();
         List<GroupModel> groups = getGroups();
         boolean isMentorAssigned = false;
         String chosenGroupName = "";
@@ -58,7 +49,8 @@ public class SchoolController {
         }
     }
 
-    public void assignStudentToGroup(StudentModel student){
+    public static void assignStudentToGroup(StudentModel student){
+        SchoolView view = new SchoolView();
         List<GroupModel> groups = getGroups();
         boolean isStudentAssigned = false;
         String chosenGroupName = "";
@@ -83,7 +75,8 @@ public class SchoolController {
         }
     }
 
-    public void assignStudentToTeam(StudentModel student) {
+    public static void assignStudentToTeam(StudentModel student) {
+        SchoolView view = new SchoolView();
         List<TeamModel> teams = getTeamsByGroup(student.getGroup());
         boolean isStudentAssigned = false;
         String chosenTeamName = "";
@@ -104,7 +97,7 @@ public class SchoolController {
         }
     }
 
-    public List<TeamModel> getTeamsByGroup(GroupModel group){
+    public static List<TeamModel> getTeamsByGroup(GroupModel group){
         List<TeamModel> teams = getTeams();
         List<TeamModel> teamsByGroup = new ArrayList<>();
         for (TeamModel team : teams){
@@ -121,19 +114,24 @@ public class SchoolController {
         return teamsByGroup;
     }
 
-    public List<StudentModel> getStudentsByGroup(GroupModel group) {
+    public static List<StudentModel> getStudentsByGroup(GroupModel group) {
         return group.getStudents();
     }
 
-    public List<StudentModel> getStudentsByTeam(TeamModel team) {
+    public static List<StudentModel> getStudentsByTeam(TeamModel team) {
         return team.getStudents();
     }
 
-    public List<StudentModel> getAllStudents() {
+    public static List<StudentModel> getAllStudents() {
         return new StudentDAO().getAllObjects();
     }
 
-    public StudentModel pickStudentFromList(List<StudentModel> students) {
+    public static List<MentorModel> getAllMentors() {
+        return new MentorDAO().getAllObjects();
+    }
+
+    public static StudentModel pickStudentFromList(List<StudentModel> students) {
+        SchoolView view = new SchoolView();
         view.displayObjects(students);
         String chosenStudent = view.getUserInput("\nChoose student by id: ");
         for (StudentModel student : students){
@@ -144,7 +142,7 @@ public class SchoolController {
         return null;
     }
 
-    private TeamModel getDefaultTeam(){
+    private static TeamModel getDefaultTeam(){
         CreatableDAO dao = new TeamDAO();
         return dao.getObjectById(1);
     }

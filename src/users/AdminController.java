@@ -20,7 +20,7 @@ public class AdminController extends UserController{
 
         boolean isDone = false;
         while(! isDone) {
-            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "0"};
             view.clearScreen();
             view.displayMenu();
             String userChoice = view.getMenuChoice(correctChoices);
@@ -40,9 +40,12 @@ public class AdminController extends UserController{
                     displayMentorProfile();
                     break;
                 case "5":
-                    createGroup();
+                    executeNotImplementedInfo();
                     break;
                 case "6":
+                    createGroup();
+                    break;
+                case "7":
                     runExpLevelManager();
                     break;
                 case "0":
@@ -63,7 +66,7 @@ public class AdminController extends UserController{
     }
 
     private void editMentor() {
-        List<MentorModel> mentors = getMentors();
+        List<MentorModel> mentors = SchoolController.getAllMentors();
         view.displayUsers(mentors);
         String id = view.getUserInput("Enter ID of mentor: ");
         for (MentorModel mentor : mentors) {
@@ -92,7 +95,7 @@ public class AdminController extends UserController{
                             mentor.setEmail(email);
                             break;
                         case "5" :
-                            new SchoolController().assignMentorToGroup(mentor);
+                            SchoolController.assignMentorToGroup(mentor);
                             break;
                         case "0":
                             MentorDAO dao = new MentorDAO();
@@ -111,8 +114,8 @@ public class AdminController extends UserController{
         }
     }
 
-    private void displayMentorProfile(){
-        List<MentorModel> mentors = getMentors();
+    private void displayMentorProfile() {
+        List<MentorModel> mentors = SchoolController.getAllMentors();
         view.displayMessage("Mentors:\n");
         view.displayUsers(mentors);
         String id = view.getUserInput("Select mentor by id: ");
@@ -123,6 +126,10 @@ public class AdminController extends UserController{
                 view.displayUserWithDetails(mentor);
             }
         }
+    }
+
+    private void displayStudentsByMentor() {
+
     }
 
     private void createGroup(){
