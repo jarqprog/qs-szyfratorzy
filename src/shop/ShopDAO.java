@@ -5,9 +5,7 @@ import application.Table;
 import item.ArtifactModel;
 import item.ArtifactDAO;
 
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class ShopDAO {
@@ -21,25 +19,39 @@ public class ShopDAO {
 
     public ShopDAO(){ this.DEFAULT_TABLE = Table.STUDENTS_ARTIFACTS.getName(); }
 
-    public List<String []> findStudentArtifacts(int studentId) {
+    public List<String []> findArtifacts(int studentId) {
         dao = new DbManagerDAO();
         String query = String.format("SELECT artifact_id, id FROM %s " +
-                                    "WHERE student_id = %s;", DEFAULT_TABLE, studentId );
+                                    "WHERE student_id = %s;", DEFAULT_TABLE, studentId);
         return dao.getData(query);
     }
 
-    public List<ArtifactModel> loadInventory(List<String []> artifactsId) {
+    public List<String []> findTeamArtifacts(int teamId) {
+        dao = new DbManagerDAO();
+        String query = String.format("SELECT artifact_id, id FROM team_artifacts " +
+                "WHERE team_id = %s;", teamId);
+        return dao.getData(query);
+    }
+
+    public Map<ArtifactModel, Integer> loadInventory(List<String []> artifactsId) {
         dao = new DbManagerDAO();
         artifactDAO = new ArtifactDAO();
-        ArrayList<ArtifactModel> inventory = new ArrayList<>();
+        Map<ArtifactModel, Integer> inventory = new HashMap<>();
+        Integer value;
 
         for(String[] record : artifactsId) {
             int artifactId = Integer.parseInt(record[INDEX_ART_ID]);
             String query = String.format("SELECT * FROM artifacts " +
                     "WHERE id = %s;", artifactId);
             ArtifactModel artifact = artifactDAO.getOneObject(query);
-            inventory.add(artifact);
+            if(inventory.containsKey(artifact)) {
+                value = inventory.get(artifact);
+                inventory.replace(artifact, ++value);
+            } else {
+            inventory.put(artifact, 1);
+            }
         }
+
         for(String[] record : artifactsId) {
             int id = Integer.parseInt(record[INDEX_STUDENTS_ARTIFACTS_ID]);
             String query = String.format("DELETE FROM %s " +
@@ -49,8 +61,16 @@ public class ShopDAO {
         return inventory;
     }
 
+    public Map<ArtifactModel, Integer> loadStudentInventory(int studentId) {
+        return loadInventory(findArtifacts(studentId));
+    }
+
+    public Map<ArtifactModel, Integer> loadTeamInventory(int teamId) {
+        return loadInventory(findTeamArtifacts(teamId));
+    }
+
     public void deleteFromInventory(int studentId, int artifactId) {
-        List<String []> artifactsId = findStudentArtifacts(studentId);
+        List<String []> artifactsId = findArtifacts(studentId);
         for(String[] record : artifactsId) {
             int id = Integer.parseInt(record[INDEX_STUDENTS_ARTIFACTS_ID]);
             String query = String.format("DELETE FROM %s " +
