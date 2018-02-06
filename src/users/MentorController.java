@@ -41,6 +41,7 @@ public class MentorController extends UserController{
                     assignStudentToGroup();
                     break;
                 case "4":
+                    assignStudentToTeam();
                     break;
                 case "5":
                     createQuest();
@@ -211,19 +212,29 @@ public class MentorController extends UserController{
     }
 
     private void assignStudentToGroup(){
-        CreatableDAO dao = new StudentDAO();
-        List<StudentModel> students = dao.getAllObjects();
-        StudentModel student = pickStudentFromCollection(students);
+        StudentModel student = pickStudentFromCollection();
         if (student != null){
             new SchoolController().assignStudentToGroup(student);
             view.displayMessage("Done");
         } else {
             view.displayMessage("Student does not exist...");
         }
-        
     }
 
-    private StudentModel pickStudentFromCollection(List<StudentModel> students){
+    private void assignStudentToTeam(){
+        
+        StudentModel student = pickStudentFromCollection();
+        if (student != null){
+            new SchoolController().assignStudentToTeam(student);
+            view.displayMessage("Done");
+        } else {
+            view.displayMessage("Student does not exist...");
+        }
+    }
+
+    private StudentModel pickStudentFromCollection(){
+        CreatableDAO dao = new StudentDAO();
+        List<StudentModel> students = dao.getAllObjects();
         view.displayObjects(students);
         String chosenStudent = view.getUserInput("Choose student by ID: ");
         for (StudentModel student : students){
