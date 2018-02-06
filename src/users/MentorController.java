@@ -212,7 +212,7 @@ public class MentorController extends UserController{
     }
 
     private void assignStudentToGroup(){
-        StudentModel student = pickStudentFromCollection();
+        StudentModel student = pickStudent();
         if (student != null){
             new SchoolController().assignStudentToGroup(student);
             view.displayMessage("Done");
@@ -223,7 +223,7 @@ public class MentorController extends UserController{
 
     private void assignStudentToTeam(){
         
-        StudentModel student = pickStudentFromCollection();
+        StudentModel student = pickStudent();
         if (student != null){
             new SchoolController().assignStudentToTeam(student);
             view.displayMessage("Done");
@@ -232,7 +232,7 @@ public class MentorController extends UserController{
         }
     }
 
-    private StudentModel pickStudentFromCollection(){
+    private StudentModel pickStudent(){
         CreatableDAO dao = new StudentDAO();
         List<StudentModel> students = dao.getAllObjects();
         view.displayObjects(students);
