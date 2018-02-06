@@ -3,6 +3,7 @@ package users;
 import item.ArtifactModel;
 import shop.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentController extends UserController{
@@ -36,6 +37,8 @@ public class StudentController extends UserController{
 
     private void showMyInventory() { view.displayInventory(student.getInventory()); }
 
+    private void showTeamInventory() { view.displayInventory(student.getTeam().getInventory()); }
+
     public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
 
     private void updateInventory() {
@@ -44,6 +47,13 @@ public class StudentController extends UserController{
         student.setInventory(shopDAO.loadInventory(artifacts));
         shopDAO.saveInventory(student.getId(), student.getInventory());
     }
+
+//    private void updateTeamInventory() {
+//        shopDAO = new ShopDAO();
+//        List<String []> artifacts =  shopDAO.findTeamArtifacts(student.getTeam().getId());
+//        student.getTeam().setInventory(shopDAO.loadInventory(artifacts));
+//        shopDAO.saveInventory(student.getId(), student.getInventory());
+//    }
 
     private void executeShopping() {
         ShopModel shop = new ShopModel();
@@ -103,6 +113,9 @@ public class StudentController extends UserController{
                     break;
                 case "4":
                     showStudentsFromMyTeam();
+                    break;
+                case "5":
+                    showTeamInventory();
                     break;
                 case "0":
                     isDone = true;
