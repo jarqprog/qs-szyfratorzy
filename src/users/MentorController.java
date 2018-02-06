@@ -14,11 +14,13 @@ public class MentorController extends UserController{
     MentorView view;
     MentorModel mentor;
     MentorDAO dao;
+    SchoolController school;
 
     public MentorController(MentorModel mentorModel){
         mentor = mentorModel;
         view = new MentorView();
         dao = new MentorDAO();
+        school = new SchoolController();
 
     }
 
@@ -206,42 +208,34 @@ public class MentorController extends UserController{
     }
 
     private void showStudentsFromMyGroup() {
-        List<StudentModel> students = mentor.getGroup().getStudents();
+        List<StudentModel> students = school.getStudentsByGroup(mentor.getGroup());
         view.displayMessage("Your students:\n");
         view.displayUsersWithDetails(students);
     }
 
     private void assignStudentToGroup(){
-        StudentModel student = pickStudent();
+        List<StudentModel> students = school.getAllStudents();
+        StudentModel student = school.pickStudentFromList(students);
         if (student != null){
-            new SchoolController().assignStudentToGroup(student);
-            view.displayMessage("Done");
+            school.assignStudentToGroup(student);
+            view.displayMessage("\nStudent edited: ");
+            view.displayUserWithDetails(student);
         } else {
-            view.displayMessage("Student does not exist...");
+            view.displayMessage("\nStudent does not exist...");
         }
     }
 
-    private void assignStudentToTeam(){
-        
-        StudentModel student = pickStudent();
+    private void assignStudentToTeam() {
+        List<StudentModel> students = school.getStudentsByGroup(mentor.getGroup());
+        StudentModel student = school.pickStudentFromList(students);
         if (student != null){
-            new SchoolController().assignStudentToTeam(student);
-            view.displayMessage("Done");
+            school.assignStudentToTeam(student);
+            view.displayMessage("\nStudent edited: ");
+            view.displayUserWithDetails(student);
         } else {
-            view.displayMessage("Student does not exist...");
+            view.displayMessage("\nStudent does not exist...");
         }
     }
 
-    private StudentModel pickStudent(){
-        CreatableDAO dao = new StudentDAO();
-        List<StudentModel> students = dao.getAllObjects();
-        view.displayObjects(students);
-        String chosenStudent = view.getUserInput("Choose student by ID: ");
-        for (StudentModel student : students){
-            if (chosenStudent.equals(String.valueOf(student.getId()))){
-                return student;
-            }
-        }
-        return null;
-    }
+
 }
