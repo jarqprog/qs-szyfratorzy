@@ -7,7 +7,7 @@ import item.ArtifactModel;
 import school.ExperienceLevelsController;
 import school.GroupModel;
 import school.TeamModel;
-import school.AttendancesModel;
+import school.AttendanceModel;
 
 public class StudentModel extends UserModel {
 
@@ -16,19 +16,20 @@ public class StudentModel extends UserModel {
     private int wallet;
     private int experience;
     private List<ArtifactModel> inventory;
-    private AttendancesModel attendance;
+    private AttendanceModel attendance;
     private String experienceLevel;
 
     public StudentModel(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
         wallet = 0;
         experience = 0;
-        attendance = new AttendancesModel(id);
+        attendance = new AttendanceModel(id); // set student id -1 means not loading attendance from database
         team = new TeamModel(1, "undefined");
         group = new GroupModel(1,"undefined");
         inventory = new ArrayList<>();
         role = Role.STUDENT.getName();
         this.id = saveNewObjectGetId();
+        attendance.setStudentId(id); // to set proper student id in attendance
     }
 
     public StudentModel(int id, String firstName, String lastName, String email,
@@ -38,7 +39,7 @@ public class StudentModel extends UserModel {
         super(id, firstName, lastName, email, password);
         this.wallet = wallet;
         this.experience = experience;
-        this.attendance = new AttendancesModel(id);
+        this.attendance = new AttendanceModel(id);
         this.team = team;
         this.group = group;
         this.inventory = inventory;
@@ -112,7 +113,7 @@ public class StudentModel extends UserModel {
         return experienceLevel;
     }
 
-    public AttendancesModel getAttendance()
+    public AttendanceModel getAttendance()
     {
         return attendance;
     }
