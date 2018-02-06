@@ -20,8 +20,14 @@ public abstract class AbstractView {
         System.out.println(message);
     }
 
-    public void displayObject(Object object) {
+    public <T extends Object> void displayObject(T object) {
         System.out.println(object.toString());
+    }
+
+    public <T extends Object> void displayObjects(List<T> objects) {
+        for (T object : objects){
+            displayObject(object);
+        }
     }
 
     public void displayHeaderAndElementsOfCollection(String[] collection, String header) {
@@ -116,7 +122,7 @@ public abstract class AbstractView {
         }
     }
 
-    public int getUserChoice(String message) {
+    public int getNumber(String message) {
         Scanner scanner = new Scanner(System.in);
         int input = -1;
         try {
@@ -132,7 +138,7 @@ public abstract class AbstractView {
         String menuChoice = "";
         Boolean isChoiceReady = false;
         while (!isChoiceReady) {
-            menuChoice = getUserInput("Select an option: ");
+            menuChoice = getUserInput("\tSelect an option: ");
             isChoiceReady = DataTool.checkIfElementInArray(correctChoices, menuChoice);
         }
         return menuChoice;

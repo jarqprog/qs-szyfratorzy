@@ -75,14 +75,12 @@ public class ShopController {
                     shopDAO = new ShopDAO();
                     shopDAO.saveInventory(student.getId(), student.getInventory());
                     shopDAO.saveStudentTransaction(student.getId(), artifact.getId());
-
                 } else {
                     view.displayMessage("This artifact is to expensive!");
                 }
             }
         }
         view.displayMessage("Bye");
-
     }
 
     public void buyArtifactForTeam() {
@@ -131,7 +129,6 @@ public class ShopController {
         }
         return artifacts;
     }
-
+  
 }
-
 

@@ -25,7 +25,8 @@ public class UsersView extends AbstractView{
         }
     }
 
-    protected <T extends UserModel> void displayUserWithDetails(T user){
+    protected <T extends UserModel> void  displayUserWithDetails(T user){
         System.out.println(space + user.getFullDataToString());
     }
+
 }

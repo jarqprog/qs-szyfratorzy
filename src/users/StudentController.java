@@ -67,7 +67,7 @@ public class StudentController extends UserController{
             view.displayMessage("Sorry, You have nothing to use!");
             view.handlePause();
         } else {
-            int id = view.getUserChoice("Enter artifact id: ");
+            int id = view.getNumber("Enter artifact id: ");
             for(ArtifactModel artifact : student.getInventory()) {
                 if(id == artifact.getId()) {
                     student.getInventory().remove(artifact);
@@ -88,43 +88,34 @@ public class StudentController extends UserController{
     }
 
     public void handleMainMenu() {
+
         boolean isDone = false;
         while(! isDone){
 
             String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
             view.clearScreen();
+            showProfile(student);
             view.displayMenu();
             String userChoice = view.getMenuChoice(correctChoices);
 
-            view.clearScreen();
+
             switch(userChoice){
+
                 case "1":
-                    showProfile(student);
-                    break;
-                case "2":
-                    showMyWallet();
-                    break;
-                case "3":
-                    showTeamInventory();
-                    break;
-                case "4":
                     executeShopping();
                     updateInventory();
                     break;
-                case "5":
+                case "2":
                     showMyInventory();
                     break;
-                case "6":
-                    showMyGroup();
-                    break;
-                case "7":
-                    showMyTeam();
-                    break;
-                case "8":
+                case "3":
                     useArtifacts();
                     break;
-                case "9":
+                case "4":
                     showStudentsFromMyTeam();
+                    break;
+                case "5":
+                    showTeamInventory();
                     break;
                 case "0":
                     isDone = true;
