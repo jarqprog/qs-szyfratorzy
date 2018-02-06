@@ -7,6 +7,7 @@ import item.ArtifactModel;
 import school.ExperienceLevelsController;
 import school.GroupModel;
 import school.TeamModel;
+import school.AttendanceModel;
 
 public class StudentModel extends UserModel {
 
@@ -15,30 +16,30 @@ public class StudentModel extends UserModel {
     private int wallet;
     private int experience;
     private List<ArtifactModel> inventory;
-    private float attendance;
+    private AttendanceModel attendance;
     private String experienceLevel;
 
     public StudentModel(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
         wallet = 0;
         experience = 0;
-        attendance = 100;
+        attendance = new AttendanceModel(id); // set student id -1 means not loading attendance from database
         team = new TeamModel(1, "undefined");
         group = new GroupModel(1,"undefined");
         inventory = new ArrayList<>();
         role = Role.STUDENT.getName();
         this.id = saveNewObjectGetId();
-
+        attendance.setStudentId(id); // to set proper student id in attendance
     }
 
     public StudentModel(int id, String firstName, String lastName, String email,
-                        String password, int wallet, int experience, float attendance,
+                        String password, int wallet, int experience,
                         TeamModel team, GroupModel group, List<ArtifactModel> inventory) {
 
         super(id, firstName, lastName, email, password);
         this.wallet = wallet;
         this.experience = experience;
-        this.attendance = attendance;
+        this.attendance = new AttendanceModel(id);
         this.team = team;
         this.group = group;
         this.inventory = inventory;
@@ -112,14 +113,9 @@ public class StudentModel extends UserModel {
         return experienceLevel;
     }
 
-    public float getAttendance()
+    public AttendanceModel getAttendance()
     {
         return attendance;
-    }
-
-    public void setAttendance(float attendance) {
-        // temporary!!!
-        this.attendance = attendance;
     }
 
     public List<ArtifactModel> getInventory() { return inventory; }
@@ -129,8 +125,8 @@ public class StudentModel extends UserModel {
     public String getFullDataToString() {
         return super.getFullDataToString() + String.format(
                 " \n\t -group: %s\n\t -team: %s\n\t -wallet: %dcc\n\t" +
-                " -level: %s\n\t -attendance: %.2f\n", getGroup(), getTeam(),
-                wallet, getExperienceLevel(), attendance);
+                " -level: %s\n\t -%s\n", getGroup(), getTeam(),
+                wallet, getExperienceLevel(), attendance) + attendance.getFullDataToString();
     }
 
     public void saveObject(){
@@ -142,5 +138,4 @@ public class StudentModel extends UserModel {
         StudentDAO dao = new StudentDAO();
         return dao.saveObjectAndGetId(this);
     }
-  
 }

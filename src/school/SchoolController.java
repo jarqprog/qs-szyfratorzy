@@ -32,10 +32,6 @@ public class SchoolController {
         return new ExperienceLevels();
     }
 
-    public AttendanceModel getAttendance(){
-        return new AttendanceModel();
-    }
-
     protected void executeNotImplementedInfo() {
         view.displayMessage("Not implemented yet");
         view.handlePause();
