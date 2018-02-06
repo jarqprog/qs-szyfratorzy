@@ -34,12 +34,20 @@ public class DataTool {
         return new String(new char[multiplier]).replace("\0", string);
     }
 
+
+    public static String getShortText(int cutIndex, String text) {
+        if (text.length() > cutIndex) {
+            return text.substring(0, cutIndex) + "...";
+        }
+        return text;
+
     public static String removeWhitespacesFromString(String string) {
         String regex = "\\s+";
         String delimiter = " ";
         List<String> listToTrim = Arrays.asList(string.split(regex));
         listToTrim.stream().map(String :: trim);
         return String.join(delimiter, listToTrim);
+
 
 
     }
