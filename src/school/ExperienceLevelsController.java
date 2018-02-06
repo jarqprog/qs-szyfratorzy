@@ -13,19 +13,19 @@ import java.util.Map;
 public class ExperienceLevelsController {
 
     private SchoolView view;
-    private ExperienceLevels experienceLevels;
+    private ExperienceLevelsModel experienceLevels;
     private boolean shouldExit = false;
 
     public ExperienceLevelsController() {
         this.view = new SchoolView();
     }
 
-    public ExperienceLevels getExperienceLevels() {
-        return new ExperienceLevels();
+    public ExperienceLevelsModel getExperienceLevels() {
+        return new ExperienceLevelsModel();
     }
 
     public void setStudentExperienceLevel(StudentModel student) {
-        Map<String,Integer> levels = new ExperienceLevels().getUpdatedLevels();
+        Map<String,Integer> levels = new ExperienceLevelsModel().getUpdatedLevels();
         List<Integer> expValues = new ArrayList<>(levels.values());
         Collections.sort(expValues);
         int studentExperience = student.getExperience();

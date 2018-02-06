@@ -5,7 +5,6 @@ import application.Table;
 import users.MentorModel;
 import users.StudentModel;
 import users.StudentDAO;
-import users.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +31,6 @@ public class SchoolController {
 
     public List<String> getTeamNames() {
         return new SchoolDAO().getStudentsSetsNames(Table.TEAMS.getName());
-    }
-
-    public ExperienceLevels getExperienceLevels() {
-        return new ExperienceLevels();
     }
 
     protected void executeNotImplementedInfo() {

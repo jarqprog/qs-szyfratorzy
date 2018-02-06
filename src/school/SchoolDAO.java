@@ -34,7 +34,7 @@ public class SchoolDAO {
         return experienceLevels;
     }
 
-    public void saveExperienceLevels(ExperienceLevels experienceLevels) {
+    public void saveExperienceLevels(ExperienceLevelsModel experienceLevels) {
         String clearTableQuery = String.format("DELETE FROM %s;", EXPERIENCE_LEVELS_TABLE);
         dao.inputData(clearTableQuery);
         Map<String,Integer> levelsAndValues = experienceLevels.getLevels();
