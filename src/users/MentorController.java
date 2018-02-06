@@ -68,6 +68,7 @@ public class MentorController extends UserController{
                     break;
                 case "13":
                     SchoolController.createNewTeam();
+                    break;
                 case "0":
                     isDone = true;
                     break;
