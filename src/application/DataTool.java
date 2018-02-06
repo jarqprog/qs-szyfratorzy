@@ -9,8 +9,8 @@ import java.time.LocalDate;
 
 public class DataTool {
 
-    public static Boolean checkIfElementInArray(String[] array, String element) {
-        for(String item : array){
+    public static <T> Boolean checkIfElementInArray(T[] array, T element) {
+        for(T item : array){
             if(item.equals(element)){
                 return true;
             }
@@ -18,7 +18,7 @@ public class DataTool {
         return false;
     }
 
-    public static LinkedHashMap<String,Integer> sortMapByValue(Map<String,Integer> map){
+    public static <K,V extends Comparable<V>> LinkedHashMap<K,V> sortMapByValue(Map<K,V> map){
         return map.entrySet().stream().sorted(Map.Entry.comparingByValue())
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                 (oldValue, newValue) -> oldValue, LinkedHashMap::new));
