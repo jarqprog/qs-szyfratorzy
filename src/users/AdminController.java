@@ -4,6 +4,7 @@ import java.util.List;
 
 import school.ExperienceLevelsController;
 import school.GroupModel;
+import school.SchoolController;
 
 public class AdminController extends UserController{
 
@@ -72,6 +73,7 @@ public class AdminController extends UserController{
                     view.clearScreen();
                     view.displayEditMenu();
                     String userChoice = view.getUserInput("Select an option: ");
+                    view.clearScreen();
                     switch(userChoice) {
                         case "1" :
                             String firstName = view.getUserInput("Enter first name: ");
@@ -90,8 +92,7 @@ public class AdminController extends UserController{
                             mentor.setEmail(email);
                             break;
                         case "5" :
-                            String groupName = view.getUserInput("Enter group name: ");
-                            mentor.setGroup(new GroupModel(groupName));
+                            new SchoolController().assignMentorToGroup(mentor);
                             break;
                         case "0":
                             MentorDAO dao = new MentorDAO();
@@ -100,7 +101,8 @@ public class AdminController extends UserController{
                             break;
                     }
                     if(! isFinished){
-                        view.displayMessage("Edited:");
+                        view.clearScreen();
+                        view.displayMessage("Mentor`s data:\n");
                         view.displayUserWithDetails(mentor);
                         view.handlePause();
                     }
