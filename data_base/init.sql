@@ -115,15 +115,15 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
   INSERT OR IGNORE INTO quests VALUES(12,'Creating an enchanteds scroll','Q','Creating extra material for the current TW/SI topic (should be revised by mentors)', 500);
   INSERT OR IGNORE INTO quests VALUES(13,'Enter the arena','Q','Do a presentation on a meet-up', 500);
 
-  INSERT OR IGNORE INTO artifacts VALUES(1,'Combat training','S','Private mentoring', 50);
-  INSERT OR IGNORE INTO artifacts VALUES(2,'Sanctuary','S','You can spend a day in home office', 1000);
-  INSERT OR IGNORE INTO artifacts VALUES(3,'Time Travel','S','extend SI week assignment deadline by one day', 750);
-  INSERT OR IGNORE INTO artifacts VALUES(4,'Circle of Sorcery','S','60 min workshop by a mentor(s) of the chosen topic', 6000);
-  INSERT OR IGNORE INTO artifacts VALUES(5,'Summon Code Elemental','S','mentor joins a students team for a one hour', 2500);
-  INSERT OR IGNORE INTO artifacts VALUES(6,'Tome of knowledge','S','Extra material for the current topic', 1500);
-  INSERT OR IGNORE INTO artifacts VALUES(7,'Transform mentors','S','All mentors should dress up as pirates (or just funny) for the day', 5000);
-  INSERT OR IGNORE INTO artifacts VALUES(8,'Teleport','S','The whole course goes to an off-school program instead for a day', 30000);
-  INSERT OR IGNORE INTO artifacts VALUES(9,'Coffe','S','brain buff', 5);
+  INSERT OR IGNORE INTO artifacts VALUES(1,'Combat training','B','Private mentoring', 50);
+  INSERT OR IGNORE INTO artifacts VALUES(2,'Sanctuary','B','You can spend a day in home office', 1000);
+  INSERT OR IGNORE INTO artifacts VALUES(3,'Time Travel','B','extend SI week assignment deadline by one day', 750);
+  INSERT OR IGNORE INTO artifacts VALUES(4,'Circle of Sorcery','M','60 min workshop by a mentor(s) of the chosen topic', 6000);
+  INSERT OR IGNORE INTO artifacts VALUES(5,'Summon Code Elemental','M','mentor joins a students team for a one hour', 2500);
+  INSERT OR IGNORE INTO artifacts VALUES(6,'Tome of knowledge','M','Extra material for the current topic', 1500);
+  INSERT OR IGNORE INTO artifacts VALUES(7,'Transform mentors','M','All mentors should dress up as pirates (or just funny) for the day', 5000);
+  INSERT OR IGNORE INTO artifacts VALUES(8,'Teleport','M','The whole course goes to an off-school program instead for a day', 30000);
+  INSERT OR IGNORE INTO artifacts VALUES(9,'Coffe','B','brain buff', 5);
 
 DELETE FROM sqlite_sequence;
 
