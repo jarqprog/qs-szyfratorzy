@@ -3,6 +3,9 @@ package application;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.Map.Entry;
+import java.util.Objects;
+import java.time.LocalDate;
+
 
 public class DataTool {
 
@@ -19,6 +22,12 @@ public class DataTool {
         return map.entrySet().stream().sorted(Map.Entry.comparingByValue())
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                 (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+    }
+
+    public static LinkedHashMap<LocalDate,Boolean> sortMapByKey(Map<LocalDate,Boolean> map){
+        return map.entrySet().stream().sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 
     public static <K, V> K getKeyByValue(Map<K, V> map, V value) {

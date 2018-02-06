@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS students(
   password text,
   wallet integer,
   experience integer,
-  attendance float,
   team_id integer,
 	group_id integer,
 	FOREIGN KEY (team_id) REFERENCES teams(id),
@@ -81,12 +80,21 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
   FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
   FOREIGN KEY (student_id) REFERENCES students(id));
 
+
   CREATE TABLE IF NOT EXISTS team_artifacts(
   id integer PRIMARY KEY AUTOINCREMENT,
   team_id integer,
   artifact_id integer,
   FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
   FOREIGN KEY (team_id) REFERENCES team(id));
+
+CREATE TABLE IF NOT EXISTS attendance(
+  id integer PRIMARY KEY AUTOINCREMENT,
+  date text,
+  attendance int,
+  student_id int,
+  FOREIGN KEY (student_id) REFERENCES students(id));
+
 
 -- add data
 
@@ -98,16 +106,48 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
   INSERT OR IGNORE INTO teams VALUES(3,'koniki');
   INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
   INSERT OR IGNORE INTO admins VALUES(6,'Piotr','Gryzlo','piotr@cc.com','12321');
-  INSERT OR IGNORE INTO students VALUES(100,'Marcinek','Stasik','lolek@gmail.com','12321', 200000, 300, 40, 2, 2);
-  INSERT OR IGNORE INTO students VALUES(101,'Jadzia','Piernik','jadzia@cc.com','12321', 2000, 101, 100, 2, 2);
-  INSERT OR IGNORE INTO students VALUES(102,'Maciek','Jankowicz','maciek99@cc.com','12321', 20, 3000, 71, 2, 2);
-  INSERT OR IGNORE INTO students VALUES(103,'Balbina','Karp','karpik007@cc.com','12321', 20, 0, 10, 3, 3);
-  INSERT OR IGNORE INTO students VALUES(104,'Alfred','Szlarski','pan.samochodzik@cc.com','12321', 200, 3000, 40, 3, 3);
-  INSERT OR IGNORE INTO students VALUES(105,'Jakub','Wedrowycz','bimbrownik@gmail.com','12321', 20, 40000, 100, 3, 3);
+  INSERT OR IGNORE INTO students VALUES(100,'Marcinek','Stasik','lolek@gmail.com','12321', 200000, 300, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(101,'Jadzia','Piernik','jadzia@cc.com','12321', 2000, 101, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(102,'Maciek','Jankowicz','maciek99@cc.com','12321', 20, 3000, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(103,'Balbina','Karp','karpik007@cc.com','12321', 20, 0, 3, 3);
+  INSERT OR IGNORE INTO students VALUES(104,'Alfred','Szlarski','pan.samochodzik@cc.com','12321', 200, 3000, 3, 3);
+  INSERT OR IGNORE INTO students VALUES(105,'Jakub','Wedrowycz','bimbrownik@gmail.com','12321', 20, 40000, 3, 3);
   INSERT OR IGNORE INTO mentors VALUES(10,'Jarek','Kucharczyk','jarek@gmail.com','12321', 2);
   INSERT OR IGNORE INTO mentors VALUES(11,'Dominik','Strazak','pogromca@cc.com','12321', 3);
   INSERT OR IGNORE INTO mentors VALUES(12,'Konrad','Mazina','kondzio999999@cc.com','12321', 3);
 
+  -- attendance:
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,100);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,100);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',0,100);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',1,100);
+
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,101);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,101);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',1,101);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',0,101);
+
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',1,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',0,102);
+
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,103);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,103);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',1,103);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',1,103);
+
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,104);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',0,104);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',0,104);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',0,104);
+
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',0,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',0,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',1,105);
+
+  -- items (quests and artifacts):
   INSERT OR IGNORE INTO quests VALUES(1,'Exploring a dungeon','Q','Finishing a Teamwork week', 100);
   INSERT OR IGNORE INTO quests VALUES(2,'Solving the magic puzzle','Q','Finishing an SI assignment', 100);
   INSERT OR IGNORE INTO quests VALUES(3,'Slaying a dragon','Q','Passing a Checkpoint in the first attempt', 500);

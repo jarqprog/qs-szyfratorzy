@@ -4,25 +4,30 @@ import item.ArtifactDAO;
 import item.ArtifactModel;
 import item.QuestDAO;
 import item.QuestModel;
+import school.SchoolController;
 
 import java.util.List;
+
+import application.CreatableDAO;
 
 public class MentorController extends UserController{
     MentorView view;
     MentorModel mentor;
     MentorDAO dao;
+    SchoolController school;
 
     public MentorController(MentorModel mentorModel){
         mentor = mentorModel;
         view = new MentorView();
         dao = new MentorDAO();
+        school = new SchoolController();
 
     }
 
     public void handleMainMenu(){
         boolean isDone = false;
         while(! isDone){
-            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "0"};
             view.clearScreen();
             view.displayMenu();
             String userChoice = view.getMenuChoice(correctChoices);
@@ -35,27 +40,33 @@ public class MentorController extends UserController{
                     createStudent();
                     break;
                 case "3":
-                    createQuest();
+                    assignStudentToGroup();
                     break;
                 case "4":
-                    editQuest();
+                    assignStudentToTeam();
                     break;
                 case "5":
-                    createArtifact();
+                    createQuest();
                     break;
                 case "6":
-                    editArtifact();
+                    editQuest();
                     break;
                 case "7":
-                    markStudentQuest();
+                    createArtifact();
                     break;
                 case "8":
-                    displayStudentWallet();
+                    editArtifact();
                     break;
                 case "9":
-                    markStudentArtifacts();
+                    markStudentQuest();
                     break;
                 case "10":
+                    displayStudentWallet();
+                    break;
+                case "11":
+                    markStudentArtifacts();
+                    break;
+                case "12":
                     showStudentsFromMyGroup();
                     break;
                 case "0":
@@ -197,8 +208,34 @@ public class MentorController extends UserController{
     }
 
     private void showStudentsFromMyGroup() {
-        List<StudentModel> students = mentor.getGroup().getStudents();
+        List<StudentModel> students = school.getStudentsByGroup(mentor.getGroup());
         view.displayMessage("Your students:\n");
         view.displayUsersWithDetails(students);
     }
+
+    private void assignStudentToGroup(){
+        List<StudentModel> students = school.getAllStudents();
+        StudentModel student = school.pickStudentFromList(students);
+        if (student != null){
+            school.assignStudentToGroup(student);
+            view.displayMessage("\nStudent edited: ");
+            view.displayUserWithDetails(student);
+        } else {
+            view.displayMessage("\nStudent does not exist...");
+        }
+    }
+
+    private void assignStudentToTeam() {
+        List<StudentModel> students = school.getStudentsByGroup(mentor.getGroup());
+        StudentModel student = school.pickStudentFromList(students);
+        if (student != null){
+            school.assignStudentToTeam(student);
+            view.displayMessage("\nStudent edited: ");
+            view.displayUserWithDetails(student);
+        } else {
+            view.displayMessage("\nStudent does not exist...");
+        }
+    }
+
+
 }
