@@ -19,10 +19,10 @@ public class ShopView extends AbstractView {
     }
 
     public void displayListOfArtifacts(List<ArtifactModel> store) {
-        System.out.format("%-10s | %-4s | %-3s | %-21s | %-70s | %-9s |\n", "Genre", "Id", "Type", "Name", "Description", "Price");
+        System.out.format("%-4s | %-3s | %-21s | %-80s | %-9s |\n", "Id", "Type", "Name", "Description", "Price");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
         for(ArtifactModel artifact : store) {
-            System.out.format("%-10s | %-4d | %-4s | %-21s | %-70s | %-6d cc |\n", artifact.getGenre(), artifact.getId(),
+            System.out.format("%-4d | %-4s | %-21s | %-80s | %-6d cc |\n", artifact.getId(),
                                 artifact.getType(), artifact.getName(), artifact.getDescription(), artifact.getPrice());
             System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
         }
