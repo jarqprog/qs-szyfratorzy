@@ -1,5 +1,7 @@
 package item;
 
+import application.DataTool;
+
 public abstract class ItemModel {
 
     protected char type;
@@ -27,8 +29,8 @@ public abstract class ItemModel {
         return name;
     }
 
-    public void setName(String newItemName){
-        name = newItemName;
+    public void setName(String name){
+        this.name = name;
         saveObject();
     }
 
@@ -40,8 +42,8 @@ public abstract class ItemModel {
         return id;
     }
 
-    public void setType(char newItemType){
-        type = newItemType;
+    public void setType(char type){
+        this.type = type;
         saveObject();
     }
 
@@ -49,8 +51,13 @@ public abstract class ItemModel {
         return description;
     }
 
-    public void setDescription(String newItemDescription){
-        description = newItemDescription;
+    public String getShortDescription() {
+        final int MAX_DESCRIPTION_LENGTH = 70;
+        return DataTool.getShortText(MAX_DESCRIPTION_LENGTH, description);
+    }
+
+    public void setDescription(String description){
+        this.description = description;
         saveObject();
     }
 
