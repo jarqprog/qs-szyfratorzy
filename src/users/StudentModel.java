@@ -122,7 +122,8 @@ public class StudentModel extends UserModel {
         this.attendance = attendance;
     }
 
-    public List<ArtifactModel> getInventory() { return inventory; }
+    public List<ArtifactModel> getInventory() {
+        return inventory; }
 
     public void setInventory(List<ArtifactModel> inventory) { this.inventory = inventory; }
 
