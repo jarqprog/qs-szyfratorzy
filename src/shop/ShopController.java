@@ -64,7 +64,7 @@ public class ShopController {
 
     public void buyArtifact() {
         view.displayListOfArtifacts(getArtifactsByType('B'));
-        int id = view.getUserChoice("Enter artifact id: ");
+        int id = view.getNumber("Enter artifact id: ");
         for (ArtifactModel artifact : shop.getStore()) {
             if (id == artifact.getId() && Objects.equals(artifact.getType(), 'B')) {
                 if (artifact.getPrice() <= student.getWallet()) {
@@ -85,7 +85,7 @@ public class ShopController {
 
     public void buyArtifactForTeam() {
         view.displayListOfArtifacts(getArtifactsByType('M'));
-        int id = view.getUserChoice("Enter artifact id: ");
+        int id = view.getNumber("Enter artifact id: ");
         for (ArtifactModel artifact : shop.getStore()) {
             if (id == artifact.getId() && Objects.equals(artifact.getType(), 'M')) {
                 if (checkTeamResources(artifact, student.getTeam())) {
