@@ -1,5 +1,6 @@
 package shop;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,7 +51,7 @@ public class ShopController {
                     view.handlePause();
                     break;
                 case "3":
-//                    buyArtifactForTeam();
+                    buyArtifactForTeam();
                     view.handlePause();
                     break;
                 case "0":
@@ -62,7 +63,7 @@ public class ShopController {
 
 
     public void buyArtifact() {
-        view.displayListOfArtifacts(shop.getStore(), 'B');
+        view.displayListOfArtifacts(getArtifactsByType('B'));
         int id = view.getUserChoice("Enter artifact id: ");
         for (ArtifactModel artifact : shop.getStore()) {
             if (id == artifact.getId() && Objects.equals(artifact.getType(), 'B')) {
@@ -85,17 +86,18 @@ public class ShopController {
     }
 
     public void buyArtifactForTeam() {
-        view.displayListOfArtifacts(shop.getStore(), 'M');
+        view.displayListOfArtifacts(getArtifactsByType('M'));
         int id = view.getUserChoice("Enter artifact id: ");
         for (ArtifactModel artifact : shop.getStore()) {
             if (id == artifact.getId() && Objects.equals(artifact.getType(), 'M')) {
                 if (checkTeamResources(artifact, student.getTeam())) {
                     chargeTeamMembers(artifact, student.getTeam());
                     student.getTeam().getInventory().add(artifact);
+                    view.displayMessage("You bought " + artifact.getName() + "!");
 //                    save
 
                 } else {
-                    view.displayMessage("Not enough codecool coins to buy this artifact!");
+                    view.displayMessage("Not enough coolcoins to buy this artifact!");
                 }
             }
         }
@@ -115,10 +117,19 @@ public class ShopController {
     public void chargeTeamMembers(ArtifactModel artifact, TeamModel team) {
 
         for (StudentModel student : team.getStudents()) {
-            for (StudentModel pupil : team.getStudents()) {
-                pupil.setWallet(pupil.getWallet() - (artifact.getPrice() / team.getStudents().size()));
+            student.setWallet(student.getWallet() - (artifact.getPrice() / team.getStudents().size()));
+            }
+    }
+
+    public List<ArtifactModel> getArtifactsByType(char type) {
+
+        List<ArtifactModel> artifacts = new ArrayList<>();
+        for(ArtifactModel artifact : shop.getStore()){
+            if(Objects.equals(artifact.getType(), type)) {
+                artifacts.add(artifact);
             }
         }
+        return artifacts;
     }
 
 }
