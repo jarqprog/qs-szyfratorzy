@@ -40,7 +40,7 @@ public class AdminController extends UserController{
                     displayMentorProfile();
                     break;
                 case "5":
-                    executeNotImplementedInfo();
+                    displayStudentsByMentor();
                     break;
                 case "6":
                     createGroup();
@@ -62,74 +62,71 @@ public class AdminController extends UserController{
         String password = view.getUserInput("Enter password: ");
         MentorModel mentor = new MentorModel(firstName, lastName, password);
         view.clearScreen();
-        view.displayMessage("Mentor created: " + mentor.toString());
+        view.displayMessage("\nMentor created: " + mentor.toString());
     }
 
     private void editMentor() {
-        List<MentorModel> mentors = SchoolController.getAllMentors();
-        view.displayUsers(mentors);
-        String id = view.getUserInput("Enter ID of mentor: ");
-        for (MentorModel mentor : mentors) {
-            if (id.equals(Integer.toString(mentor.getId()))) {
-                boolean isFinished = false;
-                while(! isFinished) {
+        MentorModel mentor = SchoolController.getMentorByUserChoice();
+        if (mentor != null) {
+            boolean isFinished = false;
+            while (!isFinished) {
+                view.clearScreen();
+                view.displayEditMenu();
+                String userChoice = view.getUserInput("Select an option: ");
+                view.clearScreen();
+                switch (userChoice) {
+                    case "1":
+                        String firstName = view.getUserInput("Enter first name: ");
+                        mentor.setFirstName(firstName);
+                        break;
+                    case "2":
+                        String lastName = view.getUserInput("Enter last name: ");
+                        mentor.setLastName(lastName);
+                        break;
+                    case "3":
+                        String password = view.getUserInput("Enter password: ");
+                        mentor.setPassword(password);
+                        break;
+                    case "4":
+                        String email = view.getUserInput("Enter email: ");
+                        mentor.setEmail(email);
+                        break;
+                    case "5":
+                        SchoolController.assignMentorToGroup(mentor);
+                        break;
+                    case "0":
+                        MentorDAO dao = new MentorDAO();
+                        dao.saveObject(mentor);
+                        isFinished = true;
+                        break;
+                }
+                if (!isFinished) {
                     view.clearScreen();
-                    view.displayEditMenu();
-                    String userChoice = view.getUserInput("Select an option: ");
-                    view.clearScreen();
-                    switch(userChoice) {
-                        case "1" :
-                            String firstName = view.getUserInput("Enter first name: ");
-                            mentor.setFirstName(firstName);
-                            break;
-                        case "2" :
-                            String lastName = view.getUserInput("Enter last name: ");
-                            mentor.setLastName(lastName);
-                            break;
-                        case "3" :
-                            String password = view.getUserInput("Enter password: ");
-                            mentor.setPassword(password);
-                            break;
-                        case "4" :
-                            String email = view.getUserInput("Enter email: ");
-                            mentor.setEmail(email);
-                            break;
-                        case "5" :
-                            SchoolController.assignMentorToGroup(mentor);
-                            break;
-                        case "0":
-                            MentorDAO dao = new MentorDAO();
-                            dao.saveObject(mentor);
-                            isFinished = true;
-                            break;
-                    }
-                    if(! isFinished){
-                        view.clearScreen();
-                        view.displayMessage("Mentor`s data:\n");
-                        view.displayUserWithDetails(mentor);
-                        view.handlePause();
-                    }
+                    view.displayMessage("\nMentor`s data:\n");
+                    view.displayUserWithDetails(mentor);
+                    view.handlePause();
                 }
             }
         }
     }
 
     private void displayMentorProfile() {
-        List<MentorModel> mentors = SchoolController.getAllMentors();
-        view.displayMessage("Mentors:\n");
-        view.displayUsers(mentors);
-        String id = view.getUserInput("Select mentor by id: ");
-        for (MentorModel mentor : mentors) {
-            if (id.equals(Integer.toString(mentor.getId()))) {
-                view.clearScreen();
-                view.displayMessage("Mentor's profile:\n");
-                view.displayUserWithDetails(mentor);
-            }
+        MentorModel mentor = SchoolController.getMentorByUserChoice();
+        if(mentor != null) {
+            view.clearScreen();
+            view.displayMessage("\nMentor's details:\n");
+            view.displayUserWithDetails(mentor);
         }
     }
 
     private void displayStudentsByMentor() {
-
+        MentorModel mentor = SchoolController.getMentorByUserChoice();
+        if(mentor != null) {
+            view.clearScreen();
+            view.displayMessage("\nStudents:\n");
+            List<StudentModel> students = SchoolController.getStudentsByGroup(mentor.getGroup());
+            view.displayUsers(students);
+        }
     }
 
     private void createGroup(){

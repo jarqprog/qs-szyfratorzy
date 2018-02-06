@@ -2,10 +2,7 @@ package school;
 
 import application.CreatableDAO;
 import application.Table;
-import users.MentorDAO;
-import users.MentorModel;
-import users.StudentModel;
-import users.StudentDAO;
+import users.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,4 +143,19 @@ public class SchoolController {
         CreatableDAO dao = new TeamDAO();
         return dao.getObjectById(1);
     }
+
+    public static MentorModel getMentorByUserChoice() {
+        UsersView view = new UsersView();
+        List<MentorModel> mentors = getAllMentors();
+        view.displayMessage("Mentors:\n");
+        view.displayUsers(mentors);
+        String id = view.getUserInput("\nSelect mentor by id: ");
+        for (MentorModel mentor : mentors) {
+            if (id.equals(Integer.toString(mentor.getId()))) {
+                return mentor;
+            }
+        }
+        return null;
+    }
+
 }
