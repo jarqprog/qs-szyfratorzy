@@ -12,7 +12,7 @@ public class UsersView extends AbstractView{
         }
     }
 
-    protected <T extends UserModel> void displayUsers(List<T> users){
+    public <T extends UserModel> void displayUsers(List<T> users){
         for(T user: users) {
             displayObject(user);
         }
