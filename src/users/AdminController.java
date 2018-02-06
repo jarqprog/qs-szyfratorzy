@@ -43,7 +43,7 @@ public class AdminController extends UserController{
                     displayStudentsByMentor();
                     break;
                 case "6":
-                    createGroup();
+                    SchoolController.createNewGroup();
                     break;
                 case "7":
                     runExpLevelManager();
@@ -127,13 +127,6 @@ public class AdminController extends UserController{
             List<StudentModel> students = SchoolController.getStudentsByGroup(mentor.getGroup());
             view.displayUsers(students);
         }
-    }
-
-    private void createGroup(){
-        String groupName = view.getUserInput("Enter group name: ");
-        GroupModel group = new GroupModel(groupName);
-        view.clearScreen();
-        view.displayMessage("Group created: " + group);
     }
 
     private void runExpLevelManager(){
