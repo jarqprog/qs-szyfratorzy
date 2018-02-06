@@ -158,4 +158,24 @@ public class SchoolController {
         return null;
     }
 
+    public static void createNewTeam(){
+        boolean isDone = false;
+        String teamName = "";
+        SchoolView view = new SchoolView();
+        while (!isDone && teamName != "0"){
+            teamName = view.getUserInput("Enter team name: ");
+            if (teamName == "0"){
+                isDone = true;
+                break;
+            } else if (getTeamNames().contains(teamName)) {
+                view.displayMessage("Team already exist...");
+                continue;
+            } else {
+                TeamModel newTeam = new TeamModel(teamName);
+                view.displayMessage("Done");
+                isDone = true;
+            }
+        }
+    }
+
 }
