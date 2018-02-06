@@ -1,11 +1,10 @@
 package application;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.time.LocalDate;
-
 
 public class DataTool {
 
@@ -18,13 +17,19 @@ public class DataTool {
         return false;
     }
 
-    public static <K,V extends Comparable<V>> LinkedHashMap<K,V> sortMapByValue(Map<K,V> map){
+    public static <K,V extends Comparable<V>> LinkedHashMap<K,V> sortMapByValue(Map<K,V> map) {
         return map.entrySet().stream().sorted(Map.Entry.comparingByValue())
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                 (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 
-    public static LinkedHashMap<LocalDate,Boolean> sortMapByKey(Map<LocalDate,Boolean> map){
+    public static <V> LinkedHashMap<LocalDate,V> sortDateMap(Map<LocalDate,V> map) {
+        return map.entrySet().stream().sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+    }
+
+    public static <K extends Comparable<K>,V> LinkedHashMap<K,V> sortMapByKey(Map <K,V> map){
         return map.entrySet().stream().sorted(Map.Entry.comparingByKey())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                         (oldValue, newValue) -> oldValue, LinkedHashMap::new));
@@ -57,8 +62,5 @@ public class DataTool {
         List<String> listToTrim = Arrays.asList(string.split(regex));
         listToTrim.stream().map(String :: trim);
         return String.join(delimiter, listToTrim);
-
-
-
     }
 }
