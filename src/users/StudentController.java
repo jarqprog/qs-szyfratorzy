@@ -84,7 +84,7 @@ public class StudentController extends UserController{
 
             String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
             view.clearScreen();
-            view.displayMessage(showProfile(student));
+            showProfile(student);
             view.displayMenu();
             String userChoice = view.getMenuChoice(correctChoices);
 

@@ -17,9 +17,9 @@ public abstract class  UserController{
 
     }
 
-    protected <T extends UserModel> String showProfile(T user){
+    protected <T extends UserModel> void showProfile(T user){
         UsersView view = new UsersView();
-       return view.displayUserWithDetails(user);
+        view.displayUserWithDetails(user);
     }
 
     protected List<MentorModel> getMentors(){
