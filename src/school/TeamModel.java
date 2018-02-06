@@ -2,7 +2,7 @@ package school;
 
 import users.StudentDAO;
 
-public class TeamModel extends StudentSets{
+public class TeamModel extends StudentSetsModel{
 
     public TeamModel(int id, String name) {
         super(id, name);
