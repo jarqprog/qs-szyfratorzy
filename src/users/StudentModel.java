@@ -129,7 +129,7 @@ public class StudentModel extends UserModel {
 
     public String getFullDataToString() {
         return super.getFullDataToString() + String.format(
-                " \n\t -group: %s\n\t -team: %s\n\t -wallet: %dcc\n\t" +
+                " \n\n\t -group: %s\n\t -team: %s\n\t -wallet: %dcc\n\t" +
                 " -level: %s\n\t -attendance: %.2f\n", getGroup(), getTeam(),
                 wallet, getExperienceLevel(), attendance);
     }

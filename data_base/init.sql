@@ -81,6 +81,13 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
   FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
   FOREIGN KEY (student_id) REFERENCES students(id));
 
+  CREATE TABLE IF NOT EXISTS team_artifacts(
+  id integer PRIMARY KEY AUTOINCREMENT,
+  team_id integer,
+  artifact_id integer,
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
+  FOREIGN KEY (team_id) REFERENCES team(id));
+
 -- add data
 
   INSERT OR IGNORE INTO groups VALUES(1,'undefined');

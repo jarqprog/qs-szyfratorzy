@@ -116,7 +116,7 @@ public abstract class AbstractView {
         }
     }
 
-    public int getUserChoice(String message) {
+    public int getNumber(String message) {
         Scanner scanner = new Scanner(System.in);
         int input = -1;
         try {
@@ -132,7 +132,7 @@ public abstract class AbstractView {
         String menuChoice = "";
         Boolean isChoiceReady = false;
         while (!isChoiceReady) {
-            menuChoice = getUserInput("Select an option: ");
+            menuChoice = getUserInput("\tSelect an option: ");
             isChoiceReady = DataTool.checkIfElementInArray(correctChoices, menuChoice);
         }
         return menuChoice;
