@@ -1,6 +1,7 @@
 package shop;
 
 import java.util.List;
+import java.util.Objects;
 
 import application.DataTool;
 import item.ArtifactDAO;
@@ -29,7 +30,7 @@ public class ShopController {
         boolean isDone = false;
         while(! isDone){
             String userChoice = "";
-            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "0"};
+            String[] correctChoices = {"1", "2", "3", "0"};
             Boolean isChoiceReady = false;
             while(! isChoiceReady){
                 view.clearScreen();
@@ -47,6 +48,10 @@ public class ShopController {
                     buyArtifact();
                     view.handlePause();
                     break;
+                case "3":
+                    buyArtifactForTeam();
+                    view.handlePause();
+                    break;
                 case "0":
                     isDone = true;
                     break;
@@ -56,10 +61,10 @@ public class ShopController {
 
 
     public void buyArtifact() {
-        view.displayListOfArtifacts(shop.getStore());
+        view.displayListOfArtifacts(shop.getStore(), 'B');
         int id = view.getUserChoice("Enter artifact id: ");
         for(ArtifactModel artifact : shop.getStore()) {
-            if(id == artifact.getId()) {
+            if(id == artifact.getId() && Objects.equals(artifact.getType(), 'B')) {
                 if(artifact.getPrice() <= student.getWallet()) {
                     student.getInventory().clear();
                     student.getInventory().add(artifact);
@@ -77,4 +82,24 @@ public class ShopController {
         view.displayMessage("Bye");
 
     }
+
+    public void buyArtifactForTeam() {
+        view.displayListOfArtifacts(shop.getStore(), 'M');
+        int id = view.getUserChoice("Enter artifact id: ");
+        for(ArtifactModel artifact : shop.getStore()) {
+            if(id == artifact.getId() && Objects.equals(artifact.getType(), 'M')) {
+                if(checkTeamResources()) {
+                    chargeTeamMembers()
+                    student.getTeam().getInventory().add(artifact);
+//                    save
+
+                }
+                else {
+                    view.displayMessage("Not enough codecool coins to buy this artifact!");
+                }
+            }
+        }
+    }
+
+    public boolean checkTeamResources() { return true; }
 }
