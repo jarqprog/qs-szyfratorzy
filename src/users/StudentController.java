@@ -3,6 +3,7 @@ package users;
 import item.ArtifactModel;
 import shop.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentController extends UserController{
@@ -35,6 +36,8 @@ public class StudentController extends UserController{
     }
 
     private void showMyInventory() { view.displayInventory(student.getInventory()); }
+
+    private void showTeamInventory() { view.displayInventory(student.getTeam().getInventory()); }
 
     public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
 
@@ -95,7 +98,7 @@ public class StudentController extends UserController{
                     showMyWallet();
                     break;
                 case "3":
-                    showLevelOfExperience();
+                    showTeamInventory();
                     break;
                 case "4":
                     executeShopping();
