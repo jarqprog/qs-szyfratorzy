@@ -6,6 +6,7 @@ import java.util.Objects;
 import application.DataTool;
 import item.ArtifactDAO;
 import item.ArtifactModel;
+import school.TeamModel;
 import users.StudentDAO;
 import users.StudentModel;
 
@@ -17,29 +18,29 @@ public class ShopController {
     StudentModel student;
     ShopDAO shopDAO;
 
-    public ShopController (ShopModel shop, StudentModel student) {
+    public ShopController(ShopModel shop, StudentModel student) {
         this.shop = shop;
         this.student = student;
         view = new ShopView();
         artifactDao = new ArtifactDAO();
         List<ArtifactModel> artifacts = artifactDao.getManyObjects("SELECT * FROM artifacts;");
         shop.setStore(artifacts);
-        }
+    }
 
     public void executeShoppingMenu() {
         boolean isDone = false;
-        while(! isDone){
+        while (!isDone) {
             String userChoice = "";
             String[] correctChoices = {"1", "2", "3", "0"};
             Boolean isChoiceReady = false;
-            while(! isChoiceReady){
+            while (!isChoiceReady) {
                 view.clearScreen();
                 view.displayMenu();
                 userChoice = view.getUserInput("Select an option: ");
                 isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
             }
             view.clearScreen();
-            switch(userChoice){
+            switch (userChoice) {
                 case "1":
                     view.displayListOfArtifacts(shop.getStore());
                     view.handlePause();
@@ -63,12 +64,12 @@ public class ShopController {
     public void buyArtifact() {
         view.displayListOfArtifacts(shop.getStore(), 'B');
         int id = view.getUserChoice("Enter artifact id: ");
-        for(ArtifactModel artifact : shop.getStore()) {
-            if(id == artifact.getId() && Objects.equals(artifact.getType(), 'B')) {
-                if(artifact.getPrice() <= student.getWallet()) {
+        for (ArtifactModel artifact : shop.getStore()) {
+            if (id == artifact.getId() && Objects.equals(artifact.getType(), 'B')) {
+                if (artifact.getPrice() <= student.getWallet()) {
                     student.getInventory().clear();
                     student.getInventory().add(artifact);
-                    student.setWallet(student.getWallet()-artifact.getPrice());
+                    student.setWallet(student.getWallet() - artifact.getPrice());
                     view.displayMessage("You bought " + artifact.getName() + "!");
                     shopDAO = new ShopDAO();
                     shopDAO.saveInventory(student.getId(), student.getInventory());
@@ -83,23 +84,43 @@ public class ShopController {
 
     }
 
-//    public void buyArtifactForTeam() {
-//        view.displayListOfArtifacts(shop.getStore(), 'M');
-//        int id = view.getUserChoice("Enter artifact id: ");
-//        for(ArtifactModel artifact : shop.getStore()) {
-//            if(id == artifact.getId() && Objects.equals(artifact.getType(), 'M')) {
-//                if(checkTeamResources()) {
-//                    chargeTeamMembers();
-//                    student.getTeam().getInventory().add(artifact);
-////                    save
-//
-//                }
-//                else {
-//                    view.displayMessage("Not enough codecool coins to buy this artifact!");
-//                }
-//            }
-//        }
-//    }
+    public void buyArtifactForTeam() {
+        view.displayListOfArtifacts(shop.getStore(), 'M');
+        int id = view.getUserChoice("Enter artifact id: ");
+        for (ArtifactModel artifact : shop.getStore()) {
+            if (id == artifact.getId() && Objects.equals(artifact.getType(), 'M')) {
+                if (checkTeamResources(artifact, student.getTeam())) {
+                    chargeTeamMembers(artifact, student.getTeam());
+                    student.getTeam().getInventory().add(artifact);
+//                    save
 
-    public boolean checkTeamResources() { return true; }
+                } else {
+                    view.displayMessage("Not enough codecool coins to buy this artifact!");
+                }
+            }
+        }
+    }
+
+    public boolean checkTeamResources(ArtifactModel artifact, TeamModel team) {
+
+        int pricePerTeamMember = artifact.getPrice() / team.getStudents().size();
+        for (StudentModel student : team.getStudents()) {
+            if (student.getWallet() < pricePerTeamMember) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void chargeTeamMembers(ArtifactModel artifact, TeamModel team) {
+
+        for (StudentModel student : team.getStudents()) {
+            for (StudentModel pupil : team.getStudents()) {
+                pupil.setWallet(pupil.getWallet() - (artifact.getPrice() / team.getStudents().size()));
+            }
+        }
+    }
+
 }
+
+
