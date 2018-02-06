@@ -21,7 +21,7 @@ public class StudentView extends UsersView {
         String[] options = {"      *** Student's Menu ***     \n",
                             "[1] display profile",
                             "[2] display wallet",
-                            "[3] display level of experience",
+                            "[3] display team inventory",
                             "[4] shop online",
                             "[5] display inventory",
                             "[6] display group",
