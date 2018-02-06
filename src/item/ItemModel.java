@@ -52,7 +52,7 @@ public abstract class ItemModel {
     }
 
     public String getShortDescription() {
-        int MAX_DESCRIPTION_LENGTH = 60;
+        final int MAX_DESCRIPTION_LENGTH = 70;
         return DataTool.getShortText(MAX_DESCRIPTION_LENGTH, description);
     }
 

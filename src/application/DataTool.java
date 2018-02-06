@@ -40,6 +40,7 @@ public class DataTool {
             return text.substring(0, cutIndex) + "...";
         }
         return text;
+    }
 
     public static String removeWhitespacesFromString(String string) {
         String regex = "\\s+";
