@@ -49,7 +49,7 @@ public class ShopController {
                     view.handlePause();
                     break;
                 case "3":
-                    buyArtifactForTeam();
+//                    buyArtifactForTeam();
                     view.handlePause();
                     break;
                 case "0":
@@ -83,23 +83,23 @@ public class ShopController {
 
     }
 
-    public void buyArtifactForTeam() {
-        view.displayListOfArtifacts(shop.getStore(), 'M');
-        int id = view.getUserChoice("Enter artifact id: ");
-        for(ArtifactModel artifact : shop.getStore()) {
-            if(id == artifact.getId() && Objects.equals(artifact.getType(), 'M')) {
-                if(checkTeamResources()) {
-                    chargeTeamMembers()
-                    student.getTeam().getInventory().add(artifact);
-//                    save
-
-                }
-                else {
-                    view.displayMessage("Not enough codecool coins to buy this artifact!");
-                }
-            }
-        }
-    }
+//    public void buyArtifactForTeam() {
+//        view.displayListOfArtifacts(shop.getStore(), 'M');
+//        int id = view.getUserChoice("Enter artifact id: ");
+//        for(ArtifactModel artifact : shop.getStore()) {
+//            if(id == artifact.getId() && Objects.equals(artifact.getType(), 'M')) {
+//                if(checkTeamResources()) {
+//                    chargeTeamMembers();
+//                    student.getTeam().getInventory().add(artifact);
+////                    save
+//
+//                }
+//                else {
+//                    view.displayMessage("Not enough codecool coins to buy this artifact!");
+//                }
+//            }
+//        }
+//    }
 
     public boolean checkTeamResources() { return true; }
 }
