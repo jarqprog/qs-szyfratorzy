@@ -14,14 +14,11 @@ public class MentorController extends UserController{
     MentorView view;
     MentorModel mentor;
     MentorDAO dao;
-    SchoolController school;
 
     public MentorController(MentorModel mentorModel){
         mentor = mentorModel;
         view = new MentorView();
         dao = new MentorDAO();
-        school = new SchoolController();
-
     }
 
     public void handleMainMenu(){
@@ -208,16 +205,16 @@ public class MentorController extends UserController{
     }
 
     private void showStudentsFromMyGroup() {
-        List<StudentModel> students = school.getStudentsByGroup(mentor.getGroup());
+        List<StudentModel> students = SchoolController.getStudentsByGroup(mentor.getGroup());
         view.displayMessage("Your students:\n");
         view.displayUsersWithDetails(students);
     }
 
-    private void assignStudentToGroup(){
-        List<StudentModel> students = school.getAllStudents();
-        StudentModel student = school.pickStudentFromList(students);
+    private void assignStudentToGroup() {
+        List<StudentModel> students = SchoolController.getAllStudents();
+        StudentModel student = SchoolController.pickStudentFromList(students);
         if (student != null){
-            school.assignStudentToGroup(student);
+            SchoolController.assignStudentToGroup(student);
             view.displayMessage("\nStudent edited: ");
             view.displayUserWithDetails(student);
         } else {
@@ -226,16 +223,14 @@ public class MentorController extends UserController{
     }
 
     private void assignStudentToTeam() {
-        List<StudentModel> students = school.getStudentsByGroup(mentor.getGroup());
-        StudentModel student = school.pickStudentFromList(students);
+        List<StudentModel> students = SchoolController.getStudentsByGroup(mentor.getGroup());
+        StudentModel student = SchoolController.pickStudentFromList(students);
         if (student != null){
-            school.assignStudentToTeam(student);
+            SchoolController.assignStudentToTeam(student);
             view.displayMessage("\nStudent edited: ");
             view.displayUserWithDetails(student);
         } else {
             view.displayMessage("\nStudent does not exist...");
         }
     }
-
-
 }
