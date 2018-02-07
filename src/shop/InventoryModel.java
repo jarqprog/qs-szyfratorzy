@@ -2,14 +2,13 @@ package shop;
 
 import item.ArtifactModel;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InventoryModel {
+public abstract class InventoryModel {
 
-    private int id;
-    private Map<ArtifactModel, Integer> inventory;
+    protected int id;
+    protected Map<ArtifactModel, Integer> inventory;
 
     public InventoryModel(int id) {
 
@@ -25,7 +24,9 @@ public class InventoryModel {
     public void setInventory(Map<ArtifactModel, Integer> inventory) {
         this.inventory = inventory;
     }
-    
+
+    public abstract void updateInventory();
+
 }
 
 
