@@ -158,4 +158,46 @@ public class SchoolController {
         return null;
     }
 
+    public static void createNewTeam(){
+        boolean isDone = false;
+        String teamName = "";
+        SchoolView view = new SchoolView();
+        while (!isDone){
+            teamName = view.getUserInput("Enter team name(or 0 to exit): ");
+            if (teamName.equals("0")){
+                isDone = true;
+                break;
+            } else if (getTeamNames().contains(teamName)) {
+                view.displayMessage("Team already exist...");
+                continue;
+            } else {
+                TeamModel newTeam = new TeamModel(teamName);
+                view.clearScreen();
+                view.displayMessage("Team created: \n" + newTeam);
+                isDone = true;
+            }
+        }
+    }
+
+    public static void createNewGroup(){
+        boolean isDone = false;
+        String groupName = "";
+        SchoolView view = new SchoolView();
+        while (!isDone){
+            groupName = view.getUserInput("Enter group name(or 0 to exit): ");
+            if (groupName.equals("0")){
+                isDone = true;
+                break;
+            } else if (getGroupNames().contains(groupName)) {
+                view.displayMessage("Group already exist...");
+                continue;
+            } else {
+                GroupModel newGroup = new GroupModel(groupName);
+                view.clearScreen();
+                view.displayMessage("Group created: \n" + newGroup);
+                isDone = true;
+            }
+        }
+    }
+
 }

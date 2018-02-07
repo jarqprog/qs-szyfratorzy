@@ -24,7 +24,7 @@ public class MentorController extends UserController{
     public void handleMainMenu(){
         boolean isDone = false;
         while(! isDone){
-            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "0"};
             view.clearScreen();
             view.displayMenu();
             String userChoice = view.getMenuChoice(correctChoices);
@@ -65,6 +65,9 @@ public class MentorController extends UserController{
                     break;
                 case "12":
                     showStudentsFromMyGroup();
+                    break;
+                case "13":
+                    SchoolController.createNewTeam();
                     break;
                 case "0":
                     isDone = true;
