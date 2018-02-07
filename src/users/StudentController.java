@@ -39,12 +39,11 @@ public class StudentController extends UserController{
 
     private void showTeamInventory() { view.displayInventory(student.getTeam().getInventory()); }
 
-    public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
+//    public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
 
-    private void updateInventory() {
+    private void updateStudentInventory() {
         shopDAO = new ShopDAO();
-        List<String []> artifacts =  shopDAO.findStudentArtifacts(student.getId());
-        student.setInventory(shopDAO.loadInventory(artifacts));
+        shopDAO.loadStudentInventory(student.getId());
         shopDAO.saveInventory(student.getId(), student.getInventory());
     }
 
@@ -70,6 +69,7 @@ public class StudentController extends UserController{
             int id = view.getNumber("Enter artifact id: ");
             for(ArtifactModel artifact : student.getInventory()) {
                 if(id == artifact.getId()) {
+
                     student.getInventory().remove(artifact);
                     view.displayMessage("Artifact used!");
                     shopDAO.deleteFromInventory(student.getId(), id);

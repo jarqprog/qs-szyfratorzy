@@ -7,6 +7,8 @@ import application.DatabaseDAO;
 import item.ArtifactModel;
 import school.GroupModel;
 import school.TeamModel;
+import shop.InventoryModel;
+import shop.StudentInventory;
 
 
 public class UsersDAO extends DatabaseDAO implements LogableDAO{
@@ -94,7 +96,7 @@ public class UsersDAO extends DatabaseDAO implements LogableDAO{
         int experience = 1000;
         GroupModel group = new GroupModel("undefined");
         TeamModel team = new TeamModel("undefined");
-        List<ArtifactModel> inventory = new ArrayList<>();
+        InventoryModel inventory = new StudentInventory(id);
 
         return new StudentModel(id, fname, lname, email, password, wallet,
                                 experience, team, group, inventory);

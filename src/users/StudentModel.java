@@ -9,6 +9,8 @@ import school.ExperienceLevelsController;
 import school.GroupModel;
 import school.TeamModel;
 import school.AttendanceModel;
+import shop.InventoryModel;
+import shop.StudentInventory;
 
 public class StudentModel extends UserModel {
 
@@ -16,7 +18,7 @@ public class StudentModel extends UserModel {
     private TeamModel team;
     private int wallet;
     private int experience;
-    private List<ArtifactModel> inventory;
+    private InventoryModel inventory;
     private AttendanceModel attendance;
     private String experienceLevel;
 
@@ -27,15 +29,15 @@ public class StudentModel extends UserModel {
         attendance = new AttendanceModel(id); // set student id -1 means not loading attendance from database
         team = new TeamModel(1, "undefined");
         group = new GroupModel(1,"undefined");
-        inventory = new ArrayList<>();
         role = Role.STUDENT.getName();
         this.id = saveNewObjectGetId();
         attendance.setStudentId(id); // to set proper student id in attendance
+        inventory = new StudentInventory(id);
     }
 
     public StudentModel(int id, String firstName, String lastName, String email,
                         String password, int wallet, int experience,
-                        TeamModel team, GroupModel group, List<ArtifactModel> inventory) {
+                        TeamModel team, GroupModel group, InventoryModel inventory) {
 
         super(id, firstName, lastName, email, password);
         this.wallet = wallet;
@@ -119,9 +121,9 @@ public class StudentModel extends UserModel {
         return attendance;
     }
 
-    public List<ArtifactModel> getInventory() { return inventory; }
+    public InventoryModel getInventory() { return inventory; }
 
-    public void setInventory(List<ArtifactModel> inventory) { this.inventory = inventory; }
+    public void setInventory(InventoryModel inventory) { this.inventory = inventory; }
 
     public String getFullDataToString() {
         return super.getFullDataToString() + String.format(
