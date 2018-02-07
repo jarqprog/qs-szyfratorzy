@@ -3,12 +3,12 @@ package school;
 import item.ArtifactModel;
 import users.StudentDAO;
 
-public class TeamModel extends StudentSetsModel{
-
 import java.util.ArrayList;
 import java.util.List;
-private List<ArtifactModel> inventory;
 
+public class TeamModel extends StudentSetsModel{
+
+    private List<ArtifactModel> inventory;
 
     public TeamModel(int id, String name) {
         super(id, name);
