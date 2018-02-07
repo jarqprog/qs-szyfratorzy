@@ -1,15 +1,15 @@
 package application;
 
-import java.util.Map;
-import java.util.LinkedHashMap;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.Map.Entry;
 import java.util.Objects;
 
 public class DataTool {
 
-    public static Boolean checkIfElementInArray(String[] array, String element) {
-        for(String item : array){
+    public static <T> Boolean checkIfElementInArray(T[] array, T element) {
+        for(T item : array){
             if(item.equals(element)){
                 return true;
             }
@@ -17,10 +17,22 @@ public class DataTool {
         return false;
     }
 
-    public static LinkedHashMap<String,Integer> sortMapByValue(Map<String,Integer> map){
+    public static <K,V extends Comparable<V>> LinkedHashMap<K,V> sortMapByValue(Map<K,V> map) {
         return map.entrySet().stream().sorted(Map.Entry.comparingByValue())
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                 (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+    }
+
+    public static <V> LinkedHashMap<LocalDate,V> sortDateMap(Map<LocalDate,V> map) {
+        return map.entrySet().stream().sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+    }
+
+    public static <K extends Comparable<K>,V> LinkedHashMap<K,V> sortMapByKey(Map <K,V> map){
+        return map.entrySet().stream().sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 
     public static <K, V> K getKeyByValue(Map<K, V> map, V value) {
@@ -32,7 +44,23 @@ public class DataTool {
         return null;
     }
 
-    public static String getMultipliedString(String string, int multiplier){
+    public static String getMultipliedString(String string, int multiplier) {
         return new String(new char[multiplier]).replace("\0", string);
+    }
+
+
+    public static String getShortText(int cutIndex, String text) {
+        if (text.length() > cutIndex) {
+            return text.substring(0, cutIndex) + "...";
+        }
+        return text;
+    }
+
+    public static String removeWhitespacesFromString(String string) {
+        String regex = "\\s+";
+        String delimiter = " ";
+        List<String> listToTrim = Arrays.asList(string.split(regex));
+        listToTrim.stream().map(String :: trim);
+        return String.join(delimiter, listToTrim);
     }
 }

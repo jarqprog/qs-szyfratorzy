@@ -2,6 +2,7 @@ package users;
 
 
 import java.util.List;
+
 import item.ArtifactDAO;
 import item.ArtifactModel;
 import item.QuestDAO;
@@ -22,19 +23,12 @@ public abstract class  UserController{
         view.displayUserWithDetails(user);
     }
 
-    protected List<MentorModel> getMentors(){
-        MentorDAO dao = new MentorDAO();
-        return dao.getManyObjects("SELECT * FROM mentors;");
-    }
-
     protected List<ArtifactModel> getArtifacts(){
-        ArtifactDAO dao = new ArtifactDAO();
-        return dao.getManyObjects("SELECT * FROM artifacts;");
+        return new ArtifactDAO().getAllObjects();
     }
 
     protected List<QuestModel> getQuests(){
-        QuestDAO dao = new QuestDAO();
-        return dao.getManyObjects("SELECT * FROM quests;");
+        return new QuestDAO().getAllObjects();
     }
 
     protected void executeNotImplementedInfo() {

@@ -3,6 +3,7 @@ package users;
 import item.ArtifactModel;
 import shop.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentController extends UserController{
@@ -36,6 +37,8 @@ public class StudentController extends UserController{
 
     private void showMyInventory() { view.displayInventory(student.getInventory()); }
 
+    private void showTeamInventory() { view.displayInventory(student.getTeam().getInventory()); }
+
     public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
 
     private void updateInventory() {
@@ -44,6 +47,13 @@ public class StudentController extends UserController{
         student.setInventory(shopDAO.loadInventory(artifacts));
         shopDAO.saveInventory(student.getId(), student.getInventory());
     }
+
+//    private void updateTeamInventory() {
+//        shopDAO = new ShopDAO();
+//        List<String []> artifacts =  shopDAO.findTeamArtifacts(student.getTeam().getId());
+//        student.getTeam().setInventory(shopDAO.loadInventory(artifacts));
+//        shopDAO.saveInventory(student.getId(), student.getInventory());
+//    }
 
     private void executeShopping() {
         ShopModel shop = new ShopModel();
@@ -57,7 +67,7 @@ public class StudentController extends UserController{
             view.displayMessage("Sorry, You have nothing to use!");
             view.handlePause();
         } else {
-            int id = view.getUserChoice("Enter artifact id: ");
+            int id = view.getNumber("Enter artifact id: ");
             for(ArtifactModel artifact : student.getInventory()) {
                 if(id == artifact.getId()) {
                     student.getInventory().remove(artifact);
@@ -78,43 +88,34 @@ public class StudentController extends UserController{
     }
 
     public void handleMainMenu() {
+
         boolean isDone = false;
         while(! isDone){
 
             String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
             view.clearScreen();
+            showProfile(student);
             view.displayMenu();
             String userChoice = view.getMenuChoice(correctChoices);
 
-            view.clearScreen();
+
             switch(userChoice){
+
                 case "1":
-                    showProfile(student);
-                    break;
-                case "2":
-                    showMyWallet();
-                    break;
-                case "3":
-                    showLevelOfExperience();
-                    break;
-                case "4":
                     executeShopping();
                     updateInventory();
                     break;
-                case "5":
+                case "2":
                     showMyInventory();
                     break;
-                case "6":
-                    showMyGroup();
-                    break;
-                case "7":
-                    showMyTeam();
-                    break;
-                case "8":
+                case "3":
                     useArtifacts();
                     break;
-                case "9":
+                case "4":
                     showStudentsFromMyTeam();
+                    break;
+                case "5":
+                    showTeamInventory();
                     break;
                 case "0":
                     isDone = true;

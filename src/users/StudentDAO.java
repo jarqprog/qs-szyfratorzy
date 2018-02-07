@@ -7,10 +7,7 @@ import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
 import item.ArtifactModel;
-import school.GroupDAO;
-import school.GroupModel;
-import school.TeamDAO;
-import school.TeamModel;
+import school.*;
 
 public class StudentDAO extends FactoryDAO {
 
@@ -20,7 +17,6 @@ public class StudentDAO extends FactoryDAO {
     private String password;
     private int wallet;
     private int experience;
-    private float attendance;
     private int groupId;
     private int teamId;
 
@@ -37,12 +33,10 @@ public class StudentDAO extends FactoryDAO {
         final Integer LAST_NAME_INDEX = 2;
         final Integer EMAIL_INDEX = 3;
         final Integer PASSWORD_INDEX = 4;
-
         final Integer WALLET_INDEX = 5;
         final Integer EXPERIENCE_INDEX = 6;
-        final Integer ATTENDANCE_INDEX = 7;
-        final Integer TEAM_INDEX = 8;
-        final Integer GROUP_INDEX = 9;
+        final Integer TEAM_INDEX = 7;
+        final Integer GROUP_INDEX = 8;
 
 
         int studentId = Integer.parseInt(studentData[ID_INDEX]);
@@ -52,7 +46,6 @@ public class StudentDAO extends FactoryDAO {
         password = studentData[PASSWORD_INDEX];
         wallet = Integer.parseInt(studentData[WALLET_INDEX]);
         experience  = Integer.parseInt(studentData[EXPERIENCE_INDEX]);
-        attendance = Float.parseFloat(studentData[ATTENDANCE_INDEX]);
         teamId = Integer.parseInt(studentData[TEAM_INDEX]);
         groupId = Integer.parseInt(studentData[GROUP_INDEX]);
 
@@ -66,7 +59,7 @@ public class StudentDAO extends FactoryDAO {
 
         List<ArtifactModel> inventory = new ArrayList<>();
 
-        return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience, attendance,
+        return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience,
                 team, group, inventory);
     }
 
@@ -79,7 +72,6 @@ public class StudentDAO extends FactoryDAO {
         password = student.getPassword();
         wallet = student.getWallet();
         experience = student.getExperience();
-        attendance = student.getAttendance();
         teamId = student.getTeam().getId();
         groupId = student.getGroup().getId();
         String query;
@@ -88,20 +80,21 @@ public class StudentDAO extends FactoryDAO {
 
             query = String.format(
                             "INSERT INTO %s " +
-                            "VALUES(null, '%s', '%s', '%s', '%s', %s, %s, %s, %s, %s);",
+                            "VALUES(null, '%s', '%s', '%s', '%s', %s, %s, %s, %s);",
                     DEFAULT_TABLE, firstName, lastName, email, password, wallet,
-                    experience, attendance, teamId, groupId);
+                    experience, teamId, groupId);
 
         } else{
 
             query = String.format(
                             "UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', " +
-                            " wallet=%s, experience=%s, attendance=%s, team_id=%s, group_id=%s " +
+                            " wallet=%s, experience=%s, team_id=%s, group_id=%s " +
                             "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, wallet, experience,
-                    attendance, teamId, groupId, studentId);
+                            teamId, groupId, studentId);
         }
 
         dao = new DbManagerDAO();
         dao.inputData(query);
+        student.getAttendance().saveObject();
     }
 }

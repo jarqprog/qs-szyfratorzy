@@ -3,11 +3,14 @@ package school;
 import application.DbManagerDAO;
 import application.Table;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class SchoolDAO {
 
     final private String EXPERIENCE_LEVELS_TABLE = Table.EXPERIENCE_LEVELS.getName();
+    final private String ATTENDANCE_TABLE = Table.ATTENDANCE.getName();
+
     private DbManagerDAO dao;
 
     public SchoolDAO() {
@@ -31,7 +34,7 @@ public class SchoolDAO {
         return experienceLevels;
     }
 
-    public void saveExperienceLevels(ExperienceLevels experienceLevels) {
+    public void saveExperienceLevels(ExperienceLevelsModel experienceLevels) {
         String clearTableQuery = String.format("DELETE FROM %s;", EXPERIENCE_LEVELS_TABLE);
         dao.inputData(clearTableQuery);
         Map<String,Integer> levelsAndValues = experienceLevels.getLevels();
@@ -43,6 +46,49 @@ public class SchoolDAO {
                 int value = values[index];
                 String query = String.format("INSERT INTO %s VALUES(null, '%s', %s);",
                         EXPERIENCE_LEVELS_TABLE, level, value);
+                dao.inputData(query);
+                index++;
+            }
+        }
+    }
+
+    Map<LocalDate,Boolean> loadAttendance(int studentId) {
+        LocalDate date;
+        Boolean wasPresent;
+        int DATE_INDEX = 0;
+        int ATTENDANCE_INDEX = 1;
+        Map<LocalDate,Boolean> attendance = new HashMap<>();
+        final String query = String.format("SELECT date, attendance FROM %s WHERE student_id=%s;",
+                                            ATTENDANCE_TABLE, studentId);
+        List<String[]> dataCollection = dao.getData(query);
+        for(String[] data : dataCollection){
+            date = LocalDate.parse(data[DATE_INDEX]);
+            wasPresent = data[ATTENDANCE_INDEX].equals("1");
+            attendance.put(date, wasPresent);
+        }
+        return attendance;
+    }
+
+    public void saveAttendance(AttendanceModel attendance) {
+        int studentId = attendance.getStudentId();
+        String clearQuery = String.format("DELETE FROM %s WHERE student_id=%s;", ATTENDANCE_TABLE, studentId);
+        dao.inputData(clearQuery);
+        Map<LocalDate,Boolean> datesWithAttendance = attendance.getAttendance();
+        if(datesWithAttendance.size() > 0) {
+            Set<LocalDate> dates = datesWithAttendance.keySet();
+            Boolean[] presences = datesWithAttendance.values().toArray(new Boolean[0]);
+            String date;
+            int presence;
+            int index = 0;
+            for(LocalDate localDate : dates) {
+                date = localDate.toString();
+                if(presences[index]) {
+                    presence = 1;
+                } else {
+                    presence = 0;
+                }
+                String query = String.format("INSERT INTO %s VALUES(null, '%s', %s, %s);",
+                        ATTENDANCE_TABLE, date, presence, studentId);
                 dao.inputData(query);
                 index++;
             }

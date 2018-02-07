@@ -4,19 +4,19 @@ import users.StudentModel;
 import java.util.List;
 import java.util.ArrayList;
 
-public abstract class StudentSets {
+public abstract class StudentSetsModel {
 
     protected String name;
     protected List<StudentModel> students;
     protected int id;
 
-    public StudentSets(int id, String name) {
+    public StudentSetsModel(int id, String name) {
         this(name);
         this.id = id;
         this.students = new ArrayList<>();
     }
 
-    public StudentSets(String name) {
+    public StudentSetsModel(String name) {
         this.id = -1;
         this.name = name;
         this.students = new ArrayList<>();

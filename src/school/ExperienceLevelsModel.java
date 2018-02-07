@@ -4,11 +4,11 @@ import application.DataTool;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class ExperienceLevels {
+public class ExperienceLevelsModel {
 
     private Map<String, Integer> levels;
 
-    public ExperienceLevels(){
+    public ExperienceLevelsModel() {
         this.levels = getUpdatedLevels();
         setLevels();
     }

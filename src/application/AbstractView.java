@@ -2,6 +2,7 @@ package application;
 
 import java.util.Scanner;
 import java.io.IOException;
+import java.util.List;
 
 public abstract class AbstractView {
 
@@ -19,8 +20,14 @@ public abstract class AbstractView {
         System.out.println(message);
     }
 
-    public void displayObject(Object object) {
+    public <T extends Object> void displayObject(T object) {
         System.out.println(object.toString());
+    }
+
+    public <T extends Object> void displayObjects(List<T> objects) {
+        for (T object : objects){
+            displayObject(object);
+        }
     }
 
     public void displayHeaderAndElementsOfCollection(String[] collection, String header) {
@@ -48,24 +55,26 @@ public abstract class AbstractView {
     public String getUserInput(String message) {
         Scanner scanner = new Scanner(System.in);
         String userInput = "";
+        String delimiter = "\n";
         int minimumUserInputLength = 1;
         while(userInput.length() < minimumUserInputLength){
             System.out.print(message);
-            scanner.useDelimiter("\n");
-            userInput = scanner.next().trim();
+            scanner.useDelimiter(delimiter);
+            userInput = scanner.next();
         }
-        return userInput;
+        return DataTool.removeWhitespacesFromString(userInput);
     }
 
     public String getNumberFromUser(String message) {
         Scanner scanner = new Scanner(System.in);
         String userInput = "";
+        String regex = ".*\\d+.*";
         int minimumUserInputLength = 1;
-        while(! userInput.matches(".*\\d+.*") && userInput.length() < minimumUserInputLength){
+        while(! userInput.matches(regex) && userInput.length() < minimumUserInputLength){
             System.out.print(message);
             scanner.useDelimiter("\n");
             userInput = scanner.next().trim();
-            if(! userInput.matches(".*\\d+.*")){
+            if(! userInput.matches(regex)){
                 displayMessage("    - Wrong input (number required)!");
             }
         }
@@ -88,8 +97,6 @@ public abstract class AbstractView {
         }
         return number;
     }
-
-
 
     public void clearScreen() {
         try{
@@ -115,7 +122,7 @@ public abstract class AbstractView {
         }
     }
 
-    public int getUserChoice(String message) {
+    public int getNumber(String message) {
         Scanner scanner = new Scanner(System.in);
         int input = -1;
         try {
@@ -131,7 +138,7 @@ public abstract class AbstractView {
         String menuChoice = "";
         Boolean isChoiceReady = false;
         while (!isChoiceReady) {
-            menuChoice = getUserInput("Select an option: ");
+            menuChoice = getUserInput("\tSelect an option: ");
             isChoiceReady = DataTool.checkIfElementInArray(correctChoices, menuChoice);
         }
         return menuChoice;
