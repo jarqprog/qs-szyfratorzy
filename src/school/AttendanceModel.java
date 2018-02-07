@@ -13,13 +13,11 @@ public class AttendanceModel {
     public AttendanceModel(Integer studentId) {
         this.studentId = studentId;
         this.attendace = new HashMap<>();
-        if(studentId != -1) {
-            setAttendance(); // new created student has id=-1 (while creating) and it's no point to load nothing from database
-        }
     }
 
     public void setAttendance(Map<LocalDate, Boolean> attendace) {
         this.attendace = attendace;
+        saveObject();
     }
 
     public void setAttendance() {
@@ -29,11 +27,14 @@ public class AttendanceModel {
 
     public void clearAttendance() {
         this.attendace.clear();
+        saveObject();
     }
 
     public void addAttendance(Boolean attendance) {
+        setAttendance();
         LocalDate date = LocalDate.now();
         this.attendace.put(date, attendance);
+        saveObject();
     }
 
     public void addAttendance(LocalDate date, Boolean attendance) {
@@ -51,15 +52,6 @@ public class AttendanceModel {
 
     public int getStudentId() {
         return studentId;
-    }
-
-    public void setStudentId(int studentId){
-        /*
-        -- important:
-        Only use in StudentModel constructor while creating brand new student (short constructor)
-        */
-        this.studentId = studentId;
-        saveObject();
     }
 
     public String getPercentageAttendance() {

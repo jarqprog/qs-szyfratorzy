@@ -24,13 +24,12 @@ public class StudentModel extends UserModel {
         super(firstName, lastName, password);
         wallet = 0;
         experience = 0;
-        attendance = new AttendanceModel(id); // set student id -1 means not loading attendance from database
         team = new TeamModel(1, "undefined");
         group = new GroupModel(1,"undefined");
-        inventory = new ArrayList<>();
         role = Role.STUDENT.getName();
-        this.id = saveNewObjectGetId();
-        attendance.setStudentId(id); // to set proper student id in attendance
+        id = saveNewObjectGetId();
+        attendance = new AttendanceModel(id);
+        inventory = new ArrayList<>();
     }
 
     public StudentModel(int id, String firstName, String lastName, String email,
@@ -75,8 +74,7 @@ public class StudentModel extends UserModel {
         this.team.setStudents();
     }
 
-    public int getWallet()
-    {
+    public int getWallet(){
         return wallet;
     }
 
@@ -90,8 +88,7 @@ public class StudentModel extends UserModel {
         saveObject();
     }
 
-    public int getExperience()
-    {
+    public int getExperience(){
         return experience;
     }
 
@@ -114,9 +111,12 @@ public class StudentModel extends UserModel {
         return experienceLevel;
     }
 
-    public AttendanceModel getAttendance()
-    {
+    public AttendanceModel getAttendance(){
         return attendance;
+    }
+
+    public void checkAttendance(Boolean isPresent){
+        attendance.addAttendance(isPresent);
     }
 
     public List<ArtifactModel> getInventory() { return inventory; }
