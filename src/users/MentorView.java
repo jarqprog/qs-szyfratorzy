@@ -39,6 +39,7 @@ public class MentorView extends UsersView {
                             "[10] display student wallet",
                             "[11] mark student artifact",
                             "[12] display students from group",
+                            "[13] create new team",
                             "[0] exit"};
 
         for(String element : options) {

@@ -7,8 +7,9 @@ public class AdminView extends UsersView {
                             "[2] create mentor",
                             "[3] edit mentor",
                             "[4] display mentor",
-                            "[5] create group",
-                            "[6] manage experience levels",
+                            "[5] display mentor's students",
+                            "[6] create group",
+                            "[7] manage experience levels",
                             "[0] exit\n"};
 
         for(String element : options) {

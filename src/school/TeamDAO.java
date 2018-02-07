@@ -29,7 +29,6 @@ public class TeamDAO extends FactoryDAO {
         name = team.getName();
         String query;
         if(teamId.equals("-1")){
-            System.out.println(teamId);
             query = String.format(
                     "INSERT INTO %s " +
                             "VALUES(null, '%s');",

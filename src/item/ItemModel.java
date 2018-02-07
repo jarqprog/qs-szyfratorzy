@@ -1,6 +1,7 @@
 package item;
 
 import application.DataTool;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public abstract class ItemModel {
 
@@ -61,6 +62,16 @@ public abstract class ItemModel {
         saveObject();
     }
 
+    public boolean compare(ItemModel item){
+        if(item == null){
+            return false;
+        }
+        if(item.getId() == this.id){
+            return true;
+        }
+        return false;
+    }
+
     public String getFullName(){
         return String.format("%s - type: (%s) name: %s", genre, type, name);
     }
@@ -75,5 +86,6 @@ public abstract class ItemModel {
     }
 
     public abstract void saveObject();
+
 
 }
