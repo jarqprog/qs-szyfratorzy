@@ -14,7 +14,7 @@ public class StudentsQuestsModel extends StudentStockModel {
         super(id);
     }
 
-    public Integer getStudentId() {
+    public int getStudentId() {
         return studentId;
     }
 

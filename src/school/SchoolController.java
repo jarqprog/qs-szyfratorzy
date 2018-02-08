@@ -5,6 +5,7 @@ import application.Table;
 import users.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SchoolController {
@@ -168,12 +169,12 @@ public class SchoolController {
                 isDone = true;
                 break;
             } else if (getTeamNames().contains(teamName)) {
-                view.displayMessage("Team already exist...");
+                view.displayMessage("   - Team already exist...");
                 continue;
             } else {
                 TeamModel newTeam = new TeamModel(teamName);
                 view.clearScreen();
-                view.displayMessage("Team created: \n" + newTeam);
+                view.displayMessage("\n - Team created: \n" + newTeam);
                 isDone = true;
             }
         }
@@ -184,20 +185,36 @@ public class SchoolController {
         String groupName = "";
         SchoolView view = new SchoolView();
         while (!isDone){
-            groupName = view.getUserInput("Enter group name(or 0 to exit): ");
+            groupName = view.getUserInput("Enter group name (or 0 to exit): ");
             if (groupName.equals("0")){
                 isDone = true;
                 break;
             } else if (getGroupNames().contains(groupName)) {
-                view.displayMessage("Group already exist...");
+                view.displayMessage("   - Group already exist...");
                 continue;
             } else {
                 GroupModel newGroup = new GroupModel(groupName);
                 view.clearScreen();
-                view.displayMessage("Group created: \n" + newGroup);
+                view.displayMessage("\n - Group created: \n" + newGroup);
                 isDone = true;
             }
         }
+    }
+
+    public static void checkAttendance(MentorModel mentor){
+        SchoolView view = new SchoolView();
+        for (StudentModel student : getStudentsByGroup(mentor.getGroup())){
+            boolean isPreneceChecked = false;
+            AttendanceModel attendance = student.getAttendance();
+            while (!isPreneceChecked){
+                String userInput = view.getUserInput(String.format("    - Is %s present (y/anything else): ", student.getFullName()));
+                boolean isPresent = userInput.equals("y");
+                student.checkAttendance(isPresent);
+                isPreneceChecked = true;
+            }
+            
+        }
+
     }
 
 }

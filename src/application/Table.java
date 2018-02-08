@@ -7,6 +7,7 @@ public enum Table {
     TEAMS("teams"), ARTIFACTS("artifacts"), QUESTS("quests"), STUDENTS_ARTIFACTS("students_artifacts"),
     EXPERIENCE_LEVELS("experience_levels"), ATTENDANCE("attendance"), STUDENTS_QUESTS("students_quests");
 
+
     private String name;
 
     Table(String name){
