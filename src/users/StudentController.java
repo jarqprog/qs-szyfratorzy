@@ -40,7 +40,7 @@ public class StudentController extends UserController{
 
     private void showMyInventory() { view.displayInventory(student.getInventory()); }
 
-//    private void showTeamInventory() { view.displayInventory(student.getTeam().getInventory()); }
+    private void showTeamInventory() { view.displayInventory(student.getTeam().getInventory()); }
 
 //    public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
 
@@ -127,9 +127,9 @@ public class StudentController extends UserController{
                 case "4":
                     showStudentsFromMyTeam();
                     break;
-//                case "5":
-//                    showTeamInventory();
-//                    break;
+                case "5":
+                    showTeamInventory();
+                    break;
                 case "6":
                     pickQuestToAchieve();
                     break;
