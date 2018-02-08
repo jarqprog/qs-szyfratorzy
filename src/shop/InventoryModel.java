@@ -18,7 +18,6 @@ public class InventoryModel extends StudentStockModel {
     }
 
     public Map<ArtifactModel,Integer> getStock() {
-        setStock();
         return stock;
     }
 
@@ -34,7 +33,7 @@ public class InventoryModel extends StudentStockModel {
 
     public void removeArtifact(ArtifactModel artifact) {
         stock.remove(artifact);
-//        saveObject();
+        saveObject();
     }
 
     public void modifyQuantity(ArtifactModel artifact) {
@@ -49,12 +48,6 @@ public class InventoryModel extends StudentStockModel {
         saveObject();
     }
 
-    public void modifyQuantity(ArtifactModel artifact, Integer number) {
-        Integer value = stock.get(artifact);
-        stock.put(artifact, value + number);
-//        saveObject();
-    }
-
     public void decreaseQuantity(ArtifactModel artifact) {
         Set<ArtifactModel> inventory = stock.keySet();
         for(ArtifactModel inStockItem: inventory){
@@ -63,7 +56,7 @@ public class InventoryModel extends StudentStockModel {
                 stock.put(artifact, --value);
             }
         }
-//        saveObject();
+        saveObject();
     }
 
     public ArtifactModel getItem(int itemId) {

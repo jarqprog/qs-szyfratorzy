@@ -8,34 +8,12 @@ import java.util.List;
 import java.util.Set;
 
 public class StudentController extends UserController{
-    StudentModel student;
-    StudentView view;
-    ShopDAO shopDAO;
-    QuestDAO questDAO;
-    QuestView questView;
-    StudentsQuestsController studentsQuestsController;
+    private StudentModel student;
+    private StudentView view;
 
     public StudentController(StudentModel studentModel){
         student = studentModel;
         view = new StudentView();
-    }
-
-    private void showMyWallet(){
-        view.displayMessage("Your wallet: " + String.valueOf(student.getWallet()));
-    }
-
-    private void showMyGroup(){
-        view.displayMessage("Your Group:\n");
-        view.displayObject(student.getGroup());
-    }
-
-    private void showMyTeam(){
-        view.displayMessage("Your Team:\n");
-        view.displayObject(student.getTeam());
-    }
-
-    private void showLevelOfExperience(){
-        view.displayMessage("Your experience level: " + student.getExperienceLevel());
     }
 
     private void showMyInventory() { view.displayInventory(student.getInventory()); }

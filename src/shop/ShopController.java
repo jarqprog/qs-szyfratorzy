@@ -3,22 +3,19 @@ package shop;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import application.DataTool;
 import item.ArtifactDAO;
 import item.ArtifactModel;
 import school.TeamModel;
-import users.StudentDAO;
 import users.StudentModel;
 
 public class ShopController {
+
     ShopModel shop;
     ShopView view;
     ArtifactDAO artifactDao;
-    StudentDAO studentDAO;
     StudentModel student;
-    ShopDAO shopDAO;
 
     public ShopController(ShopModel shop, StudentModel student) {
         this.shop = shop;
@@ -84,10 +81,8 @@ public class ShopController {
     public void finalizeTransaction(ArtifactModel artifact) {
         InventoryModel inventory = student.getInventory();
         if(inventory.containsItem(artifact)) {
-            System.out.println("POSIADAM");
             inventory.modifyQuantity(artifact);
         } else {
-            System.out.println("NIE POSIADAM");
             inventory.addItem(artifact);
         }
         System.out.println(inventory);

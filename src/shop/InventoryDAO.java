@@ -23,7 +23,7 @@ public abstract class InventoryDAO {
             artifactDAO = new ArtifactDAO();
             ArtifactModel artifact;
             int ID_INDEX = 0;
-            List<Integer> usedArtifactsId = new ArrayList<>();
+            List<Integer> usedArtifactsId = new ArrayList<>(5);
             for (String[] data : dataCollection) {
                 int artifactId = Integer.parseInt(data[ID_INDEX]);
                 if (!usedArtifactsId.contains(artifactId)) {
@@ -48,14 +48,12 @@ public abstract class InventoryDAO {
         int ownerId = inventory.getOwnerId();
         dao = new DbManagerDAO();
         String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;", DEFAULT_TABLE, ownerId);
-        System.out.println("inventory: " + inventory.getStock().size());
         if (! inventory.isEmpty()) {
-//            dao.inputData(clearQuery);
+            dao.inputData(clearQuery);
             String query;
             for (Map.Entry<ArtifactModel,Integer> entry : inventory.getStock().entrySet()) {
                 Integer artifactId = entry.getKey().getId();
                 Integer value = entry.getValue();
-                System.out.println(value);
                 for(int i = 0; i < value; i++) {
                     query = String.format("INSERT INTO %s " +
                             "VALUES(null, %s, %s);", DEFAULT_TABLE, ownerId, artifactId);
