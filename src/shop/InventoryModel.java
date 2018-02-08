@@ -6,19 +6,19 @@ import java.util.Map;
 
 public class InventoryModel extends StudentStockModel {
 
-    public InventoryModel(int id) {
-        super(id);
+    public InventoryModel(int studentId) {
+        super(studentId);
     }
 
-    @Override
-    public Map getStock() {
-        return stock;
+    public Map<ArtifactModel,Integer> getStock() {
+        @SuppressWarnings("unchecked")
+        Map<ArtifactModel,Integer> inventory = (Map<ArtifactModel,Integer>)stock;
+        return inventory;
     }
 
-    @Override
     public void setStock() {
         ShopDAO shopDao = new ShopDAO();
-        stock = shopDao.loadStudentInventory(id);
+        stock = shopDao.loadStudentInventory(studentId);
     }
 
     public void addItem(ArtifactModel item) {
@@ -40,15 +40,16 @@ public class InventoryModel extends StudentStockModel {
     }
 
     public String toString() {
-        String inventory = "";
+        StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<?,?> entry : super.getMap().entrySet()){
             @SuppressWarnings("unchecked")
             ArtifactModel artifact = (ArtifactModel) entry.getKey();
             @SuppressWarnings("unchecked")
             Integer quantity = (Integer) entry.getValue();
-            inventory += String.format("Id: %d, Artifact: %s, Quantity: %d\n",artifact.getId(),  artifact.getName(), quantity);
+            stringBuilder.append(String.format("Id: %d, Artifact: %s, Quantity: %d\n",
+                    artifact.getId(),  artifact.getName(), quantity));
         }
-        return inventory;
+        return stringBuilder.toString();
     }
 
 }

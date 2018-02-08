@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
   FOREIGN KEY (student_id) REFERENCES students(id));
 
 
-  CREATE TABLE IF NOT EXISTS team_artifacts(
+  CREATE TABLE IF NOT EXISTS teams_artifacts(
   id integer PRIMARY KEY AUTOINCREMENT,
   team_id integer,
   artifact_id integer,

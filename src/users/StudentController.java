@@ -131,9 +131,9 @@ public class StudentController extends UserController{
                 case "4":
                     showStudentsFromMyTeam();
                     break;
-                case "5":
-                    showTeamInventory();
-                    break;
+//                case "5":
+//                    showTeamInventory();
+//                    break;
                 case "6":
                     pickQuestToAchieve();
                     break;
