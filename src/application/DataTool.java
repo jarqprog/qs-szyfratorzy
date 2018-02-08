@@ -1,5 +1,7 @@
 package application;
 
+import item.ItemModel;
+
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -62,5 +64,16 @@ public class DataTool {
         List<String> listToTrim = Arrays.asList(string.split(regex));
         listToTrim.stream().map(String :: trim);
         return String.join(delimiter, listToTrim);
+    }
+
+    public static <T extends ItemModel, V> boolean checkIfMapContainsItem(T item, Map<T,V> map) {
+        for (Map.Entry<?,?> entry : map.entrySet()) {
+            @SuppressWarnings("unchecked")
+            T inMapItem = (T) entry.getKey();
+            if (inMapItem.getName().equals(item.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -53,37 +53,21 @@ CREATE TABLE IF NOT EXISTS quests(
   reward integer,
   status text);
 
-  CREATE TABLE IF NOT EXISTS students_quests(
+CREATE TABLE IF NOT EXISTS students_transactions(
   id integer PRIMARY KEY AUTOINCREMENT,
-  student_id integer,
-  quests_id integer,
+  owner_id integer,
+  artifact_id integer,
   date text,
-  FOREIGN KEY (quests_id) REFERENCES quests(id),
-  FOREIGN KEY (student_id) REFERENCES students(id));
+  FOREIGN KEY (owner_id) REFERENCES students(id),
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id));
 
 CREATE TABLE IF NOT EXISTS teams_transactions(
   id integer PRIMARY KEY AUTOINCREMENT,
-  team_id integer,
+  owner_id integer,
   artifact_id integer,
   date text,
-  FOREIGN KEY (team_id) REFERENCES teams(id),
+  FOREIGN KEY (owner_id) REFERENCES teams(id),
   FOREIGN KEY (artifact_id) REFERENCES artifacts(id));
-
-CREATE TABLE IF NOT EXISTS students_quests(
-  id integer PRIMARY KEY AUTOINCREMENT,
-  student_id integer,
-  quests_id integer,
-  date text,
-  FOREIGN KEY (quests_id) REFERENCES artifacts(id),
-  FOREIGN KEY (student_id) REFERENCES students(id));
-
-CREATE TABLE IF NOT EXISTS students_transactions(
-  id integer PRIMARY KEY AUTOINCREMENT,
-  student_id integer,
-  artifact_id integer,
-  date text,
-  FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
-  FOREIGN KEY (student_id) REFERENCES students(id));
 
 CREATE TABLE IF NOT EXISTS experience_levels(
   id integer PRIMARY KEY AUTOINCREMENT,
@@ -92,18 +76,25 @@ CREATE TABLE IF NOT EXISTS experience_levels(
 
 CREATE TABLE IF NOT EXISTS students_artifacts(
   id integer PRIMARY KEY AUTOINCREMENT,
-  student_id integer,
+  owner_id integer,
   artifact_id integer,
-  FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
-  FOREIGN KEY (student_id) REFERENCES students(id));
-
+  FOREIGN KEY (owner_id) REFERENCES students(id),
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id));
 
   CREATE TABLE IF NOT EXISTS teams_artifacts(
   id integer PRIMARY KEY AUTOINCREMENT,
-  team_id integer,
+  owner_id integer,
   artifact_id integer,
-  FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
-  FOREIGN KEY (team_id) REFERENCES teams(id));
+  FOREIGN KEY (owner_id) REFERENCES teams(id),
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id));
+
+CREATE TABLE IF NOT EXISTS students_quests(
+  id integer PRIMARY KEY AUTOINCREMENT,
+  owner_id integer,
+  quests_id integer,
+  date text,
+  FOREIGN KEY (owner_id) REFERENCES students(id),
+  FOREIGN KEY (quests_id) REFERENCES quests(id));
 
 CREATE TABLE IF NOT EXISTS attendance(
   id integer PRIMARY KEY AUTOINCREMENT,
