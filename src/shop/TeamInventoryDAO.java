@@ -8,7 +8,4 @@ public class TeamInventoryDAO extends InventoryDAO {
         this.DEFAULT_TABLE = Table.TEAMS_ARTIFACTS.getName();
     }
 
-    public void saveInventory(InventoryModel inventory) {
-
-    }
 }

@@ -43,7 +43,7 @@ public class StudentsQuestsDAO {
         return questsStock;
     }
 
-    public void saveQuests(StudentsQuests studentsQuests) {
+    public void saveQuests(StudentsQuestsModel studentsQuests) {
         int ownerId = studentsQuests.getOwnerId();
         String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;",
                 STUDENTS_QUESTS_TABLE, ownerId);
