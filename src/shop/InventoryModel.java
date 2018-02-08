@@ -22,7 +22,7 @@ public class InventoryModel extends StudentStockModel {
     }
 
     public void addItem(ArtifactModel item) {
-        stock.put(item, 1);
+        super.getMap().put(item, 1);
     }
 
     public void removeArtifact(ArtifactModel artifact) {
@@ -31,20 +31,22 @@ public class InventoryModel extends StudentStockModel {
 
     public void modifyQuantity(ArtifactModel artifact) {
         Integer value = (Integer) stock.get(artifact);
-        stock.put(artifact, ++value);
+        super.getMap().put(artifact, ++value);
     }
 
     public void decreaseQuantity(ArtifactModel artifact) {
-        Integer value = (Integer) stock.get(artifact);
-        stock.put(artifact, --value);
+        Integer value = (Integer) super.getMap().get(artifact);
+        super.getMap().put(artifact, --value);
     }
 
     public String toString() {
-        String inventory = " ";
-        for (Map.Entry<ArtifactModel, Integer> entry : stock.entrySet()){
-            ArtifactModel artifact = entry.getKey();
-            Integer quantity = entry.getValue();
-            inventory += String.format("Artifact: %s, Quantity: %d\n", artifact.getName(), quantity);
+        String inventory = "";
+        for (Map.Entry<?,?> entry : super.getMap().entrySet()){
+            @SuppressWarnings("unchecked")
+            ArtifactModel artifact = (ArtifactModel) entry.getKey();
+            @SuppressWarnings("unchecked")
+            Integer quantity = (Integer) entry.getValue();
+            inventory += String.format("Id: %d, Artifact: %s, Quantity: %d\n",artifact.getId(),  artifact.getName(), quantity);
         }
         return inventory;
     }

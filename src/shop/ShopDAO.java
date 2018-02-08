@@ -52,7 +52,6 @@ public class ShopDAO {
             } else {
                 for (ArtifactModel key : inventory.keySet()) {
                     if (key.getId() == artifact.getId()) {
-                        System.out.println(key);
                         value = inventory.get(key);
                         inventory.put(key, ++value);
                     } else {
