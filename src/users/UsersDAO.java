@@ -84,20 +84,22 @@ public class UsersDAO extends DatabaseDAO implements LogableDAO{
     }
 
     public StudentModel createStudentModel(String[] table){
-        int groupIndex = 5;
-        int id = Integer.parseInt(table[ID_INDEX]);
-        String fname = table[FNAME_INDEX];
-        String lname = table[LNAME_INDEX];
-        String email = table[EMAIL_INDEX];
-        String password = table[PASSWORD_INDEX];
-        int wallet = 100;
-        int experience = 1000;
-        GroupModel group = new GroupModel("undefined");
-        TeamModel team = new TeamModel("undefined");
-        InventoryModel inventory = new InventoryModel(id);
+//        int groupIndex = 5;
+//        int id = Integer.parseInt(table[ID_INDEX]);
+//        String fname = table[FNAME_INDEX];
+//        String lname = table[LNAME_INDEX];
+//        String email = table[EMAIL_INDEX];
+//        String password = table[PASSWORD_INDEX];
+//        int wallet = 100;
+//        int experience = 1000;
+//        GroupModel group = new GroupModel("undefined");
+//        TeamModel team = new TeamModel("undefined");
+//        InventoryModel inventory = new InventoryModel(id);
+//
+//        return new StudentModel(id, fname, lname, email, password, wallet,
+//                                experience, team, group, inventory);
 
-        return new StudentModel(id, fname, lname, email, password, wallet,
-                                experience, team, group, inventory);
+        return null;
     }
 
     public List<AdminModel> getAdminsFromFile(){

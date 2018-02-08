@@ -38,10 +38,10 @@ public class StudentModel extends UserModel {
         studentsQuests = new StudentsQuestsModel(id);
     }
 
-
     public StudentModel(int id, String firstName, String lastName, String email,
                         String password, int wallet, int experience,
-                        TeamModel team, GroupModel group, InventoryModel inventory) {
+                        TeamModel team, GroupModel group, InventoryModel inventory,
+                        StudentsQuestsModel studentsQuests) {
 
         super(id, firstName, lastName, email, password);
         this.wallet = wallet;
@@ -51,9 +51,8 @@ public class StudentModel extends UserModel {
         this.team = team;
         this.group = group;
         this.inventory = inventory;
-        this.studentsQuests = new StudentsQuestsModel(id);
+        this.studentsQuests = studentsQuests;
         role = Role.STUDENT.getName();
-
     }
 
     public GroupModel getGroup() {
@@ -84,17 +83,25 @@ public class StudentModel extends UserModel {
         this.team.setStudents();
     }
 
+    public InventoryModel getInventory() { return inventory; }
+
+    public void setInventory(InventoryModel inventory) { this.inventory = inventory; }
+
+    public void setInventory() { this.inventory.setStock(); }
+
+
+    public StudentsQuestsModel getStudentsQuests() { return studentsQuests; }
+
+    public void setStudentsQuests(StudentsQuestsModel studentsQuests) { this.studentsQuests = studentsQuests; }
+
+    public void setStudentsQuests() { this.studentsQuests.setStock(); }
+
     public int getWallet(){
         return wallet;
     }
 
     public void setWallet(int value) {
         this.wallet = value;
-        saveObject();
-    }
-
-    public void modifyWallet(int value){
-        this.wallet += value;
         saveObject();
     }
 
@@ -124,17 +131,16 @@ public class StudentModel extends UserModel {
     public AttendanceModel getAttendance(){
         return attendance;
     }
-    public StudentsQuestsModel getStudentsQuests() {
-        return studentsQuests;
+
+
+    public void modifyWallet(int value){
+        this.wallet += value;
+        saveObject();
     }
 
-    public void checkAttendance(Boolean isPresent){
+    public void addAttendance(Boolean isPresent){
         attendance.addAttendance(isPresent);
     }
-
-    public InventoryModel getInventory() { return inventory; }
-
-    public void setInventory(InventoryModel inventory) { this.inventory = inventory; }
 
     public String getFullDataToString() {
         return super.getFullDataToString() + String.format(
@@ -153,4 +159,3 @@ public class StudentModel extends UserModel {
         return dao.saveObjectAndGetId(this);
     }
 }
-
