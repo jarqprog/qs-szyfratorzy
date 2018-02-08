@@ -4,6 +4,8 @@ import application.DbManagerDAO;
 import application.FactoryDAO;
 import application.Table;
 
+import java.util.List;
+
 
 public class QuestDAO extends FactoryDAO {
 

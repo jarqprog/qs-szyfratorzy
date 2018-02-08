@@ -1,15 +1,20 @@
 package users;
 
 import item.ArtifactModel;
+import item.QuestDAO;
+import item.QuestModel;
+import item.QuestView;
 import shop.*;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class StudentController extends UserController{
     StudentModel student;
     StudentView view;
     ShopDAO shopDAO;
+    QuestDAO questDAO;
+    QuestView questView;
 
     public StudentController(StudentModel studentModel){
         student = studentModel;
@@ -86,13 +91,20 @@ public class StudentController extends UserController{
         view.displayMessage("Your teammates:\n");
         view.displayUsersWithDetails(students);
     }
+    private void pickQuestToAchieve(){
+        questDAO = new QuestDAO();
+        questView = new QuestView();
+       List<QuestModel> quests= questDAO.getAllObjects()    ;
+        questView.displayQuests(quests);
+
+        }
 
     public void handleMainMenu() {
 
         boolean isDone = false;
         while(! isDone){
 
-            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5","6", "0"};
             view.clearScreen();
             showProfile(student);
             view.displayMenu();
@@ -116,6 +128,9 @@ public class StudentController extends UserController{
                     break;
                 case "5":
                     showTeamInventory();
+                    break;
+                case "6":
+                    pickQuestToAchieve();
                     break;
                 case "0":
                     isDone = true;
