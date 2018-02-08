@@ -5,52 +5,52 @@ import item.ItemModel;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.*;
+
 
 public abstract class StudentStockModel {
     protected int id;
-    protected Map<ItemModel, ?> stock;
+    protected Map<? extends ItemModel, ?> stock;
 
     public StudentStockModel(int id) {
         this.id = id;
-        stock = new HashMap();
+        stock = new HashMap<>();
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setStock(Map stock) {
+
+    public <K extends ItemModel, V> void setStock(Map<K,V> stock) {
         this.stock = stock;
     }
 
-    public ItemModel getItem(int itemId) {
-        Set<ItemModel> items = stock.keySet();
-        ItemModel item = null;
-        for (ItemModel element : items) {
-            if (itemId == element.getId()) {
-                item = element;
-                break;
+    public <T extends ItemModel> T getItem(int itemId) {
+        for (Map.Entry<?,?> entry : stock.entrySet()) {
+            @SuppressWarnings("unchecked")
+            T inStockItem = (T) entry.getKey();
+            if (inStockItem.getId() == itemId) {
+                return inStockItem;
             }
         }
-        return item;
+        return null;
     }
 
-    public boolean containsItem(ItemModel item) {
-        boolean elementFound = false;
-        for (ItemModel element : stock.keySet()) {
-            if (element.compare(item)) {
-                elementFound = true;
-                break;
+    public <T extends ItemModel> boolean containsItem(T item) {
+        for (Map.Entry<?,?> entry : stock.entrySet()) {
+            @SuppressWarnings("unchecked")
+            T inStockItem = (T) entry.getKey();
+            if (inStockItem.getName().equals(item.getName())) {
+                return true;
             }
         }
-        return elementFound;
+        return false;
     }
+//     public abstract Map getStock();
 
+//     public abstract void setStock();     //use DAO
 
-    public abstract Map getStock();
-
-    public abstract void setStock();     //use DAO
-
-    public abstract void addItem();
+//     public abstract void addItem();
 
 }
