@@ -101,7 +101,7 @@ public class ShopController {
 
     public void saveStudentInventory(ArtifactModel artifact) {
         shopDAO = new ShopDAO();
-        shopDAO.saveInventory(student.getId(), "students_artifacts", student.getInventory());
+//        shopDAO.saveInventory(student.getId(), "students_artifacts", student.getInventory());
         shopDAO.saveStudentTransaction(student.getId(), artifact.getId());
     }
 

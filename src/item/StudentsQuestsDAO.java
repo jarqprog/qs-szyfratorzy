@@ -31,7 +31,7 @@ public class StudentsQuestsDAO {
         int QUEST_ID_INDEX = 0;
         int DATE_INDEX = 1;
         Map<QuestModel,LocalDate> questsStock = new HashMap<>();
-        final String query = String.format("SELECT quests_id, date FROM %s WHERE student_id=%s;",
+        final String query = String.format("SELECT quests_id, date FROM %s WHERE owner_id=%s;",
                 STUDENTS_QUESTS_TABLE, ownerId);
         List<String[]> dataCollection = dataBaseDao.getData(query);
         for(String[] data : dataCollection){
@@ -45,7 +45,7 @@ public class StudentsQuestsDAO {
 
     public void saveQuests(StudentsQuests studentsQuests) {
         int ownerId = studentsQuests.getOwnerId();
-        String clearQuery = String.format("DELETE FROM %s WHERE student_id=%s;",
+        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;",
                 STUDENTS_QUESTS_TABLE, ownerId);
         dataBaseDao.inputData(clearQuery);
         Map<QuestModel,LocalDate> questsStock  = studentsQuests.getStock();
