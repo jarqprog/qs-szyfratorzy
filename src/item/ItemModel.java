@@ -2,6 +2,7 @@ package item;
 
 import application.DataTool;
 
+
 public abstract class ItemModel {
 
     protected char type;
@@ -79,12 +80,11 @@ public abstract class ItemModel {
         return genre;
     }
 
-//    public String toString(){
-//        return String.format("genre: %s, id: %s, type: %s, item name: %s, description: %s", this.genre, this.id,
-//                            this.type, this.name, this.description);
-//    }
+    public String toString(){
+        return String.format("genre: %s\n, id: %s\n, type: %s\n, item name: %s\n, description: %s\n\n\n", this.genre, this.id,
+                            this.type, this.name, this.description);
+    }
 
     public abstract void saveObject();
-
 
 }

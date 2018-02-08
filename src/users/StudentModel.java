@@ -23,13 +23,13 @@ public class StudentModel extends UserModel {
         super(firstName, lastName, password);
         wallet = 0;
         experience = 0;
-        attendance = new AttendanceModel(id); // set student id -1 means not loading attendance from database
         team = new TeamModel(1, "undefined");
         group = new GroupModel(1,"undefined");
         role = Role.STUDENT.getName();
-        this.id = saveNewObjectGetId();
-        attendance.setStudentId(id); // to set proper student id in attendance
+        id = saveNewObjectGetId();
+        attendance = new AttendanceModel(id);
         inventory = new InventoryModel(id);
+
     }
 
     public StudentModel(int id, String firstName, String lastName, String email,
@@ -74,8 +74,7 @@ public class StudentModel extends UserModel {
         this.team.setStudents();
     }
 
-    public int getWallet()
-    {
+    public int getWallet(){
         return wallet;
     }
 
@@ -89,8 +88,7 @@ public class StudentModel extends UserModel {
         saveObject();
     }
 
-    public int getExperience()
-    {
+    public int getExperience(){
         return experience;
     }
 
@@ -113,9 +111,12 @@ public class StudentModel extends UserModel {
         return experienceLevel;
     }
 
-    public AttendanceModel getAttendance()
-    {
+    public AttendanceModel getAttendance(){
         return attendance;
+    }
+
+    public void checkAttendance(Boolean isPresent){
+        attendance.addAttendance(isPresent);
     }
 
     public InventoryModel getInventory() { return inventory; }
@@ -126,7 +127,7 @@ public class StudentModel extends UserModel {
         return super.getFullDataToString() + String.format(
                 " \n\n\t -group: %s\n\t -team: %s\n\t -wallet: %dcc\n\t" +
                 " -level: %s\n\t -%s\n", getGroup(), getTeam(),
-                wallet, getExperienceLevel(), attendance) + attendance.getFullDataToString();
+                wallet, getExperienceLevel(), attendance);
     }
 
     public void saveObject(){
