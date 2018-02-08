@@ -5,6 +5,7 @@ import shop.*;
 
 
 import java.util.List;
+import java.util.Set;
 
 public class StudentController extends UserController{
     StudentModel student;
@@ -17,7 +18,7 @@ public class StudentController extends UserController{
     public StudentController(StudentModel studentModel){
         student = studentModel;
         view = new StudentView();
-        updateInventory();
+        updateStudentInventory();
     }
 
     private void showMyWallet(){
@@ -40,15 +41,14 @@ public class StudentController extends UserController{
 
     private void showMyInventory() { view.displayInventory(student.getInventory()); }
 
-    private void showTeamInventory() { view.displayInventory(student.getTeam().getInventory()); }
+//    private void showTeamInventory() { view.displayInventory(student.getTeam().getInventory()); }
 
-    public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
+//    public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
 
-    private void updateInventory() {
+    private void updateStudentInventory() {
+        student.getInventory().setStock();
         shopDAO = new ShopDAO();
-        List<String []> artifacts =  shopDAO.findStudentArtifacts(student.getId());
-        student.setInventory(shopDAO.loadInventory(artifacts));
-        shopDAO.saveInventory(student.getId(), student.getInventory());
+        shopDAO.saveInventory(student.getId(), "students_artifacts", student.getInventory());
     }
 
 //    private void updateTeamInventory() {
@@ -66,19 +66,23 @@ public class StudentController extends UserController{
 
     private void useArtifacts() {
         showMyInventory();
-        if(student.getInventory().isEmpty()){
+        if(student.getInventory().getStock().isEmpty()){
             view.displayMessage("Sorry, You have nothing to use!");
             view.handlePause();
         } else {
             int id = view.getNumber("Enter artifact id: ");
-            for(ArtifactModel artifact : student.getInventory()) {
-                if(id == artifact.getId()) {
-                    student.getInventory().remove(artifact);
+            Set<ArtifactModel> artifacts = student.getInventory().getStock().keySet();
+            for(ArtifactModel artifact : artifacts) {
+                if(id == artifact.getId() && (Integer) student.getInventory().getStock().get(artifact) == 1) {
+                    student.getInventory().removeArtifact(artifact);
                     view.displayMessage("Artifact used!");
                     shopDAO.deleteFromInventory(student.getId(), id);
-                    shopDAO.saveStudentTransaction(student.getId(), artifact.getId());
-                    updateInventory();
                     break;
+                }
+                else if ((id == artifact.getId())) {
+                    student.getInventory().decreaseQuantity(artifact);
+                    shopDAO.saveInventory(student.getId(), "students_artifacts", student.getInventory());
+                    view.displayMessage("Artifact used!");
                 }
             }
         }
@@ -116,7 +120,7 @@ public class StudentController extends UserController{
 
                 case "1":
                     executeShopping();
-                    updateInventory();
+                    updateStudentInventory();
                     break;
                 case "2":
                     showMyInventory();
@@ -142,6 +146,4 @@ public class StudentController extends UserController{
             view.handlePause();
         }
     }
-
-
 }

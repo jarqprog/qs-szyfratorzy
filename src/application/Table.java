@@ -5,8 +5,8 @@ public enum Table {
     STUDENTS("students"), MENTORS("mentors"), ADMINS("admins"),
     TRANSACTIONS("transactions"), GROUPS("groups"),
     TEAMS("teams"), ARTIFACTS("artifacts"), QUESTS("quests"), STUDENTS_ARTIFACTS("students_artifacts"),
-    EXPERIENCE_LEVELS("experience_levels"), ATTENDANCE("attendance"), STUDENTS_QUESTS("students_quests");
 
+    EXPERIENCE_LEVELS("experience_levels"), ATTENDANCE("attendance"), STUDENTS_QUESTS("students_quests"), ("teams_artifacts");
 
     private String name;
 

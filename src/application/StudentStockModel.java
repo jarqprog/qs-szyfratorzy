@@ -1,6 +1,5 @@
 package application;
 
-
 import item.ItemModel;
 
 import java.util.HashMap;
@@ -103,5 +102,4 @@ public abstract class StudentStockModel {
     public boolean isEmpty(){
         return stock.size() > 0;
     }
-
 }

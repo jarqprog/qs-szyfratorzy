@@ -3,6 +3,7 @@ package shop;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import application.DataTool;
 import item.ArtifactDAO;
@@ -40,6 +41,7 @@ public class ShopController {
                 userChoice = view.getUserInput("Select an option: ");
                 isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
             }
+
             view.clearScreen();
             switch (userChoice) {
                 case "1":
@@ -61,26 +63,46 @@ public class ShopController {
         }
     }
 
-
     public void buyArtifact() {
         view.displayListOfArtifacts(getArtifactsByType('B'));
         int id = view.getNumber("Enter artifact id: ");
         for (ArtifactModel artifact : shop.getStore()) {
             if (id == artifact.getId() && Objects.equals(artifact.getType(), 'B')) {
                 if (artifact.getPrice() <= student.getWallet()) {
-                    student.getInventory().clear();
-                    student.getInventory().add(artifact);
-                    student.setWallet(student.getWallet() - artifact.getPrice());
+                    finalizeTransaction(artifact);
+                    pay(artifact);
+                    saveStudentInventory(artifact);
                     view.displayMessage("You bought " + artifact.getName() + "!");
-                    shopDAO = new ShopDAO();
-                    shopDAO.saveInventory(student.getId(), student.getInventory());
-                    shopDAO.saveStudentTransaction(student.getId(), artifact.getId());
+
                 } else {
                     view.displayMessage("This artifact is to expensive!");
                 }
             }
         }
         view.displayMessage("Bye");
+    }
+
+    public void finalizeTransaction(ArtifactModel artifact) {
+        student.getInventory().getStock().clear();
+        InventoryModel inventory = student.getInventory();
+        for(ArtifactModel item : shop.getStore()) {
+            if(item.compare(artifact)) {
+                inventory.modifyQuantity(artifact);
+            }
+            else {
+                inventory.addItem(artifact);
+            }
+        }
+    }
+
+    public void pay(ArtifactModel artifact) {
+        student.setWallet(student.getWallet() - artifact.getPrice());
+    }
+
+    public void saveStudentInventory(ArtifactModel artifact) {
+        shopDAO = new ShopDAO();
+        shopDAO.saveInventory(student.getId(), "students_artifacts", student.getInventory());
+        shopDAO.saveStudentTransaction(student.getId(), artifact.getId());
     }
 
     public void buyArtifactForTeam() {
