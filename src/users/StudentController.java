@@ -42,21 +42,6 @@ public class StudentController extends UserController{
 
     private void showTeamInventory() { view.displayInventory(student.getTeam().getInventory()); }
 
-//    public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
-
-//    private void updateStudentInventory() {
-//        student.getInventory().setStock();
-//        shopDAO = new ShopDAO();
-//        shopDAO.saveInventory(student.getId(), "students_artifacts", student.getInventory());
-//    }
-
-//    private void updateTeamInventory() {
-//        shopDAO = new ShopDAO();
-//        List<String []> artifacts =  shopDAO.findTeamArtifacts(student.getTeam().getId());
-//        student.getTeam().setInventory(shopDAO.loadInventory(artifacts));
-//        shopDAO.saveInventory(student.getId(), student.getInventory());
-//    }
-
     private void executeShopping() {
         ShopModel shop = new ShopModel();
         ShopController controller = new ShopController(shop, student);

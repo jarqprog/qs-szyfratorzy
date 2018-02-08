@@ -47,11 +47,11 @@ public class StudentModel extends UserModel {
         this.wallet = wallet;
         this.experience = experience;
         this.attendance = new AttendanceModel(id);
-        this.studentsQuests = new StudentsQuestsModel(id);
         this.team = team;
         this.group = group;
-        this.inventory = inventory;
-        this.studentsQuests = studentsQuests;
+        this.inventory = new InventoryModel(id);
+        this.inventory.setStock();
+        this.studentsQuests = new StudentsQuestsModel(id);
         role = Role.STUDENT.getName();
     }
 
@@ -83,12 +83,13 @@ public class StudentModel extends UserModel {
         this.team.setStudents();
     }
 
-    public InventoryModel getInventory() { return inventory; }
+    public InventoryModel getInventory() {
+        inventory.setStock();
+        return inventory;
+    }
 
-    public void setInventory(InventoryModel inventory) { this.inventory = inventory; }
-
-    public void setInventory() { this.inventory.setStock(); }
-
+    public void setInventory(InventoryModel inventory) {
+        this.inventory = inventory; }
 
     public StudentsQuestsModel getStudentsQuests() { return studentsQuests; }
 

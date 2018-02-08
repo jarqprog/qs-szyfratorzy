@@ -84,10 +84,13 @@ public class ShopController {
     public void finalizeTransaction(ArtifactModel artifact) {
         InventoryModel inventory = student.getInventory();
         if(inventory.containsItem(artifact)) {
+            System.out.println("POSIADAM");
             inventory.modifyQuantity(artifact);
         } else {
+            System.out.println("NIE POSIADAM");
             inventory.addItem(artifact);
         }
+        System.out.println(inventory);
     }
 
     public void finalizeTeamTransaction(ArtifactModel artifact) {
@@ -99,16 +102,8 @@ public class ShopController {
         }
     }
 
-
-
     public void pay(ArtifactModel artifact) {
         student.setWallet(student.getWallet() - artifact.getPrice());
-    }
-
-    public void saveStudentInventory(ArtifactModel artifact) {
-        shopDAO = new ShopDAO();
-//        shopDAO.saveInventory(student.getId(), "students_artifacts", student.getInventory());
-        shopDAO.saveStudentTransaction(student.getId(), artifact.getId());
     }
 
     public void buyArtifactForTeam() {
