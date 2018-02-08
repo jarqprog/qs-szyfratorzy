@@ -21,6 +21,7 @@ public abstract class StudentStockModel {
         this.id = id;
     }
 
+
     public <K extends ItemModel, V> void setStock(Map<K,V> stock) {
         this.stock = stock;
     }
