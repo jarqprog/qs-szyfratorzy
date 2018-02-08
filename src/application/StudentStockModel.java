@@ -43,7 +43,7 @@ public abstract class StudentStockModel {
         return null;
     }
 
-    public <K,V> Map<K,V> getMapa() {
+    public <K,V> Map<K,V> getMap() {
         @SuppressWarnings("unchecked")
         Map<K,V> map = (Map<K,V>) this.stock;
         return map;

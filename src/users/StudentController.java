@@ -1,9 +1,6 @@
 package users;
 
-import item.ArtifactModel;
-import item.QuestDAO;
-import item.QuestModel;
-import item.QuestView;
+import item.*;
 import shop.*;
 
 
@@ -15,6 +12,7 @@ public class StudentController extends UserController{
     ShopDAO shopDAO;
     QuestDAO questDAO;
     QuestView questView;
+    StudentsQuestsController studentsQuestsController;
 
     public StudentController(StudentModel studentModel){
         student = studentModel;
@@ -92,12 +90,15 @@ public class StudentController extends UserController{
         view.displayUsersWithDetails(students);
     }
     private void pickQuestToAchieve(){
-        questDAO = new QuestDAO();
-        questView = new QuestView();
-       List<QuestModel> quests= questDAO.getAllObjects()    ;
-        questView.displayQuests(quests);
+        StudentsQuestsController studentQuestsCtrl = new StudentsQuestsController();
+        StudentsQuestsModel studentsQuests = student.getStudentsQuests();
+        studentQuestsCtrl.addQuestToStudentsQuests(studentsQuests);
+    }
+    private void showMyQuests() {
 
-        }
+    }
+
+
 
     public void handleMainMenu() {
 
@@ -132,6 +133,8 @@ public class StudentController extends UserController{
                 case "6":
                     pickQuestToAchieve();
                     break;
+                case "7":
+                    showMyQuests();
                 case "0":
                     isDone = true;
                     break;
@@ -139,4 +142,6 @@ public class StudentController extends UserController{
             view.handlePause();
         }
     }
+
+
 }
