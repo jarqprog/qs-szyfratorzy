@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class InventoryModel extends StudentStockModel {
 
-    public InventoryModel(int studentId) {
-        super(studentId);
+    public InventoryModel(int ownerId) {
+        super(ownerId);
     }
 
     public Map<ArtifactModel,Integer> getStock() {
@@ -18,7 +18,7 @@ public class InventoryModel extends StudentStockModel {
 
     public void setStock() {
         ShopDAO shopDao = new ShopDAO();
-        stock = shopDao.loadStudentInventory(studentId);
+        stock = shopDao.loadStudentInventory(ownerId);
     }
 
     public void addItem(ArtifactModel item) {

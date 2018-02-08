@@ -4,27 +4,26 @@ import item.ItemModel;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 
 public abstract class StudentStockModel {
 
-    protected int studentId;
+    protected int ownerId;
     protected Map<? extends ItemModel, ?> stock;
 
 
 
-    public StudentStockModel(int studentId) {
-        this.studentId = studentId;
+    public StudentStockModel(int ownerId) {
+        this.ownerId = ownerId;
         stock = new HashMap<>();
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public int getStudentId() {
-        return studentId;
+    public int getOwnerId() {
+        return ownerId;
     }
 
 

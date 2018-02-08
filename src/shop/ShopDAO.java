@@ -22,10 +22,10 @@ public class ShopDAO {
                     this.DEFAULT_TABLE2 = Table.TEAMS_ARTIFACTS.getName();
     }
 
-    public List<String []> findArtifacts(int studentId) {
+    public List<String []> findArtifacts(int ownerId) {
         dao = new DbManagerDAO();
         String query = String.format("SELECT artifact_id, id FROM %s " +
-                                    "WHERE student_id = %s;", DEFAULT_TABLE1, studentId);
+                                    "WHERE student_id = %s;", DEFAULT_TABLE1, ownerId);
         return dao.getData(query);
     }
 
@@ -114,5 +114,4 @@ public class ShopDAO {
                         "VALUES(null, %s, %s, '%s');", studentID, artifactID, transactionDate);
         dao.inputData(query);
     }
-
 }

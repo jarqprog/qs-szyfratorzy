@@ -17,13 +17,14 @@ public class StudentsQuestsDAO {
     private DbManagerDAO dataBaseDao;
 
     public StudentsQuestsDAO() {
+
         STUDENTS_QUESTS_TABLE = Table.STUDENTS_QUESTS.getName();
         questDao = new QuestDAO();
         dataBaseDao = new DbManagerDAO();
 
     }
 
-    Map<QuestModel,LocalDate> loadQuests(int studentId) {
+    Map<QuestModel,LocalDate> loadQuests(int ownerId) {
 
         QuestModel quest;
         LocalDate date;
@@ -31,7 +32,7 @@ public class StudentsQuestsDAO {
         int DATE_INDEX = 1;
         Map<QuestModel,LocalDate> questsStock = new HashMap<>();
         final String query = String.format("SELECT quests_id, date FROM %s WHERE student_id=%s;",
-                STUDENTS_QUESTS_TABLE, studentId);
+                STUDENTS_QUESTS_TABLE, ownerId);
         List<String[]> dataCollection = dataBaseDao.getData(query);
         for(String[] data : dataCollection){
             int questId = Integer.parseInt(data[QUEST_ID_INDEX]);
@@ -43,8 +44,9 @@ public class StudentsQuestsDAO {
     }
 
     public void saveQuests(StudentsQuests studentsQuests) {
-        int studentId = studentsQuests.getStudentId();
-        String clearQuery = String.format("DELETE FROM %s WHERE student_id=%s;", STUDENTS_QUESTS_TABLE, studentId);
+        int ownerId = studentsQuests.getOwnerId();
+        String clearQuery = String.format("DELETE FROM %s WHERE student_id=%s;",
+                STUDENTS_QUESTS_TABLE, ownerId);
         dataBaseDao.inputData(clearQuery);
         Map<QuestModel,LocalDate> questsStock  = studentsQuests.getStock();
         if(questsStock.size() > 0) {
@@ -58,7 +60,7 @@ public class StudentsQuestsDAO {
                 LocalDate localDate = (LocalDate) dates[index];
                 date = localDate.toString();
                 String query = String.format("INSERT INTO %s VALUES(null, '%s', %s, %s);",
-                        STUDENTS_QUESTS_TABLE, studentId, questId, date);
+                        STUDENTS_QUESTS_TABLE, ownerId, questId, date);
                 dataBaseDao.inputData(query);
                 index++;
             }
