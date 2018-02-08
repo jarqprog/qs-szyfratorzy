@@ -21,6 +21,7 @@ public abstract class StudentStockModel {
         this.id = id;
     }
 
+
     public <K extends ItemModel, V> void setStock(Map<K,V> stock) {
         this.stock = stock;
     }
@@ -46,11 +47,10 @@ public abstract class StudentStockModel {
         }
         return false;
     }
+//     public abstract Map getStock();
 
-    public abstract Map getStock();
+//     public abstract void setStock();     //use DAO
 
-    public abstract void setStock();     //use DAO
-
-    public abstract void addItem();
+//     public abstract void addItem();
 
 }
