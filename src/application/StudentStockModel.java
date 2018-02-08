@@ -9,7 +9,8 @@ import java.util.Set;
 import java.util.*;
 
 
-public class StudentStockModel {
+
+public abstract class StudentStockModel {
 
     protected int studentId;
     protected Map<? extends ItemModel, ?> stock;
@@ -26,6 +27,7 @@ public class StudentStockModel {
     public int getStudentId() {
         return studentId;
     }
+
 
     public <K extends ItemModel, V> void setStock(Map<K,V> stock) {
         this.stock = stock;
@@ -57,11 +59,8 @@ public class StudentStockModel {
         return stock.size() > 0;
     }
 
-
     //public abstract Map getStock();
 
     //public abstract void setStock();
-
-
-
+  
 }

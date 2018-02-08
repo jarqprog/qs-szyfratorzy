@@ -50,7 +50,16 @@ CREATE TABLE IF NOT EXISTS quests(
   name text,
   type text,
   description text,
-  reward integer);
+  reward integer,
+  status text);
+
+  CREATE TABLE IF NOT EXISTS students_quests(
+  id integer PRIMARY KEY AUTOINCREMENT,
+  student_id integer,
+  quests_id integer,
+  date text,
+  FOREIGN KEY (quests_id) REFERENCES artifacts(id),
+  FOREIGN KEY (student_id) REFERENCES students(id));
 
 CREATE TABLE IF NOT EXISTS teams_transactions(
   id integer PRIMARY KEY AUTOINCREMENT,
@@ -156,19 +165,19 @@ CREATE TABLE IF NOT EXISTS attendance(
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',1,105);
 
   -- items (quests and artifacts):
-  INSERT OR IGNORE INTO quests VALUES(1,'Exploring a dungeon','Q','Finishing a Teamwork week', 100);
-  INSERT OR IGNORE INTO quests VALUES(2,'Solving the magic puzzle','Q','Finishing an SI assignment', 100);
-  INSERT OR IGNORE INTO quests VALUES(3,'Slaying a dragon','Q','Passing a Checkpoint in the first attempt', 500);
-  INSERT OR IGNORE INTO quests VALUES(4,'Spot trap','Q','Spot a major mistake in the assignment', 50);
-  INSERT OR IGNORE INTO quests VALUES(5,'Taming a pet','Q','Doing a demo about a pet project', 100);
-  INSERT OR IGNORE INTO quests VALUES(6,'Recruiting some n00bs','Q','Taking part in the student screening process', 100);
-  INSERT OR IGNORE INTO quests VALUES(7,'Forging weapons','Q','Organizing a workshop for other students', 400);
-  INSERT OR IGNORE INTO quests VALUES(8,'Master the mornings','Q','Attend 1 months without being late', 300);
-  INSERT OR IGNORE INTO quests VALUES(9,'Fast as an unicorn','Q','deliver 4 consecutive SI week assignments on time', 500);
-  INSERT OR IGNORE INTO quests VALUES(10,'Achiever','Q','set up a SMART goal accepted by a mentor, then achieve it', 1000);
-  INSERT OR IGNORE INTO quests VALUES(11,'Fortune','Q','students choose the best project of the week. Selected team scores', 500);
-  INSERT OR IGNORE INTO quests VALUES(12,'Creating an enchanteds scroll','Q','Creating extra material for the current TW/SI topic (should be revised by mentors)', 500);
-  INSERT OR IGNORE INTO quests VALUES(13,'Enter the arena','Q','Do a presentation on a meet-up', 500);
+  INSERT OR IGNORE INTO quests VALUES(1,'Exploring a dungeon','Q','Finishing a Teamwork week', 100,'Available');
+  INSERT OR IGNORE INTO quests VALUES(2,'Solving the magic puzzle','Q','Finishing an SI assignment', 100,'Available');
+  INSERT OR IGNORE INTO quests VALUES(3,'Slaying a dragon','Q','Passing a Checkpoint in the first attempt', 500,'Available');
+  INSERT OR IGNORE INTO quests VALUES(4,'Spot trap','Q','Spot a major mistake in the assignment', 50,'Available');
+  INSERT OR IGNORE INTO quests VALUES(5,'Taming a pet','Q','Doing a demo about a pet project', 100,'Available');
+  INSERT OR IGNORE INTO quests VALUES(6,'Recruiting some n00bs','Q','Taking part in the student screening process', 100,'Available');
+  INSERT OR IGNORE INTO quests VALUES(7,'Forging weapons','Q','Organizing a workshop for other students', 400,'Available');
+  INSERT OR IGNORE INTO quests VALUES(8,'Master the mornings','Q','Attend 1 months without being late', 300,'Available');
+  INSERT OR IGNORE INTO quests VALUES(9,'Fast as an unicorn','Q','deliver 4 consecutive SI week assignments on time', 500,'Available');
+  INSERT OR IGNORE INTO quests VALUES(10,'Achiever','Q','set up a SMART goal accepted by a mentor, then achieve it', 1000,'Available');
+  INSERT OR IGNORE INTO quests VALUES(11,'Fortune','Q','students choose the best project of the week. Selected team scores', 500,'Available');
+  INSERT OR IGNORE INTO quests VALUES(12,'Creating an enchanteds scroll','Q','Creating extra material for the current TW/SI topic (should be revised by mentors)', 500,'Available');
+  INSERT OR IGNORE INTO quests VALUES(13,'Enter the arena','Q','Do a presentation on a meet-up', 500,'Available');
 
   INSERT OR IGNORE INTO artifacts VALUES(1,'Combat training','B','Private mentoring', 50);
   INSERT OR IGNORE INTO artifacts VALUES(2,'Sanctuary','B','You can spend a day in home office', 1000);

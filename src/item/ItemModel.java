@@ -2,6 +2,7 @@ package item;
 
 import application.DataTool;
 
+
 public abstract class ItemModel {
 
     protected char type;
@@ -61,6 +62,16 @@ public abstract class ItemModel {
         saveObject();
     }
 
+    public boolean compare(ItemModel item){
+        if(item == null){
+            return false;
+        }
+        if(item.getId() == this.id){
+            return true;
+        }
+        return false;
+    }
+
     public String getFullName(){
         return String.format("%s - type: (%s) name: %s", genre, type, name);
     }
@@ -70,10 +81,11 @@ public abstract class ItemModel {
     }
 
     public String toString(){
-        return String.format("genre: %s, id: %s, type: %s, item name: %s, description: %s", this.genre, this.id,
+        return String.format("genre: %s\n, id: %s\n, type: %s\n, item name: %s\n, description: %s\n\n\n", this.genre, this.id,
                             this.type, this.name, this.description);
     }
 
     public abstract void saveObject();
+
 
 }
