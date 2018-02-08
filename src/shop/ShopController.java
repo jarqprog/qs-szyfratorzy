@@ -90,6 +90,17 @@ public class ShopController {
         }
     }
 
+    public void finalizeTeamTransaction(ArtifactModel artifact) {
+        InventoryModel inventory = student.getTeam().getInventory();
+        if(inventory.containsItem(artifact)) {
+            inventory.modifyQuantity(artifact);
+        } else {
+            inventory.addItem(artifact);
+        }
+    }
+
+
+
     public void pay(ArtifactModel artifact) {
         student.setWallet(student.getWallet() - artifact.getPrice());
     }
@@ -107,10 +118,8 @@ public class ShopController {
             if (id == artifact.getId() && Objects.equals(artifact.getType(), 'M')) {
                 if (checkTeamResources(artifact, student.getTeam())) {
                     chargeTeamMembers(artifact, student.getTeam());
-                    student.getTeam().getInventory().add(artifact);
+                    finalizeTeamTransaction(artifact);
                     view.displayMessage("You bought " + artifact.getName() + "!");
-//                    save
-
                 } else {
                     view.displayMessage("Not enough coolcoins to buy this artifact!");
                 }
