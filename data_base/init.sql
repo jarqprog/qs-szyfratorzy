@@ -60,6 +60,14 @@ CREATE TABLE IF NOT EXISTS teams_transactions(
   FOREIGN KEY (team_id) REFERENCES teams(id),
   FOREIGN KEY (artifact_id) REFERENCES artifacts(id));
 
+CREATE TABLE IF NOT EXISTS students_quests(
+  id integer PRIMARY KEY AUTOINCREMENT,
+  student_id integer,
+  quests_id integer,
+  date text,
+  FOREIGN KEY (quests_id) REFERENCES artifacts(id),
+  FOREIGN KEY (student_id) REFERENCES students(id));
+
 CREATE TABLE IF NOT EXISTS students_transactions(
   id integer PRIMARY KEY AUTOINCREMENT,
   student_id integer,
