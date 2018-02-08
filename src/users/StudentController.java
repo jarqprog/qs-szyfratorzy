@@ -18,7 +18,6 @@ public class StudentController extends UserController{
     public StudentController(StudentModel studentModel){
         student = studentModel;
         view = new StudentView();
-        updateStudentInventory();
     }
 
     private void showMyWallet(){
@@ -45,11 +44,11 @@ public class StudentController extends UserController{
 
 //    public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
 
-    private void updateStudentInventory() {
-        student.getInventory().setStock();
-        shopDAO = new ShopDAO();
-        shopDAO.saveInventory(student.getId(), "students_artifacts", student.getInventory());
-    }
+//    private void updateStudentInventory() {
+//        student.getInventory().setStock();
+//        shopDAO = new ShopDAO();
+//        shopDAO.saveInventory(student.getId(), "students_artifacts", student.getInventory());
+//    }
 
 //    private void updateTeamInventory() {
 //        shopDAO = new ShopDAO();
@@ -73,15 +72,13 @@ public class StudentController extends UserController{
             int id = view.getNumber("Enter artifact id: ");
             Set<ArtifactModel> artifacts = student.getInventory().getStock().keySet();
             for(ArtifactModel artifact : artifacts) {
-                if(id == artifact.getId() && (Integer) student.getInventory().getStock().get(artifact) == 1) {
+                if(id == artifact.getId() && student.getInventory().getStock().get(artifact) == 1) {
                     student.getInventory().removeArtifact(artifact);
                     view.displayMessage("Artifact used!");
-                    shopDAO.deleteFromInventory(student.getId(), id);
                     break;
                 }
                 else if ((id == artifact.getId())) {
                     student.getInventory().decreaseQuantity(artifact);
-                    shopDAO.saveInventory(student.getId(), "students_artifacts", student.getInventory());
                     view.displayMessage("Artifact used!");
                 }
             }
@@ -109,7 +106,7 @@ public class StudentController extends UserController{
         boolean isDone = false;
         while(! isDone){
 
-            String[] correctChoices = {"1", "2", "3", "4", "5","6", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5","6", "7", "0"};
             view.clearScreen();
             showProfile(student);
             view.displayMenu();
@@ -120,7 +117,6 @@ public class StudentController extends UserController{
 
                 case "1":
                     executeShopping();
-                    updateStudentInventory();
                     break;
                 case "2":
                     showMyInventory();

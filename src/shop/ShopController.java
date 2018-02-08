@@ -71,7 +71,6 @@ public class ShopController {
                 if (artifact.getPrice() <= student.getWallet()) {
                     finalizeTransaction(artifact);
                     pay(artifact);
-                    saveStudentInventory(artifact);
                     view.displayMessage("You bought " + artifact.getName() + "!");
 
                 } else {
@@ -83,15 +82,11 @@ public class ShopController {
     }
 
     public void finalizeTransaction(ArtifactModel artifact) {
-        student.getInventory().getStock().clear();
         InventoryModel inventory = student.getInventory();
-        for(ArtifactModel item : shop.getStore()) {
-            if(item.compare(artifact)) {
-                inventory.modifyQuantity(artifact);
-            }
-            else {
-                inventory.addItem(artifact);
-            }
+        if(inventory.containsItem(artifact)) {
+            inventory.modifyQuantity(artifact);
+        } else {
+            inventory.addItem(artifact);
         }
     }
 

@@ -30,7 +30,7 @@ public class InventoryModel extends StudentStockModel {
     }
 
     public void modifyQuantity(ArtifactModel artifact) {
-        Integer value = (Integer) stock.get(artifact);
+        Integer value = (Integer) super.getMap().get(artifact);
         super.getMap().put(artifact, ++value);
     }
 
