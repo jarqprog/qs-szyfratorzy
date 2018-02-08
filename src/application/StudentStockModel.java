@@ -1,5 +1,6 @@
 package application;
 
+
 import item.ItemModel;
 
 import java.util.HashMap;
@@ -8,17 +9,23 @@ import java.util.Set;
 import java.util.*;
 
 
+
 public abstract class StudentStockModel {
-    protected int id;
+
+    protected int studentId;
     protected Map<? extends ItemModel, ?> stock;
 
-    public StudentStockModel(int id) {
-        this.id = id;
+    public StudentStockModel(int studentId) {
+        this.studentId = studentId;
         stock = new HashMap<>();
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
+
+    public int getStudentId() {
+        return studentId;
     }
 
 
@@ -47,10 +54,13 @@ public abstract class StudentStockModel {
         }
         return false;
     }
-//     public abstract Map getStock();
 
-//     public abstract void setStock();     //use DAO
+    public boolean isEmpty(){
+        return stock.size() > 0;
+    }
 
-//     public abstract void addItem();
+    //public abstract Map getStock();
 
+    //public abstract void setStock();
+  
 }
