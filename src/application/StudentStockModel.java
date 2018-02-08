@@ -47,10 +47,15 @@ public abstract class StudentStockModel {
         return false;
     }
 
+    public boolean isEmpty(){
+        return stock.size() > 0;
+    }
+
+    
     public abstract Map getStock();
 
     public abstract void setStock();     //use DAO
 
-    public abstract void addItem();
+    
 
 }
