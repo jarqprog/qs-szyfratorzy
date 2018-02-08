@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import application.StudentStockModel;
-import shop.InventoryDAO;
-import shop.StudentInventoryDAO;
 
 
 public class StudentsQuestsModel extends StudentStockModel {

@@ -1,8 +1,9 @@
-package shop;
+package dao;
 
 import application.DbManagerDAO;
 import item.ArtifactDAO;
 import item.ArtifactModel;
+import Model.Inventory;
 
 import java.util.*;
 
@@ -13,7 +14,7 @@ public abstract class InventoryDAO {
     protected ArtifactDAO artifactDAO;
 
 
-    public Map<ArtifactModel,Integer> loadInventory(int ownerId) {
+    public Map<ArtifactModel,Integer> load(int ownerId) {
         final String query = String.format("SELECT artifact_id FROM %s WHERE owner_id=%s;",
                 DEFAULT_TABLE, ownerId);
         dao = new DbManagerDAO();
@@ -44,7 +45,7 @@ public abstract class InventoryDAO {
         return inventory;
     }
 
-    public void saveInventory(InventoryModel inventory) {
+    public void save(Inventory inventory) {
         int ownerId = inventory.getOwnerId();
         dao = new DbManagerDAO();
         String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;", DEFAULT_TABLE, ownerId);

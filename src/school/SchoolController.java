@@ -1,11 +1,11 @@
 package school;
 
+import Model.Attendance;
 import application.CreatableDAO;
 import application.Table;
 import users.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class SchoolController {
@@ -191,7 +191,7 @@ public class SchoolController {
                 break;
             } else if (getGroupNames().contains(groupName)) {
                 view.displayMessage("   - Group already exist...");
-                continue;
+//                continue;
             } else {
                 GroupModel newGroup = new GroupModel(groupName);
                 view.clearScreen();
@@ -204,13 +204,12 @@ public class SchoolController {
     public static void checkAttendance(MentorModel mentor){
         SchoolView view = new SchoolView();
         for (StudentModel student : getStudentsByGroup(mentor.getGroup())){
-            boolean isPreneceChecked = false;
-            AttendanceModel attendance = student.getAttendance();
-            while (!isPreneceChecked){
+            boolean isPresenceChecked = false;
+            while (!isPresenceChecked){
                 String userInput = view.getUserInput(String.format("    - Is %s present (y/anything else): ", student.getFullName()));
                 boolean isPresent = userInput.equals("y");
                 student.addAttendance(isPresent);
-                isPreneceChecked = true;
+                isPresenceChecked = true;
             }
             
         }

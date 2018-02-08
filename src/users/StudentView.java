@@ -1,17 +1,27 @@
 package users;
 
-import item.ArtifactModel;
-import shop.InventoryModel;
+import Model.StudentInventory;
+import Model.TeamInventory;
 
 public class StudentView extends UsersView {
 
-    public void displayInventory(InventoryModel inventory) {
+    public void displayInventory(StudentInventory inventory) {
         if (inventory.getStock().isEmpty()) {
-            displayMessage("Your inventory is empty");
+            displayMessage("    - Your inventory is empty");
         }
         else {
             displayMessage("Your Inventory: \n");
                 System.out.println(inventory);
+        }
+    }
+
+    public void displayInventory(TeamInventory inventory) {
+        if (inventory.getStock().isEmpty()) {
+            displayMessage("    - Your team's inventory is empty");
+        }
+        else {
+            displayMessage("Your team's inventory: \n");
+            System.out.println(inventory);
         }
     }
 

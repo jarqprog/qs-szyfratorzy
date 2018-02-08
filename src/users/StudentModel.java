@@ -3,14 +3,13 @@ package users;
 
 import application.Role;
 
-import item.ArtifactModel;
 import item.StudentsQuestsModel;
 
 import school.ExperienceLevelsController;
 import school.GroupModel;
 import school.TeamModel;
-import school.AttendanceModel;
-import shop.InventoryModel;
+import Model.Attendance;
+import Model.StudentInventory;
 
 
 public class StudentModel extends UserModel {
@@ -19,8 +18,8 @@ public class StudentModel extends UserModel {
     private TeamModel team;
     private int wallet;
     private int experience;
-    private InventoryModel inventory;
-    private AttendanceModel attendance;
+    private StudentInventory inventory;
+    private Attendance attendance;
     private String experienceLevel;
     private StudentsQuestsModel studentsQuests;
 
@@ -31,26 +30,23 @@ public class StudentModel extends UserModel {
         team = new TeamModel(1, "undefined");
         group = new GroupModel(1,"undefined");
         role = Role.STUDENT.getName();
-
         id = saveNewObjectGetId();
-        attendance = new AttendanceModel(id);
-        inventory = new InventoryModel(id);
+        attendance = new Attendance(id);
+        inventory = new StudentInventory(id);
         studentsQuests = new StudentsQuestsModel(id);
     }
 
     public StudentModel(int id, String firstName, String lastName, String email,
                         String password, int wallet, int experience,
-                        TeamModel team, GroupModel group, InventoryModel inventory,
-                        StudentsQuestsModel studentsQuests) {
+                        TeamModel team, GroupModel group) {
 
         super(id, firstName, lastName, email, password);
         this.wallet = wallet;
         this.experience = experience;
-        this.attendance = new AttendanceModel(id);
         this.team = team;
         this.group = group;
-        this.inventory = new InventoryModel(id);
-        this.inventory.setStock();
+        this.attendance = new Attendance(id);
+        this.inventory = new StudentInventory(id);
         this.studentsQuests = new StudentsQuestsModel(id);
         role = Role.STUDENT.getName();
     }
@@ -83,12 +79,12 @@ public class StudentModel extends UserModel {
         this.team.setStudents();
     }
 
-    public InventoryModel getInventory() {
+    public StudentInventory getInventory() {
         inventory.setStock();
         return inventory;
     }
 
-    public void setInventory(InventoryModel inventory) {
+    public void setInventory(StudentInventory inventory) {
         this.inventory = inventory; }
 
     public StudentsQuestsModel getStudentsQuests() { return studentsQuests; }
@@ -129,7 +125,7 @@ public class StudentModel extends UserModel {
         return experienceLevel;
     }
 
-    public AttendanceModel getAttendance(){
+    public Attendance getAttendance(){
         return attendance;
     }
 

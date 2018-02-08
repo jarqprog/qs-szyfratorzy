@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.ArrayList;
 import application.DatabaseDAO;
 import school.GroupModel;
-import school.TeamModel;
-import shop.InventoryModel;
 
 
 public class UsersDAO extends DatabaseDAO implements LogableDAO{

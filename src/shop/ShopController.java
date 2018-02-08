@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import Model.StudentInventory;
+import Model.TeamInventory;
 import application.DataTool;
 import item.ArtifactDAO;
 import item.ArtifactModel;
@@ -79,7 +81,7 @@ public class ShopController {
     }
 
     public void finalizeTransaction(ArtifactModel artifact) {
-        InventoryModel inventory = student.getInventory();
+        StudentInventory inventory = student.getInventory();
         if(inventory.containsItem(artifact)) {
             inventory.modifyQuantity(artifact);
         } else {
@@ -89,7 +91,7 @@ public class ShopController {
     }
 
     public void finalizeTeamTransaction(ArtifactModel artifact) {
-        InventoryModel inventory = student.getTeam().getInventory();
+        TeamInventory inventory = student.getTeam().getInventory();
         if(inventory.containsItem(artifact)) {
             inventory.modifyQuantity(artifact);
         } else {

@@ -1,32 +1,30 @@
 package school;
 
-import item.ArtifactModel;
-import shop.InventoryModel;
+import Model.TeamInventory;
 import users.StudentDAO;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TeamModel extends StudentSetsModel{
 
-    private InventoryModel inventory;
+    private TeamInventory inventory;
 
     public TeamModel(int id, String name) {
         super(id, name);
-        inventory = new InventoryModel(id);
+        inventory = new TeamInventory(id);
+        inventory.setStock();
     }
 
     public TeamModel(String name) {
         super(name);
         this.id = saveNewObjectGetId();
-        inventory = new InventoryModel(id);
+        inventory = new TeamInventory(id);
     }
 
-    public InventoryModel getInventory() {
+    public TeamInventory getInventory() {
+        inventory.setStock();
         return inventory;
     }
 
-    public void setInventory(InventoryModel inventory) {
+    public void setInventory(TeamInventory inventory) {
         this.inventory = inventory;
     }
 

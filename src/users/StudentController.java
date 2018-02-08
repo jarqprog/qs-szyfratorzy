@@ -94,8 +94,7 @@ public class StudentController extends UserController{
             showProfile(student);
             view.displayMenu();
             String userChoice = view.getMenuChoice(correctChoices);
-
-
+            view.clearScreen();
             switch(userChoice){
 
                 case "1":
