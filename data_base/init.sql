@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS students_artifacts(
   team_id integer,
   artifact_id integer,
   FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
-  FOREIGN KEY (team_id) REFERENCES team(id));
+  FOREIGN KEY (team_id) REFERENCES teams(id));
 
 CREATE TABLE IF NOT EXISTS attendance(
   id integer PRIMARY KEY AUTOINCREMENT,
