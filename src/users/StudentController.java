@@ -1,9 +1,9 @@
 package users;
 
-import item.ArtifactModel;
+import item.*;
 import shop.*;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Set;
 
@@ -11,6 +11,9 @@ public class StudentController extends UserController{
     StudentModel student;
     StudentView view;
     ShopDAO shopDAO;
+    QuestDAO questDAO;
+    QuestView questView;
+    StudentsQuestsController studentsQuestsController;
 
     public StudentController(StudentModel studentModel){
         student = studentModel;
@@ -90,13 +93,23 @@ public class StudentController extends UserController{
         view.displayMessage("Your teammates:\n");
         view.displayUsersWithDetails(students);
     }
+    private void pickQuestToAchieve(){
+        StudentsQuestsController studentQuestsCtrl = new StudentsQuestsController();
+        StudentsQuestsModel studentsQuests = student.getStudentsQuests();
+        studentQuestsCtrl.addQuestToStudentsQuests(studentsQuests);
+    }
+    private void showMyQuests() {
+
+    }
+
+
 
     public void handleMainMenu() {
 
         boolean isDone = false;
         while(! isDone){
 
-            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5","6", "0"};
             view.clearScreen();
             showProfile(student);
             view.displayMenu();
@@ -118,9 +131,14 @@ public class StudentController extends UserController{
                 case "4":
                     showStudentsFromMyTeam();
                     break;
-//                case "5":
-//                    showTeamInventory();
-//                    break;
+                case "5":
+                    showTeamInventory();
+                    break;
+                case "6":
+                    pickQuestToAchieve();
+                    break;
+                case "7":
+                    showMyQuests();
                 case "0":
                     isDone = true;
                     break;

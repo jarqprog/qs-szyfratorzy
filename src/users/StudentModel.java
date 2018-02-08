@@ -2,6 +2,10 @@
 package users;
 
 import application.Role;
+
+import item.ArtifactModel;
+import item.StudentsQuestsModel;
+
 import school.ExperienceLevelsController;
 import school.GroupModel;
 import school.TeamModel;
@@ -18,6 +22,7 @@ public class StudentModel extends UserModel {
     private InventoryModel inventory;
     private AttendanceModel attendance;
     private String experienceLevel;
+    private StudentsQuestsModel studentsQuests;
 
     public StudentModel(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
@@ -26,11 +31,13 @@ public class StudentModel extends UserModel {
         team = new TeamModel(1, "undefined");
         group = new GroupModel(1,"undefined");
         role = Role.STUDENT.getName();
+
         id = saveNewObjectGetId();
         attendance = new AttendanceModel(id);
         inventory = new InventoryModel(id);
-
+        studentsQuests = new StudentsQuestsModel(id);
     }
+
 
     public StudentModel(int id, String firstName, String lastName, String email,
                         String password, int wallet, int experience,
@@ -40,10 +47,13 @@ public class StudentModel extends UserModel {
         this.wallet = wallet;
         this.experience = experience;
         this.attendance = new AttendanceModel(id);
+        this.studentsQuests = new StudentsQuestsModel(id);
         this.team = team;
         this.group = group;
         this.inventory = inventory;
+        this.studentsQuests = new StudentsQuestsModel(id);
         role = Role.STUDENT.getName();
+
     }
 
     public GroupModel getGroup() {
@@ -113,6 +123,9 @@ public class StudentModel extends UserModel {
 
     public AttendanceModel getAttendance(){
         return attendance;
+    }
+    public StudentsQuestsModel getStudentsQuests() {
+        return studentsQuests;
     }
 
     public void checkAttendance(Boolean isPresent){

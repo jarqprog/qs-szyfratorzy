@@ -43,9 +43,10 @@ public class QuestModel extends ItemModel {
 
 
     public String toString() {
-        return String.format(" id= %d\n name= %s\n description= %s\n reward =%d\n type= %s\n status= %s\n",
+        return String.format("\n id: %d  name: %s\n description: %s\n reward: %d type: %s status: %s\n\n",
                             id, name,description, reward, type, status);
     }
+
 
     public int saveNewObjectGetId(){
         QuestDAO dao = new QuestDAO();
