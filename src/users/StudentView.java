@@ -22,7 +22,8 @@ public class StudentView extends UsersView {
                 "[3] use artifact",
                 "[4] display teammates",
                 "[5] display team inventory",
-                "[6] display quest to achiv",
+                "[6] use team artifact",
+                "[7] display quest to achiv",
                 "[0] exit"};
 
         for (String element : options) {
