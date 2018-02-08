@@ -4,11 +4,9 @@ package users;
 import java.util.List;
 import java.util.ArrayList;
 import application.DatabaseDAO;
-import item.ArtifactModel;
 import school.GroupModel;
 import school.TeamModel;
 import shop.InventoryModel;
-import shop.StudentInventory;
 
 
 public class UsersDAO extends DatabaseDAO implements LogableDAO{
@@ -96,7 +94,7 @@ public class UsersDAO extends DatabaseDAO implements LogableDAO{
         int experience = 1000;
         GroupModel group = new GroupModel("undefined");
         TeamModel team = new TeamModel("undefined");
-        InventoryModel inventory = new StudentInventory(id);
+        InventoryModel inventory = new InventoryModel(id);
 
         return new StudentModel(id, fname, lname, email, password, wallet,
                                 experience, team, group, inventory);

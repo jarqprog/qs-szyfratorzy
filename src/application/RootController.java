@@ -41,9 +41,10 @@ public class RootController{
     private void loggingProcedure() {
 
         String login = view.displayLoginScreen("Login: ");
-        Console console = System.console();
-        view.displayMessage("Please enter your password: ");
-        char[] password = console.readPassword();
+//        Console console = System.console();
+//        view.displayMessage("Please enter your password: ");
+//        char[] password = console.readPassword();
+        String password = view.displayLoginScreen("Please enter your password: ");
         String [] usersTables = {Table.ADMINS.getName(), Table.MENTORS.getName(), Table.STUDENTS.getName()};
         for(String tableName : usersTables) {
             String query = String.format("Select * FROM %s " +

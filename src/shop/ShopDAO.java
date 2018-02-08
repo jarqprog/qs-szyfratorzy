@@ -47,11 +47,18 @@ public class ShopDAO {
             String query = String.format("SELECT * FROM artifacts " +
                     "WHERE id = %s;", artifactId);
             ArtifactModel artifact = artifactDAO.getOneObject(query);
-            if(inventory.containsKey(artifact)) {
-                value = inventory.get(artifact);
-                inventory.replace(artifact, ++value);
+            if (inventory.isEmpty()) {
+                inventory.put(artifact, 1);
             } else {
-            inventory.put(artifact, 1);
+                for (ArtifactModel key : inventory.keySet()) {
+                    if (key.getId() == artifact.getId()) {
+                        System.out.println(key);
+                        value = inventory.get(key);
+                        inventory.put(key, ++value);
+                    } else {
+                        inventory.put(artifact, 1);
+                    }
+                }
             }
         }
 
@@ -61,6 +68,7 @@ public class ShopDAO {
                     "WHERE id = %s;", tableName, id);
             dao.inputData(query);
         }
+
         return inventory;
     }
 
@@ -86,13 +94,16 @@ public class ShopDAO {
     public void saveInventory(int id, String tableName, InventoryModel inventory) {
         dao = new DbManagerDAO();
         int artifactId = -1;
-        Set<ArtifactModel> keys = inventory.getInventory().keySet();
+        Set<ArtifactModel> keys = inventory.getStock().keySet();
         String query;
         for(ArtifactModel artifact : keys) {
             artifactId = artifact.getId();
-            query = String.format("INSERT INTO %s " +
-                    "VALUES(null, %s, %s);",tableName, id, artifactId);
-            dao.inputData(query);
+            Integer value = (Integer) inventory.getStock().get(artifact);
+            for(int i = 0; i < value; i++) {
+                query = String.format("INSERT INTO %s " +
+                        "VALUES(null, %s, %s);", tableName, id, artifactId);
+                dao.inputData(query);
+            }
         }
     }
 

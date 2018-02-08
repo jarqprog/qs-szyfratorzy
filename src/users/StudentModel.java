@@ -1,16 +1,13 @@
 
 package users;
 
-import java.util.*;
-
 import application.Role;
-import item.ArtifactModel;
 import school.ExperienceLevelsController;
 import school.GroupModel;
 import school.TeamModel;
 import school.AttendanceModel;
 import shop.InventoryModel;
-import shop.StudentInventory;
+
 
 public class StudentModel extends UserModel {
 
@@ -32,7 +29,7 @@ public class StudentModel extends UserModel {
         role = Role.STUDENT.getName();
         this.id = saveNewObjectGetId();
         attendance.setStudentId(id); // to set proper student id in attendance
-        inventory = new StudentInventory(id);
+        inventory = new InventoryModel(id);
     }
 
     public StudentModel(int id, String firstName, String lastName, String email,

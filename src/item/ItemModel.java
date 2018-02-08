@@ -1,7 +1,6 @@
 package item;
 
 import application.DataTool;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public abstract class ItemModel {
 
@@ -80,10 +79,10 @@ public abstract class ItemModel {
         return genre;
     }
 
-    public String toString(){
-        return String.format("genre: %s, id: %s, type: %s, item name: %s, description: %s", this.genre, this.id,
-                            this.type, this.name, this.description);
-    }
+//    public String toString(){
+//        return String.format("genre: %s, id: %s, type: %s, item name: %s, description: %s", this.genre, this.id,
+//                            this.type, this.name, this.description);
+//    }
 
     public abstract void saveObject();
 

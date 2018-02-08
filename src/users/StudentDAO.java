@@ -1,17 +1,10 @@
 package users;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
-import item.ArtifactModel;
 import school.*;
 import shop.InventoryModel;
-import shop.StudentInventory;
 
 public class StudentDAO extends FactoryDAO {
 
@@ -61,8 +54,7 @@ public class StudentDAO extends FactoryDAO {
         GroupDAO groupDAO = new GroupDAO();
         GroupModel group = groupDAO.getOneObject(groupQuery);
 
-        InventoryModel inventory = new StudentInventory(studentId);
-        inventory.updateInventory();
+        InventoryModel inventory = new InventoryModel(studentId);
 
         return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience,
                 team, group, inventory);
@@ -102,4 +94,5 @@ public class StudentDAO extends FactoryDAO {
         dao.inputData(query);
         student.getAttendance().saveObject();
     }
+
 }

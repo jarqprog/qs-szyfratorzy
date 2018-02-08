@@ -1,5 +1,6 @@
 package application;
 
+import item.ArtifactModel;
 import item.ItemModel;
 
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.Set;
 
 public abstract class StudentStockModel {
     protected int id;
-    protected Map<ItemModel, ?> stock;
+    protected Map<ArtifactModel, Integer> stock;
 
     public StudentStockModel(int id) {
         this.id = id;
@@ -24,7 +25,7 @@ public abstract class StudentStockModel {
     }
 
     public ItemModel getItem(int itemId) {
-        Set<ItemModel> items = stock.keySet();
+        Set<ArtifactModel> items = stock.keySet();
         ItemModel item = null;
         for (ItemModel element : items) {
             if (itemId == element.getId()) {
@@ -51,6 +52,6 @@ public abstract class StudentStockModel {
 
     public abstract void setStock();     //use DAO
 
-    public abstract void addItem();
+
 
 }
