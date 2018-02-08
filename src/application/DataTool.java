@@ -63,4 +63,10 @@ public class DataTool {
         listToTrim.stream().map(String :: trim);
         return String.join(delimiter, listToTrim);
     }
+
+    public static <K> LinkedHashMap<K,LocalDate> sortDateMapByValue(Map<K,LocalDate> map) {
+        return map.entrySet().stream().sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+    }
 }
