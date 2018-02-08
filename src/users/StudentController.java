@@ -99,14 +99,34 @@ public class StudentController extends UserController{
 
     }
 
-
+    private void useTeamArtifacts() {
+        showTeamInventory();
+        if(student.getTeam().getInventory().getStock().isEmpty()){
+            view.displayMessage("Sorry, You have nothing to use!");
+            view.handlePause();
+        } else {
+            int id = view.getNumber("Enter artifact id: ");
+            Set<ArtifactModel> artifacts = student.getTeam().getInventory().getStock().keySet();
+            for(ArtifactModel artifact : artifacts) {
+                if(id == artifact.getId() && student.getTeam().getInventory().getStock().get(artifact) == 1) {
+                    student.getTeam().getInventory().removeArtifact(artifact);
+                    view.displayMessage("Artifact used!");
+                    break;
+                }
+                else if ((id == artifact.getId())) {
+                    student.getTeam().getInventory().decreaseQuantity(artifact);
+                    view.displayMessage("Artifact used!");
+                }
+            }
+        }
+    }
 
     public void handleMainMenu() {
 
         boolean isDone = false;
         while(! isDone){
 
-            String[] correctChoices = {"1", "2", "3", "4", "5","6", "7", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5","6", "7", "8", "0"};
             view.clearScreen();
             showProfile(student);
             view.displayMenu();
@@ -131,9 +151,12 @@ public class StudentController extends UserController{
                     showTeamInventory();
                     break;
                 case "6":
-                    pickQuestToAchieve();
+                    useTeamArtifacts();
                     break;
                 case "7":
+                    pickQuestToAchieve();
+                    break;
+                case "8":
                     showMyQuests();
                 case "0":
                     isDone = true;
