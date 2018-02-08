@@ -53,9 +53,9 @@ public abstract class StudentStockModel {
     }
 
     
-    public abstract Map getStock();
+    //public abstract Map getStock();
 
-    public abstract void setStock();     //use DAO
+    //public abstract void setStock();
 
     
 
