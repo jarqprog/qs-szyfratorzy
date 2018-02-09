@@ -2,13 +2,13 @@ package model;
 
 import java.time.LocalDate;
 
-public class TransactionModel {
+public class Transaction {
     private LocalDate localDate;
     private int studentId;
     private int itemId;
     private int itemPrice;
 
-    public TransactionModel(int studentId, int itemId, int itemPrice) {
+    public Transaction(int studentId, int itemId, int itemPrice) {
         this.studentId = studentId;
         this.itemId = itemId;
         this.itemPrice = itemPrice;
