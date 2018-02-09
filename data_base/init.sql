@@ -50,23 +50,24 @@ CREATE TABLE IF NOT EXISTS quests(
   name text,
   type text,
   description text,
-  reward integer);
-
-CREATE TABLE IF NOT EXISTS teams_transactions(
-  id integer PRIMARY KEY AUTOINCREMENT,
-  team_id integer,
-  artifact_id integer,
-  date text,
-  FOREIGN KEY (team_id) REFERENCES teams(id),
-  FOREIGN KEY (artifact_id) REFERENCES artifacts(id));
+  reward integer,
+  status text);
 
 CREATE TABLE IF NOT EXISTS students_transactions(
   id integer PRIMARY KEY AUTOINCREMENT,
-  student_id integer,
+  owner_id integer,
   artifact_id integer,
   date text,
-  FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
-  FOREIGN KEY (student_id) REFERENCES students(id));
+  FOREIGN KEY (owner_id) REFERENCES students(id),
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id));
+
+CREATE TABLE IF NOT EXISTS teams_transactions(
+  id integer PRIMARY KEY AUTOINCREMENT,
+  owner_id integer,
+  artifact_id integer,
+  date text,
+  FOREIGN KEY (owner_id) REFERENCES teams(id),
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id));
 
 CREATE TABLE IF NOT EXISTS experience_levels(
   id integer PRIMARY KEY AUTOINCREMENT,
@@ -75,18 +76,25 @@ CREATE TABLE IF NOT EXISTS experience_levels(
 
 CREATE TABLE IF NOT EXISTS students_artifacts(
   id integer PRIMARY KEY AUTOINCREMENT,
-  student_id integer,
+  owner_id integer,
   artifact_id integer,
-  FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
-  FOREIGN KEY (student_id) REFERENCES students(id));
+  FOREIGN KEY (owner_id) REFERENCES students(id),
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id));
 
-
-  CREATE TABLE IF NOT EXISTS team_artifacts(
+  CREATE TABLE IF NOT EXISTS teams_artifacts(
   id integer PRIMARY KEY AUTOINCREMENT,
-  team_id integer,
+  owner_id integer,
   artifact_id integer,
-  FOREIGN KEY (artifact_id) REFERENCES artifacts(id),
-  FOREIGN KEY (team_id) REFERENCES team(id));
+  FOREIGN KEY (owner_id) REFERENCES teams(id),
+  FOREIGN KEY (artifact_id) REFERENCES artifacts(id));
+
+CREATE TABLE IF NOT EXISTS students_quests(
+  id integer PRIMARY KEY AUTOINCREMENT,
+  owner_id integer,
+  quests_id integer,
+  date text,
+  FOREIGN KEY (owner_id) REFERENCES students(id),
+  FOREIGN KEY (quests_id) REFERENCES quests(id));
 
 CREATE TABLE IF NOT EXISTS attendance(
   id integer PRIMARY KEY AUTOINCREMENT,
@@ -107,8 +115,8 @@ CREATE TABLE IF NOT EXISTS attendance(
   INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
   INSERT OR IGNORE INTO admins VALUES(6,'Piotr','Gryzlo','piotr@cc.com','12321');
   INSERT OR IGNORE INTO students VALUES(100,'Marcinek','Stasik','lolek@gmail.com','12321', 200000, 300, 2, 2);
-  INSERT OR IGNORE INTO students VALUES(101,'Jadzia','Piernik','jadzia@cc.com','12321', 2000, 101, 2, 2);
-  INSERT OR IGNORE INTO students VALUES(102,'Maciek','Jankowicz','maciek99@cc.com','12321', 20, 3000, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(101,'Jadzia','Piernik','jadzia@cc.com','12321', 200000, 101, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(102,'Maciek','Jankowicz','maciek99@cc.com','12321', 33330, 3000, 2, 2);
   INSERT OR IGNORE INTO students VALUES(103,'Balbina','Karp','karpik007@cc.com','12321', 20, 0, 3, 3);
   INSERT OR IGNORE INTO students VALUES(104,'Alfred','Szlarski','pan.samochodzik@cc.com','12321', 200, 3000, 3, 3);
   INSERT OR IGNORE INTO students VALUES(105,'Jakub','Wedrowycz','bimbrownik@gmail.com','12321', 20, 40000, 3, 3);
@@ -121,46 +129,70 @@ CREATE TABLE IF NOT EXISTS attendance(
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,100);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',0,100);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',1,100);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-05',1,100);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-06',1,100);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',1,100);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',1,100);
 
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,101);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,101);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',1,101);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',0,101);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-05',1,101);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-06',0,101);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',0,101);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',0,101);
 
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,102);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,102);
-  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',1,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',0,102);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',0,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-05',0,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-06',1,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',1,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',0,102);
 
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,103);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,103);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',1,103);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',1,103);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-05',1,103);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-06',0,103);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',0,103);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',1,103);
 
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,104);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',0,104);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',0,104);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',0,104);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-05',1,104);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-06',0,104);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',0,104);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',0,104);
 
-  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',0,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,105);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,105);
-  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',0,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',1,105);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',1,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-05',1,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-06',1,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',1,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',1,105);
 
   -- items (quests and artifacts):
-  INSERT OR IGNORE INTO quests VALUES(1,'Exploring a dungeon','Q','Finishing a Teamwork week', 100);
-  INSERT OR IGNORE INTO quests VALUES(2,'Solving the magic puzzle','Q','Finishing an SI assignment', 100);
-  INSERT OR IGNORE INTO quests VALUES(3,'Slaying a dragon','Q','Passing a Checkpoint in the first attempt', 500);
-  INSERT OR IGNORE INTO quests VALUES(4,'Spot trap','Q','Spot a major mistake in the assignment', 50);
-  INSERT OR IGNORE INTO quests VALUES(5,'Taming a pet','Q','Doing a demo about a pet project', 100);
-  INSERT OR IGNORE INTO quests VALUES(6,'Recruiting some n00bs','Q','Taking part in the student screening process', 100);
-  INSERT OR IGNORE INTO quests VALUES(7,'Forging weapons','Q','Organizing a workshop for other students', 400);
-  INSERT OR IGNORE INTO quests VALUES(8,'Master the mornings','Q','Attend 1 months without being late', 300);
-  INSERT OR IGNORE INTO quests VALUES(9,'Fast as an unicorn','Q','deliver 4 consecutive SI week assignments on time', 500);
-  INSERT OR IGNORE INTO quests VALUES(10,'Achiever','Q','set up a SMART goal accepted by a mentor, then achieve it', 1000);
-  INSERT OR IGNORE INTO quests VALUES(11,'Fortune','Q','students choose the best project of the week. Selected team scores', 500);
-  INSERT OR IGNORE INTO quests VALUES(12,'Creating an enchanteds scroll','Q','Creating extra material for the current TW/SI topic (should be revised by mentors)', 500);
-  INSERT OR IGNORE INTO quests VALUES(13,'Enter the arena','Q','Do a presentation on a meet-up', 500);
+  INSERT OR IGNORE INTO quests VALUES(1,'Exploring a dungeon','B','Finishing a Teamwork week', 100,'Available');
+  INSERT OR IGNORE INTO quests VALUES(2,'Solving the magic puzzle','B','Finishing an SI assignment', 100,'Available');
+  INSERT OR IGNORE INTO quests VALUES(3,'Slaying a dragon','B','Passing a Checkpoint in the first attempt', 500,'Available');
+  INSERT OR IGNORE INTO quests VALUES(4,'Spot trap','E','Spot a major mistake in the assignment', 50,'Available');
+  INSERT OR IGNORE INTO quests VALUES(5,'Taming a pet','E','Doing a demo about a pet project', 100,'Available');
+  INSERT OR IGNORE INTO quests VALUES(6,'Recruiting some n00bs','E','Taking part in the student screening process', 100,'Available');
+  INSERT OR IGNORE INTO quests VALUES(7,'Forging weapons','E','Organizing a workshop for other students', 400,'Available');
+  INSERT OR IGNORE INTO quests VALUES(8,'Master the mornings','E','Attend 1 months without being late', 300,'Available');
+  INSERT OR IGNORE INTO quests VALUES(9,'Fast as an unicorn','E','deliver 4 consecutive SI week assignments on time', 500,'Available');
+  INSERT OR IGNORE INTO quests VALUES(10,'Achiever','E','set up a SMART goal accepted by a mentor, then achieve it', 1000,'Available');
+  INSERT OR IGNORE INTO quests VALUES(11,'Fortune','E','students choose the best project of the week. Selected team scores', 500,'Available');
+  INSERT OR IGNORE INTO quests VALUES(12,'Creating an enchanteds scroll','E','Creating extra material for the current TW/SI topic (should be revised by mentors)', 500,'Available');
+  INSERT OR IGNORE INTO quests VALUES(13,'Enter the arena','E','Do a presentation on a meet-up', 500,'Available');
 
   INSERT OR IGNORE INTO artifacts VALUES(1,'Combat training','B','Private mentoring', 50);
   INSERT OR IGNORE INTO artifacts VALUES(2,'Sanctuary','B','You can spend a day in home office', 1000);
