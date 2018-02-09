@@ -1,45 +1,39 @@
-package shop;
+package model;
 
-import application.StudentStockModel;
-import item.ArtifactModel;
+import dao.InventoryDAO;
 
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 
-public class InventoryModel extends StudentStockModel {
+public abstract class Inventory extends StudentStock {
 
-    Map<ArtifactModel,Integer> stock;
+    protected Map<Artifact,Integer> stock;
+    protected InventoryDAO dao;
 
-    public InventoryModel(int ownerId) {
+    public Inventory(int ownerId) {
         super(ownerId);
         stock = new HashMap<>();
-
     }
 
-    public Map<ArtifactModel,Integer> getStock() {
+    public Map<Artifact,Integer> getStock() {
         return stock;
     }
 
-    public void setStock() {
-        InventoryDAO dao = new StudentInventoryDAO();
-        stock = dao.loadInventory(ownerId);
-    }
-
-    public void addItem(ArtifactModel item) {
+    public void addItem(Artifact item) {
         stock.put(item, 1);
         saveObject();
     }
 
-    public void removeArtifact(ArtifactModel artifact) {
+    public void removeArtifact(Artifact artifact) {
         stock.remove(artifact);
         saveObject();
     }
 
-    public void modifyQuantity(ArtifactModel artifact) {
-        Set<ArtifactModel> inventory = stock.keySet();
+    public void modifyQuantity(Artifact artifact) {
+        Set<Artifact> inventory = stock.keySet();
 
-        for(ArtifactModel inStockItem: inventory){
+        for(Artifact inStockItem: inventory){
             if(inStockItem.getId() == artifact.getId()){
                 Integer value = stock.get(inStockItem);
                 stock.put(inStockItem, ++value);
@@ -48,9 +42,9 @@ public class InventoryModel extends StudentStockModel {
         saveObject();
     }
 
-    public void decreaseQuantity(ArtifactModel artifact) {
-        Set<ArtifactModel> inventory = stock.keySet();
-        for(ArtifactModel inStockItem: inventory){
+    public void decreaseQuantity(Artifact artifact) {
+        Set<Artifact> inventory = stock.keySet();
+        for(Artifact inStockItem: inventory){
             if(inStockItem.getId() == artifact.getId()){
                 Integer value = stock.get(inStockItem);
                 stock.put(artifact, --value);
@@ -59,10 +53,10 @@ public class InventoryModel extends StudentStockModel {
         saveObject();
     }
 
-    public ArtifactModel getItem(int itemId) {
+    public Artifact getItem(int itemId) {
         if (! isEmpty()) {
-            for (Map.Entry<ArtifactModel, Integer> entry : stock.entrySet()) {
-                ArtifactModel inStockItem = entry.getKey();
+            for (Map.Entry<Artifact, Integer> entry : stock.entrySet()) {
+                Artifact inStockItem = entry.getKey();
                 if (inStockItem.getId() == itemId) {
                     return inStockItem;
 
@@ -72,9 +66,9 @@ public class InventoryModel extends StudentStockModel {
         return null;
     }
 
-    public boolean containsItem(ArtifactModel item) {
-        for (Map.Entry<ArtifactModel, Integer> entry : stock.entrySet()) {
-            ArtifactModel inStockItem = entry.getKey();
+    public boolean containsItem(Artifact item) {
+        for (Map.Entry<Artifact,Integer> entry : stock.entrySet()) {
+            Artifact inStockItem = entry.getKey();
             if (inStockItem.getName().equals(item.getName())) {
                 return true;
             }
@@ -84,8 +78,8 @@ public class InventoryModel extends StudentStockModel {
 
     public String toString () {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<ArtifactModel,Integer> entry : stock.entrySet()) {
-            ArtifactModel artifact = entry.getKey();
+        for (Map.Entry<Artifact,Integer> entry : stock.entrySet()) {
+            Artifact artifact = entry.getKey();
             Integer quantity = entry.getValue();
             stringBuilder.append(String.format("Id: %d, Artifact: %s, Quantity: %d\n",
                     artifact.getId(), artifact.getName(), quantity));
@@ -93,12 +87,12 @@ public class InventoryModel extends StudentStockModel {
         return stringBuilder.toString();
     }
 
-    public void saveObject () {
-        StudentInventoryDAO dao = new StudentInventoryDAO();
-        dao.saveInventory(this);
-    }
-
     public boolean isEmpty () {
         return stock.size() == 0;
     }
+
+    protected abstract void saveObject ();
+
+    public abstract void setStock();
+
 }

@@ -1,18 +1,13 @@
 
-package users;
+package model;
 
-import application.Role;
+import enums.Role;
 
-import item.StudentsQuestsModel;
-
-import school.ExperienceLevelsController;
-import Model.Group;
-import Model.Team;
-import Model.Attendance;
-import Model.StudentInventory;
+import controllers.ExperienceLevelsController;
+import dao.StudentDAO;
 
 
-public class StudentModel extends UserModel {
+public class Student extends User {
 
     private Group group;
     private Team team;
@@ -21,9 +16,9 @@ public class StudentModel extends UserModel {
     private StudentInventory inventory;
     private Attendance attendance;
     private String experienceLevel;
-    private StudentsQuestsModel studentsQuests;
+    private StudentsQuests studentsQuests;
 
-    public StudentModel(String firstName, String lastName, String password) {
+    public Student(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
         wallet = 0;
         experience = 0;
@@ -33,10 +28,10 @@ public class StudentModel extends UserModel {
         id = saveNewObjectGetId();
         attendance = new Attendance(id);
         inventory = new StudentInventory(id);
-        studentsQuests = new StudentsQuestsModel(id);
+        studentsQuests = new StudentsQuests(id);
     }
 
-    public StudentModel(int id, String firstName, String lastName, String email,
+    public Student(int id, String firstName, String lastName, String email,
                         String password, int wallet, int experience,
                         Team team, Group group) {
 
@@ -47,7 +42,7 @@ public class StudentModel extends UserModel {
         this.group = group;
         this.attendance = new Attendance(id);
         this.inventory = new StudentInventory(id);
-        this.studentsQuests = new StudentsQuestsModel(id);
+        this.studentsQuests = new StudentsQuests(id);
         role = Role.STUDENT.getName();
     }
 
@@ -87,9 +82,9 @@ public class StudentModel extends UserModel {
     public void setInventory(StudentInventory inventory) {
         this.inventory = inventory; }
 
-    public StudentsQuestsModel getStudentsQuests() { return studentsQuests; }
+    public StudentsQuests getStudentsQuests() { return studentsQuests; }
 
-    public void setStudentsQuests(StudentsQuestsModel studentsQuests) { this.studentsQuests = studentsQuests; }
+    public void setStudentsQuests(StudentsQuests studentsQuests) { this.studentsQuests = studentsQuests; }
 
     public void setStudentsQuests() { this.studentsQuests.setStock(); }
 

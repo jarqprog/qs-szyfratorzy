@@ -1,20 +1,20 @@
-package users;
+package model;
 
-import application.Role;
-import Model.Group;
+import enums.Role;
+import dao.MentorDAO;
 
-public class MentorModel extends UserModel {
+public class Mentor extends User {
 
     private Group group;
 
-    public MentorModel(String firstName, String lastName, String password) {
+    public Mentor(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
         group = new Group(1,"undefined");
         role = Role.MENTOR.getName();
         this.id = saveNewObjectGetId();
     }
 
-    public MentorModel(int id, String firstName, String lastName,
+    public Mentor(int id, String firstName, String lastName,
                        String email, String password, Group group) {
         super(id, firstName, lastName, email, password);
         this.group = group;

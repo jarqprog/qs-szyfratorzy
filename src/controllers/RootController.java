@@ -1,14 +1,15 @@
-package application;
+package controllers;
 
 import java.util.List;
+import java.io.Console;
 
-import Model.Admin;
-import Model.Mentor;
-import Model.Student;
-import dao.AdminDAO;
-import dao.MentorDAO;
-import dao.StudentDAO;
-import users.*;
+import dao.*;
+import enums.FilePath;
+import enums.Table;
+import model.Admin;
+import model.Mentor;
+import model.Student;
+import view.RootView;
 
 
 public class RootController{
@@ -45,10 +46,9 @@ public class RootController{
     private void loggingProcedure() {
 
         String login = view.displayLoginScreen("Login: ");
-//        Console console = System.console();
-//        view.displayMessage("Please enter your password: ");
-//        char[] password = console.readPassword();
-        String password = view.displayLoginScreen("Please enter your password: ");
+        Console console = System.console();
+        view.displayMessage("Please enter your password: ");
+        char[] password = console.readPassword();
         String [] usersTables = {Table.ADMINS.getName(), Table.MENTORS.getName(), Table.STUDENTS.getName()};
         for(String tableName : usersTables) {
             String query = String.format("Select * FROM %s " +

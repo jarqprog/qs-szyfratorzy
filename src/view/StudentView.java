@@ -1,7 +1,7 @@
-package users;
+package view;
 
-import Model.StudentInventory;
-import Model.TeamInventory;
+import model.StudentInventory;
+import model.TeamInventory;
 
 public class StudentView extends UsersView {
 

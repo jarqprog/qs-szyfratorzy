@@ -1,5 +1,6 @@
-package shop;
+package Model;
 
+import dao.InventoryDAO;
 import application.StudentStockModel;
 import item.ArtifactModel;
 
@@ -7,23 +8,18 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 
-public class InventoryModel extends StudentStockModel {
+public abstract class Inventory extends StudentStockModel {
 
-    Map<ArtifactModel,Integer> stock;
+    protected Map<ArtifactModel,Integer> stock;
+    protected InventoryDAO dao;
 
-    public InventoryModel(int ownerId) {
+    public Inventory(int ownerId) {
         super(ownerId);
         stock = new HashMap<>();
-
     }
 
     public Map<ArtifactModel,Integer> getStock() {
         return stock;
-    }
-
-    public void setStock() {
-        InventoryDAO dao = new StudentInventoryDAO();
-        stock = dao.loadInventory(ownerId);
     }
 
     public void addItem(ArtifactModel item) {
@@ -93,12 +89,12 @@ public class InventoryModel extends StudentStockModel {
         return stringBuilder.toString();
     }
 
-    public void saveObject () {
-        StudentInventoryDAO dao = new StudentInventoryDAO();
-        dao.saveInventory(this);
-    }
-
     public boolean isEmpty () {
         return stock.size() == 0;
     }
+
+    protected abstract void saveObject ();
+
+    public abstract void setStock();
+
 }
