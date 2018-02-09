@@ -6,7 +6,7 @@ import java.util.List;
 public class ShopView extends AbstractView {
 
     public void displayMenu() {
-        String[] options = {"      *** ShopModel online ***     ",
+        String[] options = {"\n      *** Shop online ***     \n",
                 "[1] display available artifacts",
                 "[2] buy artifact",
                 "[3] buy artifact for team",

@@ -1,11 +1,8 @@
 package model;
 
-import dao.InventoryDAO;
 import dao.TeamInventoryDAO;
 
 public class TeamInventory extends Inventory {
-
-    private InventoryDAO dao;
 
     public TeamInventory(int ownerId) {
         super(ownerId);

@@ -39,7 +39,7 @@ public class ShopController {
             while (!isChoiceReady) {
                 view.clearScreen();
                 view.displayMenu();
-                userChoice = view.getUserInput("Select an option: ");
+                userChoice = view.getUserInput("\n  Select an option: ");
                 isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
             }
 
@@ -66,20 +66,20 @@ public class ShopController {
 
     public void buyArtifact() {
         view.displayListOfArtifacts(getArtifactsByType('B'));
-        int id = view.getNumber("Enter artifact id: ");
+        int id = view.getNumber("\nEnter artifact id: ");
         for (Artifact artifact : shop.getStore()) {
             if (id == artifact.getId() && Objects.equals(artifact.getType(), 'B')) {
                 if (artifact.getPrice() <= student.getWallet()) {
                     finalizeTransaction(artifact);
                     pay(artifact);
-                    view.displayMessage("You bought " + artifact.getName() + "!");
+                    view.displayMessage("\n   You've bought " + artifact.getName() + "!");
 
                 } else {
-                    view.displayMessage("This artifact is to expensive!");
+                    view.displayMessage("   - This artifact is to expensive!");
                 }
             }
         }
-        view.displayMessage("Bye");
+        view.displayMessage("   Bye!");
     }
 
     public void finalizeTransaction(Artifact artifact) {
@@ -107,15 +107,15 @@ public class ShopController {
 
     public void buyArtifactForTeam() {
         view.displayListOfArtifacts(getArtifactsByType('M'));
-        int id = view.getNumber("Enter artifact id: ");
+        int id = view.getNumber("\nEnter artifact id: ");
         for (Artifact artifact : shop.getStore()) {
             if (id == artifact.getId() && Objects.equals(artifact.getType(), 'M')) {
                 if (checkTeamResources(artifact, student.getTeam())) {
                     chargeTeamMembers(artifact, student.getTeam());
                     finalizeTeamTransaction(artifact);
-                    view.displayMessage("You bought " + artifact.getName() + "!");
+                    view.displayMessage("   - You bought " + artifact.getName() + "!");
                 } else {
-                    view.displayMessage("Not enough coolcoins to buy this artifact!");
+                    view.displayMessage("   - Not enough coolcoins to buy this artifact!");
                 }
             }
         }

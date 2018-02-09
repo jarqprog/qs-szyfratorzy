@@ -23,10 +23,10 @@ public class StudentsQuests extends StudentStock {
     public void addItem(Quest quest) {
         LocalDate date = LocalDate.now();
         stock.put(quest, date);
+        saveObject();
     }
 
     public Map<Quest,LocalDate> getStock() {
-        setStock();
         return stock;
     }
 
@@ -40,7 +40,6 @@ public class StudentsQuests extends StudentStock {
             Quest inStockItem = entry.getKey();
             if (inStockItem.getId() == itemId) {
                 return inStockItem;
-
             }
         }
         return null;
@@ -73,7 +72,7 @@ public class StudentsQuests extends StudentStock {
     }
 
     public boolean isEmpty () {
-        return stock.size() > 0;
+        return stock.size() == 0;
     }
 }
 

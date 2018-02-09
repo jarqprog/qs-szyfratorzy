@@ -44,7 +44,7 @@ public class Quest extends Item {
 
 
     public String toString() {
-        return String.format("\n id: %d  name: %s\n description: %s\n reward: %d type: %s status: %s\n\n",
+        return String.format("\n id: %d  name: %s\n description: %s\n reward: %d type: %s status: %s\n",
                             id, name,description, reward, type, status);
     }
 

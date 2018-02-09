@@ -34,7 +34,6 @@ public class RootController{
             {
                 case "1":
                     loggingProcedure();
-//                    handleUserData(userData);
                     break;
                 case "0":
                     isDone = true;
@@ -52,14 +51,13 @@ public class RootController{
         String [] usersTables = {Table.ADMINS.getName(), Table.MENTORS.getName(), Table.STUDENTS.getName()};
         for(String tableName : usersTables) {
             String query = String.format("Select * FROM %s " +
-                "WHERE first_name || id = '%s' AND password = '%s';", tableName, login, String.valueOf(password));
-                List<String[]> userData = dbManagerDao.getData(query);
-                if(userData.size() == 1) {
-                    createUser(userData.get(0), tableName);
-                    break;
-                }
+            "WHERE first_name || id = '%s' AND password = '%s';", tableName, login, String.valueOf(password));
+            List<String[]> userData = dbManagerDao.getData(query);
+            if(userData.size() == 1) {
+                createUser(userData.get(0), tableName);
+                break;
             }
-
+        }
     }
 
     public void createUser(String [] userData, String tableName) {
@@ -103,13 +101,13 @@ public class RootController{
         dbDAO.openConnection();
         boolean hasConnection = dbDAO.isConnected();
         if(hasConnection){
-            view.displayMessage("Opened database successfully");
+            view.displayMessage("\n\n\n\n\tOpened database successfully");
         }else{
             view.displayMessage("Problem occured while opening database");
         }
         dbDAO.fillDatabase();
         dbDAO.closeConnection();
-        view.displayMessage("Database prepared");
+        view.displayMessage("\n\n\n\n\tDatabase prepared..\n\n\n\n\n");
         view.handlePause();
     }
 }

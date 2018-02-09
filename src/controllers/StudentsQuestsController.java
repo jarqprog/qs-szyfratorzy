@@ -6,26 +6,27 @@ import Interface.CreatableDAO;
 import dao.QuestDAO;
 import view.QuestView;
 import model.Quest;
-import model.StudentsQuests;
+import model.Student;
 
 
 public class StudentsQuestsController {
 
-    QuestDAO questDAO;
-    QuestView questView;
+    QuestView view;
     CreatableDAO dao;
 
 
-    public void addQuestToStudentsQuests(StudentsQuests studentsQuests){
+    public void runQuestMenu(Student student){
 
-        questDAO = new QuestDAO();
-        questView = new QuestView();
+        view = new QuestView();
         dao = new QuestDAO();
 
-        List<Quest> quests= questDAO.getAllObjects();
-        questView.displayQuests(quests);
-        Integer questsId = questView.typeQuestIdInput();
+        List<Quest> quests = dao.getAllObjects();
+        view.displayQuests(quests);
+        Integer questsId = view.typeQuestIdInput();
         Quest pickedQuest = dao.getObjectById(questsId);
-        studentsQuests.addItem(pickedQuest);
+        student.getStudentsQuests().addItem(pickedQuest);
+        view.clearScreen();
+        view.displayMessage("\nYou have taken up the task:\n");
+        view.displayObject(pickedQuest);
         }
     }

@@ -48,17 +48,18 @@ public class StudentsQuestsDAO {
         int ownerId = studentsQuests.getOwnerId();
         String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;",
                 STUDENTS_QUESTS_TABLE, ownerId);
-        dataBaseDao.inputData(clearQuery);
         Map<Quest,LocalDate> questsStock  = studentsQuests.getStock();
+        dataBaseDao.inputData(clearQuery);
+        System.out.println(questsStock.size() + " quests: "+questsStock+ " "+ String.valueOf((questsStock.size() > 0)));
         if(questsStock.size() > 0) {
             Set<Quest> quests = questsStock.keySet();
-            Object[] dates = questsStock.values().toArray(new Object[0]);
+            LocalDate[] dates = questsStock.values().toArray(new LocalDate[0]);
             String date;
             int questId;
             int index = 0;
             for(Quest quest : quests) {
                 questId = quest.getId();
-                LocalDate localDate = (LocalDate) dates[index];
+                LocalDate localDate = dates[index];
                 date = localDate.toString();
                 String query = String.format("INSERT INTO %s VALUES(null, '%s', %s, %s);",
                         STUDENTS_QUESTS_TABLE, ownerId, questId, date);

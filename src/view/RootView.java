@@ -26,8 +26,4 @@ public class RootView extends AbstractView{
         return getUserInput(message);
     }
 
-    public void displayLogoutScreen(){
-        displayMessage("Logout.... ;( ");
-        handlePause();
-    }
 }

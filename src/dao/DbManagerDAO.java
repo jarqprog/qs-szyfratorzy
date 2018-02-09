@@ -6,7 +6,6 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
-
 public class DbManagerDAO extends DatabaseDAO {
 
     public void inputData(String query){
@@ -37,9 +36,9 @@ public class DbManagerDAO extends DatabaseDAO {
             int colCounter = meta.getColumnCount();
 
             while (resultSet.next()) {
-                final List<String> columnList = new ArrayList<>();
+                List<String> columnList = new ArrayList<>();
                 for (int column = 1; column <= colCounter; ++ column) {
-                    final Object value = resultSet.getObject(column);
+                    Object value = resultSet.getObject(column);
                     columnList.add(String.valueOf(value));
                 }
                 String[] columnArray = new String[columnList.size()];

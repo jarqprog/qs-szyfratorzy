@@ -2,10 +2,8 @@
 package model;
 
 import enums.Role;
-
 import controllers.ExperienceLevelsController;
 import dao.StudentDAO;
-
 
 public class Student extends User {
 
@@ -82,7 +80,9 @@ public class Student extends User {
     public void setInventory(StudentInventory inventory) {
         this.inventory = inventory; }
 
-    public StudentsQuests getStudentsQuests() { return studentsQuests; }
+    public StudentsQuests getStudentsQuests() {
+        studentsQuests.setStock();
+        return studentsQuests; }
 
     public void setStudentsQuests(StudentsQuests studentsQuests) { this.studentsQuests = studentsQuests; }
 

@@ -10,7 +10,7 @@ public class QuestView extends AbstractView {
         for (Quest singleQuest : quests) System.out.println(singleQuest.toString());
         }
 
-    public Integer typeQuestIdInput(){
-       return getNotNegativeNumberFromUser("Chose id to pick quest");
+    public int typeQuestIdInput(){
+       return getNotNegativeNumberFromUser("\nChoose id to pick quest: ");
     }
 }
