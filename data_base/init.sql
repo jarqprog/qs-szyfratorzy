@@ -115,8 +115,8 @@ CREATE TABLE IF NOT EXISTS attendance(
   INSERT OR IGNORE INTO admins VALUES(1,'admin','admin','admin@email.com','admin');
   INSERT OR IGNORE INTO admins VALUES(6,'Piotr','Gryzlo','piotr@cc.com','12321');
   INSERT OR IGNORE INTO students VALUES(100,'Marcinek','Stasik','lolek@gmail.com','12321', 200000, 300, 2, 2);
-  INSERT OR IGNORE INTO students VALUES(101,'Jadzia','Piernik','jadzia@cc.com','12321', 2000, 101, 2, 2);
-  INSERT OR IGNORE INTO students VALUES(102,'Maciek','Jankowicz','maciek99@cc.com','12321', 20, 3000, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(101,'Jadzia','Piernik','jadzia@cc.com','12321', 200000, 101, 2, 2);
+  INSERT OR IGNORE INTO students VALUES(102,'Maciek','Jankowicz','maciek99@cc.com','12321', 33330, 3000, 2, 2);
   INSERT OR IGNORE INTO students VALUES(103,'Balbina','Karp','karpik007@cc.com','12321', 20, 0, 3, 3);
   INSERT OR IGNORE INTO students VALUES(104,'Alfred','Szlarski','pan.samochodzik@cc.com','12321', 200, 3000, 3, 3);
   INSERT OR IGNORE INTO students VALUES(105,'Jakub','Wedrowycz','bimbrownik@gmail.com','12321', 20, 40000, 3, 3);
@@ -129,31 +129,55 @@ CREATE TABLE IF NOT EXISTS attendance(
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,100);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',0,100);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',1,100);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-05',1,100);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-06',1,100);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',1,100);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',1,100);
 
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,101);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,101);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',1,101);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',0,101);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-05',1,101);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-06',0,101);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',0,101);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',0,101);
 
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,102);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,102);
-  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',1,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',0,102);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',0,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-05',0,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-06',1,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',1,102);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',0,102);
 
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,103);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,103);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',1,103);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',1,103);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-05',1,103);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-06',0,103);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',0,103);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',1,103);
 
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,104);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',0,104);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',0,104);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',0,104);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-05',1,104);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-06',0,104);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',0,104);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',0,104);
 
-  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',0,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,105);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,105);
-  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',0,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',1,105);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-04',1,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-05',1,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-06',1,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',1,105);
+  INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',1,105);
 
   -- items (quests and artifacts):
   INSERT OR IGNORE INTO quests VALUES(1,'Exploring a dungeon','B','Finishing a Teamwork week', 100,'Available');
