@@ -33,7 +33,7 @@ public class Artifact extends Item {
     }
 
     public String toString(){
-        return super.toString() + String.format(" price: %s", getPrice());
+        return super.toString() + String.format(" -price: %s\n\n", getPrice());
     }
 
     public int saveNewObjectGetId(){

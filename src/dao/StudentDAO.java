@@ -84,10 +84,8 @@ public class StudentDAO extends FactoryDAO {
                             "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, wallet, experience,
                             teamId, groupId, studentId);
         }
-
         dao = new DbManagerDAO();
         dao.inputData(query);
-        student.getAttendance().saveObject();
     }
 
 }

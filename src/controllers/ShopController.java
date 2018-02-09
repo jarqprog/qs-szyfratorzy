@@ -72,7 +72,8 @@ public class ShopController {
                 if (artifact.getPrice() <= student.getWallet()) {
                     finalizeTransaction(artifact);
                     pay(artifact);
-                    view.displayMessage("\n   You've bought " + artifact.getName() + "!");
+                    view.displayMessage("\n   You've bought " + artifact.getName() + "!\n");
+                    view.displayMessage(artifact.toString());
 
                 } else {
                     view.displayMessage("   - This artifact is to expensive!");
@@ -89,7 +90,6 @@ public class ShopController {
         } else {
             inventory.addItem(artifact);
         }
-        System.out.println(inventory);
     }
 
     public void finalizeTeamTransaction(Artifact artifact) {
@@ -113,7 +113,8 @@ public class ShopController {
                 if (checkTeamResources(artifact, student.getTeam())) {
                     chargeTeamMembers(artifact, student.getTeam());
                     finalizeTeamTransaction(artifact);
-                    view.displayMessage("   - You bought " + artifact.getName() + "!");
+                    view.displayMessage("   - You bought " + artifact.getName() + "!\n");
+                    view.displayMessage(artifact.toString());
                 } else {
                     view.displayMessage("   - Not enough coolcoins to buy this artifact!");
                 }

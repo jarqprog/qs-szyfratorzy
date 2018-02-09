@@ -81,7 +81,7 @@ public abstract class Item {
     }
 
     public String toString(){
-        return String.format("genre: %s\n, id: %s\n, type: %s\n, item name: %s\n, description: %s\n\n\n", this.genre, this.id,
+        return String.format("\n -genre: %s\n -id: %s\n -type: %s\n -item name: %s\n -description: %s\n", this.genre, this.id,
                             this.type, this.name, this.description);
     }
 

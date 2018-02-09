@@ -27,37 +27,21 @@ public abstract class Inventory extends StudentStock {
 
     public void removeArtifact(Artifact artifact) {
         Artifact inStockItem = getItem(artifact.getId());
-//        Set<Artifact> inventory = stock.keySet();
-//        for(Artifact inStockItem: inventory){
-//            if(inStockItem.getId() == artifact.getId()){
-                stock.remove(inStockItem);
-//            }
-//        }
+        stock.remove(inStockItem);
         saveObject();
     }
 
     public void modifyQuantity(Artifact artifact) {
         Artifact inStockItem = getItem(artifact.getId());
-//        Set<Artifact> inventory = stock.keySet();
-//
-//        for(Artifact inStockItem: inventory){
-//            if(inStockItem.getId() == artifact.getId()){
-                Integer value = stock.get(inStockItem);
-                stock.put(inStockItem, value + 1);
-//            }
-//        }
+        Integer value = stock.get(inStockItem);
+        stock.put(inStockItem, value + 1);
         saveObject();
     }
 
     public void decreaseQuantity(Artifact artifact) {
         Artifact inStockItem = getItem(artifact.getId());
-//        Set<Artifact> inventory = stock.keySet();
-//        for(Artifact inStockItem: inventory){
-//            if(inStockItem.getId() == artifact.getId()){
-                Integer value = stock.get(inStockItem);
-                stock.put(inStockItem, value - 1);
-//            }
-//        }
+        Integer value = stock.get(inStockItem);
+        stock.put(inStockItem, value - 1);
         saveObject();
     }
 
@@ -73,15 +57,6 @@ public abstract class Inventory extends StudentStock {
 
     public boolean containsItem(Artifact item) {
         return getItem(item.getId()) != null;
-//            return false
-//        }
-//        for (Map.Entry<Artifact,Integer> entry : stock.entrySet()) {
-//            Artifact inStockItem = entry.getKey();
-//            if (inStockItem.getName().equals(item.getName())) {
-//                return true;
-//            }
-//        }
-//        return false;
     }
 
     public String toString () {

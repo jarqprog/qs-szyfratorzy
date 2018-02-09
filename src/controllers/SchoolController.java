@@ -153,7 +153,7 @@ public class SchoolController {
     public static Mentor getMentorByUserChoice() {
         UsersView view = new UsersView();
         List<Mentor> mentors = getAllMentors();
-        view.displayMessage("Mentors:\n");
+        view.displayMessage("\nMentors:\n");
         view.displayUsers(mentors);
         String id = view.getUserInput("\nSelect mentor by id: ");
         for (Mentor mentor : mentors) {
@@ -169,7 +169,7 @@ public class SchoolController {
         String teamName = "";
         SchoolView view = new SchoolView();
         while (!isDone){
-            teamName = view.getUserInput("Enter team name(or 0 to exit): ");
+            teamName = view.getUserInput("\nEnter team name (or 0 to exit): ");
             if (teamName.equals("0")){
                 isDone = true;
                 break;
@@ -190,7 +190,7 @@ public class SchoolController {
         String groupName = "";
         SchoolView view = new SchoolView();
         while (!isDone){
-            groupName = view.getUserInput("Enter group name (or 0 to exit): ");
+            groupName = view.getUserInput("\nEnter group name (or 0 to exit): ");
             if (groupName.equals("0")){
                 isDone = true;
                 break;
@@ -216,9 +216,6 @@ public class SchoolController {
                 student.addAttendance(isPresent);
                 isPresenceChecked = true;
             }
-            
         }
-
     }
-
 }

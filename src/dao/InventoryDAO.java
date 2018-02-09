@@ -47,8 +47,8 @@ public abstract class InventoryDAO {
         int ownerId = inventory.getOwnerId();
         dao = new DbManagerDAO();
         String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;", DEFAULT_TABLE, ownerId);
+        dao.inputData(clearQuery);
         if (! inventory.isEmpty()) {
-            dao.inputData(clearQuery);
             String query;
             for (Map.Entry<Artifact,Integer> entry : inventory.getStock().entrySet()) {
                 Integer artifactId = entry.getKey().getId();

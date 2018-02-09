@@ -9,46 +9,46 @@ import java.util.*;
 public class Attendance {
 
     private int studentId;
-    private Map<LocalDate, Boolean> attendace;
+    private Map<LocalDate, Boolean> attendance;
 
     public Attendance(Integer studentId) {
         this.studentId = studentId;
-        this.attendace = new HashMap<>();
+        this.attendance = new HashMap<>();
     }
 
-    public void setAttendance(Map<LocalDate, Boolean> attendace) {
-        this.attendace = attendace;
+    public void setAttendance(Map<LocalDate, Boolean> attendance) {
+        this.attendance = attendance;
         saveObject();
     }
 
     public void setAttendance() {
         AttendanceDAO dao = new AttendanceDAO();
-        this.attendace = dao.load(studentId);
+        this.attendance = dao.load(studentId);
     }
 
     public void clearAttendance() {
-        this.attendace.clear();
+        this.attendance.clear();
         saveObject();
     }
 
     public void addAttendance(Boolean attendance) {
         setAttendance();
         LocalDate date = LocalDate.now();
-        this.attendace.put(date, attendance);
+        this.attendance.put(date, attendance);
         saveObject();
     }
 
     public void addAttendance(LocalDate date, Boolean attendance) {
-        this.attendace.put(date, attendance);
+        this.attendance.put(date, attendance);
     }
 
     public Map<LocalDate, Boolean> getAttendance() {
-        return this.attendace;
+        return this.attendance;
     }
 
     public Map<LocalDate, Boolean> getUpdatedAttendance() {
         setAttendance();
-        return this.attendace;
+        return this.attendance;
     }
 
     public int getStudentId() {
@@ -58,10 +58,10 @@ public class Attendance {
     public String getPercentageAttendance() {
         setAttendance();
         String attendacePercentage = "Attendance (in percent): 100%";
-        int size = attendace.size();
+        int size = attendance.size();
         if(size > 0) {
             int counter = 0;
-            Collection<Boolean> attendanceCollection = attendace.values();
+            Collection<Boolean> attendanceCollection = attendance.values();
             for (Boolean attendance : attendanceCollection) {
                 if (attendance) {
                     counter++;
@@ -80,7 +80,7 @@ public class Attendance {
 
     public String getFullDataToString() {
         setAttendance();
-        Map<LocalDate,Boolean> sorted = DataTool.sortDateMap(attendace); // sort map - result LinkedHashMap
+        Map<LocalDate,Boolean> sorted = DataTool.sortDateMap(attendance); // sort map - result LinkedHashMap
         String attendancePercentage = getPercentageAttendance();
         StringBuilder sb = new StringBuilder();
         sb.append("\n  Attendance:\n\n\t");

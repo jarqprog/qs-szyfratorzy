@@ -26,7 +26,6 @@ public class StudentsQuestsDAO {
     }
 
     public Map<Quest,LocalDate> load(int ownerId) {
-
         Quest quest;
         LocalDate date;
         int QUEST_ID_INDEX = 0;
@@ -50,7 +49,6 @@ public class StudentsQuestsDAO {
                 STUDENTS_QUESTS_TABLE, ownerId);
         Map<Quest,LocalDate> questsStock  = studentsQuests.getStock();
         dataBaseDao.inputData(clearQuery);
-        System.out.println(questsStock.size() + " quests: "+questsStock+ " "+ String.valueOf((questsStock.size() > 0)));
         if(questsStock.size() > 0) {
             Set<Quest> quests = questsStock.keySet();
             LocalDate[] dates = questsStock.values().toArray(new LocalDate[0]);
@@ -61,7 +59,7 @@ public class StudentsQuestsDAO {
                 questId = quest.getId();
                 LocalDate localDate = dates[index];
                 date = localDate.toString();
-                String query = String.format("INSERT INTO %s VALUES(null, '%s', %s, %s);",
+                String query = String.format("INSERT INTO %s VALUES(null, %s, %s, '%s');",
                         STUDENTS_QUESTS_TABLE, ownerId, questId, date);
                 dataBaseDao.inputData(query);
                 index++;

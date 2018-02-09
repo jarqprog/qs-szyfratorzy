@@ -59,7 +59,7 @@ public class MentorController extends UserController{
                     markStudentQuest();
                     break;
                 case "10":
-                    displayStudentWallet();
+                    displayStudentDetails();
                     break;
                 case "11":
                     markStudentArtifacts();
@@ -213,7 +213,7 @@ public class MentorController extends UserController{
 
     private void showStudentsFromMyGroup() {
         List<Student> students = SchoolController.getStudentsByGroup(mentor.getGroup());
-        view.displayMessage("Your students:\n");
+        view.displayMessage("\nYour students:\n");
         view.displayUsersWithDetails(students);
     }
 
@@ -222,7 +222,7 @@ public class MentorController extends UserController{
         Student student = SchoolController.pickStudentFromList(students);
         if (student != null){
             SchoolController.assignStudentToGroup(student);
-            view.displayMessage("\nStudent edited: ");
+            view.displayMessage("\nStudent edited:\n");
             view.displayUserWithDetails(student);
         } else {
             view.displayMessage("\nStudent does not exist...");
@@ -234,10 +234,23 @@ public class MentorController extends UserController{
         Student student = SchoolController.pickStudentFromList(students);
         if (student != null){
             SchoolController.assignStudentToTeam(student);
-            view.displayMessage("\nStudent edited: ");
+            view.displayMessage("\nStudent edited:\n");
             view.displayUserWithDetails(student);
         } else {
             view.displayMessage("\nStudent does not exist...");
+        }
+    }
+
+    private void displayStudentDetails() {
+        Student student = SchoolController.pickStudentFromList(mentor.getGroup().getStudents());
+        if (student != null) {
+            view.clearScreen();
+            view.displayMessage("\n\n\tDetailed info:\n");
+            view.displayUserWithDetails(student);
+            String attendanceInfo = student.getAttendance().getFullDataToString();
+            view.displayMessage(attendanceInfo);
+        } else {
+            view.displayMessage("   - there is no one to show..");
         }
     }
 }

@@ -30,19 +30,17 @@ public class StudentController extends UserController{
         if(student.getInventory().getStock().isEmpty()){
             view.displayMessage("    - Sorry, You have nothing to use!");
         } else {
-            int id = view.getNumber("Enter artifact id: ");
+            int id = view.getNumber("\nEnter artifact id: ");
             StudentInventory inventory = student.getInventory();
             Set<Artifact> artifacts = inventory.getStock().keySet();
             for(Artifact artifact : artifacts) {
                 if(id == artifact.getId() && inventory.getStock().get(artifact) == 1) {
                     inventory.removeArtifact(artifact);
                     view.displayMessage("   - Artifact used!");
-                    break;
                 }
-                else if ((id == artifact.getId())) {
+                else if (id == artifact.getId() && id == artifact.getId()) {
                     inventory.decreaseQuantity(artifact);
                     view.displayMessage("   - Artifact used!");
-                    break;
                 }
             }
         }
@@ -58,7 +56,11 @@ public class StudentController extends UserController{
         studentQuestsCtrl.runQuestMenu(student);
     }
     private void showMyQuests() {
+        if(student.getStudentsQuests().isEmpty()) {
+            view.displayMessage("\n    - Sorry, there is nothing to show!");
+        } else {
         view.displayObject(student.getStudentsQuests());
+        }
     }
 
     private void showMyAttendance() {
