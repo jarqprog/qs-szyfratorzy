@@ -1,5 +1,7 @@
 package shop;
 
+import application.CreatableDAO;
+import item.ArtifactDAO;
 import item.ArtifactModel;
 
 import java.util.ArrayList;
@@ -12,7 +14,11 @@ public class ShopModel {
         store = new ArrayList<>();
         }
 
-    public List<ArtifactModel> getStore() { return store;}
+    public List<ArtifactModel> getStore() {
+        CreatableDAO dao = new ArtifactDAO();
+        store = dao.getAllObjects();
+        return store;
+    }
 
     public void setStore(List<ArtifactModel> store) {this.store = store;}
 

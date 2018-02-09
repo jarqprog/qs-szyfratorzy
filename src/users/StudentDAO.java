@@ -1,13 +1,11 @@
 package users;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
-import item.ArtifactModel;
+import item.StudentsQuestsModel;
 import school.*;
+import shop.InventoryModel;
 
 public class StudentDAO extends FactoryDAO {
 
@@ -57,10 +55,12 @@ public class StudentDAO extends FactoryDAO {
         GroupDAO groupDAO = new GroupDAO();
         GroupModel group = groupDAO.getOneObject(groupQuery);
 
-        List<ArtifactModel> inventory = new ArrayList<>();
+        InventoryModel inventory = new InventoryModel(studentId);
+
+        StudentsQuestsModel quests = new StudentsQuestsModel(studentId);
 
         return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience,
-                team, group, inventory);
+                team, group, inventory, quests);
     }
 
     public <T> void saveObject(T t){
@@ -96,5 +96,10 @@ public class StudentDAO extends FactoryDAO {
         dao = new DbManagerDAO();
         dao.inputData(query);
         student.getAttendance().saveObject();
+
+
+
+        /// save Quests!! Items!!!
     }
+
 }

@@ -1,20 +1,23 @@
 package users;
 
-import item.ArtifactModel;
+import item.*;
 import shop.*;
 
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.Set;
 
 public class StudentController extends UserController{
     StudentModel student;
     StudentView view;
     ShopDAO shopDAO;
+    QuestDAO questDAO;
+    QuestView questView;
+    StudentsQuestsController studentsQuestsController;
 
     public StudentController(StudentModel studentModel){
         student = studentModel;
         view = new StudentView();
-        updateInventory();
     }
 
     private void showMyWallet(){
@@ -39,22 +42,6 @@ public class StudentController extends UserController{
 
     private void showTeamInventory() { view.displayInventory(student.getTeam().getInventory()); }
 
-    public void removeFromInventory(ArtifactModel artifact) {student.getInventory().remove(artifact); }
-
-    private void updateInventory() {
-        shopDAO = new ShopDAO();
-        List<String []> artifacts =  shopDAO.findStudentArtifacts(student.getId());
-        student.setInventory(shopDAO.loadInventory(artifacts));
-        shopDAO.saveInventory(student.getId(), student.getInventory());
-    }
-
-//    private void updateTeamInventory() {
-//        shopDAO = new ShopDAO();
-//        List<String []> artifacts =  shopDAO.findTeamArtifacts(student.getTeam().getId());
-//        student.getTeam().setInventory(shopDAO.loadInventory(artifacts));
-//        shopDAO.saveInventory(student.getId(), student.getInventory());
-//    }
-
     private void executeShopping() {
         ShopModel shop = new ShopModel();
         ShopController controller = new ShopController(shop, student);
@@ -63,19 +50,21 @@ public class StudentController extends UserController{
 
     private void useArtifacts() {
         showMyInventory();
-        if(student.getInventory().isEmpty()){
+        if(student.getInventory().getStock().isEmpty()){
             view.displayMessage("Sorry, You have nothing to use!");
             view.handlePause();
         } else {
             int id = view.getNumber("Enter artifact id: ");
-            for(ArtifactModel artifact : student.getInventory()) {
-                if(id == artifact.getId()) {
-                    student.getInventory().remove(artifact);
+            Set<ArtifactModel> artifacts = student.getInventory().getStock().keySet();
+            for(ArtifactModel artifact : artifacts) {
+                if(id == artifact.getId() && student.getInventory().getStock().get(artifact) == 1) {
+                    student.getInventory().removeArtifact(artifact);
                     view.displayMessage("Artifact used!");
-                    shopDAO.deleteFromInventory(student.getId(), id);
-                    shopDAO.saveStudentTransaction(student.getId(), artifact.getId());
-                    updateInventory();
                     break;
+                }
+                else if ((id == artifact.getId())) {
+                    student.getInventory().decreaseQuantity(artifact);
+                    view.displayMessage("Artifact used!");
                 }
             }
         }
@@ -86,13 +75,43 @@ public class StudentController extends UserController{
         view.displayMessage("Your teammates:\n");
         view.displayUsersWithDetails(students);
     }
+    private void pickQuestToAchieve(){
+        StudentsQuestsController studentQuestsCtrl = new StudentsQuestsController();
+        StudentsQuestsModel studentsQuests = student.getStudentsQuests();
+        studentQuestsCtrl.addQuestToStudentsQuests(studentsQuests);
+    }
+    private void showMyQuests() {
+
+    }
+
+    private void useTeamArtifacts() {
+        showTeamInventory();
+        if(student.getTeam().getInventory().getStock().isEmpty()){
+            view.displayMessage("Sorry, You have nothing to use!");
+            view.handlePause();
+        } else {
+            int id = view.getNumber("Enter artifact id: ");
+            Set<ArtifactModel> artifacts = student.getTeam().getInventory().getStock().keySet();
+            for(ArtifactModel artifact : artifacts) {
+                if(id == artifact.getId() && student.getTeam().getInventory().getStock().get(artifact) == 1) {
+                    student.getTeam().getInventory().removeArtifact(artifact);
+                    view.displayMessage("Artifact used!");
+                    break;
+                }
+                else if ((id == artifact.getId())) {
+                    student.getTeam().getInventory().decreaseQuantity(artifact);
+                    view.displayMessage("Artifact used!");
+                }
+            }
+        }
+    }
 
     public void handleMainMenu() {
 
         boolean isDone = false;
         while(! isDone){
 
-            String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5","6", "7", "8", "0"};
             view.clearScreen();
             showProfile(student);
             view.displayMenu();
@@ -103,7 +122,6 @@ public class StudentController extends UserController{
 
                 case "1":
                     executeShopping();
-                    updateInventory();
                     break;
                 case "2":
                     showMyInventory();
@@ -117,6 +135,14 @@ public class StudentController extends UserController{
                 case "5":
                     showTeamInventory();
                     break;
+                case "6":
+                    useTeamArtifacts();
+                    break;
+                case "7":
+                    pickQuestToAchieve();
+                    break;
+                case "8":
+                    showMyQuests();
                 case "0":
                     isDone = true;
                     break;

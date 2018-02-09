@@ -1,14 +1,17 @@
 
 package users;
 
-import java.util.*;
-
 import application.Role;
+
 import item.ArtifactModel;
+import item.StudentsQuestsModel;
+
 import school.ExperienceLevelsController;
 import school.GroupModel;
 import school.TeamModel;
 import school.AttendanceModel;
+import shop.InventoryModel;
+
 
 public class StudentModel extends UserModel {
 
@@ -16,9 +19,10 @@ public class StudentModel extends UserModel {
     private TeamModel team;
     private int wallet;
     private int experience;
-    private List<ArtifactModel> inventory;
+    private InventoryModel inventory;
     private AttendanceModel attendance;
     private String experienceLevel;
+    private StudentsQuestsModel studentsQuests;
 
     public StudentModel(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
@@ -27,14 +31,17 @@ public class StudentModel extends UserModel {
         team = new TeamModel(1, "undefined");
         group = new GroupModel(1,"undefined");
         role = Role.STUDENT.getName();
+
         id = saveNewObjectGetId();
         attendance = new AttendanceModel(id);
-        inventory = new ArrayList<>();
+        inventory = new InventoryModel(id);
+        studentsQuests = new StudentsQuestsModel(id);
     }
 
     public StudentModel(int id, String firstName, String lastName, String email,
                         String password, int wallet, int experience,
-                        TeamModel team, GroupModel group, List<ArtifactModel> inventory) {
+                        TeamModel team, GroupModel group, InventoryModel inventory,
+                        StudentsQuestsModel studentsQuests) {
 
         super(id, firstName, lastName, email, password);
         this.wallet = wallet;
@@ -42,7 +49,9 @@ public class StudentModel extends UserModel {
         this.attendance = new AttendanceModel(id);
         this.team = team;
         this.group = group;
-        this.inventory = inventory;
+        this.inventory = new InventoryModel(id);
+        this.inventory.setStock();
+        this.studentsQuests = new StudentsQuestsModel(id);
         role = Role.STUDENT.getName();
     }
 
@@ -74,17 +83,26 @@ public class StudentModel extends UserModel {
         this.team.setStudents();
     }
 
+    public InventoryModel getInventory() {
+        inventory.setStock();
+        return inventory;
+    }
+
+    public void setInventory(InventoryModel inventory) {
+        this.inventory = inventory; }
+
+    public StudentsQuestsModel getStudentsQuests() { return studentsQuests; }
+
+    public void setStudentsQuests(StudentsQuestsModel studentsQuests) { this.studentsQuests = studentsQuests; }
+
+    public void setStudentsQuests() { this.studentsQuests.setStock(); }
+
     public int getWallet(){
         return wallet;
     }
 
     public void setWallet(int value) {
         this.wallet = value;
-        saveObject();
-    }
-
-    public void modifyWallet(int value){
-        this.wallet += value;
         saveObject();
     }
 
@@ -115,19 +133,21 @@ public class StudentModel extends UserModel {
         return attendance;
     }
 
-    public void checkAttendance(Boolean isPresent){
-        attendance.addAttendance(isPresent);
+
+    public void modifyWallet(int value){
+        this.wallet += value;
+        saveObject();
     }
 
-    public List<ArtifactModel> getInventory() { return inventory; }
-
-    public void setInventory(List<ArtifactModel> inventory) { this.inventory = inventory; }
+    public void addAttendance(Boolean isPresent){
+        attendance.addAttendance(isPresent);
+    }
 
     public String getFullDataToString() {
         return super.getFullDataToString() + String.format(
                 " \n\n\t -group: %s\n\t -team: %s\n\t -wallet: %dcc\n\t" +
                 " -level: %s\n\t -%s\n", getGroup(), getTeam(),
-                wallet, getExperienceLevel(), attendance) + attendance.getFullDataToString();
+                wallet, getExperienceLevel(), attendance);
     }
 
     public void saveObject(){
@@ -140,4 +160,3 @@ public class StudentModel extends UserModel {
         return dao.saveObjectAndGetId(this);
     }
 }
-

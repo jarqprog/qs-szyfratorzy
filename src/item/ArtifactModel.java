@@ -30,9 +30,9 @@ public class ArtifactModel extends ItemModel{
         saveObject();
     }
 
-    public String toString(){
-        return super.toString() + String.format(" price: %s", getPrice());
-    }
+//    public String toString(){
+//        return super.toString() + String.format(" price: %s", getPrice());
+//    }
 
     public int saveNewObjectGetId(){
         ArtifactDAO dao = new ArtifactDAO();

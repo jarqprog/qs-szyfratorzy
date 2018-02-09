@@ -209,7 +209,7 @@ public class SchoolController {
             while (!isPreneceChecked){
                 String userInput = view.getUserInput(String.format("    - Is %s present (y/anything else): ", student.getFullName()));
                 boolean isPresent = userInput.equals("y");
-                student.checkAttendance(isPresent);
+                student.addAttendance(isPresent);
                 isPreneceChecked = true;
             }
             

@@ -1,5 +1,7 @@
 package application;
 
+import item.ItemModel;
+
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -64,9 +66,21 @@ public class DataTool {
         return String.join(delimiter, listToTrim);
     }
 
+
     public static <K> LinkedHashMap<K,LocalDate> sortDateMapByValue(Map<K,LocalDate> map) {
         return map.entrySet().stream().sorted(Map.Entry.comparingByValue())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                         (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+    }
+
+    public static <T extends ItemModel, V> boolean checkIfMapContainsItem(T item, Map<T,V> map) {
+        for (Map.Entry<?,?> entry : map.entrySet()) {
+            @SuppressWarnings("unchecked")
+            T inMapItem = (T) entry.getKey();
+            if (inMapItem.getName().equals(item.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -1,19 +1,17 @@
 package users;
 
 import item.ArtifactModel;
-
-import java.util.List;
+import shop.InventoryModel;
 
 public class StudentView extends UsersView {
 
-    public void displayInventory(List<ArtifactModel> inventory) {
-        if (inventory.isEmpty()) {
+    public void displayInventory(InventoryModel inventory) {
+        if (inventory.getStock().isEmpty()) {
             displayMessage("Your inventory is empty");
-        } else {
+        }
+        else {
             displayMessage("Your Inventory: \n");
-            for (ArtifactModel artifact : inventory) {
-                System.out.println(artifact);
-            }
+                System.out.println(inventory);
         }
     }
 
@@ -24,6 +22,8 @@ public class StudentView extends UsersView {
                 "[3] use artifact",
                 "[4] display teammates",
                 "[5] display team inventory",
+                "[6] use team artifact",
+                "[7] display quest to achiv",
                 "[0] exit"};
 
         for (String element : options) {

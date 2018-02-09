@@ -3,6 +3,7 @@ package shop;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import application.DataTool;
 import item.ArtifactDAO;
@@ -40,6 +41,7 @@ public class ShopController {
                 userChoice = view.getUserInput("Select an option: ");
                 isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
             }
+
             view.clearScreen();
             switch (userChoice) {
                 case "1":
@@ -61,26 +63,47 @@ public class ShopController {
         }
     }
 
-
     public void buyArtifact() {
         view.displayListOfArtifacts(getArtifactsByType('B'));
         int id = view.getNumber("Enter artifact id: ");
         for (ArtifactModel artifact : shop.getStore()) {
             if (id == artifact.getId() && Objects.equals(artifact.getType(), 'B')) {
                 if (artifact.getPrice() <= student.getWallet()) {
-                    student.getInventory().clear();
-                    student.getInventory().add(artifact);
-                    student.setWallet(student.getWallet() - artifact.getPrice());
+                    finalizeTransaction(artifact);
+                    pay(artifact);
                     view.displayMessage("You bought " + artifact.getName() + "!");
-                    shopDAO = new ShopDAO();
-                    shopDAO.saveInventory(student.getId(), student.getInventory());
-                    shopDAO.saveStudentTransaction(student.getId(), artifact.getId());
+
                 } else {
                     view.displayMessage("This artifact is to expensive!");
                 }
             }
         }
         view.displayMessage("Bye");
+    }
+
+    public void finalizeTransaction(ArtifactModel artifact) {
+        InventoryModel inventory = student.getInventory();
+        if(inventory.containsItem(artifact)) {
+            System.out.println("POSIADAM");
+            inventory.modifyQuantity(artifact);
+        } else {
+            System.out.println("NIE POSIADAM");
+            inventory.addItem(artifact);
+        }
+        System.out.println(inventory);
+    }
+
+    public void finalizeTeamTransaction(ArtifactModel artifact) {
+        InventoryModel inventory = student.getTeam().getInventory();
+        if(inventory.containsItem(artifact)) {
+            inventory.modifyQuantity(artifact);
+        } else {
+            inventory.addItem(artifact);
+        }
+    }
+
+    public void pay(ArtifactModel artifact) {
+        student.setWallet(student.getWallet() - artifact.getPrice());
     }
 
     public void buyArtifactForTeam() {
@@ -90,10 +113,8 @@ public class ShopController {
             if (id == artifact.getId() && Objects.equals(artifact.getType(), 'M')) {
                 if (checkTeamResources(artifact, student.getTeam())) {
                     chargeTeamMembers(artifact, student.getTeam());
-                    student.getTeam().getInventory().add(artifact);
+                    finalizeTeamTransaction(artifact);
                     view.displayMessage("You bought " + artifact.getName() + "!");
-//                    save
-
                 } else {
                     view.displayMessage("Not enough coolcoins to buy this artifact!");
                 }
