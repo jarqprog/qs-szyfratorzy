@@ -1,9 +1,10 @@
-package users;
+package dao;
 
-import application.FactoryDAO;
+import Model.Group;
+import Model.Student;
+import Model.Team;
 import application.Table;
 import application.DbManagerDAO;
-import school.*;
 
 public class StudentDAO extends FactoryDAO {
 
@@ -20,9 +21,7 @@ public class StudentDAO extends FactoryDAO {
         this.DEFAULT_TABLE = Table.STUDENTS.getName();
     }
 
-
-    public StudentModel getOneObject(String[] studentData) {
-
+    public Student getOneObject(String[] studentData) {
 
         final Integer ID_INDEX = 0;
         final Integer FIRST_NAME_INDEX = 1;
@@ -47,18 +46,18 @@ public class StudentDAO extends FactoryDAO {
 
         final String teamQuery = String.format("SELECT * FROM teams WHERE id=%s;", teamId);
         TeamDAO teamDAO = new TeamDAO();
-        TeamModel team = teamDAO.getOneObject(teamQuery);
+        Team team = teamDAO.getOneObject(teamQuery);
 
         final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
         GroupDAO groupDAO = new GroupDAO();
-        GroupModel group = groupDAO.getOneObject(groupQuery);
+        Group group = groupDAO.getOneObject(groupQuery);
 
-        return new StudentModel(studentId, firstName, lastName, email, password, wallet, experience,
+        return new Student(studentId, firstName, lastName, email, password, wallet, experience,
                 team, group);
     }
 
     public <T> void saveObject(T t){
-        StudentModel student = (StudentModel) t;
+        Student student = (Student) t;
         String studentId = String.valueOf(student.getId());
         firstName = student.getFirstName();
         lastName = student.getLastName();

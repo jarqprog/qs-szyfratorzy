@@ -1,5 +1,6 @@
 package users;
 
+import Model.Student;
 import item.*;
 import shop.*;
 
@@ -8,10 +9,10 @@ import java.util.List;
 import java.util.Set;
 
 public class StudentController extends UserController{
-    private StudentModel student;
+    private Student student;
     private StudentView view;
 
-    public StudentController(StudentModel studentModel){
+    public StudentController(Student studentModel){
         student = studentModel;
         view = new StudentView();
     }
@@ -49,7 +50,7 @@ public class StudentController extends UserController{
     }
 
     private void showStudentsFromMyTeam() {
-        List<StudentModel> students = student.getTeam().getStudents();
+        List<Student> students = student.getTeam().getStudents();
         view.displayMessage("Your teammates:\n");
         view.displayUsersWithDetails(students);
     }

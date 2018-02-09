@@ -1,10 +1,9 @@
-package users;
+package dao;
 
-import application.FactoryDAO;
+import Model.Mentor;
 import application.Table;
 import application.DbManagerDAO;
-import school.GroupDAO;
-import school.GroupModel;
+import Model.Group;
 
 public class MentorDAO extends FactoryDAO {
 
@@ -18,7 +17,7 @@ public class MentorDAO extends FactoryDAO {
         this.DEFAULT_TABLE = Table.MENTORS.getName();
     }
 
-    public MentorModel getOneObject(String[] record) {
+    public Mentor getOneObject(String[] record) {
 
         final Integer ID_INDEX = 0;
         final Integer FIRST_NAME_INDEX = 1;
@@ -36,13 +35,13 @@ public class MentorDAO extends FactoryDAO {
 
         final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
         GroupDAO groupDAO = new GroupDAO();
-        GroupModel group = groupDAO.getOneObject(groupQuery);
+        Group group = groupDAO.getOneObject(groupQuery);
 
-        return new MentorModel(mentorId, firstName, lastName, email, password, group);
+        return new Mentor(mentorId, firstName, lastName, email, password, group);
     }
 
     public <T> void saveObject(T t){
-        MentorModel mentor = (MentorModel) t;
+        Mentor mentor = (Mentor) t;
         String mentorId = String.valueOf(mentor.getId());
         firstName = mentor.getFirstName();
         lastName = mentor.getLastName();

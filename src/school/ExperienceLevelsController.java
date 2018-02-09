@@ -1,9 +1,10 @@
 package school;
 
+import Model.ExperienceLevels;
 import application.DataTool;
 import application.DbManagerDAO;
 import application.FilePath;
-import users.StudentModel;
+import Model.Student;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -13,19 +14,19 @@ import java.util.Map;
 public class ExperienceLevelsController {
 
     private SchoolView view;
-    private ExperienceLevelsModel experienceLevels;
+    private ExperienceLevels experienceLevels;
     private boolean shouldExit = false;
 
     public ExperienceLevelsController() {
         this.view = new SchoolView();
     }
 
-    public ExperienceLevelsModel getExperienceLevels() {
-        return new ExperienceLevelsModel();
+    public ExperienceLevels getExperienceLevels() {
+        return new ExperienceLevels();
     }
 
-    public void setStudentExperienceLevel(StudentModel student) {
-        Map<String,Integer> levels = new ExperienceLevelsModel().getUpdatedLevels();
+    public void setStudentExperienceLevel(Student student) {
+        Map<String,Integer> levels = new ExperienceLevels().getUpdatedLevels();
         List<Integer> expValues = new ArrayList<>(levels.values());
         Collections.sort(expValues);
         int studentExperience = student.getExperience();

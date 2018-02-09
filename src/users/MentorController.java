@@ -1,21 +1,22 @@
 package users;
 
-import item.ArtifactDAO;
+import Model.Mentor;
+import Model.Student;
+import dao.MentorDAO;
+import dao.ArtifactDAO;
 import item.ArtifactModel;
-import item.QuestDAO;
+import dao.QuestDAO;
 import item.QuestModel;
 import school.SchoolController;
 
 import java.util.List;
 
-import application.CreatableDAO;
-
 public class MentorController extends UserController{
     MentorView view;
-    MentorModel mentor;
+    Mentor mentor;
     MentorDAO dao;
 
-    public MentorController(MentorModel mentor){
+    public MentorController(Mentor mentor){
         this.mentor = mentor;
         view = new MentorView();
         dao = new MentorDAO();
@@ -106,7 +107,7 @@ public class MentorController extends UserController{
         String firstName = view.getUserInput("Enter first name: ");
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
-        StudentModel newStudent = new StudentModel(firstName, lastName, password);
+        Student newStudent = new Student(firstName, lastName, password);
         view.displayMessage("Student created successfully! \n" + newStudent.toString());
     }
 
@@ -211,14 +212,14 @@ public class MentorController extends UserController{
     }
 
     private void showStudentsFromMyGroup() {
-        List<StudentModel> students = SchoolController.getStudentsByGroup(mentor.getGroup());
+        List<Student> students = SchoolController.getStudentsByGroup(mentor.getGroup());
         view.displayMessage("Your students:\n");
         view.displayUsersWithDetails(students);
     }
 
     private void assignStudentToGroup() {
-        List<StudentModel> students = SchoolController.getAllStudents();
-        StudentModel student = SchoolController.pickStudentFromList(students);
+        List<Student> students = SchoolController.getAllStudents();
+        Student student = SchoolController.pickStudentFromList(students);
         if (student != null){
             SchoolController.assignStudentToGroup(student);
             view.displayMessage("\nStudent edited: ");
@@ -229,8 +230,8 @@ public class MentorController extends UserController{
     }
 
     private void assignStudentToTeam() {
-        List<StudentModel> students = SchoolController.getStudentsByGroup(mentor.getGroup());
-        StudentModel student = SchoolController.pickStudentFromList(students);
+        List<Student> students = SchoolController.getStudentsByGroup(mentor.getGroup());
+        Student student = SchoolController.pickStudentFromList(students);
         if (student != null){
             SchoolController.assignStudentToTeam(student);
             view.displayMessage("\nStudent edited: ");

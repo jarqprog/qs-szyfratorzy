@@ -1,7 +1,6 @@
 package dao;
 
 import application.DbManagerDAO;
-import item.ArtifactDAO;
 import item.ArtifactModel;
 import Model.Inventory;
 

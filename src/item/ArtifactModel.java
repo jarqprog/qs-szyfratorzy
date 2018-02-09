@@ -1,5 +1,7 @@
 package item;
 
+import dao.ArtifactDAO;
+
 public class ArtifactModel extends ItemModel{
 
     private int price;

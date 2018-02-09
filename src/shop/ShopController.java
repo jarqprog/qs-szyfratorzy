@@ -7,19 +7,19 @@ import java.util.Objects;
 import Model.StudentInventory;
 import Model.TeamInventory;
 import application.DataTool;
-import item.ArtifactDAO;
+import dao.ArtifactDAO;
 import item.ArtifactModel;
-import school.TeamModel;
-import users.StudentModel;
+import Model.Team;
+import Model.Student;
 
 public class ShopController {
 
     ShopModel shop;
     ShopView view;
     ArtifactDAO artifactDao;
-    StudentModel student;
+    Student student;
 
-    public ShopController(ShopModel shop, StudentModel student) {
+    public ShopController(ShopModel shop, Student student) {
         this.shop = shop;
         this.student = student;
         view = new ShopView();
@@ -119,10 +119,10 @@ public class ShopController {
         }
     }
 
-    public boolean checkTeamResources(ArtifactModel artifact, TeamModel team) {
+    public boolean checkTeamResources(ArtifactModel artifact, Team team) {
 
         int pricePerTeamMember = artifact.getPrice() / team.getStudents().size();
-        for (StudentModel student : team.getStudents()) {
+        for (Student student : team.getStudents()) {
             if (student.getWallet() < pricePerTeamMember) {
                 return false;
             }
@@ -130,9 +130,9 @@ public class ShopController {
         return true;
     }
 
-    public void chargeTeamMembers(ArtifactModel artifact, TeamModel team) {
+    public void chargeTeamMembers(ArtifactModel artifact, Team team) {
 
-        for (StudentModel student : team.getStudents()) {
+        for (Student student : team.getStudents()) {
             student.setWallet(student.getWallet() - (artifact.getPrice() / team.getStudents().size()));
             }
     }

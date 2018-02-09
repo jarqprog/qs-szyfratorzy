@@ -1,7 +1,7 @@
 package shop;
 
 import application.CreatableDAO;
-import item.ArtifactDAO;
+import dao.ArtifactDAO;
 import item.ArtifactModel;
 
 import java.util.ArrayList;

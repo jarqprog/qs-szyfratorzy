@@ -1,8 +1,8 @@
-package school;
+package dao;
 
-import application.FactoryDAO;
 import application.Table;
 import application.DbManagerDAO;
+import Model.Team;
 
 public class TeamDAO extends FactoryDAO {
 
@@ -12,7 +12,7 @@ public class TeamDAO extends FactoryDAO {
         this.DEFAULT_TABLE = Table.TEAMS.getName();
     }
 
-    public TeamModel getOneObject(String[] teamData) {
+    public Team getOneObject(String[] teamData) {
 
         final Integer ID_INDEX = 0;
         final Integer NAME_INDEX = 1;
@@ -20,11 +20,11 @@ public class TeamDAO extends FactoryDAO {
         int id = Integer.parseInt(teamData[ID_INDEX]);
         name = teamData[NAME_INDEX];
 
-        return new TeamModel(id, name);
+        return new Team(id, name);
     }
 
     public <T> void saveObject(T t){
-        TeamModel team = (TeamModel) t;
+        Team team = (Team) t;
         String teamId = String.valueOf(team.getId());
         name = team.getName();
         String query;

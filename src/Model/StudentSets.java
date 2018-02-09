@@ -1,22 +1,22 @@
-package school;
+package Model;
 
-import users.StudentModel;
+import Model.Student;
 import java.util.List;
 import java.util.ArrayList;
 
-public abstract class StudentSetsModel {
+public abstract class StudentSets {
 
     protected String name;
-    protected List<StudentModel> students;
+    protected List<Student> students;
     protected int id;
 
-    public StudentSetsModel(int id, String name) {
+    public StudentSets(int id, String name) {
         this(name);
         this.id = id;
         this.students = new ArrayList<>();
     }
 
-    public StudentSetsModel(String name) {
+    public StudentSets(String name) {
         this.id = -1;
         this.name = name;
         this.students = new ArrayList<>();
@@ -35,22 +35,22 @@ public abstract class StudentSetsModel {
         saveObject();
     }
 
-    public List<StudentModel> getStudents(){
+    public List<Student> getStudents(){
         setStudents();
         return students;
     }
 
-    public void setStudents(List<StudentModel> students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 
     public abstract void setStudents();
 
-    public void addStudent(StudentModel student){
+    public void addStudent(Student student){
         students.add(student);
     }
 
-    public void removeStudent(StudentModel student){
+    public void removeStudent(Student student){
         students.remove(student);
     }
 

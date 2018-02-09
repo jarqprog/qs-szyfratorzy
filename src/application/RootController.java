@@ -2,9 +2,13 @@ package application;
 
 import java.util.List;
 
+import Model.Admin;
+import Model.Mentor;
+import Model.Student;
+import dao.AdminDAO;
+import dao.MentorDAO;
+import dao.StudentDAO;
 import users.*;
-
-import java.io.Console;
 
 
 public class RootController{
@@ -62,19 +66,19 @@ public class RootController{
 
         if(tableName.equals(Table.ADMINS.getName())) {
             AdminDAO adminDAO = new AdminDAO();
-            AdminModel admin = adminDAO.getOneObject(userData);
+            Admin admin = adminDAO.getOneObject(userData);
             AdminController adminController = new AdminController(admin);
             adminController.handleMainMenu();
 
         } else if(tableName.equals(Table.MENTORS.getName())){
             MentorDAO mentorDAO = new MentorDAO();
-            MentorModel mentor = mentorDAO.getOneObject(userData);
+            Mentor mentor = mentorDAO.getOneObject(userData);
             MentorController mentorController = new MentorController(mentor);
             mentorController.handleMainMenu();
 
         } else if(tableName.equals(Table.STUDENTS.getName())){
             StudentDAO studentDAO = new StudentDAO();
-            StudentModel student = studentDAO.getOneObject(userData);;
+            Student student = studentDAO.getOneObject(userData);;
             StudentController studentController = new StudentController(student);
             studentController.handleMainMenu();
         }

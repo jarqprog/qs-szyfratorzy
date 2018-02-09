@@ -1,7 +1,7 @@
-package users;
+package dao;
 
 
-import application.FactoryDAO;
+import Model.Admin;
 import application.Table;
 import application.DbManagerDAO;
 
@@ -17,7 +17,7 @@ public class AdminDAO extends FactoryDAO {
         this.DEFAULT_TABLE = Table.ADMINS.getName();
     }
 
-    public AdminModel getOneObject(String[] adminData) {
+    public Admin getOneObject(String[] adminData) {
 
         final Integer ID_INDEX = 0;
         final Integer FIRST_NAME_INDEX = 1;
@@ -30,11 +30,11 @@ public class AdminDAO extends FactoryDAO {
         lastName = adminData[LAST_NAME_INDEX];
         email = adminData[EMAIL_INDEX];
         password = adminData[PASSWORD_INDEX];
-        return new AdminModel(adminId, firstName, lastName, email, password);
+        return new Admin(adminId, firstName, lastName, email, password);
     }
 
     public <T> void saveObject(T t){
-        AdminModel admin = (AdminModel) t;
+        Admin admin = (Admin) t;
         String adminId = String.valueOf(admin.getId());
         firstName = admin.getFirstName();
         lastName = admin.getLastName();

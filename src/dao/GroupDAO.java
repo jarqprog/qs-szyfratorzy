@@ -1,6 +1,6 @@
-package school;
+package dao;
 
-import application.FactoryDAO;
+import Model.Group;
 import application.Table;
 import application.DbManagerDAO;
 
@@ -10,18 +10,18 @@ public class GroupDAO extends FactoryDAO {
         this.DEFAULT_TABLE = Table.GROUPS.getName();
     }
 
-    public GroupModel getOneObject(String [] record){
+    public Group getOneObject(String [] record){
 
         final Integer ID_INDEX = 0;
         final Integer NAME_INDEX = 1;
 
         int id = Integer.parseInt(record[ID_INDEX]);
         String name = record[NAME_INDEX];
-        return new GroupModel(id, name);
+        return new Group(id, name);
     }
 
     public <T> void saveObject(T t){
-        GroupModel group = (GroupModel) t;
+        Group group = (Group) t;
         String group_id = String.valueOf(group.getId());
         String name = group.getName();
         String query;

@@ -1,18 +1,15 @@
 
-package users;
+package Model;
 
 import application.Role;
 
 import item.StudentsQuestsModel;
 
 import school.ExperienceLevelsController;
-import Model.Group;
-import Model.Team;
-import Model.Attendance;
-import Model.StudentInventory;
+import dao.StudentDAO;
 
 
-public class StudentModel extends UserModel {
+public class Student extends User {
 
     private Group group;
     private Team team;
@@ -23,7 +20,7 @@ public class StudentModel extends UserModel {
     private String experienceLevel;
     private StudentsQuestsModel studentsQuests;
 
-    public StudentModel(String firstName, String lastName, String password) {
+    public Student(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
         wallet = 0;
         experience = 0;
@@ -36,7 +33,7 @@ public class StudentModel extends UserModel {
         studentsQuests = new StudentsQuestsModel(id);
     }
 
-    public StudentModel(int id, String firstName, String lastName, String email,
+    public Student(int id, String firstName, String lastName, String email,
                         String password, int wallet, int experience,
                         Team team, Group group) {
 

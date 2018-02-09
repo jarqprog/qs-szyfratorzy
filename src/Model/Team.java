@@ -1,19 +1,18 @@
-package school;
+package Model;
 
-import Model.TeamInventory;
-import users.StudentDAO;
+import dao.TeamDAO;
+import dao.StudentDAO;
 
-public class TeamModel extends StudentSetsModel{
+public class Team extends StudentSets {
 
     private TeamInventory inventory;
 
-    public TeamModel(int id, String name) {
+    public Team(int id, String name) {
         super(id, name);
         inventory = new TeamInventory(id);
-        inventory.setStock();
     }
 
-    public TeamModel(String name) {
+    public Team(String name) {
         super(name);
         this.id = saveNewObjectGetId();
         inventory = new TeamInventory(id);

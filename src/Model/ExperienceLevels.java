@@ -1,14 +1,17 @@
-package school;
+package Model;
 
 import application.DataTool;
+import school.SchoolDAO;
+import dao.ExperienceLevelsDAO;
+
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class ExperienceLevelsModel {
+public class ExperienceLevels {
 
     private Map<String, Integer> levels;
 
-    public ExperienceLevelsModel() {
+    public ExperienceLevels() {
         this.levels = getUpdatedLevels();
         setLevels();
     }
@@ -19,8 +22,8 @@ public class ExperienceLevelsModel {
     }
 
     public void setLevels(){
-        SchoolDAO dao = new SchoolDAO();
-        this.levels = dao.loadExperienceLevels();
+        ExperienceLevelsDAO dao = new ExperienceLevelsDAO();
+        this.levels = dao.load();
     }
 
     public void clearLevels(){
@@ -87,7 +90,7 @@ public class ExperienceLevelsModel {
         if(! levels.containsValue(0)){
             levels.put("basic", 0);  // exp levels always should have level with value 0
         }
-        SchoolDAO dao = new SchoolDAO();
-        dao.saveExperienceLevels(this);
+        ExperienceLevelsDAO dao = new ExperienceLevelsDAO();
+        dao.save(this);
     }
 }

@@ -2,8 +2,7 @@ package shop;
 
 import application.DbManagerDAO;
 import application.Table;
-import item.ArtifactModel;
-import item.ArtifactDAO;
+import dao.ArtifactDAO;
 
 import java.util.*;
 

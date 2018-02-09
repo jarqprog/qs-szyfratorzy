@@ -1,8 +1,9 @@
-package item;
+package dao;
 
 import application.DbManagerDAO;
-import application.FactoryDAO;
+import dao.FactoryDAO;
 import application.Table;
+import item.ArtifactModel;
 
 public class ArtifactDAO extends FactoryDAO {
 

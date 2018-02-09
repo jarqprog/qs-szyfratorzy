@@ -1,10 +1,8 @@
-package item;
+package dao;
 
 import application.DbManagerDAO;
-import application.FactoryDAO;
 import application.Table;
-
-import java.util.List;
+import item.QuestModel;
 
 
 public class QuestDAO extends FactoryDAO {

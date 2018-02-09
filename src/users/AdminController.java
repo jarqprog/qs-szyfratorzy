@@ -2,16 +2,19 @@ package users;
 
 import java.util.List;
 
+import Model.Admin;
+import Model.Mentor;
+import Model.Student;
+import dao.MentorDAO;
 import school.ExperienceLevelsController;
-import school.GroupModel;
 import school.SchoolController;
 
 public class AdminController extends UserController{
 
-    private AdminModel admin;
+    private Admin admin;
     private AdminView view;
 
-    public AdminController(AdminModel admin){
+    public AdminController(Admin admin){
         this.admin = admin;
         this.view = new AdminView();
     }
@@ -60,13 +63,13 @@ public class AdminController extends UserController{
         String firstName = view.getUserInput("Enter first name: ");
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
-        MentorModel mentor = new MentorModel(firstName, lastName, password);
+        Mentor mentor = new Mentor(firstName, lastName, password);
         view.clearScreen();
         view.displayMessage("\nMentor created: " + mentor.toString());
     }
 
     private void editMentor() {
-        MentorModel mentor = SchoolController.getMentorByUserChoice();
+        Mentor mentor = SchoolController.getMentorByUserChoice();
         if (mentor != null) {
             boolean isFinished = false;
             while (!isFinished) {
@@ -111,7 +114,7 @@ public class AdminController extends UserController{
     }
 
     private void displayMentorProfile() {
-        MentorModel mentor = SchoolController.getMentorByUserChoice();
+        Mentor mentor = SchoolController.getMentorByUserChoice();
         if(mentor != null) {
             view.clearScreen();
             view.displayMessage("\nMentor's details:\n");
@@ -120,11 +123,11 @@ public class AdminController extends UserController{
     }
 
     private void displayStudentsByMentor() {
-        MentorModel mentor = SchoolController.getMentorByUserChoice();
+        Mentor mentor = SchoolController.getMentorByUserChoice();
         if(mentor != null) {
             view.clearScreen();
             view.displayMessage("\nStudents:\n");
-            List<StudentModel> students = SchoolController.getStudentsByGroup(mentor.getGroup());
+            List<Student> students = SchoolController.getStudentsByGroup(mentor.getGroup());
             view.displayUsers(students);
         }
     }

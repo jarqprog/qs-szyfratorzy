@@ -3,9 +3,10 @@ package users;
 
 import java.util.List;
 
-import item.ArtifactDAO;
+import Model.User;
+import dao.ArtifactDAO;
 import item.ArtifactModel;
-import item.QuestDAO;
+import dao.QuestDAO;
 import item.QuestModel;
 
 public abstract class  UserController{
@@ -18,7 +19,7 @@ public abstract class  UserController{
 
     }
 
-    protected <T extends UserModel> void showProfile(T user){
+    protected <T extends User> void showProfile(T user){
         UsersView view = new UsersView();
         view.displayUserWithDetails(user);
     }

@@ -1,6 +1,7 @@
 package item;
 
 import application.QuestsStatus;
+import dao.QuestDAO;
 
 public class QuestModel extends ItemModel {
 

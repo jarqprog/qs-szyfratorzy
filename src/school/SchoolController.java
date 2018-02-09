@@ -1,8 +1,15 @@
 package school;
 
-import Model.Attendance;
+import Model.Group;
+import Model.Mentor;
+import Model.Student;
+import Model.Team;
 import application.CreatableDAO;
 import application.Table;
+import dao.GroupDAO;
+import dao.MentorDAO;
+import dao.StudentDAO;
+import dao.TeamDAO;
 import users.*;
 
 import java.util.ArrayList;
@@ -10,11 +17,11 @@ import java.util.List;
 
 public class SchoolController {
 
-    public static List<GroupModel> getGroups() {
+    public static List<Group> getGroups() {
         return new GroupDAO().getAllObjects();
     }
 
-    public static List<TeamModel> getTeams() {
+    public static List<Team> getTeams() {
         return new TeamDAO().getAllObjects();
     }
 
@@ -26,15 +33,15 @@ public class SchoolController {
         return new SchoolDAO().getStudentsSetsNames(Table.TEAMS.getName());
     }
 
-    public static void assignMentorToGroup(MentorModel mentor){
+    public static void assignMentorToGroup(Mentor mentor){
         SchoolView view = new SchoolView();
-        List<GroupModel> groups = getGroups();
+        List<Group> groups = getGroups();
         boolean isMentorAssigned = false;
         String chosenGroupName = "";
         while (!isMentorAssigned && !chosenGroupName.equals("0")){
             view.displayObjects(groups);
             chosenGroupName = view.getUserInput("\nChoose group by name (or type 0 to exit): ");
-            for (GroupModel group : groups){
+            for (Group group : groups){
                 if (chosenGroupName.equals(group.getName())){
                     mentor.setGroup(group);
                     isMentorAssigned = true;
@@ -47,15 +54,15 @@ public class SchoolController {
         }
     }
 
-    public static void assignStudentToGroup(StudentModel student){
+    public static void assignStudentToGroup(Student student){
         SchoolView view = new SchoolView();
-        List<GroupModel> groups = getGroups();
+        List<Group> groups = getGroups();
         boolean isStudentAssigned = false;
         String chosenGroupName = "";
         while (!isStudentAssigned && !chosenGroupName.equals("0")){
             view.displayObjects(groups);
             chosenGroupName = view.getUserInput("\nChoose group by name (or type 0 to exit): ");
-            for (GroupModel group : groups){
+            for (Group group : groups){
                 if (chosenGroupName.equals(group.getName())){
                     student.setGroup(group);
                     view.displayMessage("Student moved to group: " + group.getName());
@@ -73,15 +80,15 @@ public class SchoolController {
         }
     }
 
-    public static void assignStudentToTeam(StudentModel student) {
+    public static void assignStudentToTeam(Student student) {
         SchoolView view = new SchoolView();
-        List<TeamModel> teams = getTeamsByGroup(student.getGroup());
+        List<Team> teams = getTeamsByGroup(student.getGroup());
         boolean isStudentAssigned = false;
         String chosenTeamName = "";
         while (!isStudentAssigned && !chosenTeamName.equals("0")){
             view.displayObjects(teams);
             chosenTeamName = view.getUserInput("\nChoose team by name (or type 0 to exit): ");
-            for (TeamModel team : teams){
+            for (Team team : teams){
                 if (chosenTeamName.equals(team.getName())){
                     student.setTeam(team);
                     view.displayMessage("\nStudent moved to team: " + team.getName());
@@ -95,10 +102,10 @@ public class SchoolController {
         }
     }
 
-    public static List<TeamModel> getTeamsByGroup(GroupModel group){
-        List<TeamModel> teams = getTeams();
-        List<TeamModel> teamsByGroup = new ArrayList<>();
-        for (TeamModel team : teams){
+    public static List<Team> getTeamsByGroup(Group group){
+        List<Team> teams = getTeams();
+        List<Team> teamsByGroup = new ArrayList<>();
+        for (Team team : teams){
             team.setStudents();
             if (team.size() == 0){
                 teamsByGroup.add(team);
@@ -112,27 +119,27 @@ public class SchoolController {
         return teamsByGroup;
     }
 
-    public static List<StudentModel> getStudentsByGroup(GroupModel group) {
+    public static List<Student> getStudentsByGroup(Group group) {
         return group.getStudents();
     }
 
-    public static List<StudentModel> getStudentsByTeam(TeamModel team) {
+    public static List<Student> getStudentsByTeam(Team team) {
         return team.getStudents();
     }
 
-    public static List<StudentModel> getAllStudents() {
+    public static List<Student> getAllStudents() {
         return new StudentDAO().getAllObjects();
     }
 
-    public static List<MentorModel> getAllMentors() {
+    public static List<Mentor> getAllMentors() {
         return new MentorDAO().getAllObjects();
     }
 
-    public static StudentModel pickStudentFromList(List<StudentModel> students) {
+    public static Student pickStudentFromList(List<Student> students) {
         SchoolView view = new SchoolView();
         view.displayObjects(students);
         String chosenStudent = view.getUserInput("\nChoose student by id: ");
-        for (StudentModel student : students){
+        for (Student student : students){
             if (chosenStudent.equals(String.valueOf(student.getId()))){
                 return student;
             }
@@ -140,18 +147,18 @@ public class SchoolController {
         return null;
     }
 
-    private static TeamModel getDefaultTeam(){
+    private static Team getDefaultTeam(){
         CreatableDAO dao = new TeamDAO();
         return dao.getObjectById(1);
     }
 
-    public static MentorModel getMentorByUserChoice() {
+    public static Mentor getMentorByUserChoice() {
         UsersView view = new UsersView();
-        List<MentorModel> mentors = getAllMentors();
+        List<Mentor> mentors = getAllMentors();
         view.displayMessage("Mentors:\n");
         view.displayUsers(mentors);
         String id = view.getUserInput("\nSelect mentor by id: ");
-        for (MentorModel mentor : mentors) {
+        for (Mentor mentor : mentors) {
             if (id.equals(Integer.toString(mentor.getId()))) {
                 return mentor;
             }
@@ -172,7 +179,7 @@ public class SchoolController {
                 view.displayMessage("   - Team already exist...");
                 continue;
             } else {
-                TeamModel newTeam = new TeamModel(teamName);
+                Team newTeam = new Team(teamName);
                 view.clearScreen();
                 view.displayMessage("\n - Team created: \n" + newTeam);
                 isDone = true;
@@ -193,7 +200,7 @@ public class SchoolController {
                 view.displayMessage("   - Group already exist...");
 //                continue;
             } else {
-                GroupModel newGroup = new GroupModel(groupName);
+                Group newGroup = new Group(groupName);
                 view.clearScreen();
                 view.displayMessage("\n - Group created: \n" + newGroup);
                 isDone = true;
@@ -201,9 +208,9 @@ public class SchoolController {
         }
     }
 
-    public static void checkAttendance(MentorModel mentor){
+    public static void checkAttendance(Mentor mentor){
         SchoolView view = new SchoolView();
-        for (StudentModel student : getStudentsByGroup(mentor.getGroup())){
+        for (Student student : getStudentsByGroup(mentor.getGroup())){
             boolean isPresenceChecked = false;
             while (!isPresenceChecked){
                 String userInput = view.getUserInput(String.format("    - Is %s present (y/anything else): ", student.getFullName()));

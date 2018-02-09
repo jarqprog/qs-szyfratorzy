@@ -5,6 +5,7 @@ package item;
 import java.util.List;
 
 import application.CreatableDAO;
+import dao.QuestDAO;
 
 
 public class StudentsQuestsController {
