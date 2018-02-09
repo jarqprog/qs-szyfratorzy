@@ -1,7 +1,6 @@
 package dao;
 
-import application.DbManagerDAO;
-import application.Table;
+import enums.Table;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -37,7 +36,7 @@ public class AttendanceDAO {
         return attendance;
     }
 
-    public void save(Model.Attendance attendance) {
+    public void save(model.Attendance attendance) {
         int studentId = attendance.getStudentId();
         String clearQuery = String.format("DELETE FROM %s WHERE student_id=%s;", ATTENDANCE_TABLE, studentId);
         dao.inputData(clearQuery);

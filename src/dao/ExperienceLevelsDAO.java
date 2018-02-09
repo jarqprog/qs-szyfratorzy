@@ -1,9 +1,8 @@
 package dao;
 
 
-import Model.ExperienceLevels;
-import application.DbManagerDAO;
-import application.Table;
+import model.ExperienceLevels;
+import enums.Table;
 
 import java.util.HashMap;
 import java.util.List;

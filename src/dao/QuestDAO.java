@@ -1,15 +1,14 @@
 package dao;
 
-import application.DbManagerDAO;
-import application.Table;
-import item.QuestModel;
+import enums.Table;
+import model.Quest;
 
 
 public class QuestDAO extends FactoryDAO {
 
     public QuestDAO(){this.DEFAULT_TABLE = Table.QUESTS.getName();}
 
-    public QuestModel getOneObject(String[] record) {
+    public Quest getOneObject(String[] record) {
 
         final int ID_INDEX = 0;
         final int NAME_INDEX = 1;
@@ -24,11 +23,11 @@ public class QuestDAO extends FactoryDAO {
         String itemDescription = record[DESCRIPTION_INDEX];
         int reward = Integer.parseInt(record[REWARD_INDEX]);
         String status = record[STATUS_INDEX];
-        return new QuestModel(id, itemType, itemName, itemDescription, reward, status);
+        return new Quest(id, itemType, itemName, itemDescription, reward, status);
     }
 
     public <T> void saveObject(T t){
-        QuestModel quest = (QuestModel) t;
+        Quest quest = (Quest) t;
         String itemId = String.valueOf(quest.getId());
         String itemType = String.valueOf(quest.getType());
         String itemName = quest.getName();

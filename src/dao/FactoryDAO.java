@@ -1,7 +1,6 @@
 package dao;
 
-import application.CreatableDAO;
-import application.DbManagerDAO;
+import Interface.CreatableDAO;
 
 import java.util.ArrayList;
 import java.util.Arrays;

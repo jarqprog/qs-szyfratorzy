@@ -1,6 +1,6 @@
 package dao;
 
-import application.Table;
+import enums.Table;
 
 public class TeamInventoryDAO extends InventoryDAO {
 

@@ -1,9 +1,8 @@
 package dao;
 
 
-import Model.Admin;
-import application.Table;
-import application.DbManagerDAO;
+import model.Admin;
+import enums.Table;
 
 public class AdminDAO extends FactoryDAO {
 

@@ -1,10 +1,9 @@
 package dao;
 
-import Model.Group;
-import Model.Student;
-import Model.Team;
-import application.Table;
-import application.DbManagerDAO;
+import model.Group;
+import model.Student;
+import model.Team;
+import enums.Table;
 
 public class StudentDAO extends FactoryDAO {
 

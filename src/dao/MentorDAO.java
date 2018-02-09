@@ -1,9 +1,8 @@
 package dao;
 
-import Model.Mentor;
-import application.Table;
-import application.DbManagerDAO;
-import Model.Group;
+import model.Mentor;
+import enums.Table;
+import model.Group;
 
 public class MentorDAO extends FactoryDAO {
 

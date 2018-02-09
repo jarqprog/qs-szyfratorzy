@@ -1,8 +1,7 @@
 package dao;
 
-import application.Table;
-import application.DbManagerDAO;
-import Model.Team;
+import enums.Table;
+import model.Team;
 
 public class TeamDAO extends FactoryDAO {
 

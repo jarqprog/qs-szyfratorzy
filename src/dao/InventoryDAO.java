@@ -1,8 +1,7 @@
 package dao;
 
-import application.DbManagerDAO;
-import item.ArtifactModel;
-import Model.Inventory;
+import model.Artifact;
+import model.Inventory;
 
 import java.util.*;
 
@@ -13,15 +12,15 @@ public abstract class InventoryDAO {
     protected ArtifactDAO artifactDAO;
 
 
-    public Map<ArtifactModel,Integer> load(int ownerId) {
+    public Map<Artifact,Integer> load(int ownerId) {
         final String query = String.format("SELECT artifact_id FROM %s WHERE owner_id=%s;",
                 DEFAULT_TABLE, ownerId);
         dao = new DbManagerDAO();
-        Map<ArtifactModel, Integer> inventory = new HashMap<>();
+        Map<Artifact,Integer> inventory = new HashMap<>();
         List<String[]> dataCollection = dao.getData(query);
         if (dataCollection.size() > 0) {
             artifactDAO = new ArtifactDAO();
-            ArtifactModel artifact;
+            Artifact artifact;
             int ID_INDEX = 0;
             List<Integer> usedArtifactsId = new ArrayList<>(5);
             for (String[] data : dataCollection) {
@@ -30,8 +29,8 @@ public abstract class InventoryDAO {
                     artifact = artifactDAO.getObjectById(artifactId);
                     inventory.put(artifact, 1);
                 } else {
-                    Set<ArtifactModel> items = inventory.keySet();
-                    for (ArtifactModel inStockItem : items) {
+                    Set<Artifact> items = inventory.keySet();
+                    for (Artifact inStockItem : items) {
                         if (inStockItem.getId() == artifactId) {
                             Integer quantity = inventory.get(inStockItem);
                             inventory.put(inStockItem, ++quantity);
@@ -51,7 +50,7 @@ public abstract class InventoryDAO {
         if (! inventory.isEmpty()) {
             dao.inputData(clearQuery);
             String query;
-            for (Map.Entry<ArtifactModel,Integer> entry : inventory.getStock().entrySet()) {
+            for (Map.Entry<Artifact,Integer> entry : inventory.getStock().entrySet()) {
                 Integer artifactId = entry.getKey().getId();
                 Integer value = entry.getValue();
                 for(int i = 0; i < value; i++) {

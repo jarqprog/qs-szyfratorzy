@@ -1,8 +1,8 @@
 package Interface;
 
-import Model.Admin;
-import Model.Mentor;
-import Model.Student;
+import model.Admin;
+import model.Mentor;
+import model.Student;
 
 public interface LogableDAO{
 

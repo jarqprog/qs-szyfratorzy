@@ -1,8 +1,7 @@
 package dao;
 
-import Model.Group;
-import application.Table;
-import application.DbManagerDAO;
+import model.Group;
+import enums.Table;
 
 public class GroupDAO extends FactoryDAO {
 

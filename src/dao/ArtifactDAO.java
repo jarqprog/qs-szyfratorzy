@@ -1,9 +1,7 @@
 package dao;
 
-import application.DbManagerDAO;
-import dao.FactoryDAO;
-import application.Table;
-import item.ArtifactModel;
+import enums.Table;
+import model.Artifact;
 
 public class ArtifactDAO extends FactoryDAO {
 
@@ -11,7 +9,7 @@ public class ArtifactDAO extends FactoryDAO {
         this.DEFAULT_TABLE = Table.ARTIFACTS.getName();
     }
 
-    public ArtifactModel getOneObject(String[] record) {
+    public Artifact getOneObject(String[] record) {
 
         final int ID_INDEX = 0;
         final int NAME_INDEX = 1;
@@ -25,11 +23,11 @@ public class ArtifactDAO extends FactoryDAO {
         String itemDescription = record[DESCRIPTION_INDEX];
         int price = Integer.parseInt(record[PRICE_INDEX]);
 
-        return new ArtifactModel(id, itemType, itemName, itemDescription, price);
+        return new Artifact(id, itemType, itemName, itemDescription, price);
     }
 
     public <T> void saveObject(T t){
-        ArtifactModel artifact = (ArtifactModel) t;
+        Artifact artifact = (Artifact) t;
         String artifactId = String.valueOf(artifact.getId());
         String itemType = String.valueOf(artifact.getType());
         String itemName = artifact.getName();
