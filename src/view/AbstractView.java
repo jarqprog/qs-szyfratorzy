@@ -59,7 +59,7 @@ public abstract class AbstractView {
         String delimiter = "\n";
         int minimumUserInputLength = 1;
         while(userInput.length() < minimumUserInputLength){
-            System.out.print(tab + message);
+            System.out.print(emptyLines + tab + message);
             scanner.useDelimiter(delimiter);
             userInput = scanner.next();
         }
@@ -72,7 +72,7 @@ public abstract class AbstractView {
         String regex = ".*\\d+.*";
         int minimumUserInputLength = 1;
         while(! userInput.matches(regex) && userInput.length() < minimumUserInputLength){
-            System.out.print(tab + message);
+            System.out.print(emptyLines + tab + message);
             scanner.useDelimiter("\n");
             userInput = scanner.next().trim();
             if(! userInput.matches(regex)){
@@ -83,17 +83,17 @@ public abstract class AbstractView {
     }
 
     public int getIntegerFromUser(String message) {
-        return Integer.parseInt(getNumberFromUser(tab + message));
+        return Integer.parseInt(getNumberFromUser(emptyLines + tab + message));
     }
 
     public int getNotNegativeNumberFromUser(String message){
         int number = -1;
         while(number < 0) {
-            String input = getNumberFromUser(tab + message);
+            String input = getNumberFromUser(emptyLines + tab + message);
             try {
                 number = Integer.parseInt(input);
                 if (number < 0) {
-                    displayMessage(tab + "- Number shouldn't be negative!");
+                    displayMessage(tab + "- number shouldn't be negative!");
                 }
             } catch (NumberFormatException e){
                 displayMessage(tab + "- have You type an integer number?");
@@ -113,13 +113,14 @@ public abstract class AbstractView {
                 System.out.flush();
                 System.out.println();
             }
-        } catch (Exception e){
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            drawHeading();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
     }
 
     public void handlePause() {
-        System.out.println(emptyLines + tab + "Press enter to continue.. ");
+        System.out.print(emptyLines + tab + "Press enter to continue.. ");
         try {
             System.in.read();
         }catch(IOException e) {
@@ -131,7 +132,7 @@ public abstract class AbstractView {
         String menuChoice = "";
         Boolean isChoiceReady = false;
         while (!isChoiceReady) {
-            menuChoice = getUserInput(doubleTab + "Select an option: ");
+            menuChoice = getUserInput(emptyLines + doubleTab + "Select an option: ");
             isChoiceReady = DataTool.checkIfElementInArray(correctChoices, menuChoice);
         }
         return menuChoice;
@@ -144,5 +145,17 @@ public abstract class AbstractView {
         catch(InterruptedException ex){
             Thread.currentThread().interrupt();
         }
+    }
+
+    private void drawHeading() {
+        int terminalWidth = 140;
+        String programName = " Quest Store v2.0 ";
+        int additionalHeadingWidth = (terminalWidth - programName.length()) / 2;
+        String additionalHeading = DataTool.getMultipliedString("=", additionalHeadingWidth);
+        String heading = DataTool.getMultipliedString("=", terminalWidth);
+        System.out.println(emptyLines + tab + heading);
+        System.out.println(tab + additionalHeading + programName + additionalHeading);
+        System.out.println(tab + heading);
+        System.out.println(emptyLines);
     }
 }

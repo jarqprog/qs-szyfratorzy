@@ -46,7 +46,7 @@ public class RootController{
     }
 
     private void loggingProcedure() {
-
+        view.clearScreen();
         String login = view.getLogin();
         String password = view.getPassword();
         String [] usersTables = {Table.ADMINS.getName(), Table.MENTORS.getName(), Table.STUDENTS.getName()};
@@ -102,7 +102,6 @@ public class RootController{
         dbDAO.openConnection();
         boolean hasConnection = dbDAO.isConnected();
         if(hasConnection){
-            view.displayMessage("\n\n");
             view.displayMessageInNextLine("Loading database successfully\n\n");
             view.displayLoadingStars();
         }else{
@@ -110,7 +109,6 @@ public class RootController{
         }
         dbDAO.fillDatabase();
         dbDAO.closeConnection();
-        view.displayMessage("\n\n");
         view.displayMessageInNextLine("Database prepared..\n\n");
         view.handlePause();
     }
