@@ -76,7 +76,7 @@ public abstract class AbstractView {
             scanner.useDelimiter("\n");
             userInput = scanner.next().trim();
             if(! userInput.matches(regex)){
-                displayMessage(tab + "- Wrong input (number required)!");
+                displayMessage("\n" + tab + "- Wrong input (number required)!");
             }
         }
         return userInput;
@@ -93,10 +93,10 @@ public abstract class AbstractView {
             try {
                 number = Integer.parseInt(input);
                 if (number < 0) {
-                    displayMessage(tab + "- number shouldn't be negative!");
+                    displayMessage("\n" + tab + "- number shouldn't be negative!");
                 }
             } catch (NumberFormatException e){
-                displayMessage(tab + "- have You type an integer number?");
+                displayMessage("\n" + tab + "- have You type an integer number?");
                 number = -1;
             }
         }

@@ -33,7 +33,7 @@ public class Artifact extends Item {
     }
 
     public String toString(){
-        return super.toString() + String.format(" price: %s\n", getPrice());
+        return super.toString() + String.format(" price: %s", getPrice());
     }
 
     public String getFullDataToString() {

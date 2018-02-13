@@ -86,7 +86,7 @@ public abstract class Item {
     }
 
     public String getFullDataToString() {
-        return  String.format("\tid: %s, type: %s\n\titem name: %s\n\tdescription: %s", id,
+        return  String.format("\tid: %s\n\ttype: %s\n\tname: %s\n\tdescription: %s", id,
                 type, name, description);
     }
 

@@ -44,11 +44,11 @@ public class Quest extends Item {
 
 
     public String toString() {
-        return String.format(super.toString() + " reward: %d, status: %s\n", reward, status);
+        return String.format(super.toString() + " reward: %d, status: %s", reward, status);
     }
 
     public String getFullDataToString() {
-        return  String.format(super.getFullDataToString() + "\n\treward: %s, status: %s\n", reward, status);
+        return  String.format(super.getFullDataToString() + "\n\treward: %s\n\tstatus: %s\n", reward, status);
     }
 
     private int saveNewObjectGetId(){

@@ -70,14 +70,16 @@ public class ShopController {
                     if (artifact.getPrice() <= student.getWallet()) {
                         finalizeTransaction(artifact);
                         pay(artifact);
-                        view.displayMessage("You've bought " + artifact.getName() + "!\n");
+                        view.displayMessageInNextLine("You've bought " + artifact.getName() + "!\n");
                         view.displayObject(artifact);
+                        break;
 
                     } else {
-                        view.displayMessage("- this artifact is to expensive!");
+                        view.displayMessageInNextLine("- this artifact is to expensive!");
                     }
                 }
             }
+            view.handlePause();
         }
         view.displayMessageInNextLine("Thank You for Your visit!");
     }
@@ -109,19 +111,21 @@ public class ShopController {
         while (id != 0) {
             view.clearScreen();
             view.displayListOfArtifacts(getArtifactsByType('M'));
-            id = view.getIntegerFromUser("Enter artifact id or 0 to exit shop:: ");
+            id = view.getIntegerFromUser("Enter artifact id or 0 to exit shop: ");
             for (Artifact artifact : shop.getStore()) {
                 if (id == artifact.getId() && Objects.equals(artifact.getType(), 'M')) {
                     if (checkTeamResources(artifact, student.getTeam())) {
                         chargeTeamMembers(artifact, student.getTeam());
                         finalizeTeamTransaction(artifact);
-                        view.displayMessage("- You've bought " + artifact.getName() + "!\n");
+                        view.displayMessageInNextLine("- You've bought " + artifact.getName() + "!\n");
                         view.displayObject(artifact);
+                        break;
                     } else {
                         view.displayMessageInNextLine("- not enough coolcoins to buy this artifact!");
                     }
                 }
             }
+            view.handlePause();
         }
         view.displayMessageInNextLine("Thank You for Your visit!");
     }
@@ -141,7 +145,7 @@ public class ShopController {
 
         for (Student student : team.getStudents()) {
             student.setWallet(student.getWallet() - (artifact.getPrice() / team.getStudents().size()));
-            }
+        }
     }
 
     private List<Artifact> getArtifactsByType(char type) {

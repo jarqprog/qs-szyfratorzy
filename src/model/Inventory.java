@@ -59,13 +59,18 @@ public abstract class Inventory extends StudentStock {
         return getItem(item.getId()) != null;
     }
 
-    public String toString () {
+    public String toString() {
+        return String.format("Inventory of (owner id): %s", ownerId);  // temp
+    }
+
+    public String getFullDataToString() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<Artifact,Integer> entry : stock.entrySet()) {
             Artifact artifact = entry.getKey();
             Integer quantity = entry.getValue();
-            stringBuilder.append(String.format("Id: %d, Artifact: %s, Quantity: %d\n",
+            stringBuilder.append(String.format("\t\t\t\tId: %d, Artifact: %s, Quantity: %d",
                     artifact.getId(), artifact.getName(), quantity));
+            stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }

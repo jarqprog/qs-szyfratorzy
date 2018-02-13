@@ -29,7 +29,7 @@ public class MentorView extends UsersView {
     }
 
     public void displayArtifactMenu() {
-        String[] options = {"      *** Artifacts Editor ***\n",
+        String[] options = {
                             "[1] edit artifact name",
                             "[2] edit artifact type",
                             "[3] edit artifact description",
@@ -40,12 +40,12 @@ public class MentorView extends UsersView {
     }
 
     public void displayQuestMenu() {
-        String[] options = {"      *** Quest Editor ***\n",
-                "[1] edit quest name",
-                "[2] edit quest type",
-                "[3] edit quest description",
-                "[4] edit quest reward",
-                "[0] exit\n\n"};
+        String[] options = {
+                            "[1] edit quest name",
+                            "[2] edit quest type",
+                            "[3] edit quest description",
+                            "[4] edit quest reward",
+                            "[0] exit\n\n"};
 
         displayElementsOfCollection(options);
     }

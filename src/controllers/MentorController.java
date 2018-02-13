@@ -141,13 +141,15 @@ public class MentorController extends UserController{
         while(! isDone){
             String[] correctChoices = {"1", "2", "3", "4", "0"};
             view.clearScreen();
-            view.displayArtifactMenu();
-            String userChoice = view.getMenuChoice(correctChoices);
-            view.clearScreen();
             view.displayMessage("Artifact to edit:\n");
             view.displayItemWithDetails(artifact);
             view.drawNextLine();
-            switch(userChoice){
+            view.displayArtifactMenu();
+            String userChoice = view.getMenuChoice(correctChoices);
+            view.clearScreen();
+            view.displayItemWithDetails(artifact);
+            view.drawNextLine();
+            switch(userChoice) {
                 case "1":
                     artifact.setName(view.getUserInput("Enter new artifact name: "));
                     break;
@@ -166,27 +168,27 @@ public class MentorController extends UserController{
                     isDone = true;
                     break;
             }
-            if(isDone){
-                view.clearScreen();
-                view.displayMessageInNextLine("Artifact after changes:\n");
-                view.displayItemWithDetails(artifact);
-                view.handlePause();
-            }
         }
+        view.clearScreen();
+        view.displayMessageInNextLine("Artifact after changes:\n");
+        view.displayItemWithDetails(artifact);
+        view.handlePause();
     }
 
     private void handleQuestEditMenu(Quest quest){
         boolean isDone = false;
-        while(! isDone){
+        while(! isDone) {
             String[] correctChoices = {"1", "2", "3", "4", "0"};
-            view.clearScreen();
-            view.displayQuestMenu();
-            String userChoice = view.getMenuChoice(correctChoices);
             view.clearScreen();
             view.displayMessage("Quest to edit:\n");
             view.displayItemWithDetails(quest);
             view.drawNextLine();
-            switch(userChoice){
+            view.displayQuestMenu();
+            String userChoice = view.getMenuChoice(correctChoices);
+            view.clearScreen();
+            view.displayItemWithDetails(quest);
+            view.drawNextLine();
+            switch (userChoice) {
                 case "1":
                     quest.setName(view.getUserInput("Enter new quest name: "));
                     break;
@@ -205,13 +207,11 @@ public class MentorController extends UserController{
                     isDone = true;
                     break;
             }
-            if(isDone){
-                view.clearScreen();
-                view.displayMessageInNextLine("Quest after changes:\n");
-                view.displayItemWithDetails(quest);
-                view.handlePause();
-            }
         }
+        view.clearScreen();
+        view.displayMessageInNextLine("Quest after changes:\n");
+        view.displayItemWithDetails(quest);
+        view.handlePause();
     }
 
     private void markStudentQuest() {

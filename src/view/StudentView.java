@@ -11,7 +11,7 @@ public class StudentView extends UsersView {
         }
         else {
             displayMessage("Your Inventory: \n");
-            displayObject(inventory);
+            displayInventoryWithDetails(inventory);
         }
     }
 
@@ -21,7 +21,7 @@ public class StudentView extends UsersView {
         }
         else {
             displayMessage("Your team's inventory: \n");
-            displayObject(inventory);
+            displayInventoryWithDetails(inventory);
         }
     }
 

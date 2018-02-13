@@ -88,7 +88,7 @@ public class Attendance {
         sb.append("\n\n\t\t\tdate: attendace\n");
         int lineMultiplier = 45;
         String sign = "-";
-        String line = DataTool.getMultipliedString(sign, lineMultiplier) + "\n";
+        String line = DataTool.getMultipliedString(sign, lineMultiplier) + "\n\t\t";
         sb.append(line);
         String attendance;
         for (Map.Entry<LocalDate, Boolean> entry : sorted.entrySet()) {
