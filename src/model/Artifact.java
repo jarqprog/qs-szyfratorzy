@@ -33,10 +33,14 @@ public class Artifact extends Item {
     }
 
     public String toString(){
-        return super.toString() + String.format(" -price: %s\n\n", getPrice());
+        return super.toString() + String.format(" price: %s\n", getPrice());
     }
 
-    public int saveNewObjectGetId(){
+    public String getFullDataToString() {
+        return  String.format(super.getFullDataToString() + "\n\tprice: %s\n", price);
+    }
+
+    private int saveNewObjectGetId(){
         ArtifactDAO dao = new ArtifactDAO();
         return dao.saveObjectAndGetId(this);
     }

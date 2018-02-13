@@ -44,12 +44,14 @@ public class Quest extends Item {
 
 
     public String toString() {
-        return String.format("-id: %d  name: %s\n -description: %s\n -reward: %d -type: %s -status: %s\n\n",
-                            id, name,description, reward, type, status);
+        return String.format(super.toString() + " reward: %d, status: %s\n", reward, status);
     }
 
+    public String getFullDataToString() {
+        return  String.format(super.getFullDataToString() + "\n\treward: %s, status: %s\n", reward, status);
+    }
 
-    public int saveNewObjectGetId(){
+    private int saveNewObjectGetId(){
         QuestDAO dao = new QuestDAO();
         return dao.saveObjectAndGetId(this);
     }

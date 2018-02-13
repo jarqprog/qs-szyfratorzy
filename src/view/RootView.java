@@ -61,7 +61,9 @@ public class RootView extends AbstractView {
         for (int i=0; i<loops; i++) {
             System.out.println();
             System.out.print(tab);
-            System.out.print(DataTool.getMultipliedString(" ", i) + "* .");
+            System.out.print("." + DataTool.getMultipliedString(" ", i) + "*" + DataTool.getMultipliedString(" ", i) + "." +
+            DataTool.getMultipliedString(" ", i) + "*" + DataTool.getMultipliedString(" ", i) + "." +
+            DataTool.getMultipliedString(" ", i) + "*" + DataTool.getMultipliedString(" ", i) + ".");
             handleDelay(pauseInMiliseconds);
         }
         System.out.println(emptyLines);

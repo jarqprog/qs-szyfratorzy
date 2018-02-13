@@ -86,12 +86,12 @@ public class MentorController extends UserController{
         String description = view.getUserInput("Enter quest description: ");
         int reward = view.getItemValue();
         Quest quest = new Quest(name, description, reward);
+        view.clearScreen();
         view.displayMessage("You've created something new:\n");
-        view.displayObject(quest);
+        view.displayItemWithDetails(quest);
     }
 
     private void editQuest() {
-
         List<Quest> quests = getQuests();
         view.displayElementsOfCollection(prepareObjectsToDisplay(quests));
         String input = view.getUserInput("Enter id of quest which you would like to edit: ");
@@ -111,7 +111,7 @@ public class MentorController extends UserController{
         Student newStudent = new Student(firstName, lastName, password);
         view.clearScreen();
         view.displayMessageInNextLine("Student created successfully! \n");
-        view.displayObject(newStudent);
+        view.displayUserWithDetails(newStudent);
     }
 
     private void createArtifact(){
@@ -121,7 +121,7 @@ public class MentorController extends UserController{
         Artifact artifact = new Artifact(name, description, price);
         view.clearScreen();
         view.displayMessageInNextLine("You've created something new:\n");
-        view.displayObject(artifact);
+        view.displayItemWithDetails(artifact);
         }
 
     private void editArtifact(){
@@ -144,6 +144,9 @@ public class MentorController extends UserController{
             view.displayArtifactMenu();
             String userChoice = view.getMenuChoice(correctChoices);
             view.clearScreen();
+            view.displayMessage("Artifact to edit:\n");
+            view.displayItemWithDetails(artifact);
+            view.drawNextLine();
             switch(userChoice){
                 case "1":
                     artifact.setName(view.getUserInput("Enter new artifact name: "));
@@ -163,10 +166,10 @@ public class MentorController extends UserController{
                     isDone = true;
                     break;
             }
-            if(! isDone){
+            if(isDone){
                 view.clearScreen();
                 view.displayMessageInNextLine("Artifact after changes:\n");
-                view.displayObject(artifact);
+                view.displayItemWithDetails(artifact);
                 view.handlePause();
             }
         }
@@ -180,6 +183,9 @@ public class MentorController extends UserController{
             view.displayQuestMenu();
             String userChoice = view.getMenuChoice(correctChoices);
             view.clearScreen();
+            view.displayMessage("Quest to edit:\n");
+            view.displayItemWithDetails(quest);
+            view.drawNextLine();
             switch(userChoice){
                 case "1":
                     quest.setName(view.getUserInput("Enter new quest name: "));
@@ -199,10 +205,10 @@ public class MentorController extends UserController{
                     isDone = true;
                     break;
             }
-            if(! isDone){
+            if(isDone){
                 view.clearScreen();
                 view.displayMessageInNextLine("Quest after changes:\n");
-                view.displayObject(quest);
+                view.displayItemWithDetails(quest);
                 view.handlePause();
             }
         }

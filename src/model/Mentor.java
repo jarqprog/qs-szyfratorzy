@@ -43,7 +43,7 @@ public class Mentor extends User {
 
     public String getFullDataToString() {
         return super.getFullDataToString() + String.format(
-                " \n\t -group: %s\n", getGroup());
+                "\t -group: %s\n", getGroup());
     }
 
     public void saveObject(){

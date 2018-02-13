@@ -53,7 +53,7 @@ public abstract class Item {
     }
 
     public String getShortDescription() {
-        final int MAX_DESCRIPTION_LENGTH = 80;
+        final int MAX_DESCRIPTION_LENGTH = 50;
         return DataTool.getShortText(MAX_DESCRIPTION_LENGTH, description);
     }
 
@@ -81,8 +81,13 @@ public abstract class Item {
     }
 
     public String toString(){
-        return String.format("-genre: %s\n -id: %s\n -type: %s\n -item name: %s\n -description: %s\n", this.genre, this.id,
-                            this.type, this.name, this.description);
+        return String.format("id: %s, type: %s, name: %s, desc.: %s", id,
+                            type, name, getShortDescription());
+    }
+
+    public String getFullDataToString() {
+        return  String.format("\tid: %s, type: %s\n\titem name: %s\n\tdescription: %s", id,
+                type, name, description);
     }
 
     public abstract void saveObject();
