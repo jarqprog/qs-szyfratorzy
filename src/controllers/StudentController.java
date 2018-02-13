@@ -117,6 +117,7 @@ public class StudentController extends UserController{
     }
 
     private void useTeamArtifacts() {
+        view.clearScreen();
         showTeamInventory();
         if(student.getTeam().getInventory().getStock().isEmpty()){
             view.displayMessageInNextLine("- sorry, You have nothing to use!");

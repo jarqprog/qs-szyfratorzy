@@ -137,6 +137,7 @@ public class SchoolController {
         SchoolView view = new SchoolView();
         view.displayObjects(students);
         String chosenStudent = view.getUserInput("Choose student by id: ");
+        view.drawNextLine();
         for (Student student : students){
             if (chosenStudent.equals(String.valueOf(student.getId()))){
                 return student;
@@ -156,6 +157,7 @@ public class SchoolController {
         view.displayMessageInNextLine("Mentors:\n");
         view.displayObjects(mentors);
         String id = view.getUserInput("Select mentor by id: ");
+        view.drawNextLine();
         for (Mentor mentor : mentors) {
             if (id.equals(Integer.toString(mentor.getId()))) {
                 return mentor;
@@ -169,6 +171,7 @@ public class SchoolController {
         String teamName;
         SchoolView view = new SchoolView();
         while (!isDone){
+            view.clearScreen();
             teamName = view.getUserInput("Enter team name (or 0 to exit): ");
             if (teamName.equals("0")){
                 break;
@@ -177,7 +180,8 @@ public class SchoolController {
             } else {
                 Team newTeam = new Team(teamName);
                 view.clearScreen();
-                view.displayMessageInNextLine("- Team created: \n" + newTeam);
+                view.displayMessageInNextLine("- Team created: \n");
+                view.displayObject(newTeam);
                 isDone = true;
             }
         }
@@ -188,6 +192,7 @@ public class SchoolController {
         String groupName;
         SchoolView view = new SchoolView();
         while (!isDone){
+            view.clearScreen();
             groupName = view.getUserInput("Enter group name (or 0 to exit): ");
             if (groupName.equals("0")){
                 break;
@@ -196,7 +201,8 @@ public class SchoolController {
             } else {
                 Group newGroup = new Group(groupName);
                 view.clearScreen();
-                view.displayMessageInNextLine("- group created: \n" + newGroup);
+                view.displayMessageInNextLine("- group created: \n");
+                view.displayObject(newGroup);
                 isDone = true;
             }
         }
@@ -207,6 +213,7 @@ public class SchoolController {
         for (Student student : getStudentsByGroup(mentor.getGroup())){
             boolean isPresenceChecked = false;
             while (!isPresenceChecked){
+                view.clearScreen();
                 String userInput = view.getUserInput(String.format("- Is %s present (y/anything else): ", student.getFullName()));
                 boolean isPresent = userInput.equals("y");
                 student.addAttendance(isPresent);

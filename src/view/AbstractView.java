@@ -119,6 +119,10 @@ public abstract class AbstractView {
         }
     }
 
+    public void drawNextLine() {
+        System.out.println();
+    }
+
     public void handlePause() {
         System.out.print(emptyLines + tab + "Press enter to continue.. ");
         try {

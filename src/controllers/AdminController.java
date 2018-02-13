@@ -64,7 +64,8 @@ public class AdminController extends UserController{
         String password = view.getUserInput("Enter password: ");
         Mentor mentor = new Mentor(firstName, lastName, password);
         view.clearScreen();
-        view.displayMessageInNextLine("Mentor created: " + mentor.toString());
+        view.displayMessageInNextLine("Mentor created: \n");
+        view.displayObject(mentor);
     }
 
     private void editMentor() {

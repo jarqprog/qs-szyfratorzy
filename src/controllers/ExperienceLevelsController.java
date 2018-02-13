@@ -100,9 +100,9 @@ public class ExperienceLevelsController {
         view.clearScreen();
         view.displayMessage("Current state:");
         view.displayObject(experienceLevels);
-        levelName = view.getUserInput(" Type:\n\n - new level name to add level\n" +
-                " - or existing level name to modify level\n" +
-                " - or press '0' to quit process ---> ");
+        levelName = view.getUserInput(" Type:\n\n\t- new level name to add level\n" +
+                "\t- or existing level name to modify level\n" +
+                "\t- or press '0' to quit process ---> ");
         if(! levelName.equals("0")) {
             int levelValue = 0;
             boolean shouldContinue = true;
@@ -137,9 +137,9 @@ public class ExperienceLevelsController {
             view.clearScreen();
             view.displayMessage("Current state:");
             view.displayObject(experienceLevels);
-            levelName = view.getUserInput(" Type:\n\n" +
-                    " - existing level name to modify level\n" +
-                    " - or press '0' to quit process ---> ");
+            levelName = view.getUserInput("Type:\n\n" +
+                    "\t- existing level name to modify level\n" +
+                    "\t- or press '0' to quit process ---> ");
             isDone = experienceLevels.containsGivenLevel(levelName);
             if(! isDone && ! levelName.equals("0")){
                 view.displayMessage("- You should type existing level name.");

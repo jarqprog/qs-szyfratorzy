@@ -86,7 +86,8 @@ public class MentorController extends UserController{
         String description = view.getUserInput("Enter quest description: ");
         int reward = view.getItemValue();
         Quest quest = new Quest(name, description, reward);
-        view.displayMessage("You've created something new:\n" + quest);
+        view.displayMessage("You've created something new:\n");
+        view.displayObject(quest);
     }
 
     private void editQuest() {
@@ -108,7 +109,9 @@ public class MentorController extends UserController{
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
         Student newStudent = new Student(firstName, lastName, password);
-        view.displayMessageInNextLine("Student created successfully! \n" + newStudent.toString());
+        view.clearScreen();
+        view.displayMessageInNextLine("Student created successfully! \n");
+        view.displayObject(newStudent);
     }
 
     private void createArtifact(){
@@ -116,7 +119,9 @@ public class MentorController extends UserController{
         String description = view.getUserInput("Enter artifact description: ");
         int price = view.getItemValue();
         Artifact artifact = new Artifact(name, description, price);
-        view.displayMessageInNextLine("You've created something new:\n" + artifact);
+        view.clearScreen();
+        view.displayMessageInNextLine("You've created something new:\n");
+        view.displayObject(artifact);
         }
 
     private void editArtifact(){
@@ -159,8 +164,10 @@ public class MentorController extends UserController{
                     break;
             }
             if(! isDone){
-               view.displayObject(artifact);
-               view.handlePause();
+                view.clearScreen();
+                view.displayMessageInNextLine("Artifact after changes:\n");
+                view.displayObject(artifact);
+                view.handlePause();
             }
         }
     }
@@ -193,6 +200,8 @@ public class MentorController extends UserController{
                     break;
             }
             if(! isDone){
+                view.clearScreen();
+                view.displayMessageInNextLine("Quest after changes:\n");
                 view.displayObject(quest);
                 view.handlePause();
             }
@@ -222,6 +231,7 @@ public class MentorController extends UserController{
         Student student = SchoolController.pickStudentFromList(students);
         if (student != null){
             SchoolController.assignStudentToGroup(student);
+            view.clearScreen();
             view.displayMessageInNextLine("Student edited:\n");
             view.displayUserWithDetails(student);
         } else {
@@ -234,6 +244,7 @@ public class MentorController extends UserController{
         Student student = SchoolController.pickStudentFromList(students);
         if (student != null){
             SchoolController.assignStudentToTeam(student);
+            view.clearScreen();
             view.displayMessageInNextLine("Student edited:\n");
             view.displayUserWithDetails(student);
         } else {

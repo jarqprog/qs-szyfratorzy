@@ -62,6 +62,7 @@ public class ShopController {
     private void buyArtifact() {
         int id = -1;
         while (id != 0) {
+            view.clearScreen();
             view.displayListOfArtifacts(getArtifactsByType('B'));
             id = view.getIntegerFromUser("Enter artifact id or 0 to exit shop: ");
             for (Artifact artifact : shop.getStore()) {
@@ -70,7 +71,7 @@ public class ShopController {
                         finalizeTransaction(artifact);
                         pay(artifact);
                         view.displayMessage("You've bought " + artifact.getName() + "!\n");
-                        view.displayMessage(artifact.toString());
+                        view.displayObject(artifact);
 
                     } else {
                         view.displayMessage("- this artifact is to expensive!");
@@ -106,6 +107,7 @@ public class ShopController {
     private void buyArtifactForTeam() {
         int id = -1;
         while (id != 0) {
+            view.clearScreen();
             view.displayListOfArtifacts(getArtifactsByType('M'));
             id = view.getIntegerFromUser("Enter artifact id or 0 to exit shop:: ");
             for (Artifact artifact : shop.getStore()) {
@@ -114,7 +116,7 @@ public class ShopController {
                         chargeTeamMembers(artifact, student.getTeam());
                         finalizeTeamTransaction(artifact);
                         view.displayMessage("- You've bought " + artifact.getName() + "!\n");
-                        view.displayMessage(artifact.toString());
+                        view.displayObject(artifact);
                     } else {
                         view.displayMessageInNextLine("- not enough coolcoins to buy this artifact!");
                     }

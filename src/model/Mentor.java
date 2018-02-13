@@ -38,7 +38,7 @@ public class Mentor extends User {
 
     public String toString()
     {
-        return super.toString()+String.format(" Group name: %s", group.getName());
+        return super.toString() + String.format("\tGroup name: %s", group.getName());
      }
 
     public String getFullDataToString() {

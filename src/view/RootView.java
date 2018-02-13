@@ -50,7 +50,6 @@ public class RootView extends AbstractView {
         System.out.println(doubleTab + doubleTab + doubleTab + doubleTab + doubleTab + doubleTab + "    Quest Store");
         System.out.println(doubleTab + doubleTab + doubleTab + doubleTab + doubleTab + doubleTab + "    by Szyfratorzy");
         System.out.println(doubleTab + doubleTab + doubleTab + doubleTab + doubleTab + doubleTab + "    v 2.0");
-        System.out.println(emptyLines);
         System.out.println(emptyLines + doubleTab + doubleTab + beam);
         System.out.println(emptyLines);
         handlePause();
