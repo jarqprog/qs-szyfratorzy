@@ -1,28 +1,10 @@
 package view;
 
-import java.util.Scanner;
-
 public class MentorView extends UsersView {
 
-    public int getValue() {
-    Scanner scanner = new Scanner(System.in);
-    boolean correctInput = false;
-    int value = -1;
-    while(! correctInput) {
-        try {
-            System.out.print("Enter a value of item: ");
-            value = Integer.parseInt(scanner.nextLine());
-            if(value > 0) {
-            correctInput = true;
-            }
-            else {
-                System.out.println("    - Value must be greater than 0!");
-            }
-        } catch(NumberFormatException e) {
-            System.out.println("    - Wrong input!");
-        }
-    }
-    return value;
+    public int getItemValue() {
+        String message = "Enter a value of item: ";
+        return getNotNegativeNumberFromUser(message);
     }
 
     public void displayMenu() {
@@ -43,9 +25,7 @@ public class MentorView extends UsersView {
                             "[14] check attendance",
                             "[0] exit\n\n"};
 
-        for(String element : options) {
-            System.out.println(element);
-        }
+        displayElementsOfCollection(options);
     }
 
     public void displayArtifactMenu() {
@@ -56,9 +36,7 @@ public class MentorView extends UsersView {
                             "[4] edit artifact price",
                             "[0] exit\n\n"};
 
-        for(String element : options) {
-            System.out.println(element);
-        }
+        displayElementsOfCollection(options);
     }
 
     public void displayQuestMenu() {
@@ -69,8 +47,6 @@ public class MentorView extends UsersView {
                 "[4] edit quest reward",
                 "[0] exit\n\n"};
 
-        for(String element : options) {
-            System.out.println(element);
-        }
+        displayElementsOfCollection(options);
     }
 }

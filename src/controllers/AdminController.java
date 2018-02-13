@@ -64,7 +64,7 @@ public class AdminController extends UserController{
         String password = view.getUserInput("Enter password: ");
         Mentor mentor = new Mentor(firstName, lastName, password);
         view.clearScreen();
-        view.displayMessage("\nMentor created: " + mentor.toString());
+        view.displayMessageInNextLine("Mentor created: " + mentor.toString());
     }
 
     private void editMentor() {
@@ -104,7 +104,7 @@ public class AdminController extends UserController{
                 }
                 if (!isFinished) {
                     view.clearScreen();
-                    view.displayMessage("\nMentor`s data:\n");
+                    view.displayMessageInNextLine("Mentor`s data:\n");
                     view.displayUserWithDetails(mentor);
                     view.handlePause();
                 }
@@ -116,7 +116,7 @@ public class AdminController extends UserController{
         Mentor mentor = SchoolController.getMentorByUserChoice();
         if(mentor != null) {
             view.clearScreen();
-            view.displayMessage("\nMentor's details:\n");
+            view.displayMessageInNextLine("Mentor's details:\n");
             view.displayUserWithDetails(mentor);
         }
     }
@@ -125,9 +125,9 @@ public class AdminController extends UserController{
         Mentor mentor = SchoolController.getMentorByUserChoice();
         if(mentor != null) {
             view.clearScreen();
-            view.displayMessage("\nStudents:\n");
+            view.displayMessageInNextLine("Students:\n");
             List<Student> students = SchoolController.getStudentsByGroup(mentor.getGroup());
-            view.displayUsers(students);
+            view.displayObjects(students);
         }
     }
 

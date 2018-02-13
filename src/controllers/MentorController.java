@@ -84,7 +84,7 @@ public class MentorController extends UserController{
     private void createQuest() {
         String name = view.getUserInput("Enter quest name: ");
         String description = view.getUserInput("Enter quest description: ");
-        int reward = view.getValue();
+        int reward = view.getItemValue();
         Quest quest = new Quest(name, description, reward);
         view.displayMessage("You've created something new:\n" + quest);
     }
@@ -108,15 +108,15 @@ public class MentorController extends UserController{
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
         Student newStudent = new Student(firstName, lastName, password);
-        view.displayMessage("Student created successfully! \n" + newStudent.toString());
+        view.displayMessageInNextLine("Student created successfully! \n" + newStudent.toString());
     }
 
     private void createArtifact(){
         String name = view.getUserInput("Enter artifact name: ");
         String description = view.getUserInput("Enter artifact description: ");
-        int price = view.getValue();
+        int price = view.getItemValue();
         Artifact artifact = new Artifact(name, description, price);
-        view.displayMessage("You've created something new:\n" + artifact);
+        view.displayMessageInNextLine("You've created something new:\n" + artifact);
         }
 
     private void editArtifact(){
@@ -150,7 +150,7 @@ public class MentorController extends UserController{
                     artifact.setDescription(view.getUserInput("Enter new artifact description: "));
                     break;
                 case "4":
-                    artifact.setPrice(view.getValue());
+                    artifact.setPrice(view.getItemValue());
                     break;
                 case "0":
                     ArtifactDAO dao = new ArtifactDAO();
@@ -159,7 +159,7 @@ public class MentorController extends UserController{
                     break;
             }
             if(! isDone){
-               view.displayMessage(artifact.toString());
+               view.displayObject(artifact);
                view.handlePause();
             }
         }
@@ -184,7 +184,7 @@ public class MentorController extends UserController{
                     quest.setDescription(view.getUserInput("Enter new quest description: "));
                     break;
                 case "4":
-                    quest.setReward(view.getValue());
+                    quest.setReward(view.getItemValue());
                     break;
                 case "0":
                     QuestDAO dao = new QuestDAO();
@@ -193,7 +193,7 @@ public class MentorController extends UserController{
                     break;
             }
             if(! isDone){
-                view.displayMessage(quest.toString());
+                view.displayObject(quest);
                 view.handlePause();
             }
         }
@@ -213,8 +213,8 @@ public class MentorController extends UserController{
 
     private void showStudentsFromMyGroup() {
         List<Student> students = SchoolController.getStudentsByGroup(mentor.getGroup());
-        view.displayMessage("\nYour students:\n");
-        view.displayUsersWithDetails(students);
+        view.displayMessageInNextLine("Your students:\n");
+        view.displayManyUsersWithDetails(students);
     }
 
     private void assignStudentToGroup() {
@@ -222,10 +222,10 @@ public class MentorController extends UserController{
         Student student = SchoolController.pickStudentFromList(students);
         if (student != null){
             SchoolController.assignStudentToGroup(student);
-            view.displayMessage("\nStudent edited:\n");
+            view.displayMessageInNextLine("Student edited:\n");
             view.displayUserWithDetails(student);
         } else {
-            view.displayMessage("\nStudent does not exist...");
+            view.displayMessageInNextLine("Student does not exist...");
         }
     }
 
@@ -234,10 +234,10 @@ public class MentorController extends UserController{
         Student student = SchoolController.pickStudentFromList(students);
         if (student != null){
             SchoolController.assignStudentToTeam(student);
-            view.displayMessage("\nStudent edited:\n");
+            view.displayMessageInNextLine("Student edited:\n");
             view.displayUserWithDetails(student);
         } else {
-            view.displayMessage("\nStudent does not exist...");
+            view.displayMessageInNextLine("Student does not exist...");
         }
     }
 
@@ -245,12 +245,12 @@ public class MentorController extends UserController{
         Student student = SchoolController.pickStudentFromList(mentor.getGroup().getStudents());
         if (student != null) {
             view.clearScreen();
-            view.displayMessage("\n\n\tDetailed info:\n");
+            view.displayMessageInNextLine("Detailed info:\n");
             view.displayUserWithDetails(student);
             String attendanceInfo = student.getAttendance().getFullDataToString();
             view.displayMessage(attendanceInfo);
         } else {
-            view.displayMessage("   - there is no one to show..");
+            view.displayMessage("- there is no one to show..");
         }
     }
 }

@@ -55,7 +55,7 @@ public class ExperienceLevelsController {
             view.clearScreen();
             view.displayExpLevelsManager();
             String[] correctChoices = {"1", "2", "3", "4", "5", "0"};
-            String userChoice = getUserChoice(correctChoices);
+            String userChoice = view.getMenuChoice(correctChoices);
             switch (userChoice) {
                 case "1":
                     showExperienceLevels();
@@ -90,7 +90,7 @@ public class ExperienceLevelsController {
     private void restoreDefaultExpLevels() {
         importExpLvlFromSql();
         view.clearScreen();
-        view.displayMessage("Restored:");
+        view.displayMessageInNextLine("Restored:");
         showExperienceLevels();
     }
 
@@ -107,15 +107,15 @@ public class ExperienceLevelsController {
             int levelValue = 0;
             boolean shouldContinue = true;
             while(shouldContinue) {
-                levelValue = view.getNotNegativeNumberFromUser(" - type required experience level ---> ");
+                levelValue = view.getNotNegativeNumberFromUser("- type required experience level ---> ");
                 shouldContinue = experienceLevels.containsGivenValue(levelValue);
                 if(shouldContinue){
-                    view.displayMessage("   - Chosen value already exists! Type new value..");
+                    view.displayMessage("- Chosen value already exists! Type new value..");
                 }
             }
             experienceLevels.addLevel(levelName, levelValue);
             view.clearScreen();
-            view.displayMessage("Added:");
+            view.displayMessageInNextLine("Added:");
             showExperienceLevels();
         }
     }
@@ -124,7 +124,7 @@ public class ExperienceLevelsController {
         experienceLevels = getExperienceLevels();
         experienceLevels.clearLevels();
         view.clearScreen();
-        view.displayMessage("Cleared:");
+        view.displayMessageInNextLine("Cleared:");
         showExperienceLevels();
     }
 
@@ -142,13 +142,13 @@ public class ExperienceLevelsController {
                     " - or press '0' to quit process ---> ");
             isDone = experienceLevels.containsGivenLevel(levelName);
             if(! isDone && ! levelName.equals("0")){
-                view.displayMessage("   - You should type existing level name.");
+                view.displayMessage("- You should type existing level name.");
             }
         }
         if (! levelName.equals("0")) {
             view.clearScreen();
             experienceLevels.removeLevel(levelName);
-            view.displayMessage("Cleared:");
+            view.displayMessageInNextLine("Cleared:");
             showExperienceLevels();
         }
     }
@@ -157,21 +157,6 @@ public class ExperienceLevelsController {
         DbManagerDAO dao = new DbManagerDAO();
         String sqlFilePath = FilePath.UPDATE_EXP_LVL.getPath();
         dao.updateDatabase(sqlFilePath);
-    }
-
-    private String getUserChoice(String[] correctChoices) {
-        String userChoice = "";
-        Boolean isChoiceReady = false;
-        while (!isChoiceReady) {
-            userChoice = view.getUserInput("Select an option: ");
-            isChoiceReady = DataTool.checkIfElementInArray(correctChoices, userChoice);
-        }
-        return userChoice;
-    }
-
-    protected void executeNotImplementedInfo() {
-        view.displayMessage("Not implemented yet");
-        view.handlePause();
     }
 }
 

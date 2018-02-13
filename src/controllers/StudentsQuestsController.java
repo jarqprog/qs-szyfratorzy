@@ -26,7 +26,7 @@ public class StudentsQuestsController {
         Quest pickedQuest = dao.getObjectById(questsId);
         student.getStudentsQuests().addItem(pickedQuest);
         view.clearScreen();
-        view.displayMessage("\nYou have taken up the task:\n");
+        view.displayMessageInNextLine("You have taken up the task:\n");
         view.displayObject(pickedQuest);
         }
     }
