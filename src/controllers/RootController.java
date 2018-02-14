@@ -26,6 +26,7 @@ public class RootController{
     public void runApplication(){
         view.clearScreen();
         prepareDatabase();
+//        runTest();
         boolean isDone = false;
         while (! isDone){
             handleIntro();
@@ -110,4 +111,14 @@ public class RootController{
         view.displayMessage("\n\n\n\n\tDatabase prepared..\n\n\n\n\n");
         view.handlePause();
     }
+
+//    private void runTest() {
+////        UserFactory<Student> factory = new UserFactoryImpl<>(Student.class);
+////        Student stud = UserFactory.create(Student.class,"Janko", "Muzykant", "12321");
+////        view.displayObject(stud);
+////        UserFactory<Mentor> factory1 = new UserFactoryImpl<>(Mentor.class);
+////        Mentor men = factory1.create("Lejek", "Kitka", "12321");
+////        view.displayObject(men);
+////        view.handlePause();
+//    }
 }

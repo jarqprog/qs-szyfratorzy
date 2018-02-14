@@ -1,6 +1,10 @@
 package controllers;
 
 import dao.*;
+import factory.AbsFactory;
+import factory.GroupFactoryImpl;
+import factory.StudentFactoryImpl;
+import factory.TeamFactoryImpl;
 import model.Group;
 import model.Mentor;
 import model.Student;
@@ -166,20 +170,21 @@ public class SchoolController {
 
     public static void createNewTeam(){
         boolean isDone = false;
-        String teamName = "";
+        String teamName;
         SchoolView view = new SchoolView();
         while (!isDone){
             teamName = view.getUserInput("\nEnter team name (or 0 to exit): ");
             if (teamName.equals("0")){
-                isDone = true;
+//                isDone = true;
                 break;
             } else if (getTeamNames().contains(teamName)) {
                 view.displayMessage("   - Team already exist...");
-                continue;
+//                continue;
             } else {
-                Team newTeam = new Team(teamName);
+                Team team = AbsFactory.get(TeamFactoryImpl.class)
+                        .create(teamName);
                 view.clearScreen();
-                view.displayMessage("\n - Team created: \n" + newTeam);
+                view.displayMessage("\n - Team created: \n" + team);
                 isDone = true;
             }
         }
@@ -198,7 +203,8 @@ public class SchoolController {
                 view.displayMessage("   - Group already exist...");
 //                continue;
             } else {
-                Group newGroup = new Group(groupName);
+                Group newGroup = AbsFactory.get(GroupFactoryImpl.class)
+                        .create(groupName);
                 view.clearScreen();
                 view.displayMessage("\n - Group created: \n" + newGroup);
                 isDone = true;
