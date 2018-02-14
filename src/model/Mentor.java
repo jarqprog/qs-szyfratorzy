@@ -38,12 +38,12 @@ public class Mentor extends User {
 
     public String toString()
     {
-        return super.toString()+String.format(" Group name: %s", group.getName());
+        return super.toString() + String.format("\tGroup name: %s", group.getName());
      }
 
     public String getFullDataToString() {
         return super.getFullDataToString() + String.format(
-                " \n\t -group: %s\n", getGroup());
+                "\t -group: %s\n", getGroup());
     }
 
     public void saveObject(){

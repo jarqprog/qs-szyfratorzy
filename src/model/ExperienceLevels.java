@@ -72,7 +72,7 @@ public class ExperienceLevels {
         Map<String,Integer> sorted = DataTool.sortMapByValue(levels); // sort map - result LinkedHashMap
 
         StringBuilder sb = new StringBuilder();
-        sb.append("\n  Experience levels:\n\n\tlevel: required experience\n");
+        sb.append("\n\t\tExperience levels:\n\n\t\tlevel: required experience\n\t\t");
         int lineMultiplier = 45;
         String sign = "-";
         String line = DataTool.getMultipliedString(sign, lineMultiplier) + "\n";
@@ -80,7 +80,7 @@ public class ExperienceLevels {
         for (Entry<String, Integer> entry : sorted.entrySet()) {
             String key = entry.getKey();
             String value = String.valueOf(entry.getValue());
-            sb.append(String.format("\t- %s: %s\n", key, value));
+            sb.append(String.format("\t\t\t- %s: %s\n", key, value));
         }
         return sb.toString();
     }

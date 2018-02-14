@@ -1,7 +1,6 @@
 package controllers;
 
 import java.util.List;
-import java.io.Console;
 
 import dao.*;
 import enums.FilePath;
@@ -27,13 +26,17 @@ public class RootController{
         view.clearScreen();
         prepareDatabase();
         boolean isDone = false;
+        String[] correctChoices = {"0", "1", "2"};
         while (! isDone){
             handleIntro();
-            String userInput = view.displayLoginScreen("Please, choose an option: ");
-            switch (userInput)
-            {
+            view.displayLoginScreen();
+            String userInput = view.getMenuChoice(correctChoices);
+            switch (userInput) {
                 case "1":
                     loggingProcedure();
+                    break;
+                case "2":
+                    view.displayAuthors();
                     break;
                 case "0":
                     isDone = true;
@@ -43,11 +46,9 @@ public class RootController{
     }
 
     private void loggingProcedure() {
-
-        String login = view.displayLoginScreen("Login: ");
-        Console console = System.console();
-        view.displayMessage("Please enter your password: ");
-        char[] password = console.readPassword();
+        view.clearScreen();
+        String login = view.getLogin();
+        String password = view.getPassword();
         String [] usersTables = {Table.ADMINS.getName(), Table.MENTORS.getName(), Table.STUDENTS.getName()};
         for(String tableName : usersTables) {
             String query = String.format("Select * FROM %s " +
@@ -60,7 +61,7 @@ public class RootController{
         }
     }
 
-    public void createUser(String [] userData, String tableName) {
+    private void createUser(String [] userData, String tableName) {
 
         if(tableName.equals(Table.ADMINS.getName())) {
             AdminDAO adminDAO = new AdminDAO();
@@ -101,13 +102,14 @@ public class RootController{
         dbDAO.openConnection();
         boolean hasConnection = dbDAO.isConnected();
         if(hasConnection){
-            view.displayMessage("\n\n\n\n\tOpened database successfully");
+            view.displayMessageInNextLine("Loading database successfully\n\n");
+            view.displayLoadingStars();
         }else{
-            view.displayMessage("Problem occured while opening database");
+            view.displayMessageInNextLine("Problem occured while opening database");
         }
         dbDAO.fillDatabase();
         dbDAO.closeConnection();
-        view.displayMessage("\n\n\n\n\tDatabase prepared..\n\n\n\n\n");
+        view.displayMessageInNextLine("Database prepared..\n\n");
         view.handlePause();
     }
 }

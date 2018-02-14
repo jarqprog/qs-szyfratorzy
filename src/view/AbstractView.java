@@ -9,33 +9,32 @@ import java.util.List;
 public abstract class AbstractView {
 
     protected String emptyLines = "\n\n";
-    protected String space = " ";
+    protected String tab = "    ";
+    protected String doubleTab = "      ";  // use while displaying collections
     private static final String ANSI_CLS = "\u001b[2J";
     private static final String ANSI_HOME = "\u001b[H";
 
-    public void setEmptyLines(String newEmptyLines)
-    {
-        emptyLines = newEmptyLines;
-    }
-
     public void displayMessage(String message) {
-        System.out.println(message);
+        System.out.println(tab + message);
+    }
+    public void displayMessageInNextLine(String message) {
+        System.out.println("\n" + tab + message);
     }
 
-    public <T extends Object> void displayObject(T object) {
-        System.out.println(object.toString());
+    public <T> void displayObject(T object) {
+        System.out.println(doubleTab + doubleTab + object.toString());
     }
 
-    public <T extends Object> void displayObjects(List<T> objects) {
+    public <T> void displayObjects(List<T> objects) {
         for (T object : objects){
             displayObject(object);
         }
     }
 
     public void displayHeaderAndElementsOfCollection(String[] collection, String header) {
-        System.out.println(emptyLines + space + header);
+        System.out.println(emptyLines + tab + header);
         for(String element : collection) {
-        System.out.println(space + element);
+        System.out.println(doubleTab + element);
         }
     }
 
@@ -43,14 +42,14 @@ public abstract class AbstractView {
         System.out.println(emptyLines);
         int number = 0;
         for(String element : collection){
-        System.out.println(space + "[" + number + "] " + element);
+        System.out.println(doubleTab + "[" + number + "] " + element);
         number ++;
         }
     }
 
     public void displayElementsOfCollection(String[] collection) {
         for(String element : collection){
-        System.out.println(element);
+        System.out.println(doubleTab + element);
         }
     }
 
@@ -60,7 +59,7 @@ public abstract class AbstractView {
         String delimiter = "\n";
         int minimumUserInputLength = 1;
         while(userInput.length() < minimumUserInputLength){
-            System.out.print(message);
+            System.out.print(emptyLines + tab + message);
             scanner.useDelimiter(delimiter);
             userInput = scanner.next();
         }
@@ -73,27 +72,31 @@ public abstract class AbstractView {
         String regex = ".*\\d+.*";
         int minimumUserInputLength = 1;
         while(! userInput.matches(regex) && userInput.length() < minimumUserInputLength){
-            System.out.print(message);
+            System.out.print(emptyLines + tab + message);
             scanner.useDelimiter("\n");
             userInput = scanner.next().trim();
             if(! userInput.matches(regex)){
-                displayMessage("    - Wrong input (number required)!");
+                displayMessage("\n" + tab + "- Wrong input (number required)!");
             }
         }
         return userInput;
     }
 
+    public int getIntegerFromUser(String message) {
+        return Integer.parseInt(getNumberFromUser(emptyLines + tab + message));
+    }
+
     public int getNotNegativeNumberFromUser(String message){
         int number = -1;
         while(number < 0) {
-            String input = getNumberFromUser(message);
+            String input = getNumberFromUser(emptyLines + tab + message);
             try {
                 number = Integer.parseInt(input);
                 if (number < 0) {
-                    displayMessage("    - Number shouldn't be negative!");
+                    displayMessage("\n" + tab + "- number shouldn't be negative!");
                 }
             } catch (NumberFormatException e){
-                displayMessage("    - have You type an integer number?");
+                displayMessage("\n" + tab + "- have You type an integer number?");
                 number = -1;
             }
         }
@@ -110,13 +113,18 @@ public abstract class AbstractView {
                 System.out.flush();
                 System.out.println();
             }
-        } catch (Exception e){
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            drawHeading();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
     }
 
+    public void drawNextLine() {
+        System.out.println();
+    }
+
     public void handlePause() {
-        System.out.println(emptyLines + space + "Press enter to continue.. ");
+        System.out.print(emptyLines + tab + "Press enter to continue.. ");
         try {
             System.in.read();
         }catch(IOException e) {
@@ -124,25 +132,34 @@ public abstract class AbstractView {
         }
     }
 
-    public int getNumber(String message) {
-        Scanner scanner = new Scanner(System.in);
-        int input = -1;
-        try {
-            System.out.println(message);
-            input = Integer.parseInt(scanner.nextLine());
-        } catch( NumberFormatException e) {
-            System.out.println("Wrong input!");
-        }
-        return input;
-    }
-
     public String getMenuChoice(String[] correctChoices) {
         String menuChoice = "";
         Boolean isChoiceReady = false;
         while (!isChoiceReady) {
-            menuChoice = getUserInput("\tSelect an option: ");
+            menuChoice = getUserInput(emptyLines + doubleTab + "Select an option: ");
             isChoiceReady = DataTool.checkIfElementInArray(correctChoices, menuChoice);
         }
         return menuChoice;
+    }
+
+    protected void handleDelay(int pauseInMiliseconds){
+        try{
+            Thread.sleep(pauseInMiliseconds);
+        }
+        catch(InterruptedException ex){
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private void drawHeading() {
+        int terminalWidth = 140;
+        String programName = " Quest Store v2.0 ";
+        int additionalHeadingWidth = (terminalWidth - programName.length()) / 2;
+        String additionalHeading = DataTool.getMultipliedString("=", additionalHeadingWidth);
+        String heading = DataTool.getMultipliedString("=", terminalWidth);
+        System.out.println(emptyLines + tab + heading);
+        System.out.println(tab + additionalHeading + programName + additionalHeading);
+        System.out.println(tab + heading);
+        System.out.println(emptyLines);
     }
 }
