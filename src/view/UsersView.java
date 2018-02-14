@@ -1,5 +1,6 @@
 package view;
 
+import model.Attendance;
 import model.Inventory;
 import model.Item;
 import model.User;
@@ -19,10 +20,14 @@ public class UsersView extends AbstractView {
     }
 
     public <T extends Item> void  displayItemWithDetails(T item){
-        System.out.println(doubleTab + item.getFullDataToString());
+        System.out.println(item.getFullDataToString());
     }
 
     public <T extends Inventory> void  displayInventoryWithDetails(T inventory){
-        System.out.println(doubleTab + inventory.getFullDataToString());
+        System.out.println(inventory.getFullDataToString());
+    }
+
+    public void displayAttendanceWithDetails(Attendance attendance) {
+        System.out.println(attendance.getFullDataToString());
     }
 }

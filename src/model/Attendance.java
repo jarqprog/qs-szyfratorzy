@@ -83,12 +83,12 @@ public class Attendance {
         Map<LocalDate,Boolean> sorted = DataTool.sortDateMap(attendance); // sort map - result LinkedHashMap
         String attendancePercentage = getPercentageAttendance();
         StringBuilder sb = new StringBuilder();
-        sb.append("Attendance:\n\n\t");
+        sb.append("\t");
         sb.append(attendancePercentage);
-        sb.append("\n\n\t\t\tdate: attendace\n");
+        sb.append("\n\n\tdate: attendance\n\t");
         int lineMultiplier = 45;
         String sign = "-";
-        String line = DataTool.getMultipliedString(sign, lineMultiplier) + "\n\t\t";
+        String line = DataTool.getMultipliedString(sign, lineMultiplier) + "\n";
         sb.append(line);
         String attendance;
         for (Map.Entry<LocalDate, Boolean> entry : sorted.entrySet()) {
@@ -98,7 +98,7 @@ public class Attendance {
             } else {
                 attendance = "absent";
             }
-            sb.append(String.format("\t\t\t- %s: %s\n", date, attendance));
+            sb.append(String.format("\t\t- %s: %s\n", date, attendance));
         }
         return sb.toString();
     }

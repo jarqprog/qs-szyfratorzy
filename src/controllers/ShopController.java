@@ -81,6 +81,7 @@ public class ShopController {
             }
             view.handlePause();
         }
+        view.clearScreen();
         view.displayMessageInNextLine("Thank You for Your visit!");
     }
 
@@ -127,6 +128,7 @@ public class ShopController {
             }
             view.handlePause();
         }
+        view.clearScreen();
         view.displayMessageInNextLine("Thank You for Your visit!");
     }
 

@@ -26,7 +26,7 @@ public class StudentView extends UsersView {
     }
 
     public void displayMenu() {
-        String[] options = {"      *** Student's Menu ***     \n",
+        String[] options = {"\n\n      *** Student's Menu ***\n",
                 "[1] Enter to online shop",
                 "[2] display inventory",
                 "[3] use artifact",

@@ -8,7 +8,7 @@ public class MentorView extends UsersView {
     }
 
     public void displayMenu() {
-        String[] options = {"      *** Mentor's Menu ***\n",
+        String[] options = {"\n\n      *** Mentor's Menu ***\n",
                             "[1] display profile",
                             "[2] create student",
                             "[3] assign student to group",

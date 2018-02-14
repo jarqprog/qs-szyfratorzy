@@ -22,7 +22,7 @@ public abstract class AbstractView {
     }
 
     public <T> void displayObject(T object) {
-        System.out.println(doubleTab + doubleTab + object.toString());
+        System.out.println(doubleTab + object.toString());
     }
 
     public <T> void displayObjects(List<T> objects) {
@@ -34,7 +34,7 @@ public abstract class AbstractView {
     public void displayHeaderAndElementsOfCollection(String[] collection, String header) {
         System.out.println(emptyLines + tab + header);
         for(String element : collection) {
-        System.out.println(doubleTab + element);
+        System.out.println(tab + element);
         }
     }
 
@@ -42,14 +42,14 @@ public abstract class AbstractView {
         System.out.println(emptyLines);
         int number = 0;
         for(String element : collection){
-        System.out.println(doubleTab + "[" + number + "] " + element);
+        System.out.println(tab + "[" + number + "] " + element);
         number ++;
         }
     }
 
     public void displayElementsOfCollection(String[] collection) {
         for(String element : collection){
-        System.out.println(doubleTab + element);
+        System.out.println(tab + element);
         }
     }
 

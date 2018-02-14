@@ -68,7 +68,7 @@ public abstract class Inventory extends StudentStock {
         for (Map.Entry<Artifact,Integer> entry : stock.entrySet()) {
             Artifact artifact = entry.getKey();
             Integer quantity = entry.getValue();
-            stringBuilder.append(String.format("\t\t\t\tId: %d, Artifact: %s, Quantity: %d",
+            stringBuilder.append(String.format("\tId: %d, Artifact: %s, Quantity: %d",
                     artifact.getId(), artifact.getName(), quantity));
             stringBuilder.append("\n");
         }

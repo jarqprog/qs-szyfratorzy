@@ -112,8 +112,8 @@ public class StudentController extends UserController{
     }
 
     private void showMyAttendance() {
-        view.displayMessageInNextLine("Your attendance:\n");
-        view.displayMessage(student.getAttendance().getFullDataToString());
+        view.displayMessageInNextLine("Your attendance:\n\t");
+        view.displayAttendanceWithDetails(student.getAttendance());
     }
 
     private void useTeamArtifacts() {

@@ -146,9 +146,6 @@ public class MentorController extends UserController{
             view.drawNextLine();
             view.displayArtifactMenu();
             String userChoice = view.getMenuChoice(correctChoices);
-            view.clearScreen();
-            view.displayItemWithDetails(artifact);
-            view.drawNextLine();
             switch(userChoice) {
                 case "1":
                     artifact.setName(view.getUserInput("Enter new artifact name: "));
@@ -172,7 +169,6 @@ public class MentorController extends UserController{
         view.clearScreen();
         view.displayMessageInNextLine("Artifact after changes:\n");
         view.displayItemWithDetails(artifact);
-        view.handlePause();
     }
 
     private void handleQuestEditMenu(Quest quest){
@@ -185,9 +181,6 @@ public class MentorController extends UserController{
             view.drawNextLine();
             view.displayQuestMenu();
             String userChoice = view.getMenuChoice(correctChoices);
-            view.clearScreen();
-            view.displayItemWithDetails(quest);
-            view.drawNextLine();
             switch (userChoice) {
                 case "1":
                     quest.setName(view.getUserInput("Enter new quest name: "));
@@ -211,7 +204,6 @@ public class MentorController extends UserController{
         view.clearScreen();
         view.displayMessageInNextLine("Quest after changes:\n");
         view.displayItemWithDetails(quest);
-        view.handlePause();
     }
 
     private void markStudentQuest() {

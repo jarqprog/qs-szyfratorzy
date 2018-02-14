@@ -2,7 +2,7 @@ package view;
 
 public class AdminView extends UsersView {
     public void displayMenu() {
-        String[] options = {"      *** Admin's Menu ***     \n",
+        String[] options = {"\n\n      *** Admin's Menu ***     \n",
                             "[1] display profile",
                             "[2] create mentor",
                             "[3] edit mentor",
