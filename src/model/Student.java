@@ -23,10 +23,6 @@ public class Student extends User {
         team = new Team(1, "undefined");
         group = new Group(1,"undefined");
         role = Role.STUDENT.getName();
-        id = saveNewObjectGetId();
-        attendance = new Attendance(id);
-        inventory = new StudentInventory(id);
-        studentsQuests = new StudentsQuests(id);
     }
 
     public Student(int id, String firstName, String lastName, String email,
@@ -124,6 +120,9 @@ public class Student extends User {
         return attendance;
     }
 
+    public void setAttendance(Attendance attendance) {
+        this.attendance = attendance;
+    }
 
     public void modifyWallet(int value){
         this.wallet += value;
@@ -144,10 +143,5 @@ public class Student extends User {
     public void saveObject(){
         StudentDAO dao = new StudentDAO();
         dao.saveObject(this);
-    }
-
-    public int saveNewObjectGetId(){
-        StudentDAO dao = new StudentDAO();
-        return dao.saveObjectAndGetId(this);
     }
 }
