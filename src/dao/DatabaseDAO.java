@@ -2,12 +2,11 @@ package dao;
 
 import enums.FilePath;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.io.FileNotFoundException;
 import java.io.File;
 
 public class DatabaseDAO extends DAO{
@@ -17,15 +16,6 @@ public class DatabaseDAO extends DAO{
     private final static String DATA_BASE_PATH = FilePath.DATA_BASE.getPath();
 
     protected Connection connection = null;
-
-
-    public String getSqlFilePath(){
-        return SQL_SCRIPT_PATH;
-    }
-
-    public String getDatabasePath(){
-        return DATA_BASE_PATH;
-    }
 
     public boolean isConnected(){
         if(connection == null){
@@ -74,34 +64,35 @@ public class DatabaseDAO extends DAO{
         }
     }
 
-    public void executeSqlScript(File inputFile){
-        String delimiter = ";";
-        Scanner scanner;
+    private void executeSqlScript(File inputFile) {
+        String s;
+        StringBuffer sb = new StringBuffer();
         try {
-            scanner = new Scanner(inputFile).useDelimiter(delimiter);
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-            return;
-        }
-        Statement currentStatement = null;
-        while(scanner.hasNext()) {
-            String rawStatement = scanner.next() + delimiter;
-            try {
-                currentStatement = connection.createStatement();
-                currentStatement.execute(rawStatement);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                if (currentStatement != null) {
-                    try {
-                        currentStatement.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-                currentStatement = null;
+            FileReader fr = new FileReader(inputFile);
+            BufferedReader br = new BufferedReader(fr);
+
+            while((s = br.readLine()) != null) {
+                sb.append(s);
             }
+            br.close();
+            String[] instructions = sb.toString().split(";");
+            openConnection();
+            Statement st = connection.createStatement();
+
+            for(String instruction : instructions) {
+                if(!instruction.trim().equals("")) {
+                    st.executeUpdate(instruction);
+                }
+            }
+        } catch(Exception e) {
+            System.out.println("*** Error : "+e.toString());
+            System.out.println("*** ");
+            System.out.println("*** Error : ");
+            e.printStackTrace();
+            System.out.println("################################################");
+            System.out.println(sb.toString());
+        } finally {
+            closeConnection();
         }
-        scanner.close();
     }
 }
