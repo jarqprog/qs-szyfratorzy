@@ -11,7 +11,6 @@ public class Mentor extends User {
         super(firstName, lastName, password);
         group = new Group(1,"undefined");
         role = Role.MENTOR.getName();
-        this.id = saveNewObjectGetId();
     }
 
     public Mentor(int id, String firstName, String lastName,

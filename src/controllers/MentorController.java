@@ -1,5 +1,7 @@
 package controllers;
 
+import factory.AbsFactory;
+import factory.StudentFactoryImpl;
 import model.Mentor;
 import model.Student;
 import dao.MentorDAO;
@@ -108,8 +110,9 @@ public class MentorController extends UserController{
         String firstName = view.getUserInput("Enter first name: ");
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
-        Student newStudent = new Student(firstName, lastName, password);
-        view.clearScreen();
+        Student student = AbsFactory.get(StudentFactoryImpl.class)
+          .create(firstName, lastName, password);
+
         view.displayMessageInNextLine("Student created successfully! \n");
         view.displayUserWithDetails(newStudent);
     }

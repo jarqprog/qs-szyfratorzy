@@ -12,11 +12,9 @@ public class DbManagerDAO extends DatabaseDAO {
         openConnection();
         Statement stmt;
         try {
-            connection.setAutoCommit(false);
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
             stmt.close();
-            connection.commit();
         } catch ( Exception e ){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         } finally{
@@ -28,7 +26,6 @@ public class DbManagerDAO extends DatabaseDAO {
         openConnection();
         final List<String[]> rowList = new ArrayList<>();
         try{
-            connection.setAutoCommit(false);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
