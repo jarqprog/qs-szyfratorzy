@@ -10,7 +10,7 @@ import dao.QuestDAO;
 import model.Quest;
 import view.UsersView;
 
-public abstract class  UserController{
+public abstract class  UserController implements UserCtrl{
 
     public abstract void handleMainMenu();
 
