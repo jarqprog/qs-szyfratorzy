@@ -11,8 +11,6 @@ public class SchoolView extends AbstractView{
                 " [5] delete ALL experience levels",
                 " [0] exit manager\n"};
 
-        for(String element : options) {
-            System.out.println(element);
-        }
+        displayElementsOfCollection(options);
     }
 }

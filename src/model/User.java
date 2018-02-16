@@ -95,7 +95,7 @@ public abstract class User {
     public String getFullDataToString() {
         String sign = "-";
         int signMultiplier = 100;
-        return String.format(" %s, role: %s, id: %s, email: %s\n %s",
+        return String.format("\t%s, role: %s, id: %s, email: %s\n\t%s\n",
                 getFullName(), role, id, getEmail(), DataTool.getMultipliedString(sign, signMultiplier));
     }
 
