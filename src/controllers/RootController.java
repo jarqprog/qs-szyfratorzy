@@ -83,15 +83,16 @@ public class RootController{
     }
 
     private void handleIntro(){
-        IntroOutroDAO ioDao = new IntroOutroDAO();
-        List<String> introData = ioDao.getRawDataFromFile();
+        String introFilePath = FilePath.INTRO.getPath();
+        FileDAO dao = new FileDAOImpl(introFilePath);
+        List<String> introData = dao.getData();
         view.displayIntro(introData);
     }
 
     private void handleOutro(){
-        IntroOutroDAO ioDao = new IntroOutroDAO();
-        String filePath = FilePath.OUTRO.getPath();
-        List<String> outroData = ioDao.getRawDataFromFile(filePath);
+        String outroFilePath = FilePath.OUTRO.getPath();
+        FileDAO dao = new FileDAOImpl(outroFilePath);
+        List<String> outroData = dao.getData();
         view.displayOutro(outroData);
     }
 
