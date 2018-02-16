@@ -5,7 +5,7 @@ import model.Group;
 import model.Mentor;
 import model.Student;
 import model.Team;
-import Interface.CreatableDAO;
+import dao.ActiveObjDAO;
 import enums.Table;
 import view.SchoolView;
 import view.UsersView;
@@ -146,7 +146,7 @@ public class SchoolController {
     }
 
     private static Team getDefaultTeam(){
-        CreatableDAO dao = new TeamDAO();
+        ActiveObjDAO<Team> dao = new TeamDAO();
         return dao.getObjectById(1);
     }
 

@@ -2,8 +2,8 @@ package model;
 
 import tools.DataTool;
 
-public abstract class User {
-    protected int id;
+public abstract class User extends ActiveObject {
+
     protected String firstName;
     protected String lastName;
     protected String email;
@@ -22,11 +22,6 @@ public abstract class User {
         this.lastName = lastName;
         email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@cc.com";
         this.password = password;
-    }
-
-    public int getId()
-    {
-        return id;
     }
 
     public String getFirstName()

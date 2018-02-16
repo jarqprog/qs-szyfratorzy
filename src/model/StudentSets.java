@@ -3,11 +3,10 @@ package model;
 import java.util.List;
 import java.util.ArrayList;
 
-public abstract class StudentSets {
+public abstract class StudentSets extends ActiveObject {
 
     protected String name;
     protected List<Student> students;
-    protected int id;
 
     public StudentSets(int id, String name) {
         this(name);
@@ -19,10 +18,6 @@ public abstract class StudentSets {
         this.id = -1;
         this.name = name;
         this.students = new ArrayList<>();
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName(){

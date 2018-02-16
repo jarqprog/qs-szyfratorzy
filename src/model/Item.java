@@ -3,13 +3,12 @@ package model;
 import tools.DataTool;
 
 
-public abstract class Item {
+public abstract class Item extends ActiveObject {
 
     protected char type;
     protected String name;
     protected String description;
     protected String genre;
-    protected int id;
 
     public Item(int id, String name, char type, String description){
         this(name, description);
@@ -37,10 +36,6 @@ public abstract class Item {
 
     public char getType(){
         return type;
-    }
-
-    public int getId(){
-        return id;
     }
 
     public void setType(char type){
@@ -86,5 +81,4 @@ public abstract class Item {
     }
 
     public abstract void saveObject();
-
 }
