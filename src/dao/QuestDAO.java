@@ -4,7 +4,7 @@ import enums.Table;
 import model.Quest;
 
 
-public class QuestDAO extends FactoryDAO {
+public class QuestDAO extends ActiveObjDAOImpl<Quest> {
 
     public QuestDAO(){this.DEFAULT_TABLE = Table.QUESTS.getName();}
 
@@ -26,8 +26,7 @@ public class QuestDAO extends FactoryDAO {
         return new Quest(id, itemType, itemName, itemDescription, reward, status);
     }
 
-    public <T> void saveObject(T t){
-        Quest quest = (Quest) t;
+    public void saveObject(Quest quest){
         String itemId = String.valueOf(quest.getId());
         String itemType = String.valueOf(quest.getType());
         String itemName = quest.getName();

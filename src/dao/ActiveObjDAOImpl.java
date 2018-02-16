@@ -1,51 +1,48 @@
 package dao;
 
-import Interface.CreatableDAO;
+import model.ActiveObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class FactoryDAO implements CreatableDAO {
+public abstract class ActiveObjDAOImpl<T extends ActiveObject> implements ActiveObjDAO<T> {
 
     protected String DEFAULT_TABLE;
     protected DbManagerDAO dao;
 
-    public <T> T getObjectById(int id) {
+    public T getObjectById(int id) {
         String query = "Select * from " + DEFAULT_TABLE + " WHERE id=" + id + ";";
         return getOneObject(query);
     }
 
-    public <T> List<T> getAllObjects() {
+    public List<T> getAllObjects() {
         String query = "Select * from " + DEFAULT_TABLE + ";";
         return getObjects(query);
     }
 
-    private <T> List<T> getManyObjects(List<String[]> dataCollection) {
+    private List<T> getManyObjects(List<String[]> dataCollection) {
         List<T> collection = new ArrayList<>();
         for (String [] record : dataCollection) {
-            @SuppressWarnings("unchecked")
-            T object = (T) getOneObject(record);
+            T object = getOneObject(record);
             collection.add(object);
         }
         return collection;
     }
 
-    public <T> List<T> getManyObjects(String query) {
+    public List<T> getManyObjects(String query) {
         dao = new DbManagerDAO();
         List<String[]> dataCollection = dao.getData(query);
         return getManyObjects(dataCollection);
     }
 
-    public abstract Object getOneObject(String[] data);
+    public abstract T getOneObject(String[] data);
 
-    public <T> T getOneObject(String query) {
+    public T getOneObject(String query) {
         dao = new DbManagerDAO();
         String[] record = dao.getData(query).get(0);
         try {
-            @SuppressWarnings("unchecked")
-            T object = (T) getOneObject(record);
-            return object;
+            return getOneObject(record);
         } catch(Exception e){
             System.out.println(e.getMessage());
             return null;
@@ -74,36 +71,35 @@ public abstract class FactoryDAO implements CreatableDAO {
         return null;
     }
 
-    public abstract <T> void saveObject(T t);
+    public abstract void saveObject(T t);
 
-    public <T> void saveObjects(List<T> objects) {
+    public void saveObjects(List<T> objects) {
 
         for(T object : objects) {
             saveObject(object);
         }
     }
 
-    public <T> int saveObjectAndGetId(T t){
+    public int saveObjectAndGetId(T t){
         String[] idsBefore = getCurrentIdCollection();
         saveObject(t);
         String[] idsAfter = getCurrentIdCollection();
         String id = getNewId(idsBefore, idsAfter);
         try {
-            return Integer.parseInt(id);
+            if(id != null) return Integer.parseInt(id);
         } catch(Exception ex){
             System.out.println(ex.getMessage());
-            return -1;
         }
+        return -1;
     }
 
-    private <T> List<T> getObjects(String query) {
+    private List<T> getObjects(String query) {
         DbManagerDAO dao = new DbManagerDAO();
         List<String[]> dataCollection = dao.getData(query);
         List<T> objects = new ArrayList<>();
         try {
             for (String[] record : dataCollection) {
-                @SuppressWarnings("unchecked")
-                T object = (T) getOneObject(record);
+                T object = getOneObject(record);
                 objects.add(object);
             }
             return objects;

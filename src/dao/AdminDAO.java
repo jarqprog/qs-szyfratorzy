@@ -4,7 +4,7 @@ package dao;
 import model.Admin;
 import enums.Table;
 
-public class AdminDAO extends FactoryDAO {
+public class AdminDAO extends ActiveObjDAOImpl<Admin> {
 
     private String firstName;
     private String lastName;
@@ -32,8 +32,7 @@ public class AdminDAO extends FactoryDAO {
         return new Admin(adminId, firstName, lastName, email, password);
     }
 
-    public <T> void saveObject(T t){
-        Admin admin = (Admin) t;
+    public void saveObject(Admin admin){
         String adminId = String.valueOf(admin.getId());
         firstName = admin.getFirstName();
         lastName = admin.getLastName();

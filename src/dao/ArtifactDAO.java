@@ -3,7 +3,7 @@ package dao;
 import enums.Table;
 import model.Artifact;
 
-public class ArtifactDAO extends FactoryDAO {
+public class ArtifactDAO extends ActiveObjDAOImpl<Artifact> {
 
     public ArtifactDAO(){
         this.DEFAULT_TABLE = Table.ARTIFACTS.getName();
@@ -26,8 +26,7 @@ public class ArtifactDAO extends FactoryDAO {
         return new Artifact(id, itemType, itemName, itemDescription, price);
     }
 
-    public <T> void saveObject(T t){
-        Artifact artifact = (Artifact) t;
+    public void saveObject(Artifact artifact){
         String artifactId = String.valueOf(artifact.getId());
         String itemType = String.valueOf(artifact.getType());
         String itemName = artifact.getName();
