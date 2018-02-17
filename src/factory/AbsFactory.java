@@ -5,27 +5,33 @@ public class AbsFactory {
     @SuppressWarnings("unchecked")
     public static <T extends Factory> T get(Class<T> type) {
 
-        T factory = null;
+        Factory factory = null;
         String factoryName = type.getSimpleName();
 
         switch(factoryName) {
 
             case("AdminFactoryImpl"):
-                factory = (T) new AdminFactoryImpl();
+                factory = new AdminFactoryImpl();
                 break;
             case("StudentFactoryImpl"):
-                factory = (T) new StudentFactoryImpl();
+                factory = new StudentFactoryImpl();
                 break;
             case("MentorFactoryImpl"):
-                factory = (T) new MentorFactoryImpl();
+                factory = new MentorFactoryImpl();
                 break;
             case("GroupFactoryImpl"):
-                factory = (T) new GroupFactoryImpl();
+                factory = new GroupFactoryImpl();
                 break;
             case("TeamFactoryImpl"):
-                factory = (T) new TeamFactoryImpl();
+                factory = new TeamFactoryImpl();
+                break;
+            case("QuestFactoryImpl"):
+                factory = new QuestFactoryImpl();
+                break;
+            case("ArtifactFactoryImpl"):
+                factory = new ArtifactFactoryImpl();
                 break;
         }
-        return factory;
+        return (T) factory;
     }
 }

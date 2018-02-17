@@ -1,4 +1,4 @@
-package dao;
+package factory;
 
 import controllers.*;
 import model.Admin;
@@ -8,9 +8,9 @@ import model.User;
 
 public class UserControllerFactory {
 
-    public static <T extends User> UserCtrl getController(T user) {
+    public static <T extends User> UserController getController(T user) {
 
-        UserCtrl controller = null;
+        UserController controller = null;
         String userName = user.getClass().getSimpleName();
         switch(userName) {
             case("Admin"):
