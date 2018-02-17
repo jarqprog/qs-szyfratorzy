@@ -1,6 +1,10 @@
 package controllers;
 
 import dao.*;
+import factory.AbsFactory;
+import factory.GroupFactoryImpl;
+import factory.StudentFactoryImpl;
+import factory.TeamFactoryImpl;
 import model.Group;
 import model.Mentor;
 import model.Student;
@@ -38,7 +42,7 @@ public class SchoolController {
         String chosenGroupName = "";
         while (!isMentorAssigned && !chosenGroupName.equals("0")){
             view.displayObjects(groups);
-            chosenGroupName = view.getUserInput("\nChoose group by name (or type 0 to exit): ");
+            chosenGroupName = view.getUserInput("Choose group by name (or type 0 to exit): ");
             for (Group group : groups){
                 if (chosenGroupName.equals(group.getName())){
                     mentor.setGroup(group);
@@ -47,7 +51,7 @@ public class SchoolController {
                 }
             }
             if (!isMentorAssigned && !chosenGroupName.equals("0")){
-                view.displayMessage("   - There is no such group...");
+                view.displayMessageInNextLine("- there is no such group...");
             }
         }
     }
@@ -59,21 +63,21 @@ public class SchoolController {
         String chosenGroupName = "";
         while (!isStudentAssigned && !chosenGroupName.equals("0")){
             view.displayObjects(groups);
-            chosenGroupName = view.getUserInput("\nChoose group by name (or type 0 to exit): ");
+            chosenGroupName = view.getUserInput("Choose group by name (or type 0 to exit): ");
             for (Group group : groups){
                 if (chosenGroupName.equals(group.getName())){
                     student.setGroup(group);
-                    view.displayMessage("Student moved to group: " + group.getName());
+                    view.displayMessageInNextLine("- student moved to group: " + group.getName());
                     if (student.getTeam().getId() != 1){
                         student.setTeam(getDefaultTeam());
-                        view.displayMessage("Student moved to undefined team...");
+                        view.displayMessageInNextLine("- student moved to undefined team...");
                     }
                     isStudentAssigned = true;
                     break;
                 }
             }
             if (!isStudentAssigned && !chosenGroupName.equals("0")){
-                view.displayMessage("   - There is no such group...");
+                view.displayMessageInNextLine("- there is no such group...");
             }
         }
     }
@@ -85,17 +89,17 @@ public class SchoolController {
         String chosenTeamName = "";
         while (!isStudentAssigned && !chosenTeamName.equals("0")){
             view.displayObjects(teams);
-            chosenTeamName = view.getUserInput("\nChoose team by name (or type 0 to exit): ");
+            chosenTeamName = view.getUserInput("Choose team by name (or type 0 to exit): ");
             for (Team team : teams){
                 if (chosenTeamName.equals(team.getName())){
                     student.setTeam(team);
-                    view.displayMessage("\nStudent moved to team: " + team.getName());
+                    view.displayMessageInNextLine("- student moved to team: " + team.getName());
                     isStudentAssigned = true;
                     break;
                 }
             }
             if (!isStudentAssigned && !chosenTeamName.equals("0")){
-                view.displayMessage("   - There is no such group...");
+                view.displayMessageInNextLine("- there is no such group...");
             }
         }
     }
@@ -136,7 +140,8 @@ public class SchoolController {
     public static Student pickStudentFromList(List<Student> students) {
         SchoolView view = new SchoolView();
         view.displayObjects(students);
-        String chosenStudent = view.getUserInput("\nChoose student by id: ");
+        String chosenStudent = view.getUserInput("Choose student by id: ");
+        view.drawNextLine();
         for (Student student : students){
             if (chosenStudent.equals(String.valueOf(student.getId()))){
                 return student;
@@ -153,9 +158,10 @@ public class SchoolController {
     public static Mentor getMentorByUserChoice() {
         UsersView view = new UsersView();
         List<Mentor> mentors = getAllMentors();
-        view.displayMessage("\nMentors:\n");
-        view.displayUsers(mentors);
-        String id = view.getUserInput("\nSelect mentor by id: ");
+        view.displayMessageInNextLine("Mentors:\n");
+        view.displayObjects(mentors);
+        String id = view.getUserInput("Select mentor by id: ");
+        view.drawNextLine();
         for (Mentor mentor : mentors) {
             if (id.equals(Integer.toString(mentor.getId()))) {
                 return mentor;
@@ -166,20 +172,22 @@ public class SchoolController {
 
     public static void createNewTeam(){
         boolean isDone = false;
-        String teamName = "";
+        String teamName;
         SchoolView view = new SchoolView();
         while (!isDone){
-            teamName = view.getUserInput("\nEnter team name (or 0 to exit): ");
+            view.clearScreen();
+            teamName = view.getUserInput("Enter team name (or 0 to exit): ");
             if (teamName.equals("0")){
                 isDone = true;
                 break;
             } else if (getTeamNames().contains(teamName)) {
-                view.displayMessage("   - Team already exist...");
-                continue;
+                view.displayMessageInNextLine("- Team already exist...");
             } else {
-                Team newTeam = new Team(teamName);
+                Team team = AbsFactory.get(TeamFactoryImpl.class)
+                        .create(teamName);
                 view.clearScreen();
-                view.displayMessage("\n - Team created: \n" + newTeam);
+                view.displayMessageInNextLine("- Team created: \n");
+                view.displayObject(newTeam);
                 isDone = true;
             }
         }
@@ -187,20 +195,21 @@ public class SchoolController {
 
     public static void createNewGroup(){
         boolean isDone = false;
-        String groupName = "";
+        String groupName;
         SchoolView view = new SchoolView();
         while (!isDone){
-            groupName = view.getUserInput("\nEnter group name (or 0 to exit): ");
+            view.clearScreen();
+            groupName = view.getUserInput("Enter group name (or 0 to exit): ");
             if (groupName.equals("0")){
-                isDone = true;
                 break;
             } else if (getGroupNames().contains(groupName)) {
-                view.displayMessage("   - Group already exist...");
-//                continue;
+                view.displayMessageInNextLine("- group already exist...");
             } else {
-                Group newGroup = new Group(groupName);
+                Group newGroup = AbsFactory.get(GroupFactoryImpl.class)
+                        .create(groupName);
                 view.clearScreen();
-                view.displayMessage("\n - Group created: \n" + newGroup);
+                view.displayMessageInNextLine("- group created: \n");
+                view.displayObject(newGroup);
                 isDone = true;
             }
         }
@@ -211,7 +220,8 @@ public class SchoolController {
         for (Student student : getStudentsByGroup(mentor.getGroup())){
             boolean isPresenceChecked = false;
             while (!isPresenceChecked){
-                String userInput = view.getUserInput(String.format("    - Is %s present (y/anything else): ", student.getFullName()));
+                view.clearScreen();
+                String userInput = view.getUserInput(String.format("- Is %s present (y/anything else): ", student.getFullName()));
                 boolean isPresent = userInput.equals("y");
                 student.addAttendance(isPresent);
                 isPresenceChecked = true;

@@ -9,7 +9,6 @@ public class Admin extends User {
     public Admin(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
         role = Role.ADMIN.getName();
-        this.id = saveNewObjectGetId();
     }
 
     public Admin(int id, String firstName, String lastName, String email, String password) {

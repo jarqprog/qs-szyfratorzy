@@ -7,26 +7,26 @@ public class StudentView extends UsersView {
 
     public void displayInventory(StudentInventory inventory) {
         if (inventory.getStock().isEmpty()) {
-            displayMessage("    - Your inventory is empty");
+            displayMessage("- Your inventory is empty");
         }
         else {
             displayMessage("Your Inventory: \n");
-                System.out.println(inventory);
+            displayInventoryWithDetails(inventory);
         }
     }
 
     public void displayInventory(TeamInventory inventory) {
         if (inventory.getStock().isEmpty()) {
-            displayMessage("    - Your team's inventory is empty");
+            displayMessage("- Your team's inventory is empty");
         }
         else {
             displayMessage("Your team's inventory: \n");
-            System.out.println(inventory);
+            displayInventoryWithDetails(inventory);
         }
     }
 
     public void displayMenu() {
-        String[] options = {"      *** Student's Menu ***     \n",
+        String[] options = {"\n\n      *** Student's Menu ***\n",
                 "[1] Enter to online shop",
                 "[2] display inventory",
                 "[3] use artifact",
@@ -38,10 +38,7 @@ public class StudentView extends UsersView {
                 "[9] display my attendance",
                 "[0] exit"};
 
-        for (String element : options) {
-            System.out.printf("\t%s\n", element);
-        }
-        System.out.println("\n");
+        displayElementsOfCollection(options);
     }
   
 }

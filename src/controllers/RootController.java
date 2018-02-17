@@ -1,7 +1,6 @@
 package controllers;
 
 import java.util.List;
-import java.io.Console;
 
 import dao.*;
 import enums.FilePath;
@@ -26,13 +25,19 @@ public class RootController {
         databaseDao.prepareDatabase();
         while (! shouldExit){
             handleIntro();
-            String userInput = view.displayLoginScreen("Please, choose an option: ");
+            String[] correctChoices = {"0", "1", "2"};
+            view.displayLoginScreen();
+            String userInput = view.getMenuChoice(correctChoices);
+          
             switch (userInput) {
                 case "1":
                     UserCtrl controller = loggingProcedure();
                     if (controller != null) {
                         controller.handleMainMenu();
                     }
+                    break;
+                case "2":
+                    view.displayAuthors();
                     break;
                 case "0":
                     shouldExit = true;
@@ -71,4 +76,21 @@ public class RootController {
         List<String> outroData = dao.getData();
         view.displayOutro(outroData);
     }
+
+//     private void prepareDatabase(){
+
+//         DatabaseDAO dbDAO = new DatabaseDAO();
+//         dbDAO.openConnection();
+//         boolean hasConnection = dbDAO.isConnected();
+//         if(hasConnection){
+//             view.displayMessageInNextLine("Loading database successfully\n\n");
+//             view.displayLoadingStars();
+//         }else{
+//             view.displayMessageInNextLine("Problem occured while opening database");
+//         }
+//         dbDAO.fillDatabase();
+//         dbDAO.closeConnection();
+//         view.displayMessageInNextLine("Database prepared..\n\n");
+//         view.handlePause();
+//     }
 }
