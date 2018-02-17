@@ -184,6 +184,7 @@ public class SchoolController {
             } else {
                 Team team = AbsFactory.get(TeamFactoryImpl.class)
                         .create(teamName);
+
                 view.clearScreen();
                 view.displayMessageInNextLine("- Team created: \n");
                 view.displayObject(team);

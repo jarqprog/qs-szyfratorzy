@@ -32,9 +32,9 @@ public class RootController {
           
             switch (userInput) {
                 case "1":
-                    UserCtrl controller = loggingProcedure();
+                    UserController controller = loggingProcedure();
                     if (controller != null) {
-                        controller.handleMainMenu();
+                        controller.executeMainMenu();
                     }
                     break;
                 case "2":
@@ -48,10 +48,10 @@ public class RootController {
         }
     }
 
-    private UserCtrl loggingProcedure() {
+    private UserController loggingProcedure() {
         String login = view.getLogin();
         String password = view.getPassword();
-        UserCtrl controller = null;
+        UserController controller = null;
         try {
             controller = LoginDAO.getUserControllerByLoginAndPassword(login, password);
         } catch (LoginFailure ex) {

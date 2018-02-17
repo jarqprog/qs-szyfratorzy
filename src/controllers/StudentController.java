@@ -6,7 +6,7 @@ import view.StudentView;
 import java.util.List;
 import java.util.Set;
 
-public class StudentController extends UserController{
+public class StudentController extends UserControllerImpl {
     private Student student;
     private StudentView view;
 
@@ -15,7 +15,7 @@ public class StudentController extends UserController{
         view = new StudentView();
     }
 
-    public void handleMainMenu() {
+    public void executeMainMenu() {
 
         boolean isDone = false;
         while(! isDone){

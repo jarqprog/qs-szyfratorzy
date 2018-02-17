@@ -1,5 +1,5 @@
 package controllers;
 
-public interface UserCtrl {
-    void handleMainMenu();
+public interface UserController {
+    void executeMainMenu();
 }

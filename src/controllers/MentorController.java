@@ -1,6 +1,8 @@
 package controllers;
 
 import factory.AbsFactory;
+import factory.ArtifactFactoryImpl;
+import factory.QuestFactoryImpl;
 import factory.StudentFactoryImpl;
 import model.Mentor;
 import model.Student;
@@ -13,7 +15,7 @@ import view.MentorView;
 
 import java.util.List;
 
-public class MentorController extends UserController{
+public class MentorController extends UserControllerImpl {
     MentorView view;
     Mentor mentor;
     MentorDAO dao;
@@ -24,7 +26,7 @@ public class MentorController extends UserController{
         dao = new MentorDAO();
     }
 
-    public void handleMainMenu(){
+    public void executeMainMenu() {
         boolean isDone = false;
         while(! isDone){
             String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "0"};
@@ -87,7 +89,9 @@ public class MentorController extends UserController{
         String name = view.getUserInput("Enter quest name: ");
         String description = view.getUserInput("Enter quest description: ");
         int reward = view.getItemValue();
-        Quest quest = new Quest(name, description, reward);
+        Quest quest = AbsFactory.get(QuestFactoryImpl.class)
+                                .create(name, description, reward);
+
         view.clearScreen();
         view.displayMessage("You've created something new:\n");
         view.displayItemWithDetails(quest);
@@ -121,7 +125,9 @@ public class MentorController extends UserController{
         String name = view.getUserInput("Enter artifact name: ");
         String description = view.getUserInput("Enter artifact description: ");
         int price = view.getItemValue();
-        Artifact artifact = new Artifact(name, description, price);
+        Artifact artifact = AbsFactory.get(ArtifactFactoryImpl.class)
+                                        .create(name, description, price);
+
         view.clearScreen();
         view.displayMessageInNextLine("You've created something new:\n");
         view.displayItemWithDetails(artifact);
@@ -164,7 +170,7 @@ public class MentorController extends UserController{
                     break;
                 case "0":
                     ArtifactDAO dao = new ArtifactDAO();
-                    dao.saveObject(artifact);
+                    dao.save(artifact);
                     isDone = true;
                     break;
             }
@@ -199,7 +205,7 @@ public class MentorController extends UserController{
                     break;
                 case "0":
                     QuestDAO dao = new QuestDAO();
-                    dao.saveObject(quest);
+                    dao.save(quest);
                     isDone = true;
                     break;
             }

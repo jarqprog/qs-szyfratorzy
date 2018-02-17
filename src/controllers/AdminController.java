@@ -2,13 +2,15 @@ package controllers;
 
 import java.util.List;
 
+import factory.AbsFactory;
+import factory.MentorFactoryImpl;
 import model.Admin;
 import model.Mentor;
 import model.Student;
 import dao.MentorDAO;
 import view.AdminView;
 
-public class AdminController extends UserController{
+public class AdminController extends UserControllerImpl{
 
     private Admin admin;
     private AdminView view;
@@ -18,7 +20,7 @@ public class AdminController extends UserController{
         this.view = new AdminView();
     }
 
-    public void handleMainMenu(){
+    public void executeMainMenu(){
 
         boolean isDone = false;
         while(! isDone) {
@@ -62,7 +64,8 @@ public class AdminController extends UserController{
         String firstName = view.getUserInput("Enter first name: ");
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
-        Mentor mentor = new Mentor(firstName, lastName, password);
+        Mentor mentor = AbsFactory.get(MentorFactoryImpl.class)
+                                .create(firstName, lastName, password);
         view.clearScreen();
         view.displayMessageInNextLine("Mentor created: \n");
         view.displayUserWithDetails(mentor);
@@ -102,7 +105,7 @@ public class AdminController extends UserController{
                         break;
                     case "0":
                         MentorDAO dao = new MentorDAO();
-                        dao.saveObject(mentor);
+                        dao.save(mentor);
                         isFinished = true;
                         break;
                 }
