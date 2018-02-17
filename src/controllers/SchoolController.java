@@ -179,7 +179,6 @@ public class SchoolController {
             teamName = view.getUserInput("Enter team name (or 0 to exit): ");
             if (teamName.equals("0")){
                 isDone = true;
-                break;
             } else if (getTeamNames().contains(teamName)) {
                 view.displayMessageInNextLine("- Team already exist...");
             } else {
@@ -187,7 +186,7 @@ public class SchoolController {
                         .create(teamName);
                 view.clearScreen();
                 view.displayMessageInNextLine("- Team created: \n");
-                view.displayObject(newTeam);
+                view.displayObject(team);
                 isDone = true;
             }
         }

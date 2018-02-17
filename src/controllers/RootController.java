@@ -48,10 +48,8 @@ public class RootController {
     }
 
     private UserCtrl loggingProcedure() {
-        String login = view.displayLoginScreen("Login: ");
-        Console console = System.console();
-        view.displayMessage("Please enter your password: ");
-        String password = String.valueOf(console.readPassword());
+        String login = view.getLogin();
+        String password = view.getPassword();
         UserCtrl controller = null;
         try {
             controller = LoginDAO.getUserControllerByLoginAndPassword(login, password);

@@ -11,7 +11,7 @@ import view.UsersView;
 
 public class StudentsQuestsController {
 
-    QuestView view;
+    UsersView view;
     ActiveObjDAO<Quest> dao;
 
     public void runQuestMenu(Student student){

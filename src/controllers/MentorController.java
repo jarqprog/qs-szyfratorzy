@@ -111,10 +111,10 @@ public class MentorController extends UserController{
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
         Student student = AbsFactory.get(StudentFactoryImpl.class)
-          .create(firstName, lastName, password);
+                                    .create(firstName, lastName, password);
 
         view.displayMessageInNextLine("Student created successfully! \n");
-        view.displayUserWithDetails(newStudent);
+        view.displayUserWithDetails(student);
     }
 
     private void createArtifact(){
