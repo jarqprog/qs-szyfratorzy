@@ -23,7 +23,7 @@ public class RootController {
     public void runApplication(){
         view.clearScreen();
         databaseDao.prepareDatabase();
-//        view.displayLoadingStars();
+        view.displayLoadingStars();
         while (! shouldExit){
             handleIntro();
             String[] correctChoices = {"0", "1", "2"};
