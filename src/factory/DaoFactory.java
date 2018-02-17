@@ -52,6 +52,9 @@ public class DaoFactory {
             case ("TeamInventory"):
                 dao = (T) new TeamInventoryDAO();
                 break;
+            case ("StudentsQuests"):
+                dao = (T) new StudentsQuestsDAO();
+                break;
         }
         return dao;
     }
