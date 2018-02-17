@@ -25,4 +25,10 @@ public class ShopView extends AbstractView {
         }
     }
 
+    public void displayStudentWallet(int cash) {
+        System.out.println(emptyLines);
+        System.out.println(tab + "Your cash: " + cash + " cc");
+
+    }
+
 }
