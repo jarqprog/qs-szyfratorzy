@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
-public class DbManagerDAO extends DatabaseDAO {
+public class DbManagerDAO extends DatabaseDAOImpl {
 
     public void inputData(String query){
         openConnection();
@@ -17,8 +17,8 @@ public class DbManagerDAO extends DatabaseDAO {
             stmt.close();
         } catch ( Exception e ){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-        } finally{
-            closeConnection();
+//        } finally{
+//            closeConnection();
         }
     }
 
@@ -51,8 +51,30 @@ public class DbManagerDAO extends DatabaseDAO {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             return null;
 
-        } finally {
-          closeConnection();
+//        } finally {
+//          closeConnection();
+        }
+    }
+
+    public String[] getObjectData(ResultSet resultSet) {
+        String[] objectData = new String[0];
+        try {
+            ResultSetMetaData meta = resultSet.getMetaData();
+            int colCounter = meta.getColumnCount();
+            while (resultSet.next()) {
+                List<String> columnList = new ArrayList<>();
+                for (int column = 1; column <= colCounter; ++column) {
+                    Object value = resultSet.getObject(column);
+                    columnList.add(String.valueOf(value));
+                }
+                objectData = new String[columnList.size()];
+                objectData = columnList.toArray(objectData);
+            }
+            resultSet.close();
+            return objectData;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return null;
         }
     }
 }
