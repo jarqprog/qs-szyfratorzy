@@ -1,8 +1,6 @@
 package model;
 
 import enums.Role;
-import dao.MentorDAO;
-import factory.ObjDaoFactory;
 
 public class Mentor extends User {
 
@@ -45,8 +43,4 @@ public class Mentor extends User {
         return super.getFullDataToString() + String.format(
                 "\t -group: %s\n", getGroup());
     }
-
-//    public void saveObject(){
-//        ObjDaoFactory.get(MentorDAO.class).save(this);
-//    }
 }

@@ -3,8 +3,6 @@ package model;
 
 import enums.Role;
 import controllers.ExperienceLevelsController;
-import dao.StudentDAO;
-import factory.ObjDaoFactory;
 
 public class Student extends User {
 
@@ -22,13 +20,13 @@ public class Student extends User {
         wallet = 0;
         experience = 0;
         team = new Team(1, "undefined");
-        group = new Group(1,"undefined");
+        group = new Group(1, "undefined");
         role = Role.STUDENT.getName();
     }
 
     public Student(int id, String firstName, String lastName, String email,
-                        String password, int wallet, int experience,
-                        Team team, Group group) {
+                   String password, int wallet, int experience,
+                   Team team, Group group) {
 
         super(id, firstName, lastName, email, password);
         this.wallet = wallet;
@@ -65,7 +63,7 @@ public class Student extends User {
         saveObject();
     }
 
-    public void setTeam(){
+    public void setTeam() {
         this.team.setStudents();
     }
 
@@ -75,17 +73,23 @@ public class Student extends User {
     }
 
     public void setInventory(StudentInventory inventory) {
-        this.inventory = inventory; }
+        this.inventory = inventory;
+    }
 
     public StudentsQuests getStudentsQuests() {
         studentsQuests.setStock();
-        return studentsQuests; }
+        return studentsQuests;
+    }
 
-    public void setStudentsQuests(StudentsQuests studentsQuests) { this.studentsQuests = studentsQuests; }
+    public void setStudentsQuests(StudentsQuests studentsQuests) {
+        this.studentsQuests = studentsQuests;
+    }
 
-    public void setStudentsQuests() { this.studentsQuests.setStock(); }
+    public void setStudentsQuests() {
+        this.studentsQuests.setStock();
+    }
 
-    public int getWallet(){
+    public int getWallet() {
         return wallet;
     }
 
@@ -94,7 +98,7 @@ public class Student extends User {
         saveObject();
     }
 
-    public int getExperience(){
+    public int getExperience() {
         return experience;
     }
 
@@ -108,16 +112,16 @@ public class Student extends User {
         saveObject();
     }
 
-    public void setExperienceLevel(String level, int experienceToNextLevel){
+    public void setExperienceLevel(String level, int experienceToNextLevel) {
         experienceLevel = String.format("%s (%s/%s)", level, experience, experienceToNextLevel);
     }
 
-    public String getExperienceLevel(){
+    public String getExperienceLevel() {
         new ExperienceLevelsController().setStudentExperienceLevel(this);
         return experienceLevel;
     }
 
-    public Attendance getAttendance(){
+    public Attendance getAttendance() {
         return attendance;
     }
 
@@ -125,23 +129,19 @@ public class Student extends User {
         this.attendance = attendance;
     }
 
-    public void modifyWallet(int value){
+    public void modifyWallet(int value) {
         this.wallet += value;
         saveObject();
     }
 
-    public void addAttendance(Boolean isPresent){
+    public void addAttendance(Boolean isPresent) {
         attendance.addAttendance(isPresent);
     }
 
     public String getFullDataToString() {
         return super.getFullDataToString() + String.format(
                 "\t -group: %s\n\t -team: %s\n\t -wallet: %dcc\n\t" +
-                " -level: %s\n\t -%s\n", getGroup(), getTeam(),
+                        " -level: %s\n\t -%s\n", getGroup(), getTeam(),
                 wallet, getExperienceLevel(), attendance);
     }
-
-//    public void saveObject(){
-//        ObjDaoFactory.get(StudentDAO.class).save(this);
-//    }
 }

@@ -1,6 +1,6 @@
 package model;
 
-import factory.ObjDaoFactory;
+import factory.DaoFactory;
 import view.UsersView;
 
 public abstract class AbsObject {
@@ -13,6 +13,6 @@ public abstract class AbsObject {
         view.displayObject(this);
         view.handlePause();
 
-        ObjDaoFactory.get(getClass().getSimpleName()).save(this);
+        DaoFactory.get(getClass().getSimpleName()).save(this);
     }
 }

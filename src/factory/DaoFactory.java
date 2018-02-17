@@ -4,7 +4,7 @@ import dao.*;
 import model.AbsObject;
 import view.UsersView;
 
-public class ObjDaoFactory {
+public class DaoFactory {
 
     @SuppressWarnings("unchecked")
     public static <T extends AbsObjDAO, E extends AbsObject> T get(String objectTypeName) {
