@@ -1,8 +1,6 @@
 package model;
 
 import enums.Role;
-import dao.AdminDAO;
-import factory.ObjDaoFactory;
 
 public class Admin extends User {
 
@@ -16,8 +14,4 @@ public class Admin extends User {
         super(id, firstName, lastName, email, password);
         role = Role.ADMIN.getName();
     }
-
-//    public void saveObject(){
-//        ObjDaoFactory.get(AdminDAO.class).save(this);
-//    }
 }

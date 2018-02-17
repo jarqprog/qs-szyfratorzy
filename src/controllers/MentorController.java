@@ -7,9 +7,7 @@ import factory.StudentFactoryImpl;
 import model.Mentor;
 import model.Student;
 import dao.MentorDAO;
-import dao.ArtifactDAO;
 import model.Artifact;
-import dao.QuestDAO;
 import model.Quest;
 import view.MentorView;
 
@@ -103,7 +101,7 @@ public class MentorController extends UserControllerImpl {
         String input = view.getUserInput("Enter id of quest which you would like to edit: ");
         for(Quest quest : quests) {
             if(String.valueOf(quest.getId()).equals(input)) {
-                handleQuestEditMenu(quest);
+                executeQuestEditMenu(quest);
                 break;
             }
         }
@@ -139,13 +137,13 @@ public class MentorController extends UserControllerImpl {
         String input = view.getUserInput("Enter id of artifact which you would like to edit: ");
         for(Artifact artifact : artifacts) {
             if(String.valueOf(artifact.getId()).equals(input)) {
-                handleArtifactEditMenu(artifact);
+                executeArtifactEditMenu(artifact);
                 break;
             }
         }
     }
 
-    private void handleArtifactEditMenu(Artifact artifact){
+    private void executeArtifactEditMenu(Artifact artifact){
         boolean isDone = false;
         while(! isDone){
             String[] correctChoices = {"1", "2", "3", "4", "0"};
@@ -169,8 +167,6 @@ public class MentorController extends UserControllerImpl {
                     artifact.setPrice(view.getItemValue());
                     break;
                 case "0":
-                    ArtifactDAO dao = new ArtifactDAO();
-                    dao.save(artifact);
                     isDone = true;
                     break;
             }
@@ -180,7 +176,7 @@ public class MentorController extends UserControllerImpl {
         view.displayItemWithDetails(artifact);
     }
 
-    private void handleQuestEditMenu(Quest quest){
+    private void executeQuestEditMenu(Quest quest){
         boolean isDone = false;
         while(! isDone) {
             String[] correctChoices = {"1", "2", "3", "4", "0"};
@@ -204,8 +200,6 @@ public class MentorController extends UserControllerImpl {
                     quest.setReward(view.getItemValue());
                     break;
                 case "0":
-                    QuestDAO dao = new QuestDAO();
-                    dao.save(quest);
                     isDone = true;
                     break;
             }

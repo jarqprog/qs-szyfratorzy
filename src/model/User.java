@@ -83,6 +83,4 @@ public abstract class User extends ActiveObject {
         return String.format("\t%s, role: %s, id: %s, email: %s\n\t%s\n",
                 getFullName(), role, id, getEmail(), DataTool.getMultipliedString(sign, signMultiplier));
     }
-
-//    public abstract void saveObject();
 }

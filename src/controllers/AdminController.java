@@ -104,8 +104,6 @@ public class AdminController extends UserControllerImpl{
                         SchoolController.assignMentorToGroup(mentor);
                         break;
                     case "0":
-                        MentorDAO dao = new MentorDAO();
-                        dao.save(mentor);
                         isFinished = true;
                         break;
                 }
