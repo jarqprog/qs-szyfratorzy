@@ -6,7 +6,7 @@ import dao.AttendanceDAO;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Attendance {
+public class Attendance extends PassiveObject {
 
     private int studentId;
     private Map<LocalDate, Boolean> attendance;

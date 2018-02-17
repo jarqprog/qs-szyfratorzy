@@ -84,5 +84,5 @@ public abstract class User extends ActiveObject {
                 getFullName(), role, id, getEmail(), DataTool.getMultipliedString(sign, signMultiplier));
     }
 
-    public abstract void saveObject();
+//    public abstract void saveObject();
 }

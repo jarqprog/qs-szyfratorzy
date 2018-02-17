@@ -27,7 +27,7 @@ public class Group extends StudentSets {
 
     public void saveObject(){
         GroupDAO dao = new GroupDAO();
-        dao.saveObject(this);
+        dao.save(this);
     }
 
 }

@@ -2,6 +2,7 @@ package model;
 
 import enums.Role;
 import dao.MentorDAO;
+import factory.ObjDaoFactory;
 
 public class Mentor extends User {
 
@@ -45,14 +46,7 @@ public class Mentor extends User {
                 "\t -group: %s\n", getGroup());
     }
 
-    public void saveObject(){
-        MentorDAO dao = new MentorDAO();
-        dao.saveObject(this);
-    }
-
-    public int saveNewObjectGetId(){
-        MentorDAO dao = new MentorDAO();
-        return dao.saveObjectAndGetId(this);
-    }
-
+//    public void saveObject(){
+//        ObjDaoFactory.get(MentorDAO.class).save(this);
+//    }
 }

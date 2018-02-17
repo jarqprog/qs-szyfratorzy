@@ -10,11 +10,9 @@ public class Quest extends Item {
 
     public Quest(String name, String description, int reward){
         super(name, description);
-        this.id = -1;
         this.reward = reward;
         this.type = 'B';
         this.status = QuestsStatus.AVAILABLE.getName();
-        this.id = saveNewObjectGetId();
     }
 
     public Quest(int id, char type, String name, String description, int reward, String status){
@@ -51,13 +49,8 @@ public class Quest extends Item {
         return  String.format(super.getFullDataToString() + "\n\treward: %s\n\tstatus: %s\n", reward, status);
     }
 
-    private int saveNewObjectGetId(){
-        QuestDAO dao = new QuestDAO();
-        return dao.saveObjectAndGetId(this);
-    }
-
     public void saveObject(){
         QuestDAO dao = new QuestDAO();
-        dao.saveObject(this);
+        dao.save(this);
     }
 }

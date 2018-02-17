@@ -6,7 +6,7 @@ import dao.ExperienceLevelsDAO;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class ExperienceLevels {
+public class ExperienceLevels extends PassiveObject {
 
     private Map<String, Integer> levels;
 
@@ -85,7 +85,7 @@ public class ExperienceLevels {
         return sb.toString();
     }
 
-    private void saveObject(){
+    public void saveObject(){
         if(! levels.containsValue(0)){
             levels.put("basic", 0);  // exp levels always should have level with value 0
         }

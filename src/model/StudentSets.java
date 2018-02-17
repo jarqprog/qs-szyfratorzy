@@ -1,5 +1,7 @@
 package model;
 
+import factory.ObjDaoFactory;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -52,7 +54,4 @@ public abstract class StudentSets extends ActiveObject {
         return String.format("Id: %s, name: %s, number of students: %s",
                 this.id, this.name, getStudents().size());
     }
-
-    public abstract void saveObject();
-
 }

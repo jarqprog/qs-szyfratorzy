@@ -4,6 +4,7 @@ package model;
 import enums.Role;
 import controllers.ExperienceLevelsController;
 import dao.StudentDAO;
+import factory.ObjDaoFactory;
 
 public class Student extends User {
 
@@ -140,8 +141,7 @@ public class Student extends User {
                 wallet, getExperienceLevel(), attendance);
     }
 
-    public void saveObject(){
-        StudentDAO dao = new StudentDAO();
-        dao.saveObject(this);
-    }
+//    public void saveObject(){
+//        ObjDaoFactory.get(StudentDAO.class).save(this);
+//    }
 }

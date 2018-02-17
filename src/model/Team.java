@@ -33,7 +33,7 @@ public class Team extends StudentSets {
 
     public void saveObject(){
         TeamDAO dao = new TeamDAO();
-        dao.saveObject(this);
+        dao.save(this);
     }
 
     public int size(){

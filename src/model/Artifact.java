@@ -8,11 +8,9 @@ public class Artifact extends Item {
 
     public Artifact(String name, String description, int price){
         super(name, description);
-        this.id = -1;
         this.price = price;
         this.genre = "artifact";
         this.type = 'B';
-        this.id = saveNewObjectGetId();
     }
 
     public Artifact(int id, char type, String name, String description, int price){
@@ -40,13 +38,8 @@ public class Artifact extends Item {
         return  String.format(super.getFullDataToString() + "\n\tprice: %s\n", price);
     }
 
-    private int saveNewObjectGetId(){
-        ArtifactDAO dao = new ArtifactDAO();
-        return dao.saveObjectAndGetId(this);
-    }
-
     public void saveObject(){
         ArtifactDAO dao = new ArtifactDAO();
-        dao.saveObject(this);
+        dao.save(this);
     }
 }
