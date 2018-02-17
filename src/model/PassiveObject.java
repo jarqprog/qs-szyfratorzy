@@ -2,6 +2,10 @@ package model;
 
 public abstract class PassiveObject extends AbsObject {
 
-//    public abstract void saveObject();
+    protected int ownerId;
+
+    public int getOwnerId() {
+        return ownerId;
+    }
 
 }

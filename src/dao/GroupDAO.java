@@ -2,7 +2,6 @@ package dao;
 
 import model.Group;
 import enums.Table;
-import view.UsersView;
 
 public class GroupDAO extends ActiveObjDAOImpl<Group> {
 
@@ -31,13 +30,6 @@ public class GroupDAO extends ActiveObjDAOImpl<Group> {
             query = String.format("UPDATE %s SET name='%s' " +
                     "WHERE id=%s;", DEFAULT_TABLE, name, group_id);
         }
-
-
-        UsersView view = new UsersView();
-        view.displayMessage("Jestem w group dao, próbuję zapisać: " + getClass().getSimpleName());
-        view.handlePause();
-
-
 
         dao = new DbManagerDAO();
         dao.inputData(query);

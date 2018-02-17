@@ -20,14 +20,14 @@ public class AttendanceDAO implements PassiveObjDAO<Attendance> {
         dao = new DbManagerDAO();
     }
 
-    public Map<LocalDate,Boolean> load(int studentId) {
+    public Map<LocalDate,Boolean> load(int ownerId) {
         LocalDate date;
         Boolean wasPresent;
         int DATE_INDEX = 0;
         int ATTENDANCE_INDEX = 1;
         Map<LocalDate,Boolean> attendance = new HashMap<>();
-        final String query = String.format("SELECT date, attendance FROM %s WHERE student_id=%s;",
-                ATTENDANCE_TABLE, studentId);
+        final String query = String.format("SELECT date, attendance FROM %s WHERE owner_id=%s;",
+                ATTENDANCE_TABLE, ownerId);
         List<String[]> dataCollection = dao.getData(query);
         for(String[] data : dataCollection){
             date = LocalDate.parse(data[DATE_INDEX]);
@@ -38,8 +38,8 @@ public class AttendanceDAO implements PassiveObjDAO<Attendance> {
     }
 
     public void save(Attendance attendance) {
-        int studentId = attendance.getStudentId();
-        String clearQuery = String.format("DELETE FROM %s WHERE student_id=%s;", ATTENDANCE_TABLE, studentId);
+        int ownerId = attendance.getOwnerId();
+        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;", ATTENDANCE_TABLE, ownerId);
         dao.inputData(clearQuery);
         Map<LocalDate,Boolean> datesWithAttendance = attendance.getAttendance();
         if(datesWithAttendance.size() > 0) {
@@ -56,7 +56,7 @@ public class AttendanceDAO implements PassiveObjDAO<Attendance> {
                     presence = 0;
                 }
                 String query = String.format("INSERT INTO %s VALUES(null, '%s', %s, %s);",
-                        ATTENDANCE_TABLE, date, presence, studentId);
+                        ATTENDANCE_TABLE, date, presence, ownerId);
                 dao.inputData(query);
                 index++;
             }

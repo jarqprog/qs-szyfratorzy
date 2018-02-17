@@ -12,5 +12,4 @@ public class TeamInventory extends Inventory {
     public void setStock() {
         stock = dao.load(ownerId);
     }
-
 }

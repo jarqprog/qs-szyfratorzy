@@ -8,11 +8,10 @@ import java.util.*;
 
 public class Attendance extends PassiveObject {
 
-    private int studentId;
     private Map<LocalDate, Boolean> attendance;
 
-    public Attendance(Integer studentId) {
-        this.studentId = studentId;
+    public Attendance(Integer ownerId) {
+        this.ownerId = ownerId;
         this.attendance = new HashMap<>();
     }
 
@@ -23,7 +22,7 @@ public class Attendance extends PassiveObject {
 
     public void setAttendance() {
         AttendanceDAO dao = new AttendanceDAO();
-        this.attendance = dao.load(studentId);
+        this.attendance = dao.load(ownerId);
     }
 
     public void clearAttendance() {
@@ -49,10 +48,6 @@ public class Attendance extends PassiveObject {
     public Map<LocalDate, Boolean> getUpdatedAttendance() {
         setAttendance();
         return this.attendance;
-    }
-
-    public int getStudentId() {
-        return studentId;
     }
 
     public String getPercentageAttendance() {

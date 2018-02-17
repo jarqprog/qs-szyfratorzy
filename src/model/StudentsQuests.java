@@ -6,10 +6,9 @@ import java.util.Map;
 
 import dao.StudentsQuestsDAO;
 
-
 public class StudentsQuests extends StudentStock {
 
-    Map<Quest,LocalDate> stock;
+    private Map<Quest,LocalDate> stock;
 
     public StudentsQuests(int ownerId) {
         super(ownerId);
