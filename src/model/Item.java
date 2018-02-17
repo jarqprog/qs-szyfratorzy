@@ -84,6 +84,4 @@ public abstract class Item extends ActiveObject {
         return  String.format("\tid: %s\n\ttype: %s\n\tname: %s\n\tdescription: %s", id,
                 type, name, description);
     }
-
-    public abstract void saveObject();
 }

@@ -1,5 +1,6 @@
 package model;
 
+import factory.DaoFactory;
 import tools.DataTool;
 import dao.ExperienceLevelsDAO;
 
@@ -85,11 +86,12 @@ public class ExperienceLevels extends PassiveObject {
         return sb.toString();
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
     public void saveObject(){
         if(! levels.containsValue(0)){
             levels.put("basic", 0);  // exp levels always should have level with value 0
         }
-        ExperienceLevelsDAO dao = new ExperienceLevelsDAO();
-        dao.save(this);
+        DaoFactory.get(getClass().getSimpleName()).save(this);
     }
 }

@@ -1,7 +1,5 @@
 package model;
 
-import dao.ArtifactDAO;
-
 public class Artifact extends Item {
 
     private int price;
@@ -36,10 +34,5 @@ public class Artifact extends Item {
 
     public String getFullDataToString() {
         return  String.format(super.getFullDataToString() + "\n\tprice: %s\n", price);
-    }
-
-    public void saveObject(){
-        ArtifactDAO dao = new ArtifactDAO();
-        dao.save(this);
     }
 }

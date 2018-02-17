@@ -1,7 +1,6 @@
 package model;
 
 import enums.QuestsStatus;
-import dao.QuestDAO;
 
 public class Quest extends Item {
 
@@ -47,10 +46,5 @@ public class Quest extends Item {
 
     public String getFullDataToString() {
         return  String.format(super.getFullDataToString() + "\n\treward: %s\n\tstatus: %s\n", reward, status);
-    }
-
-    public void saveObject(){
-        QuestDAO dao = new QuestDAO();
-        dao.save(this);
     }
 }

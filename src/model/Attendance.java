@@ -102,9 +102,4 @@ public class Attendance extends PassiveObject {
         }
         return sb.toString();
     }
-
-    public void saveObject() {
-        AttendanceDAO dao = new AttendanceDAO();
-        dao.save(this);
-    }
 }
