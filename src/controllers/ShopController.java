@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import model.StudentInventory;
 import model.TeamInventory;
@@ -64,6 +65,7 @@ public class ShopController {
         while (id != 0) {
             view.clearScreen();
             view.displayListOfArtifacts(getArtifactsByType('B'));
+            view.displayStudentWallet(student.getWallet());
             id = view.getIntegerFromUser("Enter artifact id or 0 to exit shop: ");
             for (Artifact artifact : shop.getStore()) {
                 if (id == artifact.getId() && Objects.equals(artifact.getType(), 'B')) {
@@ -112,11 +114,12 @@ public class ShopController {
         while (id != 0) {
             view.clearScreen();
             view.displayListOfArtifacts(getArtifactsByType('M'));
+            view.displayStudentWallet(student.getWallet());
             id = view.getIntegerFromUser("Enter artifact id or 0 to exit shop: ");
             for (Artifact artifact : shop.getStore()) {
                 if (id == artifact.getId() && Objects.equals(artifact.getType(), 'M')) {
-                    if (checkTeamResources(artifact, student.getTeam())) {
-                        chargeTeamMembers(artifact, student.getTeam());
+                    if (checkTeamResources(artifact)) {
+                        chargeTeamMembers(artifact);
                         finalizeTeamTransaction(artifact);
                         view.displayMessageInNextLine("- You've bought " + artifact.getName() + "!\n");
                         view.displayObject(artifact);
@@ -132,10 +135,10 @@ public class ShopController {
         view.displayMessageInNextLine("Thank You for Your visit!");
     }
 
-    private boolean checkTeamResources(Artifact artifact, Team team) {
-
-        int pricePerTeamMember = artifact.getPrice() / team.getStudents().size();
-        for (Student student : team.getStudents()) {
+    private boolean checkTeamResources(Artifact artifact) {
+        List<Student> teamMates = student.getTeam().getStudents();
+        int pricePerTeamMember = artifact.getPrice() / teamMates.size();
+        for (Student student : teamMates) {
             if (student.getWallet() < pricePerTeamMember) {
                 return false;
             }
@@ -143,10 +146,21 @@ public class ShopController {
         return true;
     }
 
-    private void chargeTeamMembers(Artifact artifact, Team team) {
+    private void chargeTeamMembers(Artifact artifact) {
 
-        for (Student student : team.getStudents()) {
-            student.setWallet(student.getWallet() - (artifact.getPrice() / team.getStudents().size()));
+        List<Student> allTeam = student.getTeam().getStudents();
+        int price = artifact.getPrice() / allTeam.size();
+        student.setWallet(student.getWallet() - price); // student pays his part
+
+        int studentId = student.getId();
+        List<Student> teamMates = student.getTeam().getStudents().stream() // teamMates pay
+                                    .filter(s -> s.getId() != studentId)
+                                    .collect(Collectors.toList());
+
+        for (Student mate : teamMates) {
+            view.displayMessage(String.valueOf(price));
+            view.handlePause();
+            mate.setWallet(mate.getWallet() - price);
         }
     }
 

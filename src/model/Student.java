@@ -102,13 +102,8 @@ public class Student extends User {
         return experience;
     }
 
-    public void setExperience(int experience) {
-        this.experience = experience;
-        saveObject();
-    }
-
-    public void incrementExperience(int pointsToAdd) {
-        this.experience += pointsToAdd;
+    public void setExperience(int value) {
+        this.experience = value;
         saveObject();
     }
 
@@ -129,11 +124,6 @@ public class Student extends User {
         this.attendance = attendance;
     }
 
-    public void modifyWallet(int value) {
-        this.wallet += value;
-        saveObject();
-    }
-
     public void addAttendance(Boolean isPresent) {
         attendance.addAttendance(isPresent);
     }
@@ -142,6 +132,6 @@ public class Student extends User {
         return super.getFullDataToString() + String.format(
                 "\t -group: %s\n\t -team: %s\n\t -wallet: %dcc\n\t" +
                         " -level: %s\n\t -%s\n", getGroup(), getTeam(),
-                wallet, getExperienceLevel(), attendance);
+                getWallet(), getExperienceLevel(), attendance);
     }
 }
