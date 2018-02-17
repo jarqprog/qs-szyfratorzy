@@ -26,7 +26,7 @@ public class QuestDAO extends ActiveObjDAOImpl<Quest> {
         return new Quest(id, itemType, itemName, itemDescription, reward, status);
     }
 
-    public void saveObject(Quest quest){
+    public void save(Quest quest){
         String itemId = String.valueOf(quest.getId());
         String itemType = String.valueOf(quest.getType());
         String itemName = quest.getName();

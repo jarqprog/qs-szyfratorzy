@@ -55,7 +55,7 @@ public class StudentDAO extends ActiveObjDAOImpl<Student> {
                 team, group);
     }
 
-    public void saveObject(Student student){
+    public void save(Student student){
         String studentId = String.valueOf(student.getId());
         firstName = student.getFirstName();
         lastName = student.getLastName();

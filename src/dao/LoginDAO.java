@@ -3,6 +3,8 @@ package dao;
 import controllers.*;
 import enums.Table;
 import exceptions.LoginFailure;
+import factory.ConnectionFactory;
+import factory.UserControllerFactory;
 import model.User;
 
 import java.sql.Connection;
@@ -12,7 +14,7 @@ import java.sql.SQLException;
 
 public class LoginDAO {
 
-    public static UserCtrl getUserControllerByLoginAndPassword(String login, String password) throws LoginFailure {
+    public static UserController getUserControllerByLoginAndPassword(String login, String password) throws LoginFailure {
         User user;
         DbManagerDAO dao = new DbManagerDAO();
         Connection connection = ConnectionFactory.getConnection();

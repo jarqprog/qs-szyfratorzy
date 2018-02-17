@@ -32,7 +32,7 @@ public class AdminDAO extends ActiveObjDAOImpl<Admin> {
         return new Admin(adminId, firstName, lastName, email, password);
     }
 
-    public void saveObject(Admin admin){
+    public void save(Admin admin){
         String adminId = String.valueOf(admin.getId());
         firstName = admin.getFirstName();
         lastName = admin.getLastName();

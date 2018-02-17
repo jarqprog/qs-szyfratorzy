@@ -19,7 +19,7 @@ public class GroupDAO extends ActiveObjDAOImpl<Group> {
         return new Group(id, name);
     }
 
-    public void saveObject(Group group){
+    public void save(Group group){
         String group_id = String.valueOf(group.getId());
         String name = group.getName();
         String query;

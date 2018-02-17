@@ -49,40 +49,18 @@ public abstract class ActiveObjDAOImpl<T extends ActiveObject> implements Active
         }
     }
 
-    private String[] getCurrentIdCollection() {
-        final String query = String.format("SELECT id FROM %s;", this.DEFAULT_TABLE);
-        int idIndex = 0;
-        DbManagerDAO dao = new DbManagerDAO();
-        List<String[]> currentIdsCollection = dao.getData(query);
-        String[] currentIds = new String[currentIdsCollection.size()];
-        for (int i = 0; i < currentIdsCollection.size(); i++) {
-            currentIds[i] = currentIdsCollection.get(i)[idIndex];
-        }
-        return currentIds;
-    }
-
-    private String getNewId(String[] oldIdCollection, String[] newIdCollection){
-        for(String id : newIdCollection){
-            // compare collections: old collection doesn't contain new id:
-            if(! Arrays.asList(oldIdCollection).contains(id)){
-                return id;
-            }
-        }
-        return null;
-    }
-
-    public abstract void saveObject(T t);
+    public abstract void save(T t);
 
     public void saveObjects(List<T> objects) {
 
         for(T object : objects) {
-            saveObject(object);
+            save(object);
         }
     }
 
     public int saveObjectAndGetId(T t){
         String[] idsBefore = getCurrentIdCollection();
-        saveObject(t);
+        save(t);
         String[] idsAfter = getCurrentIdCollection();
         String id = getNewId(idsBefore, idsAfter);
         try {
@@ -107,5 +85,27 @@ public abstract class ActiveObjDAOImpl<T extends ActiveObject> implements Active
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             return null;
         }
+    }
+
+    private String[] getCurrentIdCollection() {
+        final String query = String.format("SELECT id FROM %s;", this.DEFAULT_TABLE);
+        int idIndex = 0;
+        DbManagerDAO dao = new DbManagerDAO();
+        List<String[]> currentIdsCollection = dao.getData(query);
+        String[] currentIds = new String[currentIdsCollection.size()];
+        for (int i = 0; i < currentIdsCollection.size(); i++) {
+            currentIds[i] = currentIdsCollection.get(i)[idIndex];
+        }
+        return currentIds;
+    }
+
+    private String getNewId(String[] oldIdCollection, String[] newIdCollection){
+        for(String id : newIdCollection){
+            // compare collections: old collection doesn't contain new id:
+            if(! Arrays.asList(oldIdCollection).contains(id)){
+                return id;
+            }
+        }
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import enums.Table;
+import model.Attendance;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class AttendanceDAO {
+public class AttendanceDAO implements PassiveObjDAO<Attendance> {
 
     private String ATTENDANCE_TABLE;
     private DbManagerDAO dao;
@@ -36,7 +37,7 @@ public class AttendanceDAO {
         return attendance;
     }
 
-    public void save(model.Attendance attendance) {
+    public void save(Attendance attendance) {
         int studentId = attendance.getStudentId();
         String clearQuery = String.format("DELETE FROM %s WHERE student_id=%s;", ATTENDANCE_TABLE, studentId);
         dao.inputData(clearQuery);

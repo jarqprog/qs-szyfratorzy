@@ -22,7 +22,7 @@ public class TeamDAO extends ActiveObjDAOImpl<Team> {
         return new Team(id, name);
     }
 
-    public void saveObject(Team team){
+    public void save(Team team){
         String teamId = String.valueOf(team.getId());
         name = team.getName();
         String query;

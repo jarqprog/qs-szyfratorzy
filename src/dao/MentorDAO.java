@@ -39,7 +39,7 @@ public class MentorDAO extends ActiveObjDAOImpl<Mentor> {
         return new Mentor(mentorId, firstName, lastName, email, password, group);
     }
 
-    public void saveObject(Mentor mentor){
+    public void save(Mentor mentor){
         String mentorId = String.valueOf(mentor.getId());
         firstName = mentor.getFirstName();
         lastName = mentor.getLastName();

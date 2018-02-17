@@ -26,7 +26,7 @@ public class ArtifactDAO extends ActiveObjDAOImpl<Artifact> {
         return new Artifact(id, itemType, itemName, itemDescription, price);
     }
 
-    public void saveObject(Artifact artifact){
+    public void save(Artifact artifact){
         String artifactId = String.valueOf(artifact.getId());
         String itemType = String.valueOf(artifact.getType());
         String itemName = artifact.getName();
