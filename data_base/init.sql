@@ -100,8 +100,8 @@ CREATE TABLE IF NOT EXISTS attendance(
   id integer PRIMARY KEY AUTOINCREMENT,
   date text,
   attendance int,
-  student_id int,
-  FOREIGN KEY (student_id) REFERENCES students(id));
+  owner_id int,
+  FOREIGN KEY (owner_id) REFERENCES students(id));
 
 
   INSERT OR IGNORE INTO groups VALUES(1,'undefined');
