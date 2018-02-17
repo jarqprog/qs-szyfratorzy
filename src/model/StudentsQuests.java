@@ -66,11 +66,6 @@ public class StudentsQuests extends StudentStock {
         return stringBuilder.toString();
     }
 
-    public void saveObject () {
-        StudentsQuestsDAO dao = new StudentsQuestsDAO();
-        dao.save(this);
-    }
-
     public boolean isEmpty () {
         return stock.size() == 0;
     }

@@ -1,7 +1,5 @@
 package model;
 
-import factory.ObjDaoFactory;
-
 import java.util.List;
 import java.util.ArrayList;
 

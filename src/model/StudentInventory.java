@@ -13,9 +13,4 @@ public class StudentInventory extends Inventory {
     public void setStock() {
         stock = dao.load(ownerId);
     }
-
-    protected void saveObject () {
-        dao.save(this);
-    }
-
 }

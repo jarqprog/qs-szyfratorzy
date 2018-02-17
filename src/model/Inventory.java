@@ -79,8 +79,6 @@ public abstract class Inventory extends StudentStock {
         return stock.size() == 0;
     }
 
-    protected abstract void saveObject();
-
     public abstract void setStock();
 
 }

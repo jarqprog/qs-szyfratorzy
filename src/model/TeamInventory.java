@@ -13,7 +13,4 @@ public class TeamInventory extends Inventory {
         stock = dao.load(ownerId);
     }
 
-    protected void saveObject () {
-        dao.save(this);
-    }
 }

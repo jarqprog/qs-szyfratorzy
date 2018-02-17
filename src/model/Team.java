@@ -1,6 +1,5 @@
 package model;
 
-import dao.TeamDAO;
 import dao.StudentDAO;
 
 public class Team extends StudentSets {
@@ -29,11 +28,6 @@ public class Team extends StudentSets {
         StudentDAO dao = new StudentDAO();
         final String query = String.format("SELECT * FROM students WHERE team_id=%s;", id);
         this.students = dao.getManyObjects(query);
-    }
-
-    public void saveObject(){
-        TeamDAO dao = new TeamDAO();
-        dao.save(this);
     }
 
     public int size(){
