@@ -67,5 +67,7 @@ public class RootView extends AbstractView {
             handleDelay(pauseInMiliseconds);
         }
         System.out.println(emptyLines);
+        displayMessage("System is ready to use...");
+        handlePause();
     }
 }

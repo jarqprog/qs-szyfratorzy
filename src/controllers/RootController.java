@@ -23,6 +23,7 @@ public class RootController {
     public void runApplication(){
         view.clearScreen();
         databaseDao.prepareDatabase();
+        view.displayLoadingStars();
         while (! shouldExit){
             handleIntro();
             String[] correctChoices = {"0", "1", "2"};
@@ -74,21 +75,4 @@ public class RootController {
         List<String> outroData = dao.getData();
         view.displayOutro(outroData);
     }
-
-//     private void prepareDatabase(){
-
-//         DatabaseDAO dbDAO = new DatabaseDAO();
-//         dbDAO.openConnection();
-//         boolean hasConnection = dbDAO.isConnected();
-//         if(hasConnection){
-//             view.displayMessageInNextLine("Loading database successfully\n\n");
-//             view.displayLoadingStars();
-//         }else{
-//             view.displayMessageInNextLine("Problem occured while opening database");
-//         }
-//         dbDAO.fillDatabase();
-//         dbDAO.closeConnection();
-//         view.displayMessageInNextLine("Database prepared..\n\n");
-//         view.handlePause();
-//     }
 }
