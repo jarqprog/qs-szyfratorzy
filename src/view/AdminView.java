@@ -2,7 +2,7 @@ package view;
 
 public class AdminView extends UsersView {
     public void displayMenu() {
-        String[] options = {"      *** Admin's Menu ***     \n",
+        String[] options = {"\n\n      *** Admin's Menu ***     \n",
                             "[1] display profile",
                             "[2] create mentor",
                             "[3] edit mentor",
@@ -12,22 +12,18 @@ public class AdminView extends UsersView {
                             "[7] manage experience levels",
                             "[0] exit\n"};
 
-        for(String element : options) {
-            System.out.println(element);
-        }
+        displayElementsOfCollection(options);
     }
 
     public void displayEditMenu() {
         String[] options = {"      *** Mentor Editor ***     \n",
-                            "[1] edit first name",
-                            "[2] edit last name",
-                            "[3] edit password",
-                            "[4] edit email",
-                            "[5] edit group",
-                            "[0] exit\n"};
+                "[1] edit first name",
+                "[2] edit last name",
+                "[3] edit password",
+                "[4] edit email",
+                "[5] edit group",
+                "[0] exit\n"};
 
-        for(String element : options) {
-            System.out.println(element);
-        }
+        displayElementsOfCollection(options);
     }
 }

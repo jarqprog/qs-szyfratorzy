@@ -10,14 +10,9 @@ import dao.QuestDAO;
 import model.Quest;
 import view.UsersView;
 
-public abstract class  UserController{
+public abstract class  UserController implements UserCtrl{
 
     public abstract void handleMainMenu();
-
-    protected void showUsers(String[] users){
-        UsersView view = new UsersView();
-        view.displayUsers(users);
-    }
 
     protected <T extends User> void showProfile(T user){
         UsersView view = new UsersView();

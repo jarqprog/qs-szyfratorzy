@@ -24,8 +24,7 @@ public abstract class User extends ActiveObject {
         this.password = password;
     }
 
-    public String getFirstName()
-    {
+    public String getFirstName() {
         return firstName;
     }
 
@@ -34,8 +33,7 @@ public abstract class User extends ActiveObject {
         saveObject();
     }
 
-    public String getLastName()
-    {
+    public String getLastName() {
         return lastName;
     }
 
@@ -48,8 +46,7 @@ public abstract class User extends ActiveObject {
         saveObject();
     }
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
@@ -58,8 +55,7 @@ public abstract class User extends ActiveObject {
         saveObject();
     }
 
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
@@ -68,13 +64,11 @@ public abstract class User extends ActiveObject {
         saveObject();
     }
 
-    public String getRole()
-    {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(String role)
-    {
+    public void setRole(String role) {
         this.role = role;
     }
 
@@ -86,7 +80,7 @@ public abstract class User extends ActiveObject {
     public String getFullDataToString() {
         String sign = "-";
         int signMultiplier = 100;
-        return String.format(" %s, role: %s, id: %s, email: %s\n %s",
+        return String.format("\t%s, role: %s, id: %s, email: %s\n\t%s\n",
                 getFullName(), role, id, getEmail(), DataTool.getMultipliedString(sign, signMultiplier));
     }
 

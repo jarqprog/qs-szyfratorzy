@@ -14,8 +14,6 @@ public class Team extends StudentSets {
 
     public Team(String name) {
         super(name);
-        this.id = saveNewObjectGetId();
-        inventory = new TeamInventory(id);
     }
 
     public TeamInventory getInventory() {
@@ -25,11 +23,6 @@ public class Team extends StudentSets {
 
     public void setInventory(TeamInventory inventory) {
         this.inventory = inventory;
-    }
-
-    public int saveNewObjectGetId(){
-        TeamDAO dao = new TeamDAO();
-        return dao.saveObjectAndGetId(this);
     }
 
     public void setStudents() {
