@@ -2,8 +2,8 @@ package model;
 
 import tools.DataTool;
 
-public abstract class User {
-    protected int id;
+public abstract class User extends ActiveObject {
+
     protected String firstName;
     protected String lastName;
     protected String email;
@@ -24,17 +24,7 @@ public abstract class User {
         this.password = password;
     }
 
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFirstName()
-    {
+    public String getFirstName() {
         return firstName;
     }
 
@@ -43,8 +33,7 @@ public abstract class User {
         saveObject();
     }
 
-    public String getLastName()
-    {
+    public String getLastName() {
         return lastName;
     }
 
@@ -57,8 +46,7 @@ public abstract class User {
         saveObject();
     }
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
@@ -67,8 +55,7 @@ public abstract class User {
         saveObject();
     }
 
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
@@ -77,13 +64,11 @@ public abstract class User {
         saveObject();
     }
 
-    public String getRole()
-    {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(String role)
-    {
+    public void setRole(String role) {
         this.role = role;
     }
 

@@ -1,6 +1,5 @@
 package dao;
 
-import Interface.CreatableDAO;
 import enums.Table;
 import model.Quest;
 import model.StudentsQuests;
@@ -14,7 +13,7 @@ import java.util.Set;
 public class StudentsQuestsDAO {
 
     private String STUDENTS_QUESTS_TABLE;
-    private CreatableDAO questDao;
+    private ActiveObjDAO<Quest> questDao;
     private DbManagerDAO dataBaseDao;
 
     public StudentsQuestsDAO() {

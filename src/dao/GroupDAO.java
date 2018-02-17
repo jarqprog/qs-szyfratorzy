@@ -3,7 +3,7 @@ package dao;
 import model.Group;
 import enums.Table;
 
-public class GroupDAO extends FactoryDAO {
+public class GroupDAO extends ActiveObjDAOImpl<Group> {
 
     public GroupDAO(){
         this.DEFAULT_TABLE = Table.GROUPS.getName();
@@ -19,8 +19,7 @@ public class GroupDAO extends FactoryDAO {
         return new Group(id, name);
     }
 
-    public <T> void saveObject(T t){
-        Group group = (Group) t;
+    public void saveObject(Group group){
         String group_id = String.valueOf(group.getId());
         String name = group.getName();
         String query;

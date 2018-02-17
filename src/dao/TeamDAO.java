@@ -3,7 +3,7 @@ package dao;
 import enums.Table;
 import model.Team;
 
-public class TeamDAO extends FactoryDAO {
+public class TeamDAO extends ActiveObjDAOImpl<Team> {
 
     private String name;
 
@@ -22,8 +22,7 @@ public class TeamDAO extends FactoryDAO {
         return new Team(id, name);
     }
 
-    public <T> void saveObject(T t){
-        Team team = (Team) t;
+    public void saveObject(Team team){
         String teamId = String.valueOf(team.getId());
         name = team.getName();
         String query;

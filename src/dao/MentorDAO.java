@@ -4,7 +4,7 @@ import model.Mentor;
 import enums.Table;
 import model.Group;
 
-public class MentorDAO extends FactoryDAO {
+public class MentorDAO extends ActiveObjDAOImpl<Mentor> {
 
     private String firstName;
     private String lastName;
@@ -39,8 +39,7 @@ public class MentorDAO extends FactoryDAO {
         return new Mentor(mentorId, firstName, lastName, email, password, group);
     }
 
-    public <T> void saveObject(T t){
-        Mentor mentor = (Mentor) t;
+    public void saveObject(Mentor mentor){
         String mentorId = String.valueOf(mentor.getId());
         firstName = mentor.getFirstName();
         lastName = mentor.getLastName();

@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.List;
 
-import Interface.CreatableDAO;
+import dao.ActiveObjDAO;
 import dao.QuestDAO;
 import model.Quest;
 import model.Student;
@@ -11,9 +11,8 @@ import view.UsersView;
 
 public class StudentsQuestsController {
 
-    UsersView view;
-    CreatableDAO dao;
-
+    QuestView view;
+    ActiveObjDAO<Quest> dao;
 
     public void runQuestMenu(Student student){
 

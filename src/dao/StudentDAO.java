@@ -5,7 +5,7 @@ import model.Student;
 import model.Team;
 import enums.Table;
 
-public class StudentDAO extends FactoryDAO {
+public class StudentDAO extends ActiveObjDAOImpl<Student> {
 
     private String firstName;
     private String lastName;
@@ -55,8 +55,7 @@ public class StudentDAO extends FactoryDAO {
                 team, group);
     }
 
-    public <T> void saveObject(T t){
-        Student student = (Student) t;
+    public void saveObject(Student student){
         String studentId = String.valueOf(student.getId());
         firstName = student.getFirstName();
         lastName = student.getLastName();
