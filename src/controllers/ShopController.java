@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -11,7 +10,6 @@ import model.Shop;
 import view.ShopView;
 import dao.ArtifactDAO;
 import model.Artifact;
-import model.Team;
 import model.Student;
 
 public class ShopController {
@@ -147,32 +145,18 @@ public class ShopController {
     }
 
     private void chargeTeamMembers(Artifact artifact) {
-
         List<Student> allTeam = student.getTeam().getStudents();
         int price = artifact.getPrice() / allTeam.size();
         student.setWallet(student.getWallet() - price); // student pays his part
-
         int studentId = student.getId();
-        List<Student> teamMates = student.getTeam().getStudents().stream() // teamMates pay
-                                    .filter(s -> s.getId() != studentId)
-                                    .collect(Collectors.toList());
-
-        for (Student mate : teamMates) {
-            view.displayMessage(String.valueOf(price));
-            view.handlePause();
-            mate.setWallet(mate.getWallet() - price);
-        }
+        allTeam.stream() // teamMates pay
+                .filter(s -> s.getId() != studentId)
+                .forEach(s -> s.setWallet(s.getWallet() - price));
     }
 
     private List<Artifact> getArtifactsByType(char type) {
-
-        List<Artifact> artifacts = new ArrayList<>();
-        for(Artifact artifact : shop.getStore()){
-            if(Objects.equals(artifact.getType(), type)) {
-                artifacts.add(artifact);
-            }
-        }
-        return artifacts;
+        return shop.getStore().stream().filter(a -> Objects.equals(a.getType(), type))
+                                .collect(Collectors.toList());
     }
 }
 

@@ -3,7 +3,6 @@ package controllers;
 import dao.*;
 import factory.AbsFactory;
 import factory.GroupFactoryImpl;
-import factory.StudentFactoryImpl;
 import factory.TeamFactoryImpl;
 import model.Group;
 import model.Mentor;
@@ -140,14 +139,12 @@ public class SchoolController {
     public static Student pickStudentFromList(List<Student> students) {
         SchoolView view = new SchoolView();
         view.displayObjects(students);
-        String chosenStudent = view.getUserInput("Choose student by id: ");
+        String id = view.getUserInput("Choose student by id: ");
         view.drawNextLine();
-        for (Student student : students){
-            if (chosenStudent.equals(String.valueOf(student.getId()))){
-                return student;
-            }
-        }
-        return null;
+        return students.stream()
+                .filter(s -> String.valueOf(s.getId()).equals(id))
+                .findAny()
+                .orElse(null);
     }
 
     private static Team getDefaultTeam(){
@@ -162,12 +159,10 @@ public class SchoolController {
         view.displayObjects(mentors);
         String id = view.getUserInput("Select mentor by id: ");
         view.drawNextLine();
-        for (Mentor mentor : mentors) {
-            if (id.equals(Integer.toString(mentor.getId()))) {
-                return mentor;
-            }
-        }
-        return null;
+        return mentors.stream()
+                .filter(m -> String.valueOf(m.getId()).equals(id))
+                .findAny()
+                .orElse(null);
     }
 
     public static void createNewTeam(){

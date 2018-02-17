@@ -213,10 +213,6 @@ public class MentorController extends UserControllerImpl {
         executeNotImplementedInfo();
     }
 
-    private void displayStudentWallet() {
-        executeNotImplementedInfo();
-    }
-
     private void markStudentArtifacts() {
         executeNotImplementedInfo();
     }
