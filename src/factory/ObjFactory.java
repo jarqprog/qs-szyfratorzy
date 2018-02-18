@@ -1,4 +1,6 @@
 package factory;
 
-public interface Factory {
+
+public interface ObjFactory {
+    // Marker interface
 }
