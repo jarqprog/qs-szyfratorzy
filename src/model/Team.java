@@ -11,7 +11,7 @@ public class Team extends StudentSets {
         inventory = new TeamInventory(id);
     }
 
-    public Team(String name) {
+    Team(String name) {
         super(name);
     }
 

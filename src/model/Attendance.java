@@ -10,7 +10,7 @@ public class Attendance extends PassiveObject {
 
     private Map<LocalDate, Boolean> attendance;
 
-    public Attendance(Integer ownerId) {
+    Attendance(Integer ownerId) {
         this.ownerId = ownerId;
         this.attendance = new HashMap<>();
     }

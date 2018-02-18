@@ -7,7 +7,7 @@ import dao.DbManagerDAO;
 import enums.FilePath;
 import model.Student;
 import view.SchoolView;
-import factory.ObjectFactory;
+import factory.AbsObjectFactory;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class ExperienceLevelsController {
 
     public ExperienceLevels getExperienceLevels() {
         if (experienceLevels == null){
-            return ObjectFactory.get(ExpLevelsFactoryImpl.class).create();
+            return AbsObjectFactory.get(ExpLevelsFactoryImpl.class).create();
         }
         return experienceLevels;
     }

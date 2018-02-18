@@ -8,7 +8,7 @@ public class Group extends StudentSets {
         super(id, name);
     }
 
-    public Group(String name) {
+    Group(String name) {
         super(name);
     }
 

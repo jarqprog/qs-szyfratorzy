@@ -7,7 +7,7 @@ public class Quest extends Item {
     private int reward;
     private String status;
 
-    public Quest(String name, String description, int reward){
+    Quest(String name, String description, int reward){
         super(name, description);
         this.reward = reward;
         this.type = 'B';

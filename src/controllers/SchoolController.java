@@ -1,7 +1,7 @@
 package controllers;
 
 import dao.*;
-import factory.ObjectFactory;
+import factory.AbsObjectFactory;
 import model.GroupFactoryImpl;
 import model.TeamFactoryImpl;
 import model.Group;
@@ -177,7 +177,7 @@ public class SchoolController {
             } else if (getTeamNames().contains(teamName)) {
                 view.displayMessageInNextLine("- Team already exist...");
             } else {
-                Team team = ObjectFactory.get(TeamFactoryImpl.class)
+                Team team = AbsObjectFactory.get(TeamFactoryImpl.class)
                         .create(teamName);
 
                 view.clearScreen();
@@ -200,7 +200,7 @@ public class SchoolController {
             } else if (getGroupNames().contains(groupName)) {
                 view.displayMessageInNextLine("- group already exist...");
             } else {
-                Group newGroup = ObjectFactory.get(GroupFactoryImpl.class)
+                Group newGroup = AbsObjectFactory.get(GroupFactoryImpl.class)
                         .create(groupName);
                 view.clearScreen();
                 view.displayMessageInNextLine("- group created: \n");

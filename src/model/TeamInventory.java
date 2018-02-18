@@ -4,7 +4,7 @@ import dao.TeamInventoryDAO;
 
 public class TeamInventory extends Inventory {
 
-    public TeamInventory(int ownerId) {
+    TeamInventory(int ownerId) {
         super(ownerId);
         dao = new TeamInventoryDAO();
     }

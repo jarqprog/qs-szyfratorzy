@@ -5,7 +5,7 @@ import dao.StudentInventoryDAO;
 public class StudentInventory extends Inventory {
 
 
-    public StudentInventory(int ownerId) {
+    StudentInventory(int ownerId) {
         super(ownerId);
         dao = new StudentInventoryDAO();
     }

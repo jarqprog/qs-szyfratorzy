@@ -1,9 +1,8 @@
 package model;
 
-import factory.Factory;
-import model.StudentSets;
+import factory.ObjFactory;
 
-public interface StudentSetFactory<T extends StudentSets> extends Factory {
+public interface StudentSetFactory<T extends StudentSets> extends ObjFactory {
 
     T create(String name);
 }

@@ -16,7 +16,7 @@ public abstract class User extends ActiveObject {
         this.email = email;
     }
 
-    public User(String firstName, String lastName, String password) {
+    User(String firstName, String lastName, String password) {
         this.id = -1;
         this.firstName = firstName;
         this.lastName = lastName;
