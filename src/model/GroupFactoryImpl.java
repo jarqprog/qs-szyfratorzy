@@ -1,7 +1,6 @@
-package factory;
+package model;
 
 import dao.GroupDAO;
-import model.Group;
 
 public class GroupFactoryImpl implements StudentSetFactory {
 

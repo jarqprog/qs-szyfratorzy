@@ -1,6 +1,8 @@
 package factory;
 
-public class AbsFactory {
+import model.*;
+
+public class ObjectFactory {
 
     @SuppressWarnings("unchecked")
     public static <T extends Factory> T get(Class<T> type) {

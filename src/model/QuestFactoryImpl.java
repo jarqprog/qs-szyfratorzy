@@ -1,7 +1,6 @@
-package factory;
+package model;
 
 import dao.QuestDAO;
-import model.Quest;
 
 public class QuestFactoryImpl implements ItemFactory {
 

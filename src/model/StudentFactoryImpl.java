@@ -1,7 +1,6 @@
-package factory;
+package model;
 
 import dao.StudentDAO;
-import model.*;
 
 public class StudentFactoryImpl implements UserFactory {
 

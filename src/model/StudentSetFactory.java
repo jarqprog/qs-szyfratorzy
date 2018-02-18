@@ -1,5 +1,6 @@
-package factory;
+package model;
 
+import factory.Factory;
 import model.StudentSets;
 
 public interface StudentSetFactory<T extends StudentSets> extends Factory {

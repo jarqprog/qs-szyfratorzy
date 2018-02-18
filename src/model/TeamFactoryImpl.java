@@ -1,8 +1,6 @@
-package factory;
+package model;
 
 import dao.TeamDAO;
-import model.Team;
-import model.TeamInventory;
 
 public class TeamFactoryImpl implements StudentSetFactory {
 

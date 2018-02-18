@@ -1,5 +1,6 @@
-package factory;
+package model;
 
+import factory.Factory;
 import model.User;
 
 public interface UserFactory<T extends User> extends Factory {

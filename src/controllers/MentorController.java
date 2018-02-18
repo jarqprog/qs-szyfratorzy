@@ -1,9 +1,9 @@
 package controllers;
 
-import factory.AbsFactory;
-import factory.ArtifactFactoryImpl;
-import factory.QuestFactoryImpl;
-import factory.StudentFactoryImpl;
+import factory.ObjectFactory;
+import model.ArtifactFactoryImpl;
+import model.QuestFactoryImpl;
+import model.StudentFactoryImpl;
 import model.Mentor;
 import model.Student;
 import dao.MentorDAO;
@@ -87,7 +87,7 @@ public class MentorController extends UserControllerImpl {
         String name = view.getUserInput("Enter quest name: ");
         String description = view.getUserInput("Enter quest description: ");
         int reward = view.getItemValue();
-        Quest quest = AbsFactory.get(QuestFactoryImpl.class)
+        Quest quest = ObjectFactory.get(QuestFactoryImpl.class)
                                 .create(name, description, reward);
 
         view.clearScreen();
@@ -112,7 +112,7 @@ public class MentorController extends UserControllerImpl {
         String firstName = view.getUserInput("Enter first name: ");
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
-        Student student = AbsFactory.get(StudentFactoryImpl.class)
+        Student student = ObjectFactory.get(StudentFactoryImpl.class)
                                     .create(firstName, lastName, password);
 
         view.displayMessageInNextLine("Student created successfully! \n");
@@ -123,7 +123,7 @@ public class MentorController extends UserControllerImpl {
         String name = view.getUserInput("Enter artifact name: ");
         String description = view.getUserInput("Enter artifact description: ");
         int price = view.getItemValue();
-        Artifact artifact = AbsFactory.get(ArtifactFactoryImpl.class)
+        Artifact artifact = ObjectFactory.get(ArtifactFactoryImpl.class)
                                         .create(name, description, price);
 
         view.clearScreen();
