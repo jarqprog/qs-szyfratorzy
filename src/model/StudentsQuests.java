@@ -10,7 +10,7 @@ public class StudentsQuests extends StudentStock {
 
     private Map<Quest,LocalDate> stock;
 
-    public StudentsQuests(int ownerId) {
+    StudentsQuests(int ownerId) {
         super(ownerId);
         stock = new HashMap<>();
     }

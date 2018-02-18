@@ -17,7 +17,7 @@ public abstract class Item extends ActiveObject {
         this.genre = "item";
     }
 
-    public Item(String name, String description){
+    Item(String name, String description){
         this.id = -1;
         this.name = name;
         this.type = 'I';

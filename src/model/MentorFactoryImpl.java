@@ -1,8 +1,6 @@
-package factory;
+package model;
 
 import dao.MentorDAO;
-import model.Group;
-import model.Mentor;
 
 public class MentorFactoryImpl implements UserFactory {
     

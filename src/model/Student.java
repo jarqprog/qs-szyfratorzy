@@ -15,7 +15,7 @@ public class Student extends User {
     private String experienceLevel;
     private StudentsQuests studentsQuests;
 
-    public Student(String firstName, String lastName, String password) {
+    Student(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
         wallet = 0;
         experience = 0;

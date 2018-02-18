@@ -1,7 +1,6 @@
-package factory;
+package model;
 
 import dao.AdminDAO;
-import model.Admin;
 
 public class AdminFactoryImpl implements UserFactory {
     

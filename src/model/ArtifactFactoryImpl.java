@@ -1,7 +1,6 @@
-package factory;
+package model;
 
 import dao.ArtifactDAO;
-import model.Artifact;
 
 public class ArtifactFactoryImpl implements ItemFactory {
 

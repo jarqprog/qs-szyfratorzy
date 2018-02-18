@@ -4,7 +4,7 @@ public class Artifact extends Item {
 
     private int price;
 
-    public Artifact(String name, String description, int price){
+    Artifact(String name, String description, int price){
         super(name, description);
         this.price = price;
         this.genre = "artifact";

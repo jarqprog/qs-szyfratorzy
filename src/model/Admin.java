@@ -5,7 +5,7 @@ import enums.Role;
 public class Admin extends User {
 
 
-    public Admin(String firstName, String lastName, String password) {
+    Admin(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
         role = Role.ADMIN.getName();
     }

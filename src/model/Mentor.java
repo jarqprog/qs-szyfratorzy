@@ -6,7 +6,7 @@ public class Mentor extends User {
 
     private Group group;
 
-    public Mentor(String firstName, String lastName, String password) {
+    Mentor(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
         group = new Group(1,"undefined");
         role = Role.MENTOR.getName();

@@ -10,7 +10,7 @@ public class ExperienceLevels extends PassiveObject {
 
     private Map<String, Integer> levels;
 
-    public ExperienceLevels() {
+    ExperienceLevels() {
         this.levels = getUpdatedLevels();
         setLevels();
     }

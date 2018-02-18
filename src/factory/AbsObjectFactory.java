@@ -1,11 +1,13 @@
 package factory;
 
-public class AbsFactory {
+import model.*;
+
+public class AbsObjectFactory {
 
     @SuppressWarnings("unchecked")
-    public static <T extends Factory> T get(Class<T> type) {
+    public static <T extends ObjFactory> T get(Class<T> type) {
 
-        Factory factory = null;
+        ObjFactory factory = null;
         String factoryName = type.getSimpleName();
 
         switch(factoryName) {
@@ -30,6 +32,9 @@ public class AbsFactory {
                 break;
             case("ArtifactFactoryImpl"):
                 factory = new ArtifactFactoryImpl();
+                break;
+            case("ExpLevelsFactoryImpl"):
+                factory = new ExpLevelsFactoryImpl();
                 break;
         }
         return (T) factory;

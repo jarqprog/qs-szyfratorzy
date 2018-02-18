@@ -1,11 +1,13 @@
 package controllers;
 
+import model.ExpLevelsFactoryImpl;
 import model.ExperienceLevels;
 import tools.DataTool;
 import dao.DbManagerDAO;
 import enums.FilePath;
 import model.Student;
 import view.SchoolView;
+import factory.AbsObjectFactory;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -19,15 +21,19 @@ public class ExperienceLevelsController {
     private boolean shouldExit = false;
 
     public ExperienceLevelsController() {
-        this.view = new SchoolView();
+        view = new SchoolView();
+        experienceLevels = getExperienceLevels();
     }
 
     public ExperienceLevels getExperienceLevels() {
-        return new ExperienceLevels();
+        if (experienceLevels == null){
+            return AbsObjectFactory.get(ExpLevelsFactoryImpl.class).create();
+        }
+        return experienceLevels;
     }
 
     public void setStudentExperienceLevel(Student student) {
-        Map<String,Integer> levels = new ExperienceLevels().getUpdatedLevels();
+        Map<String,Integer> levels = experienceLevels.getUpdatedLevels();
         List<Integer> expValues = new ArrayList<>(levels.values());
         Collections.sort(expValues);
         int studentExperience = student.getExperience();

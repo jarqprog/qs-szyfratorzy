@@ -14,7 +14,7 @@ public abstract class StudentSets extends ActiveObject {
         this.students = new ArrayList<>();
     }
 
-    public StudentSets(String name) {
+    StudentSets(String name) {
         this.id = -1;
         this.name = name;
         this.students = new ArrayList<>();
