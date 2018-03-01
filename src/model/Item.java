@@ -3,7 +3,7 @@ package model;
 import tools.DataTool;
 
 
-public abstract class Item extends ActiveObject {
+public abstract class Item extends ActiveModel {
 
     protected char type;
     protected String name;

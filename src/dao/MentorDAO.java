@@ -4,7 +4,7 @@ import model.Mentor;
 import enums.Table;
 import model.Group;
 
-public class MentorDAO extends ActiveObjDAOImpl<Mentor> {
+public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
 
     private String firstName;
     private String lastName;

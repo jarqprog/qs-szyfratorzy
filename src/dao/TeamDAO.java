@@ -3,7 +3,7 @@ package dao;
 import enums.Table;
 import model.Team;
 
-public class TeamDAO extends ActiveObjDAOImpl<Team> {
+public class TeamDAO extends ActiveModelDAOImpl<Team> {
 
     private String name;
 

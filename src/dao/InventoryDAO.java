@@ -5,7 +5,7 @@ import model.Inventory;
 
 import java.util.*;
 
-public abstract class InventoryDAO implements PassiveObjDAO<Inventory> {
+public abstract class InventoryDAO implements PassiveModelDAO<Inventory> {
 
     protected String DEFAULT_TABLE;
     protected DbManagerDAO dao;

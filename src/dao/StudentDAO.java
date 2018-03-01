@@ -5,7 +5,7 @@ import model.Student;
 import model.Team;
 import enums.Table;
 
-public class StudentDAO extends ActiveObjDAOImpl<Student> {
+public class StudentDAO extends ActiveModelDAOImpl<Student> {
 
     private String firstName;
     private String lastName;

@@ -3,7 +3,7 @@ package dao;
 import enums.Table;
 import model.Artifact;
 
-public class ArtifactDAO extends ActiveObjDAOImpl<Artifact> {
+public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
 
     public ArtifactDAO(){
         this.DEFAULT_TABLE = Table.ARTIFACTS.getName();

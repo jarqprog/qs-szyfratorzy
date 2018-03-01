@@ -4,7 +4,7 @@ package dao;
 import model.Admin;
 import enums.Table;
 
-public class AdminDAO extends ActiveObjDAOImpl<Admin> {
+public class AdminDAO extends ActiveModelDAOImpl<Admin> {
 
     private String firstName;
     private String lastName;

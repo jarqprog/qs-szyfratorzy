@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 import java.util.ArrayList;
 
-public abstract class StudentSets extends ActiveObject {
+public abstract class StudentSets extends ActiveModel {
 
     protected String name;
     protected List<Student> students;

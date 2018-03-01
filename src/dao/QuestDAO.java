@@ -4,7 +4,7 @@ import enums.Table;
 import model.Quest;
 
 
-public class QuestDAO extends ActiveObjDAOImpl<Quest> {
+public class QuestDAO extends ActiveModelDAOImpl<Quest> {
 
     public QuestDAO(){this.DEFAULT_TABLE = Table.QUESTS.getName();}
 

@@ -3,7 +3,7 @@ package dao;
 import model.Group;
 import enums.Table;
 
-public class GroupDAO extends ActiveObjDAOImpl<Group> {
+public class GroupDAO extends ActiveModelDAOImpl<Group> {
 
     public GroupDAO(){
         this.DEFAULT_TABLE = Table.GROUPS.getName();

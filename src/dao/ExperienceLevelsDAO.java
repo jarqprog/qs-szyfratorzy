@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class ExperienceLevelsDAO implements PassiveObjDAO<ExperienceLevels> {
+public class ExperienceLevelsDAO implements PassiveModelDAO<ExperienceLevels> {
 
     private String DEFAULT_TABLE;
     private DbManagerDAO dao;

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class AttendanceDAO implements PassiveObjDAO<Attendance> {
+public class AttendanceDAO implements PassiveModelDAO<Attendance> {
 
     private String ATTENDANCE_TABLE;
     private DbManagerDAO dao;

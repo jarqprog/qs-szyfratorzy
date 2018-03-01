@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class StudentsQuestsDAO implements PassiveObjDAO<StudentsQuests> {
+public class StudentsQuestsDAO implements PassiveModelDAO<StudentsQuests> {
 
     private String STUDENTS_QUESTS_TABLE;
-    private ActiveObjDAO<Quest> questDao;
+    private ActiveModelDAO<Quest> questDao;
     private DbManagerDAO dataBaseDao;
 
     public StudentsQuestsDAO() {

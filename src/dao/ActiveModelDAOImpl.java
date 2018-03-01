@@ -1,12 +1,12 @@
 package dao;
 
-import model.ActiveObject;
+import model.ActiveModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class ActiveObjDAOImpl<T extends ActiveObject> implements ActiveObjDAO<T> {
+public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements ActiveModelDAO<T> {
 
     protected String DEFAULT_TABLE;
     protected DbManagerDAO dao;
