@@ -2,7 +2,7 @@ package model;
 
 import tools.DataTool;
 
-public abstract class User extends ActiveObject {
+public abstract class User extends ActiveModel {
 
     protected String firstName;
     protected String lastName;

@@ -1,10 +1,10 @@
 package dao;
 
-import model.ActiveObject;
+import model.ActiveModel;
 
 import java.util.List;
 
-public interface ActiveObjDAO<T extends ActiveObject> extends AbsObjDAO<T> {
+public interface ActiveModelDAO<T extends ActiveModel> extends CommonModelDAO<T> {
 
     T getObjectById(int id);
     List<T> getAllObjects();

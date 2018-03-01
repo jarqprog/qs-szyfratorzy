@@ -8,7 +8,7 @@ import model.Group;
 import model.Mentor;
 import model.Student;
 import model.Team;
-import dao.ActiveObjDAO;
+import dao.ActiveModelDAO;
 import enums.Table;
 import view.SchoolView;
 import view.UsersView;
@@ -148,7 +148,7 @@ public class SchoolController {
     }
 
     private static Team getDefaultTeam(){
-        ActiveObjDAO<Team> dao = new TeamDAO();
+        ActiveModelDAO<Team> dao = new TeamDAO();
         return dao.getObjectById(1);
     }
 

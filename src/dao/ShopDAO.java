@@ -1,6 +1,7 @@
 package dao;
 
 import enums.Table;
+import managers.TemporaryManager;
 
 import java.util.*;
 
@@ -9,7 +10,7 @@ public class ShopDAO {
 
     private static final int INDEX_ART_ID = 0;
     private static final int INDEX_STUDENTS_ARTIFACTS_ID = 1;
-    protected DbManagerDAO dao;
+    protected TemporaryManager dao;
     protected ArtifactDAO artifactDAO;
     protected String STUDENTS_ARTIFACTS_TABLE;
     protected String TEAMS_ARTIFACTS_TABLE;
@@ -20,7 +21,7 @@ public class ShopDAO {
     }
 
     public void saveStudentTransaction(int studentID, int artifactID) {
-        dao = new DbManagerDAO();
+        dao = new TemporaryManager();
         date = new Date();
         String transactionDate = date.toString();
         String query = String.format("INSERT INTO students_transactions " +

@@ -6,7 +6,7 @@ import dao.ExperienceLevelsDAO;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class ExperienceLevels extends PassiveObject {
+public class ExperienceLevels extends PassiveModel {
 
     private Map<String, Integer> levels;
 

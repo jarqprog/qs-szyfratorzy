@@ -1,6 +1,7 @@
 package dao;
 
 import enums.Table;
+import managers.TemporaryManager;
 import model.Attendance;
 
 import java.time.LocalDate;
@@ -9,15 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class AttendanceDAO implements PassiveObjDAO<Attendance> {
+public class AttendanceDAO implements PassiveModelDAO<Attendance> {
 
     private String ATTENDANCE_TABLE;
-    private DbManagerDAO dao;
+    private TemporaryManager dao;
 
     public AttendanceDAO() {
 
         ATTENDANCE_TABLE = Table.ATTENDANCE.getName();
-        dao = new DbManagerDAO();
+        dao = new TemporaryManager();
     }
 
     public Map<LocalDate,Boolean> load(int ownerId) {

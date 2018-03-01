@@ -1,10 +1,11 @@
 package dao;
 
 import enums.Table;
+import managers.TemporaryManager;
 import model.Quest;
 
 
-public class QuestDAO extends ActiveObjDAOImpl<Quest> {
+public class QuestDAO extends ActiveModelDAOImpl<Quest> {
 
     public QuestDAO(){this.DEFAULT_TABLE = Table.QUESTS.getName();}
 
@@ -44,7 +45,7 @@ public class QuestDAO extends ActiveObjDAOImpl<Quest> {
             query = String.format("UPDATE %s SET name='%s' , type='%s', description='%s', reward=%s , status='%s'" +
                     "WHERE id=%s;", DEFAULT_TABLE, itemName, itemType, itemDescription, reward, status, itemId);
         }
-        DbManagerDAO dao = new DbManagerDAO();
+        TemporaryManager dao = new TemporaryManager();
         dao.inputData(query);
     }
 }

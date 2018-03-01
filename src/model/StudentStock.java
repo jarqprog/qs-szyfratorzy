@@ -1,6 +1,6 @@
 package model;
 
-public abstract class StudentStock extends PassiveObject {
+public abstract class StudentStock extends PassiveModel {
 
     StudentStock(int ownerId) {
         this.ownerId = ownerId;

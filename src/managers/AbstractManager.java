@@ -1,10 +1,10 @@
-package dao;
+package managers;
 
 import java.io.File;
 import java.io.IOException;
 
 
-public class DAO {
+public class AbstractManager {
 
     protected String filePath;
 

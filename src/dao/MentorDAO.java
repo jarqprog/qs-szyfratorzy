@@ -1,10 +1,11 @@
 package dao;
 
+import managers.TemporaryManager;
 import model.Mentor;
 import enums.Table;
 import model.Group;
 
-public class MentorDAO extends ActiveObjDAOImpl<Mentor> {
+public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
 
     private String firstName;
     private String lastName;
@@ -57,7 +58,7 @@ public class MentorDAO extends ActiveObjDAOImpl<Mentor> {
             query = String.format("UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', group_id=%s " +
                     "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, groupId, mentorId);
         }
-        dao = new DbManagerDAO();
+        dao = new TemporaryManager();
         dao.inputData(query);
     }
 }

@@ -5,9 +5,9 @@ import dao.*;
 public class DaoFactory {
 
     @SuppressWarnings("unchecked")
-    public static <T extends AbsObjDAO> T get(String objectTypeName) {
+    public static <T extends CommonModelDAO> T get(String objectTypeName) {
 
-        AbsObjDAO dao = null;
+        CommonModelDAO dao = null;
 
         switch (objectTypeName) {
             case ("Student"):

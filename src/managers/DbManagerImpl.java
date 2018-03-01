@@ -1,4 +1,4 @@
-package dao;
+package managers;
 
 import enums.FilePath;
 import factory.ConnectionFactory;
@@ -10,14 +10,14 @@ import java.sql.Statement;
 import java.io.FileNotFoundException;
 import java.io.File;
 
-public class DatabaseDAOImpl extends DAO implements DatabaseDAO{
+public class DbManagerImpl extends AbstractManager implements DbManager {
 
     private final static String SQL_SCRIPT_PATH = FilePath.SQL_SCRIPT.getPath();
     private static final String DATA_BASE_PATH = FilePath.DATA_BASE.getPath();
 
     protected Connection connection = null;
 
-    public DatabaseDAOImpl() {
+    public DbManagerImpl() {
         prepareFile(DATA_BASE_PATH);
     }
 

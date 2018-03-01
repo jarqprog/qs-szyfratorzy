@@ -1,6 +1,6 @@
 package model;
 
-public abstract class ActiveObject extends AbsObject {
+public abstract class ActiveModel extends CommonModel {
 
     protected int id;
 

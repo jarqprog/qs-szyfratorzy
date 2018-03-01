@@ -1,6 +1,6 @@
 package model;
 
-public abstract class PassiveObject extends AbsObject {
+public abstract class PassiveModel extends CommonModel {
 
     protected int ownerId;
 

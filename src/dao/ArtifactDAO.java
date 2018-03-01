@@ -1,9 +1,10 @@
 package dao;
 
 import enums.Table;
+import managers.TemporaryManager;
 import model.Artifact;
 
-public class ArtifactDAO extends ActiveObjDAOImpl<Artifact> {
+public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
 
     public ArtifactDAO(){
         this.DEFAULT_TABLE = Table.ARTIFACTS.getName();
@@ -43,7 +44,7 @@ public class ArtifactDAO extends ActiveObjDAOImpl<Artifact> {
             query = String.format("UPDATE %s SET name='%s' , type='%s', description='%s', price=%s " +
                     "WHERE id=%s;", DEFAULT_TABLE, itemName, itemType, itemDescription, price, artifactId);
         }
-        DbManagerDAO dao = new DbManagerDAO();
+        TemporaryManager dao = new TemporaryManager();
         dao.inputData(query);
     }
 }

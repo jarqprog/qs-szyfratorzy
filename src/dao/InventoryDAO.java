@@ -1,21 +1,22 @@
 package dao;
 
+import managers.TemporaryManager;
 import model.Artifact;
 import model.Inventory;
 
 import java.util.*;
 
-public abstract class InventoryDAO implements PassiveObjDAO<Inventory> {
+public abstract class InventoryDAO implements PassiveModelDAO<Inventory> {
 
     protected String DEFAULT_TABLE;
-    protected DbManagerDAO dao;
+    protected TemporaryManager dao;
     protected ArtifactDAO artifactDAO;
 
 
     public Map<Artifact,Integer> load(int ownerId) {
         final String query = String.format("SELECT artifact_id FROM %s WHERE owner_id=%s;",
                 DEFAULT_TABLE, ownerId);
-        dao = new DbManagerDAO();
+        dao = new TemporaryManager();
         Map<Artifact,Integer> inventory = new HashMap<>();
         List<String[]> dataCollection = dao.getData(query);
         if (dataCollection.size() > 0) {
@@ -45,7 +46,7 @@ public abstract class InventoryDAO implements PassiveObjDAO<Inventory> {
 
     public void save(Inventory inventory) {
         int ownerId = inventory.getOwnerId();
-        dao = new DbManagerDAO();
+        dao = new TemporaryManager();
         String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;", DEFAULT_TABLE, ownerId);
         dao.inputData(clearQuery);
         if (! inventory.isEmpty()) {

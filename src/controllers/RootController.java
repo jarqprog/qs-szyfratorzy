@@ -5,18 +5,21 @@ import java.util.List;
 import dao.*;
 import enums.FilePath;
 import exceptions.LoginFailure;
+import managers.*;
+import managers.DbManagerImpl;
+import managers.DbManager;
 import view.RootView;
 
 
 public class RootController {
 
     private RootView view;
-    private DatabaseDAO databaseDao;
+    private DbManager databaseDao;
     private boolean shouldExit;
 
     public RootController() {
         view = new RootView();
-        databaseDao = new DatabaseDAOImpl();
+        databaseDao = new DbManagerImpl();
         shouldExit = false;
     }
 
@@ -52,8 +55,9 @@ public class RootController {
         String login = view.getLogin();
         String password = view.getPassword();
         UserController controller = null;
+        LoginDAO logDao = new LoginDAOImpl();
         try {
-            controller = LoginDAO.getUserControllerByLoginAndPassword(login, password);
+            controller = logDao.getUserControllerByLoginAndPassword(login, password);
         } catch (LoginFailure ex) {
             view.clearScreen();
             view.displayMessage(ex.getMessage());
@@ -64,14 +68,14 @@ public class RootController {
 
     private void handleIntro(){
         String introFilePath = FilePath.INTRO.getPath();
-        FileDAO dao = new FileDAOImpl(introFilePath);
+        FileManager dao = new FileManagerImpl(introFilePath);
         List<String> introData = dao.getData();
         view.displayIntro(introData);
     }
 
     private void handleOutro(){
         String outroFilePath = FilePath.OUTRO.getPath();
-        FileDAO dao = new FileDAOImpl(outroFilePath);
+        FileManager dao = new FileManagerImpl(outroFilePath);
         List<String> outroData = dao.getData();
         view.displayOutro(outroData);
     }

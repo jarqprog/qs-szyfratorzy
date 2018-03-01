@@ -1,6 +1,7 @@
 package dao;
 
 import enums.Table;
+import managers.TemporaryManager;
 import model.Quest;
 import model.StudentsQuests;
 
@@ -10,17 +11,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class StudentsQuestsDAO implements PassiveObjDAO<StudentsQuests> {
+public class StudentsQuestsDAO implements PassiveModelDAO<StudentsQuests> {
 
     private String STUDENTS_QUESTS_TABLE;
-    private ActiveObjDAO<Quest> questDao;
-    private DbManagerDAO dataBaseDao;
+    private ActiveModelDAO<Quest> questDao;
+    private TemporaryManager dataBaseDao;
 
     public StudentsQuestsDAO() {
 
         STUDENTS_QUESTS_TABLE = Table.STUDENTS_QUESTS.getName();
         questDao = new QuestDAO();
-        dataBaseDao = new DbManagerDAO();
+        dataBaseDao = new TemporaryManager();
 
     }
 
