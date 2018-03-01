@@ -1,8 +1,8 @@
-package dao;
+package managers;
 
 import java.util.List;
 
-public interface FileDAO {
+public interface FileManager {
 
     void insertData(List<String> data);
     List<String> getData();

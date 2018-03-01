@@ -1,8 +1,8 @@
-package dao;
+package managers;
 
 import java.util.List;
 
-public interface FileFinderDAO {
+public interface InFileFinder {
 
     String getDataByLine(int lineNumber);
     List<String> getFilteredData(String filter);

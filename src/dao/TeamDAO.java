@@ -1,6 +1,7 @@
 package dao;
 
 import enums.Table;
+import managers.TemporaryManager;
 import model.Team;
 
 public class TeamDAO extends ActiveModelDAOImpl<Team> {
@@ -36,7 +37,7 @@ public class TeamDAO extends ActiveModelDAOImpl<Team> {
                     "UPDATE %s SET name='%s' " +
                             "WHERE id=%s;", DEFAULT_TABLE, name, teamId);
         }
-        dao = new DbManagerDAO();
+        dao = new TemporaryManager();
         dao.inputData(query);
     }
 }

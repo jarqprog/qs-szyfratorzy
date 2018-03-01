@@ -1,5 +1,6 @@
 package dao;
 
+import managers.TemporaryManager;
 import model.Group;
 import enums.Table;
 
@@ -31,7 +32,7 @@ public class GroupDAO extends ActiveModelDAOImpl<Group> {
                     "WHERE id=%s;", DEFAULT_TABLE, name, group_id);
         }
 
-        dao = new DbManagerDAO();
+        dao = new TemporaryManager();
         dao.inputData(query);
     }
 }

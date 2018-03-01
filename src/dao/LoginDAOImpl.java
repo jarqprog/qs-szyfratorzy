@@ -5,7 +5,7 @@ import enums.Table;
 import exceptions.LoginFailure;
 import factory.ConnectionFactory;
 import factory.UserControllerFactory;
-import managers.DbManagerDAO;
+import managers.TemporaryManager;
 import model.User;
 
 import java.sql.Connection;
@@ -17,7 +17,7 @@ public class LoginDAOImpl implements LoginDAO {
 
     public UserController getUserControllerByLoginAndPassword(String login, String password) throws LoginFailure {
         User user;
-        DbManagerDAO dao = new DbManagerDAO();
+        TemporaryManager dao = new TemporaryManager();
         Connection connection = ConnectionFactory.getConnection();
         String [] usersTables = {Table.ADMINS.getName(), Table.MENTORS.getName(), Table.STUDENTS.getName()};
         String statement;

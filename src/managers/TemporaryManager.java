@@ -1,4 +1,4 @@
-package dao;
+package managers;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -6,7 +6,8 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
-public class DbManagerDAO extends DatabaseDAOImpl {
+public class TemporaryManager extends DbManagerImpl {
+    // it will be changed or removed (methods delegates to proper DAOs)
 
     public void inputData(String query){
         openConnection();

@@ -1,6 +1,7 @@
 package dao;
 
 import enums.Table;
+import managers.TemporaryManager;
 import model.Quest;
 import model.StudentsQuests;
 
@@ -14,13 +15,13 @@ public class StudentsQuestsDAO implements PassiveModelDAO<StudentsQuests> {
 
     private String STUDENTS_QUESTS_TABLE;
     private ActiveModelDAO<Quest> questDao;
-    private DbManagerDAO dataBaseDao;
+    private TemporaryManager dataBaseDao;
 
     public StudentsQuestsDAO() {
 
         STUDENTS_QUESTS_TABLE = Table.STUDENTS_QUESTS.getName();
         questDao = new QuestDAO();
-        dataBaseDao = new DbManagerDAO();
+        dataBaseDao = new TemporaryManager();
 
     }
 

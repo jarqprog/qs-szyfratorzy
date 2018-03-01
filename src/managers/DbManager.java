@@ -1,8 +1,8 @@
-package dao;
+package managers;
 
 import exceptions.DatabaseFailure;
 
-public interface DatabaseDAO {
+public interface DbManager {
 
     void prepareDatabase();
     void closeConnection();

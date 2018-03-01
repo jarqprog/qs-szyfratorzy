@@ -1,5 +1,6 @@
 package dao;
 
+import managers.TemporaryManager;
 import model.ActiveModel;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements ActiveModelDAO<T> {
 
     protected String DEFAULT_TABLE;
-    protected DbManagerDAO dao;
+    protected TemporaryManager dao;
 
     public T getObjectById(int id) {
         String query = "Select * from " + DEFAULT_TABLE + " WHERE id=" + id + ";";
@@ -31,7 +32,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     }
 
     public List<T> getManyObjects(String query) {
-        dao = new DbManagerDAO();
+        dao = new TemporaryManager();
         List<String[]> dataCollection = dao.getData(query);
         return getManyObjects(dataCollection);
     }
@@ -39,7 +40,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     public abstract T getOneObject(String[] data);
 
     public T getOneObject(String query) {
-        dao = new DbManagerDAO();
+        dao = new TemporaryManager();
         String[] record = dao.getData(query).get(0);
         try {
             return getOneObject(record);
@@ -72,7 +73,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     }
 
     private List<T> getObjects(String query) {
-        DbManagerDAO dao = new DbManagerDAO();
+        TemporaryManager dao = new TemporaryManager();
         List<String[]> dataCollection = dao.getData(query);
         List<T> objects = new ArrayList<>();
         try {
@@ -90,7 +91,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     private String[] getCurrentIdCollection() {
         final String query = String.format("SELECT id FROM %s;", this.DEFAULT_TABLE);
         int idIndex = 0;
-        DbManagerDAO dao = new DbManagerDAO();
+        TemporaryManager dao = new TemporaryManager();
         List<String[]> currentIdsCollection = dao.getData(query);
         String[] currentIds = new String[currentIdsCollection.size()];
         for (int i = 0; i < currentIdsCollection.size(); i++) {

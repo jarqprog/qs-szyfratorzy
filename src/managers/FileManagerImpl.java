@@ -1,4 +1,4 @@
-package dao;
+package managers;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FileDAOImpl extends DAO implements FileDAO, FileFinderDAO {
+public class FileManagerImpl extends AbstractManager implements FileManager, InFileFinder {
 
     private String filePath;
     private BufferedReader bufReader;
@@ -14,7 +14,7 @@ public class FileDAOImpl extends DAO implements FileDAO, FileFinderDAO {
     private FileWriter fileWriter;
     private BufferedWriter bufWriter;
 
-    public FileDAOImpl(String newFilePath) {
+    public FileManagerImpl(String newFilePath) {
         filePath = newFilePath;
         prepareFile(filePath);
     }
