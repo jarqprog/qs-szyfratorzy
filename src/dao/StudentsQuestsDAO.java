@@ -6,6 +6,7 @@ import model.Quest;
 import model.StudentsQuests;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
         dao = new ResultSetManager();
     }
 
-    public Map<Quest,LocalDate> load(int ownerId) {
+    public Map<Quest,LocalDate> load(int ownerId) throws SQLException {
         ActiveModelDAO<Quest> questDao = new QuestDAO(connection);
         Quest quest;
         LocalDate date;
@@ -33,7 +34,7 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
         List<String[]> dataCollection = dao.getData(query);
         for(String[] data : dataCollection){
             int questId = Integer.parseInt(data[QUEST_ID_INDEX]);
-            quest = questDao.getObjectById(questId);
+            quest = questDao.getModelById(questId);
             date = LocalDate.parse(data[DATE_INDEX]);
             questsStock.put(quest, date);
         }

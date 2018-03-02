@@ -5,6 +5,7 @@ import model.Artifact;
 import model.Inventory;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
 public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAOImpl<T> {
@@ -17,7 +18,7 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
         dao = new ResultSetManager();
     }
 
-    public Map<Artifact,Integer> load(int ownerId) {
+    public Map<Artifact,Integer> load(int ownerId) throws SQLException {
         final String query = String.format("SELECT artifact_id FROM %s WHERE owner_id=%s;",
                 DEFAULT_TABLE, ownerId);
         Map<Artifact,Integer> inventory = new HashMap<>();
@@ -30,7 +31,7 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
             for (String[] data : dataCollection) {
                 int artifactId = Integer.parseInt(data[ID_INDEX]);
                 if (!usedArtifactsId.contains(artifactId)) {
-                    artifact = artifactDao.getObjectById(artifactId);
+                    artifact = artifactDao.getModelById(artifactId);
                     inventory.put(artifact, 1);
                 } else {
                     Set<Artifact> items = inventory.keySet();

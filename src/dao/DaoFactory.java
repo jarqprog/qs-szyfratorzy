@@ -1,5 +1,6 @@
 package dao;
 
+import factory.ConnectionFactory;
 import managers.DbManager;
 import managers.DbManagerImpl;
 
@@ -8,12 +9,11 @@ import java.sql.Connection;
 public class DaoFactory {
 
     private static Connection connection;
-    private static DbManager dbManager = new DbManagerImpl();
 
     @SuppressWarnings("unchecked")
     public static <T extends CommonModelDAO> T getByModel(String objectTypeName) {
 
-        connection = dbManager.getConnection();
+        connection = ConnectionFactory.getConnection();
         CommonModelDAO dao = null;
 
         switch (objectTypeName) {
@@ -60,7 +60,7 @@ public class DaoFactory {
     @SuppressWarnings("unchecked")
     public static <T extends CommonModelDAO> T getByType(Class<T> type) {
 
-        connection = dbManager.getConnection();
+        connection = ConnectionFactory.getConnection();
         String daoName = type.getSimpleName();
         CommonModelDAO dao = null;
 
@@ -107,7 +107,7 @@ public class DaoFactory {
 
     public static LoginDAO getLoginDAO() {
 
-        connection = dbManager.getConnection();
+        connection = ConnectionFactory.getConnection();
 
         return new LoginDAOImpl(connection);
     }

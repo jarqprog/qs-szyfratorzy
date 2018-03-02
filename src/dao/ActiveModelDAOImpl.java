@@ -4,6 +4,9 @@ import managers.ResultSetManager;
 import model.ActiveModel;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,15 +16,21 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     protected String DEFAULT_TABLE;
     protected ResultSetManager dao;
     protected Connection connection;
+    protected PreparedStatement preparedStatement;
+    protected ResultSet resultSet;
 
     ActiveModelDAOImpl(Connection connection) {
         this.connection = connection;
         setDefaultTable();
     }
 
-    public T getObjectById(int id) {
-        String query = "Select * from " + DEFAULT_TABLE + " WHERE id=" + id + ";";
-        return getOneObject(query);
+    public T getModelById(int id) throws SQLException {
+        String query = String.format("Select * from %s WHERE id=?", DEFAULT_TABLE);
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, id);
+        resultSet = preparedStatement.executeQuery();
+        String[] data = ResultSetManager.getObjectData(resultSet);
+        return extractModel(data);
     }
 
     public List<T> getAllObjects() {

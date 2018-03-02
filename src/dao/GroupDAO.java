@@ -8,7 +8,7 @@ import java.sql.Connection;
 
 public class GroupDAO extends ActiveModelDAOImpl<Group> {
 
-    public GroupDAO(Connection connection) {
+    GroupDAO(Connection connection) {
         super(connection);
     }
 
