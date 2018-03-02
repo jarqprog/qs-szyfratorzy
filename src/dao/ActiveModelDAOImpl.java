@@ -33,9 +33,16 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         return extractModel(data);
     }
 
-    public List<T> getAllObjects() {
-        String query = "Select * from " + DEFAULT_TABLE + ";";
-        return getObjects(query);
+    public List<T> getAllObjects() throws SQLException {
+        List<T> objects = new ArrayList<>();
+        String query = String.format("Select * from %s", DEFAULT_TABLE);
+        preparedStatement = connection.prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+        List<String[]> dataCollection = ResultSetManager.getObjectsDataCollection(resultSet);
+        if (dataCollection != null) {
+            objects = getManyObjects(dataCollection);
+        }
+        return objects;
     }
 
     private List<T> getManyObjects(List<String[]> dataCollection) {
@@ -88,22 +95,6 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         return -1;
     }
 
-    private List<T> getObjects(String query) {
-        ResultSetManager dao = new ResultSetManager();
-        List<String[]> dataCollection = dao.getData(query);
-        List<T> objects = new ArrayList<>();
-        try {
-            for (String[] record : dataCollection) {
-                T object = extractModel(record);
-                objects.add(object);
-            }
-            return objects;
-        } catch (Exception e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            return null;
-        }
-    }
-
     private String[] getCurrentIdCollection() {
         final String query = String.format("SELECT id FROM %s;", this.DEFAULT_TABLE);
         int idIndex = 0;
@@ -127,23 +118,5 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     }
 
     protected abstract void setDefaultTable();
-
-//    statement = String.format("SELECT * FROM %s WHERE first_name || id =? AND password=?", table);
-//            try {
-//        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-//        preparedStatement.setString(1, login);
-//        preparedStatement.setString(2, password);
-//        ResultSet resultSet = preparedStatement.executeQuery();
-//        if (resultSet.isBeforeFirst()) {
-//            String[] userData = ResultSetManager.getObjectData(resultSet);
-//            user = extractUser(userData, table);
-//            if (user != null) {
-//                return UserControllerFactory.getController(user);
-//            }
-//        }
-//    } catch (SQLException e) {
-//        System.err.println(e.getClass().getName() + ": " + e.getMessage());
-//    }
-
 
 }

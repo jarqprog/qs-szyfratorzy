@@ -3,6 +3,7 @@ package model;
 import dao.ArtifactDAO;
 import dao.DaoFactory;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,11 @@ public class Shop {
         }
 
     public List<Artifact> getStore() {
-        store = DaoFactory.getByType(ArtifactDAO.class).getAllObjects();
+        try {
+            store = DaoFactory.getByType(ArtifactDAO.class).getAllObjects();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return store;
     }
 

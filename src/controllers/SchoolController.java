@@ -19,11 +19,23 @@ import java.util.List;
 public class SchoolController {
 
     public static List<Group> getGroups() {
-        return DaoFactory.getByType(GroupDAO.class).getAllObjects();
+        List<Group> groups = new ArrayList<>();
+        try {
+            groups = DaoFactory.getByType(GroupDAO.class).getAllObjects();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return groups;
     }
 
     public static List<Team> getTeams() {
-        return DaoFactory.getByType(TeamDAO.class).getAllObjects();
+        List<Team> teams = new ArrayList<>();
+        try {
+            teams = DaoFactory.getByType(TeamDAO.class).getAllObjects();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return teams;
     }
 
     public static List<String> getGroupNames() {
@@ -129,12 +141,23 @@ public class SchoolController {
     }
 
     public static List<Student> getAllStudents() {
-        return DaoFactory.getByType(StudentDAO.class)
-                .getAllObjects();
+        List<Student> students = new ArrayList<>();
+        try {
+            students = DaoFactory.getByType(StudentDAO.class).getAllObjects();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return students;
     }
 
     public static List<Mentor> getAllMentors() {
-        return DaoFactory.getByType(MentorDAO.class).getAllObjects();
+        List<Mentor> mentors = new ArrayList<>();
+        try {
+            mentors = DaoFactory.getByType(MentorDAO.class).getAllObjects();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mentors;
     }
 
     public static Student pickStudentFromList(List<Student> students) {

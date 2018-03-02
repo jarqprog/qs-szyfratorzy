@@ -1,5 +1,7 @@
 package controllers;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -15,17 +17,20 @@ import model.Student;
 
 public class ShopController {
 
-    Shop shop;
-    ShopView view;
-    ArtifactDAO artifactDao;
-    Student student;
+    private Shop shop;
+    private ShopView view;
+    private Student student;
 
     public ShopController(Shop shop, Student student) {
         this.shop = shop;
         this.student = student;
         view = new ShopView();
-        artifactDao = DaoFactory.getByType(ArtifactDAO.class);
-        List<Artifact> artifacts = artifactDao.getAllObjects();
+        List<Artifact> artifacts = new ArrayList<>();
+        try {
+            artifacts = DaoFactory.getByType(ArtifactDAO.class).getAllObjects();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         shop.setStore(artifacts);
     }
 
