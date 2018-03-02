@@ -16,8 +16,8 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     protected String DEFAULT_TABLE;
     protected ResultSetManager dao;
     protected Connection connection;
-    protected PreparedStatement preparedStatement;
-    protected ResultSet resultSet;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
 
     ActiveModelDAOImpl(Connection connection) {
         this.connection = connection;
