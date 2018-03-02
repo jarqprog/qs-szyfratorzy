@@ -1,5 +1,6 @@
 package controllers;
 
+import dao.DaoFactory;
 import factory.GeneralModelFactory;
 import model.ArtifactFactoryImpl;
 import model.QuestFactoryImpl;
@@ -14,14 +15,12 @@ import view.MentorView;
 import java.util.List;
 
 public class MentorController extends UserControllerImpl {
-    MentorView view;
-    Mentor mentor;
-    MentorDAO dao;
+    private MentorView view;
+    private Mentor mentor;
 
     public MentorController(Mentor mentor){
         this.mentor = mentor;
         view = new MentorView();
-        dao = new MentorDAO();
     }
 
     public void executeMainMenu() {

@@ -5,6 +5,8 @@ import managers.TemporaryManager;
 import model.Admin;
 import enums.Table;
 
+import java.sql.Connection;
+
 public class AdminDAO extends ActiveModelDAOImpl<Admin> {
 
     private String firstName;
@@ -13,8 +15,8 @@ public class AdminDAO extends ActiveModelDAOImpl<Admin> {
     private String password;
 
 
-    public AdminDAO(){
-        this.DEFAULT_TABLE = Table.ADMINS.getName();
+    AdminDAO(Connection connection) {
+        super(connection);
     }
 
     public Admin getOneObject(String[] adminData) {
@@ -54,5 +56,9 @@ public class AdminDAO extends ActiveModelDAOImpl<Admin> {
         }
         dao = new TemporaryManager();
         dao.inputData(query);
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.ADMINS.getName();
     }
 }

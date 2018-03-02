@@ -5,19 +5,21 @@ import managers.TemporaryManager;
 import model.ExperienceLevels;
 import enums.Table;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 
-public class ExperienceLevelsDAO implements PassiveModelDAO<ExperienceLevels> {
+public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> {
 
     private String DEFAULT_TABLE;
     private TemporaryManager dao;
 
-    public ExperienceLevelsDAO() {
-        this.DEFAULT_TABLE = Table.EXPERIENCE_LEVELS.getName();
+    public ExperienceLevelsDAO(Connection connection) {
+        super(connection);
+        setDefaultTable();
         dao = new TemporaryManager();
     }
 
@@ -54,5 +56,9 @@ public class ExperienceLevelsDAO implements PassiveModelDAO<ExperienceLevels> {
                 index++;
             }
         }
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.EXPERIENCE_LEVELS.getName();
     }
 }

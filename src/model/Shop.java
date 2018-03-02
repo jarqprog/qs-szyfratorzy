@@ -1,7 +1,7 @@
 package model;
 
-import dao.ActiveModelDAO;
 import dao.ArtifactDAO;
+import dao.DaoFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,7 @@ public class Shop {
         }
 
     public List<Artifact> getStore() {
-        ActiveModelDAO<Artifact> dao = new ArtifactDAO();
-        store = dao.getAllObjects();
+        store = DaoFactory.getByType(ArtifactDAO.class).getAllObjects();
         return store;
     }
 

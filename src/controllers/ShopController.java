@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import dao.DaoFactory;
 import model.StudentInventory;
 import model.TeamInventory;
 import model.Shop;
@@ -23,7 +24,7 @@ public class ShopController {
         this.shop = shop;
         this.student = student;
         view = new ShopView();
-        artifactDao = new ArtifactDAO();
+        artifactDao = DaoFactory.getByType(ArtifactDAO.class);
         List<Artifact> artifacts = artifactDao.getAllObjects();
         shop.setStore(artifacts);
     }

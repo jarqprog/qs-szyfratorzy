@@ -19,11 +19,11 @@ import java.util.List;
 public class SchoolController {
 
     public static List<Group> getGroups() {
-        return new GroupDAO().getAllObjects();
+        return DaoFactory.getByType(GroupDAO.class).getAllObjects();
     }
 
     public static List<Team> getTeams() {
-        return new TeamDAO().getAllObjects();
+        return DaoFactory.getByType(TeamDAO.class).getAllObjects();
     }
 
     public static List<String> getGroupNames() {
@@ -134,7 +134,7 @@ public class SchoolController {
     }
 
     public static List<Mentor> getAllMentors() {
-        return new MentorDAO().getAllObjects();
+        return DaoFactory.getByType(MentorDAO.class).getAllObjects();
     }
 
     public static Student pickStudentFromList(List<Student> students) {
@@ -149,8 +149,7 @@ public class SchoolController {
     }
 
     private static Team getDefaultTeam(){
-        ActiveModelDAO<Team> dao = new TeamDAO();
-        return dao.getObjectById(1);
+        return DaoFactory.getByType(TeamDAO.class).getObjectById(1);
     }
 
     public static Mentor getMentorByUserChoice() {

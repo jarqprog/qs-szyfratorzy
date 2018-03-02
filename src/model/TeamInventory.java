@@ -1,12 +1,9 @@
 package model;
 
-import dao.TeamInventoryDAO;
-
 public class TeamInventory extends Inventory {
 
     TeamInventory(int ownerId) {
         super(ownerId);
-        dao = new TeamInventoryDAO();
     }
 
     public void setStock() {

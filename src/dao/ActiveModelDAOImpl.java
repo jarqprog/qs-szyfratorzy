@@ -3,6 +3,7 @@ package dao;
 import managers.TemporaryManager;
 import model.ActiveModel;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +12,12 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
 
     protected String DEFAULT_TABLE;
     protected TemporaryManager dao;
+    protected Connection connection;
+
+    ActiveModelDAOImpl(Connection connection) {
+        this.connection = connection;
+        setDefaultTable();
+    }
 
     public T getObjectById(int id) {
         String query = "Select * from " + DEFAULT_TABLE + " WHERE id=" + id + ";";
@@ -109,4 +116,6 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         }
         return null;
     }
+
+    protected abstract void setDefaultTable();
 }

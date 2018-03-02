@@ -4,11 +4,14 @@ import enums.Table;
 import managers.TemporaryManager;
 import model.Artifact;
 
+import java.sql.Connection;
+
 public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
 
-    public ArtifactDAO(){
-        this.DEFAULT_TABLE = Table.ARTIFACTS.getName();
+    ArtifactDAO(Connection connection) {
+        super(connection);
     }
+
 
     public Artifact getOneObject(String[] record) {
 
@@ -46,5 +49,9 @@ public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
         }
         TemporaryManager dao = new TemporaryManager();
         dao.inputData(query);
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.ARTIFACTS.getName();
     }
 }

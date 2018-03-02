@@ -4,10 +4,14 @@ import enums.Table;
 import managers.TemporaryManager;
 import model.Quest;
 
+import java.sql.Connection;
+
 
 public class QuestDAO extends ActiveModelDAOImpl<Quest> {
 
-    public QuestDAO(){this.DEFAULT_TABLE = Table.QUESTS.getName();}
+    QuestDAO(Connection connection) {
+        super(connection);
+    }
 
     public Quest getOneObject(String[] record) {
 
@@ -47,5 +51,9 @@ public class QuestDAO extends ActiveModelDAOImpl<Quest> {
         }
         TemporaryManager dao = new TemporaryManager();
         dao.inputData(query);
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.QUESTS.getName();
     }
 }

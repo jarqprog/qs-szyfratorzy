@@ -4,10 +4,12 @@ import managers.TemporaryManager;
 import model.Group;
 import enums.Table;
 
+import java.sql.Connection;
+
 public class GroupDAO extends ActiveModelDAOImpl<Group> {
 
-    public GroupDAO(){
-        this.DEFAULT_TABLE = Table.GROUPS.getName();
+    public GroupDAO(Connection connection) {
+        super(connection);
     }
 
     public Group getOneObject(String [] record){
@@ -34,5 +36,9 @@ public class GroupDAO extends ActiveModelDAOImpl<Group> {
 
         dao = new TemporaryManager();
         dao.inputData(query);
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.GROUPS.getName();
     }
 }

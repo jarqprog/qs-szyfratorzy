@@ -4,12 +4,14 @@ import enums.Table;
 import managers.TemporaryManager;
 import model.Team;
 
+import java.sql.Connection;
+
 public class TeamDAO extends ActiveModelDAOImpl<Team> {
 
     private String name;
 
-    public TeamDAO(){
-        this.DEFAULT_TABLE = Table.TEAMS.getName();
+    TeamDAO(Connection connection) {
+        super(connection);
     }
 
     public Team getOneObject(String[] teamData) {
@@ -39,5 +41,9 @@ public class TeamDAO extends ActiveModelDAOImpl<Team> {
         }
         dao = new TemporaryManager();
         dao.inputData(query);
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.TEAMS.getName();
     }
 }

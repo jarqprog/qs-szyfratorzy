@@ -50,11 +50,11 @@ public class LoginDAOImpl implements LoginDAO {
         User user = null;
         switch (table) {
             case ("admins"):
-                AdminDAO adDao = new AdminDAO();
+                AdminDAO adDao = new AdminDAO(connection);
                 user = adDao.getOneObject(userData);
                 break;
             case ("mentors"):
-                MentorDAO meDao = new MentorDAO();
+                MentorDAO meDao = new MentorDAO(connection);
                 user = meDao.getOneObject(userData);
                 break;
             case ("students"):

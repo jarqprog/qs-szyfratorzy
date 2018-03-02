@@ -4,20 +4,20 @@ import enums.Table;
 import managers.TemporaryManager;
 import model.Attendance;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class AttendanceDAO implements PassiveModelDAO<Attendance> {
+public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
 
-    private String ATTENDANCE_TABLE;
+    private String DEFAULT_TABLE;
     private TemporaryManager dao;
 
-    public AttendanceDAO() {
-
-        ATTENDANCE_TABLE = Table.ATTENDANCE.getName();
+    AttendanceDAO(Connection connection) {
+        super(connection);
         dao = new TemporaryManager();
     }
 
@@ -28,7 +28,7 @@ public class AttendanceDAO implements PassiveModelDAO<Attendance> {
         int ATTENDANCE_INDEX = 1;
         Map<LocalDate,Boolean> attendance = new HashMap<>();
         final String query = String.format("SELECT date, attendance FROM %s WHERE owner_id=%s;",
-                ATTENDANCE_TABLE, ownerId);
+                DEFAULT_TABLE, ownerId);
         List<String[]> dataCollection = dao.getData(query);
         for(String[] data : dataCollection){
             date = LocalDate.parse(data[DATE_INDEX]);
@@ -40,7 +40,7 @@ public class AttendanceDAO implements PassiveModelDAO<Attendance> {
 
     public void save(Attendance attendance) {
         int ownerId = attendance.getOwnerId();
-        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;", ATTENDANCE_TABLE, ownerId);
+        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;", DEFAULT_TABLE, ownerId);
         dao.inputData(clearQuery);
         Map<LocalDate,Boolean> datesWithAttendance = attendance.getAttendance();
         if(datesWithAttendance.size() > 0) {
@@ -57,10 +57,14 @@ public class AttendanceDAO implements PassiveModelDAO<Attendance> {
                     presence = 0;
                 }
                 String query = String.format("INSERT INTO %s VALUES(null, '%s', %s, %s);",
-                        ATTENDANCE_TABLE, date, presence, ownerId);
+                        DEFAULT_TABLE, date, presence, ownerId);
                 dao.inputData(query);
                 index++;
             }
         }
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.ATTENDANCE.getName();
     }
 }

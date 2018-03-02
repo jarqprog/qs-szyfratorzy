@@ -5,6 +5,8 @@ import model.Mentor;
 import enums.Table;
 import model.Group;
 
+import java.sql.Connection;
+
 public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
 
     private String firstName;
@@ -13,8 +15,8 @@ public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
     private String password;
     private int groupId;
 
-    public MentorDAO(){
-        this.DEFAULT_TABLE = Table.MENTORS.getName();
+    MentorDAO(Connection connection) {
+        super(connection);
     }
 
     public Mentor getOneObject(String[] record) {
@@ -34,7 +36,7 @@ public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
         groupId = Integer.parseInt(record[GROUP_INDEX]);
 
         final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
-        GroupDAO groupDAO = new GroupDAO();
+        GroupDAO groupDAO = new GroupDAO(connection);
         Group group = groupDAO.getOneObject(groupQuery);
 
         return new Mentor(mentorId, firstName, lastName, email, password, group);
@@ -60,5 +62,9 @@ public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
         }
         dao = new TemporaryManager();
         dao.inputData(query);
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.MENTORS.getName();
     }
 }

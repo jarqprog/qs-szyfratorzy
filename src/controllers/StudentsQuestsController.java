@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import dao.ActiveModelDAO;
+import dao.DaoFactory;
 import dao.QuestDAO;
 import model.Quest;
 import model.Student;
@@ -17,7 +18,7 @@ public class StudentsQuestsController {
     public void runQuestMenu(Student student){
 
         view = new UsersView();
-        dao = new QuestDAO();
+        dao = DaoFactory.getByType(QuestDAO.class);
         List<Quest> quests = dao.getAllObjects();
         view.displayObjects(quests);
         Integer questsId = view.getNotNegativeNumberFromUser("Choose id to pick quest: ");

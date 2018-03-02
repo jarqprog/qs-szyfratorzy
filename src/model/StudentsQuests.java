@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+import dao.DaoFactory;
 import dao.StudentsQuestsDAO;
 
 public class StudentsQuests extends StudentStock {
@@ -30,7 +31,7 @@ public class StudentsQuests extends StudentStock {
     }
 
     public void setStock() {
-        StudentsQuestsDAO dao = new StudentsQuestsDAO();
+        StudentsQuestsDAO dao = DaoFactory.getByType(StudentsQuestsDAO.class);
         stock = dao.load(ownerId);
     }
 
