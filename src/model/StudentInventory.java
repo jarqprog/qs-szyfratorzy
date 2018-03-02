@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.SQLException;
+
 public class StudentInventory extends Inventory {
 
 
@@ -8,6 +10,10 @@ public class StudentInventory extends Inventory {
     }
 
     public void setStock() {
-        stock = dao.load(ownerId);
+        try {
+            stock = dao.load(ownerId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

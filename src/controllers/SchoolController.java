@@ -8,11 +8,11 @@ import model.Group;
 import model.Mentor;
 import model.Student;
 import model.Team;
-import dao.ActiveModelDAO;
 import enums.Table;
 import view.SchoolView;
 import view.UsersView;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,7 +149,13 @@ public class SchoolController {
     }
 
     private static Team getDefaultTeam(){
-        return DaoFactory.getByType(TeamDAO.class).getObjectById(1);
+        try {
+            return DaoFactory.getByType(TeamDAO.class).getModelById(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static Mentor getMentorByUserChoice() {

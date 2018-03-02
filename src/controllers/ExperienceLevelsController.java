@@ -1,6 +1,8 @@
 package controllers;
 
-import managers.ResultSetManager;
+import exceptions.DatabaseFailure;
+import managers.DbManager;
+import managers.DbManagerImpl;
 import model.ExpLevelsFactoryImpl;
 import model.ExperienceLevels;
 import tools.DataTool;
@@ -94,7 +96,7 @@ public class ExperienceLevelsController {
     }
 
     private void restoreDefaultExpLevels() {
-        importExpLvlFromSql();
+        resetExpLevelsFromSqlFile();
         view.clearScreen();
         view.displayMessageInNextLine("Restored:");
         showExperienceLevels();
@@ -159,10 +161,15 @@ public class ExperienceLevelsController {
         }
     }
 
-    private void importExpLvlFromSql() {
-        ResultSetManager dao = new ResultSetManager();
+    private void resetExpLevelsFromSqlFile() {
+        DbManager dbManager = new DbManagerImpl();
         String sqlFilePath = FilePath.UPDATE_EXP_LVL.getPath();
-        dao.updateDatabase(sqlFilePath);
+
+        try {
+            dbManager.updateDatabase(sqlFilePath);
+        } catch (DatabaseFailure databaseFailure) {
+            databaseFailure.printStackTrace();
+        }
     }
 }
 

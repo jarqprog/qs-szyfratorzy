@@ -1,5 +1,6 @@
 package controllers;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import dao.ActiveModelDAO;
@@ -12,17 +13,15 @@ import view.UsersView;
 
 public class StudentsQuestsController {
 
-    UsersView view;
-    ActiveModelDAO<Quest> dao;
-
-    public void runQuestMenu(Student student){
-
+    public void runQuestMenu(Student student) throws SQLException {
+        UsersView view;
+        ActiveModelDAO<Quest> dao;
         view = new UsersView();
         dao = DaoFactory.getByType(QuestDAO.class);
         List<Quest> quests = dao.getAllObjects();
         view.displayObjects(quests);
         Integer questsId = view.getNotNegativeNumberFromUser("Choose id to pick quest: ");
-        Quest pickedQuest = dao.getObjectById(questsId);
+        Quest pickedQuest = dao.getModelById(questsId);
         student.getStudentsQuests().addItem(pickedQuest);
         view.clearScreen();
         view.displayMessageInNextLine("You have taken up the task:\n");
