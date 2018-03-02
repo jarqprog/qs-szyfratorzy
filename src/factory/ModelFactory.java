@@ -1,6 +1,6 @@
 package factory;
 
 
-public interface ObjFactory {
+public interface ModelFactory {
     // Marker interface
 }
