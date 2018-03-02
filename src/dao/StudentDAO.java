@@ -23,7 +23,7 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
         super(connection);
     }
 
-    public Student getOneObject(String[] studentData) {
+    public Student extractModel(String[] studentData) {
 
         final Integer ID_INDEX = 0;
         final Integer FIRST_NAME_INDEX = 1;

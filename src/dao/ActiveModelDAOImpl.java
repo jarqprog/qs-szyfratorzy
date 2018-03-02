@@ -32,7 +32,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     private List<T> getManyObjects(List<String[]> dataCollection) {
         List<T> collection = new ArrayList<>();
         for (String [] record : dataCollection) {
-            T object = getOneObject(record);
+            T object = extractModel(record);
             collection.add(object);
         }
         return collection;
@@ -44,13 +44,13 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         return getManyObjects(dataCollection);
     }
 
-    public abstract T getOneObject(String[] data);
+    public abstract T extractModel(String[] data);
 
     public T getOneObject(String query) {
         dao = new ResultSetManager();
         String[] record = dao.getData(query).get(0);
         try {
-            return getOneObject(record);
+            return extractModel(record);
         } catch(Exception e){
             System.out.println(e.getMessage());
             return null;
@@ -85,7 +85,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         List<T> objects = new ArrayList<>();
         try {
             for (String[] record : dataCollection) {
-                T object = getOneObject(record);
+                T object = extractModel(record);
                 objects.add(object);
             }
             return objects;
@@ -118,5 +118,23 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     }
 
     protected abstract void setDefaultTable();
+
+//    statement = String.format("SELECT * FROM %s WHERE first_name || id =? AND password=?", table);
+//            try {
+//        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+//        preparedStatement.setString(1, login);
+//        preparedStatement.setString(2, password);
+//        ResultSet resultSet = preparedStatement.executeQuery();
+//        if (resultSet.isBeforeFirst()) {
+//            String[] userData = ResultSetManager.getObjectData(resultSet);
+//            user = extractUser(userData, table);
+//            if (user != null) {
+//                return UserControllerFactory.getController(user);
+//            }
+//        }
+//    } catch (SQLException e) {
+//        System.err.println(e.getClass().getName() + ": " + e.getMessage());
+//    }
+
 
 }

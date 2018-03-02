@@ -13,7 +13,7 @@ public class QuestDAO extends ActiveModelDAOImpl<Quest> {
         super(connection);
     }
 
-    public Quest getOneObject(String[] record) {
+    public Quest extractModel(String[] record) {
 
         final int ID_INDEX = 0;
         final int NAME_INDEX = 1;

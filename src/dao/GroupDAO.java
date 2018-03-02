@@ -12,7 +12,7 @@ public class GroupDAO extends ActiveModelDAOImpl<Group> {
         super(connection);
     }
 
-    public Group getOneObject(String [] record){
+    public Group extractModel(String [] record){
 
         final Integer ID_INDEX = 0;
         final Integer NAME_INDEX = 1;

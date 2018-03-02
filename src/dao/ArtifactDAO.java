@@ -13,7 +13,7 @@ public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
     }
 
 
-    public Artifact getOneObject(String[] record) {
+    public Artifact extractModel(String[] record) {
 
         final int ID_INDEX = 0;
         final int NAME_INDEX = 1;

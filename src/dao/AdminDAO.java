@@ -19,7 +19,7 @@ public class AdminDAO extends ActiveModelDAOImpl<Admin> {
         super(connection);
     }
 
-    public Admin getOneObject(String[] adminData) {
+    public Admin extractModel(String[] adminData) {
 
         final Integer ID_INDEX = 0;
         final Integer FIRST_NAME_INDEX = 1;

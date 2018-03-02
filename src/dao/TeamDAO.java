@@ -14,7 +14,7 @@ public class TeamDAO extends ActiveModelDAOImpl<Team> {
         super(connection);
     }
 
-    public Team getOneObject(String[] teamData) {
+    public Team extractModel(String[] teamData) {
 
         final Integer ID_INDEX = 0;
         final Integer NAME_INDEX = 1;

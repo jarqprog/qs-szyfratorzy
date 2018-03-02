@@ -19,7 +19,7 @@ public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
         super(connection);
     }
 
-    public Mentor getOneObject(String[] record) {
+    public Mentor extractModel(String[] record) {
 
         final Integer ID_INDEX = 0;
         final Integer FIRST_NAME_INDEX = 1;

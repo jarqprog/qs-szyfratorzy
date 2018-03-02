@@ -50,15 +50,15 @@ public class LoginDAOImpl implements LoginDAO {
         switch (table) {
             case ("admins"):
                 AdminDAO adDao = new AdminDAO(connection);
-                user = adDao.getOneObject(userData);
+                user = adDao.extractModel(userData);
                 break;
             case ("mentors"):
                 MentorDAO meDao = new MentorDAO(connection);
-                user = meDao.getOneObject(userData);
+                user = meDao.extractModel(userData);
                 break;
             case ("students"):
                 StudentDAO stDao = new StudentDAO(connection);
-                user = stDao.getOneObject(userData);
+                user = stDao.extractModel(userData);
                 break;
         }
         return user;
