@@ -7,7 +7,7 @@ import tools.DataTool;
 import enums.FilePath;
 import model.Student;
 import view.SchoolView;
-import factory.AbsObjectFactory;
+import factory.GeneralModelFactory;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class ExperienceLevelsController {
 
     public ExperienceLevels getExperienceLevels() {
         if (experienceLevels == null){
-            return AbsObjectFactory.get(ExpLevelsFactoryImpl.class).create();
+            return GeneralModelFactory.get(ExpLevelsFactoryImpl.class).create();
         }
         return experienceLevels;
     }

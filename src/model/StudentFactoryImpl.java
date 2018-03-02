@@ -1,12 +1,13 @@
 package model;
 
+import dao.DaoFactory;
 import dao.StudentDAO;
 
 public class StudentFactoryImpl implements UserFactory {
 
     public Student create(String firstName, String lastName, String password) {
         Student user = new Student(firstName, lastName, password);
-        int id =  new StudentDAO().saveObjectAndGetId(user);
+        int id = DaoFactory.getByType(StudentDAO.class).saveObjectAndGetId(user);
         user.setId(id);
         user.setAttendance(new Attendance(id));
         user.setInventory(new StudentInventory(id));
