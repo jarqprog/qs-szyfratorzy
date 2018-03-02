@@ -1,7 +1,7 @@
 package dao;
 
 import enums.Table;
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Team;
 
 import java.sql.Connection;
@@ -39,7 +39,7 @@ public class TeamDAO extends ActiveModelDAOImpl<Team> {
                     "UPDATE %s SET name='%s' " +
                             "WHERE id=%s;", DEFAULT_TABLE, name, teamId);
         }
-        dao = new TemporaryManager();
+        dao = new ResultSetManager();
         dao.inputData(query);
     }
 

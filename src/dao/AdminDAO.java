@@ -1,7 +1,7 @@
 package dao;
 
 
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Admin;
 import enums.Table;
 
@@ -54,7 +54,7 @@ public class AdminDAO extends ActiveModelDAOImpl<Admin> {
                             "UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', " +
                             "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, adminId);
         }
-        dao = new TemporaryManager();
+        dao = new ResultSetManager();
         dao.inputData(query);
     }
 

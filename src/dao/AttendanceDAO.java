@@ -1,7 +1,7 @@
 package dao;
 
 import enums.Table;
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Attendance;
 
 import java.sql.Connection;
@@ -14,11 +14,11 @@ import java.util.Set;
 public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
 
     private String DEFAULT_TABLE;
-    private TemporaryManager dao;
+    private ResultSetManager dao;
 
     AttendanceDAO(Connection connection) {
         super(connection);
-        dao = new TemporaryManager();
+        dao = new ResultSetManager();
     }
 
     public Map<LocalDate,Boolean> load(int ownerId) {

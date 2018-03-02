@@ -1,7 +1,7 @@
 package dao;
 
 import enums.Table;
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Quest;
 
 import java.sql.Connection;
@@ -49,7 +49,7 @@ public class QuestDAO extends ActiveModelDAOImpl<Quest> {
             query = String.format("UPDATE %s SET name='%s' , type='%s', description='%s', reward=%s , status='%s'" +
                     "WHERE id=%s;", DEFAULT_TABLE, itemName, itemType, itemDescription, reward, status, itemId);
         }
-        TemporaryManager dao = new TemporaryManager();
+        ResultSetManager dao = new ResultSetManager();
         dao.inputData(query);
     }
 

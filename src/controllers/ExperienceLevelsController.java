@@ -1,6 +1,6 @@
 package controllers;
 
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.ExpLevelsFactoryImpl;
 import model.ExperienceLevels;
 import tools.DataTool;
@@ -160,7 +160,7 @@ public class ExperienceLevelsController {
     }
 
     private void importExpLvlFromSql() {
-        TemporaryManager dao = new TemporaryManager();
+        ResultSetManager dao = new ResultSetManager();
         String sqlFilePath = FilePath.UPDATE_EXP_LVL.getPath();
         dao.updateDatabase(sqlFilePath);
     }

@@ -1,6 +1,6 @@
 package dao;
 
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Artifact;
 import model.Inventory;
 
@@ -10,11 +10,11 @@ import java.util.*;
 public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAOImpl<T> {
 
     protected String DEFAULT_TABLE;
-    protected TemporaryManager dao;
+    protected ResultSetManager dao;
 
     InventoryDAO(Connection connection) {
         super(connection);
-        dao = new TemporaryManager();
+        dao = new ResultSetManager();
     }
 
     public Map<Artifact,Integer> load(int ownerId) {

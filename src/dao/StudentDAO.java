@@ -1,6 +1,6 @@
 package dao;
 
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Group;
 import model.Student;
 import model.Team;
@@ -87,7 +87,7 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
                             teamId, groupId, studentId);
         }
 
-        dao = new TemporaryManager();
+        dao = new ResultSetManager();
         dao.inputData(query);
     }
 

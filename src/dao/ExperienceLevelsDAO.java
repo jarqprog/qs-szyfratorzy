@@ -1,7 +1,7 @@
 package dao;
 
 
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.ExperienceLevels;
 import enums.Table;
 
@@ -15,12 +15,12 @@ import java.util.Set;
 public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> {
 
     private String DEFAULT_TABLE;
-    private TemporaryManager dao;
+    private ResultSetManager dao;
 
     public ExperienceLevelsDAO(Connection connection) {
         super(connection);
         setDefaultTable();
-        dao = new TemporaryManager();
+        dao = new ResultSetManager();
     }
 
     public HashMap<String, Integer> load(){

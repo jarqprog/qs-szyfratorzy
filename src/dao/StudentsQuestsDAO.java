@@ -1,7 +1,7 @@
 package dao;
 
 import enums.Table;
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Quest;
 import model.StudentsQuests;
 
@@ -14,11 +14,11 @@ import java.util.Set;
 
 public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
 
-    private TemporaryManager dao;
+    private ResultSetManager dao;
 
     public StudentsQuestsDAO(Connection connection) {
         super(connection);
-        dao = new TemporaryManager();
+        dao = new ResultSetManager();
     }
 
     public Map<Quest,LocalDate> load(int ownerId) {

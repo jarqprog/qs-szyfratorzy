@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
-public class TemporaryManager extends DbManagerImpl {
+public class ResultSetManager extends DbManagerImpl {
     // it will be changed or removed (methods delegates to proper DAOs)
 
     public void inputData(String query){
@@ -57,7 +57,7 @@ public class TemporaryManager extends DbManagerImpl {
         }
     }
 
-    public String[] getObjectData(ResultSet resultSet) {
+    public static String[] getObjectData(ResultSet resultSet) {
         String[] objectData = new String[0];
         try {
             ResultSetMetaData meta = resultSet.getMetaData();

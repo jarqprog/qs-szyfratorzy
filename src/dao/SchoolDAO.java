@@ -1,16 +1,16 @@
 package dao;
 
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 
 import java.util.List;
 import java.util.ArrayList;
 
 public class SchoolDAO {
 
-    private TemporaryManager dao;
+    private ResultSetManager dao;
 
     public SchoolDAO() {
-         dao = new TemporaryManager();
+         dao = new ResultSetManager();
     }
 
     public List<String> getStudentsSetsNames(String studentSetTable) {

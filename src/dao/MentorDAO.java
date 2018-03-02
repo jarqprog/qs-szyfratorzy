@@ -1,6 +1,6 @@
 package dao;
 
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Mentor;
 import enums.Table;
 import model.Group;
@@ -60,7 +60,7 @@ public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
             query = String.format("UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', group_id=%s " +
                     "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, groupId, mentorId);
         }
-        dao = new TemporaryManager();
+        dao = new ResultSetManager();
         dao.inputData(query);
     }
 

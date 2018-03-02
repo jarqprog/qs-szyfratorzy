@@ -4,7 +4,7 @@ import controllers.*;
 import enums.Table;
 import exceptions.LoginFailure;
 import factory.UserControllerFactory;
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.User;
 
 import java.sql.Connection;
@@ -22,7 +22,6 @@ public class LoginDAOImpl implements LoginDAO {
 
     public UserController getUserControllerByLoginAndPassword(String login, String password) throws LoginFailure {
         User user;
-        TemporaryManager dao = new TemporaryManager();
         String [] usersTables = {Table.ADMINS.getName(), Table.MENTORS.getName(), Table.STUDENTS.getName()};
         String statement;
         for(String table : usersTables) {
@@ -33,7 +32,7 @@ public class LoginDAOImpl implements LoginDAO {
                 preparedStatement.setString(2, password);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.isBeforeFirst()) {
-                    String[] userData = dao.getObjectData(resultSet);
+                    String[] userData = ResultSetManager.getObjectData(resultSet);
                     user = extractUser(userData, table);
                     if (user != null) {
                         return UserControllerFactory.getController(user);

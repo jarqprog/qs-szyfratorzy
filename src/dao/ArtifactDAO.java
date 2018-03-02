@@ -1,7 +1,7 @@
 package dao;
 
 import enums.Table;
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Artifact;
 
 import java.sql.Connection;
@@ -47,7 +47,7 @@ public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
             query = String.format("UPDATE %s SET name='%s' , type='%s', description='%s', price=%s " +
                     "WHERE id=%s;", DEFAULT_TABLE, itemName, itemType, itemDescription, price, artifactId);
         }
-        TemporaryManager dao = new TemporaryManager();
+        ResultSetManager dao = new ResultSetManager();
         dao.inputData(query);
     }
 
