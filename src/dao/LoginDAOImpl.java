@@ -3,7 +3,6 @@ package dao;
 import controllers.*;
 import enums.Table;
 import exceptions.LoginFailure;
-import factory.ConnectionFactory;
 import factory.UserControllerFactory;
 import managers.TemporaryManager;
 import model.User;
@@ -15,10 +14,15 @@ import java.sql.SQLException;
 
 public class LoginDAOImpl implements LoginDAO {
 
+    private Connection connection;
+
+    LoginDAOImpl(Connection connection) {
+        this.connection = connection;
+    }
+
     public UserController getUserControllerByLoginAndPassword(String login, String password) throws LoginFailure {
         User user;
         TemporaryManager dao = new TemporaryManager();
-        Connection connection = ConnectionFactory.getConnection();
         String [] usersTables = {Table.ADMINS.getName(), Table.MENTORS.getName(), Table.STUDENTS.getName()};
         String statement;
         for(String table : usersTables) {
@@ -54,7 +58,7 @@ public class LoginDAOImpl implements LoginDAO {
                 user = meDao.getOneObject(userData);
                 break;
             case ("students"):
-                StudentDAO stDao = new StudentDAO();
+                StudentDAO stDao = new StudentDAO(connection);
                 user = stDao.getOneObject(userData);
                 break;
         }

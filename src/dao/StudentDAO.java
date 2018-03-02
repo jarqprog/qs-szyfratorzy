@@ -6,7 +6,11 @@ import model.Student;
 import model.Team;
 import enums.Table;
 
+import java.sql.Connection;
+
 public class StudentDAO extends ActiveModelDAOImpl<Student> {
+
+    private Connection connection;
 
     private String firstName;
     private String lastName;
@@ -17,8 +21,9 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
     private int groupId;
     private int teamId;
 
-    public StudentDAO(){
+    StudentDAO(Connection connection){
         this.DEFAULT_TABLE = Table.STUDENTS.getName();
+        this.connection = connection;
     }
 
     public Student getOneObject(String[] studentData) {
