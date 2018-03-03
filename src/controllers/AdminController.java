@@ -63,7 +63,7 @@ public class AdminController extends UserControllerImpl{
         String firstName = view.getUserInput("Enter first name: ");
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
-        Mentor mentor = GeneralModelFactory.get(MentorFactoryImpl.class)
+        Mentor mentor = GeneralModelFactory.getByType(MentorFactoryImpl.class)
                                 .create(firstName, lastName, password);
         view.clearScreen();
         view.displayMessageInNextLine("Mentor created: \n");

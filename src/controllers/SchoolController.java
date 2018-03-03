@@ -8,34 +8,20 @@ import model.Group;
 import model.Mentor;
 import model.Student;
 import model.Team;
-import enums.Table;
 import view.SchoolView;
 import view.UsersView;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SchoolController {
 
     public static List<Group> getGroups() {
-        List<Group> groups = new ArrayList<>();
-        try {
-            groups = DaoFactory.getByType(GroupDAO.class).getAllObjects();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return groups;
+        return DaoFactory.getByType(GroupDAO.class).getAllModels();
     }
 
     public static List<Team> getTeams() {
-        List<Team> teams = new ArrayList<>();
-        try {
-            teams = DaoFactory.getByType(TeamDAO.class).getAllObjects();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return teams;
+        return DaoFactory.getByType(TeamDAO.class).getAllModels();
     }
 
     public static List<String> getGroupNames() {
@@ -141,23 +127,11 @@ public class SchoolController {
     }
 
     public static List<Student> getAllStudents() {
-        List<Student> students = new ArrayList<>();
-        try {
-            students = DaoFactory.getByType(StudentDAO.class).getAllObjects();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return students;
+        return DaoFactory.getByType(StudentDAO.class).getAllModels();
     }
 
     public static List<Mentor> getAllMentors() {
-        List<Mentor> mentors = new ArrayList<>();
-        try {
-            mentors = DaoFactory.getByType(MentorDAO.class).getAllObjects();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return mentors;
+        return DaoFactory.getByType(MentorDAO.class).getAllModels();
     }
 
     public static Student pickStudentFromList(List<Student> students) {
@@ -172,13 +146,7 @@ public class SchoolController {
     }
 
     private static Team getDefaultTeam(){
-        try {
-            return DaoFactory.getByType(TeamDAO.class).getModelById(1);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return GeneralModelFactory.getByType(TeamFactoryImpl.class).getDefault();
     }
 
     public static Mentor getMentorByUserChoice() {
@@ -206,7 +174,7 @@ public class SchoolController {
             } else if (getTeamNames().contains(teamName)) {
                 view.displayMessageInNextLine("- Team already exist...");
             } else {
-                Team team = GeneralModelFactory.get(TeamFactoryImpl.class)
+                Team team = GeneralModelFactory.getByType(TeamFactoryImpl.class)
                         .create(teamName);
 
                 view.clearScreen();
@@ -229,7 +197,7 @@ public class SchoolController {
             } else if (getGroupNames().contains(groupName)) {
                 view.displayMessageInNextLine("- group already exist...");
             } else {
-                Group newGroup = GeneralModelFactory.get(GroupFactoryImpl.class)
+                Group newGroup = GeneralModelFactory.getByType(GroupFactoryImpl.class)
                         .create(groupName);
                 view.clearScreen();
                 view.displayMessageInNextLine("- group created: \n");
