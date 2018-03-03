@@ -29,14 +29,14 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
         int QUEST_ID_INDEX = 0;
         int DATE_INDEX = 1;
         Map<Quest,LocalDate> questsStock = new HashMap<>();
-        final String query = String.format("SELECT quests_id, date FROM %s WHERE owner_id=%s;",
-                DEFAULT_TABLE, ownerId);
-        List<String[]> dataCollection = dao.getData(query);
-        for(String[] data : dataCollection){
-            int questId = Integer.parseInt(data[QUEST_ID_INDEX]);
-            quest = questDao.getModelById(questId);
-            date = LocalDate.parse(data[DATE_INDEX]);
-            questsStock.put(quest, date);
+        List<String[]> dataCollection = getQuestStockData(ownerId);
+        if (dataCollection != null) {
+            for (String[] data : dataCollection) {
+                int questId = Integer.parseInt(data[QUEST_ID_INDEX]);
+                quest = questDao.getModelById(questId);
+                date = LocalDate.parse(data[DATE_INDEX]);
+                questsStock.put(quest, date);
+            }
         }
         return questsStock;
     }
@@ -67,5 +67,14 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
 
     protected void setDefaultTable(){
         this.DEFAULT_TABLE = Table.STUDENTS_QUESTS.getName();
+    }
+
+    private List<String[]> getQuestStockData(int ownerId) throws SQLException {
+        String query = String.format("SELECT quests_id, date FROM %s WHERE owner_id=?",
+                DEFAULT_TABLE);
+        preparedStatement.setInt(1, ownerId);
+        preparedStatement = connection.prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+        return ResultSetManager.getObjectsDataCollection(resultSet);
     }
 }

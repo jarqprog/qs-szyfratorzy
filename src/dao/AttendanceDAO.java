@@ -5,6 +5,7 @@ import managers.ResultSetManager;
 import model.Attendance;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -21,19 +22,19 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
         dao = new ResultSetManager();
     }
 
-    public Map<LocalDate,Boolean> load(int ownerId) {
+    public Map<LocalDate,Boolean> load(int ownerId) throws SQLException {
         LocalDate date;
         Boolean wasPresent;
         int DATE_INDEX = 0;
         int ATTENDANCE_INDEX = 1;
         Map<LocalDate,Boolean> attendance = new HashMap<>();
-        final String query = String.format("SELECT date, attendance FROM %s WHERE owner_id=%s;",
-                DEFAULT_TABLE, ownerId);
-        List<String[]> dataCollection = dao.getData(query);
-        for(String[] data : dataCollection){
-            date = LocalDate.parse(data[DATE_INDEX]);
-            wasPresent = data[ATTENDANCE_INDEX].equals("1");
-            attendance.put(date, wasPresent);
+        List<String[]> dataCollection = getAttendanceData(ownerId);
+        if(dataCollection != null) {
+            for (String[] data : dataCollection) {
+                date = LocalDate.parse(data[DATE_INDEX]);
+                wasPresent = data[ATTENDANCE_INDEX].equals("1");
+                attendance.put(date, wasPresent);
+            }
         }
         return attendance;
     }
@@ -66,5 +67,14 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
 
     protected void setDefaultTable(){
         this.DEFAULT_TABLE = Table.ATTENDANCE.getName();
+    }
+
+    private List<String[]> getAttendanceData(int ownerId) throws SQLException {
+        String query = String.format("SELECT date, attendance FROM %s WHERE owner_id=?",
+                DEFAULT_TABLE);
+        preparedStatement.setInt(1, ownerId);
+        preparedStatement = connection.prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+        return ResultSetManager.getObjectsDataCollection(resultSet);
     }
 }
