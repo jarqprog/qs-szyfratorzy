@@ -83,26 +83,33 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     }
 
     public int saveObjectAndGetId(T t){
-        String[] idsBefore = getCurrentIdCollection();
-        save(t);
-        String[] idsAfter = getCurrentIdCollection();
-        String id = getNewId(idsBefore, idsAfter);
         try {
+            String[] idsBefore = getCurrentIdCollection();
+            save(t);
+            String[] idsAfter = getCurrentIdCollection();
+            String id = getNewId(idsBefore, idsAfter);
             if(id != null) return Integer.parseInt(id);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(SQLException ex) {
+        System.out.println(ex.getMessage());
         }
         return -1;
     }
 
-    private String[] getCurrentIdCollection() {
-        final String query = String.format("SELECT id FROM %s;", this.DEFAULT_TABLE);
+    private String[] getCurrentIdCollection() throws SQLException {
+        
         int idIndex = 0;
-        ResultSetManager dao = new ResultSetManager();
-        List<String[]> currentIdsCollection = dao.getData(query);
-        String[] currentIds = new String[currentIdsCollection.size()];
-        for (int i = 0; i < currentIdsCollection.size(); i++) {
-            currentIds[i] = currentIdsCollection.get(i)[idIndex];
+        String[] currentIds = new String[0];
+        String query = String.format("Select %s from %s", "id", DEFAULT_TABLE);
+        preparedStatement = connection.prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+        List<String[]> currentIdsCollection = ResultSetManager.getObjectsDataCollection(resultSet);
+
+        if (currentIdsCollection != null) {
+            currentIds = new String[currentIdsCollection.size()];
+            for (int i = 0; i < currentIdsCollection.size(); i++) {
+
+                currentIds[i] = currentIdsCollection.get(i)[idIndex];
+            }
         }
         return currentIds;
     }
