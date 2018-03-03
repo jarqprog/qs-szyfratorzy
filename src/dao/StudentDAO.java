@@ -1,13 +1,11 @@
 package dao;
 
-import factory.GeneralModelFactory;
-import factory.ModelFactory;
 import managers.ResultSetManager;
 import model.*;
 import enums.Table;
 
 import java.sql.Connection;
-import java.sql.SQLException;
+
 
 public class StudentDAO extends ActiveModelDAOImpl<Student> {
 
@@ -47,21 +45,11 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
         teamId = Integer.parseInt(studentData[TEAM_INDEX]);
         groupId = Integer.parseInt(studentData[GROUP_INDEX]);
 
-        Team team = GeneralModelFactory.get(TeamFactoryImpl.class).createUndefined();
 
-        try {
-            team = DaoFactory.getByType(TeamDAO.class).getModelById(teamId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Team team = DaoFactory.getByType(TeamDAO.class).getModelById(teamId);
 
-        Group group = GeneralModelFactory.get(GroupFactoryImpl.class).createUndefined();
 
-        try {
-            group = DaoFactory.getByType(GroupDAO.class).getModelById(groupId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Group group = DaoFactory.getByType(GroupDAO.class).getModelById(groupId);
 
         return new Student(studentId, firstName, lastName, email, password, wallet, experience,
                 team, group);

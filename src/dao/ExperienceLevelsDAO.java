@@ -24,19 +24,24 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
         dao = new ResultSetManager();
     }
 
-    public HashMap<String, Integer> load() throws SQLException {
+    public HashMap<String, Integer> load() {
         String levelName;
         Integer levelValue;
         int LEVEL_NAME_INDEX = 0;
         int LEVEL_VALUE_INDEX = 1;
         HashMap<String, Integer> experienceLevels = new HashMap<>();
-        List<String[]> dataCollection = getExpLevelsData();
-        if (dataCollection != null) {
-            for (String[] data : dataCollection) {
-                levelName = data[LEVEL_NAME_INDEX];
-                levelValue = Integer.parseInt(data[LEVEL_VALUE_INDEX]);
-                experienceLevels.put(levelName, levelValue);
+        try {
+            List<String[]> dataCollection = getExpLevelsData();
+            if (dataCollection != null) {
+                for (String[] data : dataCollection) {
+                    levelName = data[LEVEL_NAME_INDEX];
+                    levelValue = Integer.parseInt(data[LEVEL_VALUE_INDEX]);
+                    experienceLevels.put(levelName, levelValue);
+                }
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return experienceLevels;
     }

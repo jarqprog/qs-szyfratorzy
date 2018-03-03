@@ -7,10 +7,7 @@ import model.Attendance;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
 
@@ -22,7 +19,7 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
         dao = new ResultSetManager();
     }
 
-    public Map<LocalDate,Boolean> load(int ownerId) throws SQLException {
+    public Map<LocalDate,Boolean> load(int ownerId) {
         LocalDate date;
         Boolean wasPresent;
         int DATE_INDEX = 0;
@@ -69,12 +66,17 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
         this.DEFAULT_TABLE = Table.ATTENDANCE.getName();
     }
 
-    private List<String[]> getAttendanceData(int ownerId) throws SQLException {
+    private List<String[]> getAttendanceData(int ownerId) {
         String query = String.format("SELECT date, attendance FROM %s WHERE owner_id=?",
                 DEFAULT_TABLE);
-        preparedStatement.setInt(1, ownerId);
-        preparedStatement = connection.prepareStatement(query);
-        resultSet = preparedStatement.executeQuery();
-        return ResultSetManager.getObjectsDataCollection(resultSet);
+        try {
+            preparedStatement.setInt(1, ownerId);
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            return ResultSetManager.getObjectsDataCollection(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 }

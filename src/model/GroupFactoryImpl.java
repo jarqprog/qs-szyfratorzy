@@ -12,7 +12,7 @@ public class GroupFactoryImpl implements StudentSetFactory {
         return group;
     }
 
-    public Group createUndefined() {
+    public Group getDefault() {
         return new Group(1, "undefined");
     }
 }

@@ -26,9 +26,8 @@ public class Team extends StudentSets {
     }
 
     public void setStudents() {
-        StudentDAO dao = DaoFactory.getByType(StudentDAO.class);
-        final String query = String.format("SELECT * FROM students WHERE team_id=%s;", id);
-        this.students = dao.getManyObjects(query);
+        this.students = DaoFactory.getByType(StudentDAO.class)
+                .getFilteredModelsByIntegerParameter("team_id", id);
     }
 
     public int size(){

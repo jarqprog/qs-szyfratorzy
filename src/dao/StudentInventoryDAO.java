@@ -6,7 +6,7 @@ import java.sql.Connection;
 
 public class StudentInventoryDAO extends InventoryDAO {
 
-    public StudentInventoryDAO(Connection connection) {
+    StudentInventoryDAO(Connection connection) {
         super(connection);
     }
 

@@ -13,7 +13,7 @@ public class TeamFactoryImpl implements StudentSetFactory {
         return team;
     }
 
-    public Team createUndefined() {
+    public Team getDefault() {
         return new Team(1, "undefined");
     }
 }

@@ -22,9 +22,7 @@ public class Attendance extends PassiveModel {
     }
 
     public void setAttendance() {
-        String className = getClass().getSimpleName();
-        AttendanceDAO attendanceDao = DaoFactory.getByModel(className);
-        this.attendance = attendanceDao.load(ownerId);
+        this.attendance = DaoFactory.getByType(AttendanceDAO.class).load(ownerId);
     }
 
     public void clearAttendance() {
