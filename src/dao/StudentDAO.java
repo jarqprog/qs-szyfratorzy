@@ -1,10 +1,12 @@
 package dao;
 
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Group;
 import model.Student;
 import model.Team;
 import enums.Table;
+
+import java.sql.Connection;
 
 public class StudentDAO extends ActiveModelDAOImpl<Student> {
 
@@ -17,11 +19,11 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
     private int groupId;
     private int teamId;
 
-    public StudentDAO(){
-        this.DEFAULT_TABLE = Table.STUDENTS.getName();
+    StudentDAO(Connection connection) {
+        super(connection);
     }
 
-    public Student getOneObject(String[] studentData) {
+    public Student extractModel(String[] studentData) {
 
         final Integer ID_INDEX = 0;
         final Integer FIRST_NAME_INDEX = 1;
@@ -45,11 +47,11 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
         groupId = Integer.parseInt(studentData[GROUP_INDEX]);
 
         final String teamQuery = String.format("SELECT * FROM teams WHERE id=%s;", teamId);
-        TeamDAO teamDAO = new TeamDAO();
+        TeamDAO teamDAO = new TeamDAO(connection);
         Team team = teamDAO.getOneObject(teamQuery);
 
         final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
-        GroupDAO groupDAO = new GroupDAO();
+        GroupDAO groupDAO = new GroupDAO(connection);
         Group group = groupDAO.getOneObject(groupQuery);
 
         return new Student(studentId, firstName, lastName, email, password, wallet, experience,
@@ -85,8 +87,12 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
                             teamId, groupId, studentId);
         }
 
-        dao = new TemporaryManager();
+        dao = new ResultSetManager();
         dao.inputData(query);
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.STUDENTS.getName();
     }
 
 }

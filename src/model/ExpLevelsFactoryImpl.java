@@ -1,8 +1,8 @@
 package model;
 
-import factory.ObjFactory;
+import factory.ModelFactory;
 
-public class ExpLevelsFactoryImpl implements ObjFactory {
+public class ExpLevelsFactoryImpl implements ModelFactory {
 
     public ExperienceLevels create() {
         return new ExperienceLevels();

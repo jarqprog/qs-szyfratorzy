@@ -1,8 +1,8 @@
 package model;
 
-import factory.ObjFactory;
+import factory.ModelFactory;
 
-public interface ItemFactory <T extends Item> extends ObjFactory {
+public interface ItemFactory <T extends Item> extends ModelFactory {
 
     T create(String name, String description, int value);
 }

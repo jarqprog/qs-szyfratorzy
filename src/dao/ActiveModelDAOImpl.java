@@ -1,8 +1,12 @@
 package dao;
 
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.ActiveModel;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,41 +14,60 @@ import java.util.List;
 public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements ActiveModelDAO<T> {
 
     protected String DEFAULT_TABLE;
-    protected TemporaryManager dao;
+    protected ResultSetManager dao;
+    protected Connection connection;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
 
-    public T getObjectById(int id) {
-        String query = "Select * from " + DEFAULT_TABLE + " WHERE id=" + id + ";";
-        return getOneObject(query);
+    ActiveModelDAOImpl(Connection connection) {
+        this.connection = connection;
+        setDefaultTable();
     }
 
-    public List<T> getAllObjects() {
-        String query = "Select * from " + DEFAULT_TABLE + ";";
-        return getObjects(query);
+    public T getModelById(int id) throws SQLException {
+        String query = String.format("Select * from %s WHERE id=?", DEFAULT_TABLE);
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, id);
+        resultSet = preparedStatement.executeQuery();
+        String[] data = ResultSetManager.getObjectData(resultSet);
+        return extractModel(data);
+    }
+
+    public List<T> getAllObjects() throws SQLException {
+        List<T> objects = new ArrayList<>();
+        String query = String.format("Select * from %s", DEFAULT_TABLE);
+        preparedStatement = connection.prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+        List<String[]> dataCollection = ResultSetManager.getObjectsDataCollection(resultSet);
+        if (dataCollection != null) {
+            objects = getManyObjects(dataCollection);
+        }
+        return objects;
     }
 
     private List<T> getManyObjects(List<String[]> dataCollection) {
         List<T> collection = new ArrayList<>();
         for (String [] record : dataCollection) {
-            T object = getOneObject(record);
+            T object = extractModel(record);
             collection.add(object);
         }
         return collection;
     }
 
     public List<T> getManyObjects(String query) {
-        dao = new TemporaryManager();
+        dao = new ResultSetManager();
         List<String[]> dataCollection = dao.getData(query);
         return getManyObjects(dataCollection);
     }
 
-    public abstract T getOneObject(String[] data);
+    public abstract T extractModel(String[] data);
 
     public T getOneObject(String query) {
-        dao = new TemporaryManager();
+        dao = new ResultSetManager();
         String[] record = dao.getData(query).get(0);
         try {
-            return getOneObject(record);
-        } catch(Exception e){
+            return extractModel(record);
+        } catch(NullPointerException e){
             System.out.println(e.getMessage());
             return null;
         }
@@ -60,42 +83,33 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     }
 
     public int saveObjectAndGetId(T t){
-        String[] idsBefore = getCurrentIdCollection();
-        save(t);
-        String[] idsAfter = getCurrentIdCollection();
-        String id = getNewId(idsBefore, idsAfter);
         try {
+            String[] idsBefore = getCurrentIdCollection();
+            save(t);
+            String[] idsAfter = getCurrentIdCollection();
+            String id = getNewId(idsBefore, idsAfter);
             if(id != null) return Integer.parseInt(id);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(SQLException ex) {
+        System.out.println(ex.getMessage());
         }
         return -1;
     }
 
-    private List<T> getObjects(String query) {
-        TemporaryManager dao = new TemporaryManager();
-        List<String[]> dataCollection = dao.getData(query);
-        List<T> objects = new ArrayList<>();
-        try {
-            for (String[] record : dataCollection) {
-                T object = getOneObject(record);
-                objects.add(object);
-            }
-            return objects;
-        } catch (Exception e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            return null;
-        }
-    }
-
-    private String[] getCurrentIdCollection() {
-        final String query = String.format("SELECT id FROM %s;", this.DEFAULT_TABLE);
+    private String[] getCurrentIdCollection() throws SQLException {
+        
         int idIndex = 0;
-        TemporaryManager dao = new TemporaryManager();
-        List<String[]> currentIdsCollection = dao.getData(query);
-        String[] currentIds = new String[currentIdsCollection.size()];
-        for (int i = 0; i < currentIdsCollection.size(); i++) {
-            currentIds[i] = currentIdsCollection.get(i)[idIndex];
+        String[] currentIds = new String[0];
+        String query = String.format("Select %s from %s", "id", DEFAULT_TABLE);
+        preparedStatement = connection.prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+        List<String[]> currentIdsCollection = ResultSetManager.getObjectsDataCollection(resultSet);
+
+        if (currentIdsCollection != null) {
+            currentIds = new String[currentIdsCollection.size()];
+            for (int i = 0; i < currentIdsCollection.size(); i++) {
+
+                currentIds[i] = currentIdsCollection.get(i)[idIndex];
+            }
         }
         return currentIds;
     }
@@ -109,4 +123,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         }
         return null;
     }
+
+    protected abstract void setDefaultTable();
+
 }

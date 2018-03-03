@@ -1,42 +1,40 @@
 package dao;
 
 import enums.Table;
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Quest;
 import model.StudentsQuests;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class StudentsQuestsDAO implements PassiveModelDAO<StudentsQuests> {
+public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
 
-    private String STUDENTS_QUESTS_TABLE;
-    private ActiveModelDAO<Quest> questDao;
-    private TemporaryManager dataBaseDao;
+    private ResultSetManager dao;
 
-    public StudentsQuestsDAO() {
-
-        STUDENTS_QUESTS_TABLE = Table.STUDENTS_QUESTS.getName();
-        questDao = new QuestDAO();
-        dataBaseDao = new TemporaryManager();
-
+    public StudentsQuestsDAO(Connection connection) {
+        super(connection);
+        dao = new ResultSetManager();
     }
 
-    public Map<Quest,LocalDate> load(int ownerId) {
+    public Map<Quest,LocalDate> load(int ownerId) throws SQLException {
+        ActiveModelDAO<Quest> questDao = new QuestDAO(connection);
         Quest quest;
         LocalDate date;
         int QUEST_ID_INDEX = 0;
         int DATE_INDEX = 1;
         Map<Quest,LocalDate> questsStock = new HashMap<>();
         final String query = String.format("SELECT quests_id, date FROM %s WHERE owner_id=%s;",
-                STUDENTS_QUESTS_TABLE, ownerId);
-        List<String[]> dataCollection = dataBaseDao.getData(query);
+                DEFAULT_TABLE, ownerId);
+        List<String[]> dataCollection = dao.getData(query);
         for(String[] data : dataCollection){
             int questId = Integer.parseInt(data[QUEST_ID_INDEX]);
-            quest = questDao.getObjectById(questId);
+            quest = questDao.getModelById(questId);
             date = LocalDate.parse(data[DATE_INDEX]);
             questsStock.put(quest, date);
         }
@@ -46,9 +44,9 @@ public class StudentsQuestsDAO implements PassiveModelDAO<StudentsQuests> {
     public void save(StudentsQuests studentsQuests) {
         int ownerId = studentsQuests.getOwnerId();
         String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;",
-                STUDENTS_QUESTS_TABLE, ownerId);
+                DEFAULT_TABLE, ownerId);
         Map<Quest,LocalDate> questsStock  = studentsQuests.getStock();
-        dataBaseDao.inputData(clearQuery);
+        dao.inputData(clearQuery);
         if(questsStock.size() > 0) {
             Set<Quest> quests = questsStock.keySet();
             LocalDate[] dates = questsStock.values().toArray(new LocalDate[0]);
@@ -60,10 +58,14 @@ public class StudentsQuestsDAO implements PassiveModelDAO<StudentsQuests> {
                 LocalDate localDate = dates[index];
                 date = localDate.toString();
                 String query = String.format("INSERT INTO %s VALUES(null, %s, %s, '%s');",
-                        STUDENTS_QUESTS_TABLE, ownerId, questId, date);
-                dataBaseDao.inputData(query);
+                        DEFAULT_TABLE, ownerId, questId, date);
+                dao.inputData(query);
                 index++;
             }
         }
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.STUDENTS_QUESTS.getName();
     }
 }

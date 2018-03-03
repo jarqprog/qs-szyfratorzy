@@ -3,6 +3,7 @@ package controllers;
 import model.*;
 import view.StudentView;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
@@ -101,7 +102,11 @@ public class StudentController extends UserControllerImpl {
     }
     private void pickQuestToAchieve(){
         StudentsQuestsController studentQuestsCtrl = new StudentsQuestsController();
-        studentQuestsCtrl.runQuestMenu(student);
+        try {
+            studentQuestsCtrl.runQuestMenu(student);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     private void showMyQuests() {
         if(student.getStudentsQuests().isEmpty()) {

@@ -1,5 +1,6 @@
 package model;
 
+import dao.DaoFactory;
 import tools.DataTool;
 import dao.AttendanceDAO;
 
@@ -21,8 +22,9 @@ public class Attendance extends PassiveModel {
     }
 
     public void setAttendance() {
-        AttendanceDAO dao = new AttendanceDAO();
-        this.attendance = dao.load(ownerId);
+        String className = getClass().getSimpleName();
+        AttendanceDAO attendanceDao = DaoFactory.getByModel(className);
+        this.attendance = attendanceDao.load(ownerId);
     }
 
     public void clearAttendance() {
@@ -52,7 +54,7 @@ public class Attendance extends PassiveModel {
 
     public String getPercentageAttendance() {
         setAttendance();
-        String attendacePercentage = "Attendance (in percent): 100%";
+        String attendancePercentage = "Attendance (in percent): 100%";
         int size = attendance.size();
         if(size > 0) {
             int counter = 0;
@@ -64,9 +66,9 @@ public class Attendance extends PassiveModel {
             }
             float attendanceFactor = (float) counter / size;
             int percentageValue = (int) (attendanceFactor * 100);
-            attendacePercentage = "Attendance (in percent): " + String.valueOf(percentageValue) + "%";
+            attendancePercentage = "Attendance (in percent): " + String.valueOf(percentageValue) + "%";
         }
-        return attendacePercentage;
+        return attendancePercentage;
     }
 
     public String toString() {

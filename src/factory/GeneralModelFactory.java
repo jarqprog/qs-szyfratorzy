@@ -2,12 +2,12 @@ package factory;
 
 import model.*;
 
-public class AbsObjectFactory {
+public class GeneralModelFactory {
 
     @SuppressWarnings("unchecked")
-    public static <T extends ObjFactory> T get(Class<T> type) {
+    public static <T extends ModelFactory> T get(Class<T> type) {
 
-        ObjFactory factory = null;
+        ModelFactory factory = null;
         String factoryName = type.getSimpleName();
 
         switch(factoryName) {

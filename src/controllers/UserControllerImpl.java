@@ -1,8 +1,11 @@
 package controllers;
 
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import dao.DaoFactory;
 import model.User;
 import dao.ArtifactDAO;
 import model.Artifact;
@@ -20,11 +23,23 @@ public abstract class  UserControllerImpl implements UserController {
     }
 
     protected List<Artifact> getArtifacts(){
-        return new ArtifactDAO().getAllObjects();
+        List<Artifact> artifacts = new ArrayList<>();
+        try {
+            artifacts = DaoFactory.getByType(ArtifactDAO.class).getAllObjects();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return artifacts;
     }
 
     protected List<Quest> getQuests(){
-        return new QuestDAO().getAllObjects();
+        List<Quest> quests = new ArrayList<>();
+        try {
+            quests = DaoFactory.getByType(QuestDAO.class).getAllObjects();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quests;
     }
 
     protected void executeNotImplementedInfo() {

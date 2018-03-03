@@ -1,15 +1,18 @@
 package model;
 
-import dao.TeamInventoryDAO;
+import java.sql.SQLException;
 
 public class TeamInventory extends Inventory {
 
     TeamInventory(int ownerId) {
         super(ownerId);
-        dao = new TeamInventoryDAO();
     }
 
     public void setStock() {
-        stock = dao.load(ownerId);
+        try {
+            stock = dao.load(ownerId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

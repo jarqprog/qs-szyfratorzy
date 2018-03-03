@@ -1,16 +1,18 @@
 package dao;
 
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Group;
 import enums.Table;
 
+import java.sql.Connection;
+
 public class GroupDAO extends ActiveModelDAOImpl<Group> {
 
-    public GroupDAO(){
-        this.DEFAULT_TABLE = Table.GROUPS.getName();
+    GroupDAO(Connection connection) {
+        super(connection);
     }
 
-    public Group getOneObject(String [] record){
+    public Group extractModel(String [] record){
 
         final Integer ID_INDEX = 0;
         final Integer NAME_INDEX = 1;
@@ -32,7 +34,11 @@ public class GroupDAO extends ActiveModelDAOImpl<Group> {
                     "WHERE id=%s;", DEFAULT_TABLE, name, group_id);
         }
 
-        dao = new TemporaryManager();
+        dao = new ResultSetManager();
         dao.inputData(query);
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.GROUPS.getName();
     }
 }

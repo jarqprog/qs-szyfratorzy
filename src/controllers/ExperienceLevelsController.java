@@ -1,13 +1,15 @@
 package controllers;
 
-import managers.TemporaryManager;
+import exceptions.DatabaseFailure;
+import managers.DbManager;
+import managers.DbManagerImpl;
 import model.ExpLevelsFactoryImpl;
 import model.ExperienceLevels;
 import tools.DataTool;
 import enums.FilePath;
 import model.Student;
 import view.SchoolView;
-import factory.AbsObjectFactory;
+import factory.GeneralModelFactory;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class ExperienceLevelsController {
 
     public ExperienceLevels getExperienceLevels() {
         if (experienceLevels == null){
-            return AbsObjectFactory.get(ExpLevelsFactoryImpl.class).create();
+            return GeneralModelFactory.get(ExpLevelsFactoryImpl.class).create();
         }
         return experienceLevels;
     }
@@ -94,7 +96,7 @@ public class ExperienceLevelsController {
     }
 
     private void restoreDefaultExpLevels() {
-        importExpLvlFromSql();
+        resetExpLevelsFromSqlFile();
         view.clearScreen();
         view.displayMessageInNextLine("Restored:");
         showExperienceLevels();
@@ -159,10 +161,15 @@ public class ExperienceLevelsController {
         }
     }
 
-    private void importExpLvlFromSql() {
-        TemporaryManager dao = new TemporaryManager();
+    private void resetExpLevelsFromSqlFile() {
+        DbManager dbManager = new DbManagerImpl();
         String sqlFilePath = FilePath.UPDATE_EXP_LVL.getPath();
-        dao.updateDatabase(sqlFilePath);
+
+        try {
+            dbManager.updateDatabase(sqlFilePath);
+        } catch (DatabaseFailure databaseFailure) {
+            databaseFailure.printStackTrace();
+        }
     }
 }
 

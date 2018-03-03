@@ -1,15 +1,19 @@
 package dao;
 
 import enums.Table;
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Quest;
+
+import java.sql.Connection;
 
 
 public class QuestDAO extends ActiveModelDAOImpl<Quest> {
 
-    public QuestDAO(){this.DEFAULT_TABLE = Table.QUESTS.getName();}
+    QuestDAO(Connection connection) {
+        super(connection);
+    }
 
-    public Quest getOneObject(String[] record) {
+    public Quest extractModel(String[] record) {
 
         final int ID_INDEX = 0;
         final int NAME_INDEX = 1;
@@ -45,7 +49,11 @@ public class QuestDAO extends ActiveModelDAOImpl<Quest> {
             query = String.format("UPDATE %s SET name='%s' , type='%s', description='%s', reward=%s , status='%s'" +
                     "WHERE id=%s;", DEFAULT_TABLE, itemName, itemType, itemDescription, reward, status, itemId);
         }
-        TemporaryManager dao = new TemporaryManager();
+        ResultSetManager dao = new ResultSetManager();
         dao.inputData(query);
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.QUESTS.getName();
     }
 }

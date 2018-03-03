@@ -55,7 +55,7 @@ public class RootController {
         String login = view.getLogin();
         String password = view.getPassword();
         UserController controller = null;
-        LoginDAO logDao = new LoginDAOImpl();
+        LoginDAO logDao = DaoFactory.getLoginDAO();
         try {
             controller = logDao.getUserControllerByLoginAndPassword(login, password);
         } catch (LoginFailure ex) {

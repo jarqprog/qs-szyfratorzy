@@ -1,8 +1,8 @@
 package model;
 
-import factory.ObjFactory;
+import factory.ModelFactory;
 
-public interface UserFactory<T extends User> extends ObjFactory {
+public interface UserFactory<T extends User> extends ModelFactory {
 
     T create(String firstName, String lastName, String password);
 }

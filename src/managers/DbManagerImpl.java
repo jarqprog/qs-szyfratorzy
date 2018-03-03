@@ -1,8 +1,8 @@
 package managers;
 
 import enums.FilePath;
-import factory.ConnectionFactory;
 
+import java.sql.DriverManager;
 import java.util.Scanner;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,15 +10,32 @@ import java.sql.Statement;
 import java.io.FileNotFoundException;
 import java.io.File;
 
-public class DbManagerImpl extends AbstractManager implements DbManager {
+public class DbManagerImpl extends AbstractManager implements DbManager, DbConnectionGetter {
 
     private final static String SQL_SCRIPT_PATH = FilePath.SQL_SCRIPT.getPath();
     private static final String DATA_BASE_PATH = FilePath.DATA_BASE.getPath();
+    private static final String CLASS_NAME = "org.sqlite.JDBC";
+    private static final String URL = "jdbc:sqlite:" + DATA_BASE_PATH;
 
-    protected Connection connection = null;
+    protected static Connection connection;
 
     public DbManagerImpl() {
         prepareFile(DATA_BASE_PATH);
+    }
+
+    public Connection getConnection() {
+
+        if(connection == null) {
+            try {
+                Class.forName(CLASS_NAME);
+                connection = DriverManager.getConnection(URL);
+                return connection;
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                connection = null;
+            }
+        }
+        return connection;
     }
 
     public void closeConnection() {
@@ -34,7 +51,7 @@ public class DbManagerImpl extends AbstractManager implements DbManager {
     public void prepareDatabase() {
         try {
             if (!isConnected()) {
-                connection = ConnectionFactory.getConnection();
+                connection = getConnection();
             }
             updateDatabase();
         } catch (Exception e){
@@ -61,7 +78,7 @@ public class DbManagerImpl extends AbstractManager implements DbManager {
     }
 
     protected void openConnection() {
-        connection = ConnectionFactory.getConnection();
+        connection = getConnection();
     }
 
     private boolean isConnected() {

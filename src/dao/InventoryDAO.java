@@ -1,33 +1,37 @@
 package dao;
 
-import managers.TemporaryManager;
+import managers.ResultSetManager;
 import model.Artifact;
 import model.Inventory;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
-public abstract class InventoryDAO implements PassiveModelDAO<Inventory> {
+public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAOImpl<T> {
 
     protected String DEFAULT_TABLE;
-    protected TemporaryManager dao;
-    protected ArtifactDAO artifactDAO;
+    protected ResultSetManager dao;
 
+    InventoryDAO(Connection connection) {
+        super(connection);
+        dao = new ResultSetManager();
+    }
 
-    public Map<Artifact,Integer> load(int ownerId) {
+    public Map<Artifact,Integer> load(int ownerId) throws SQLException {
         final String query = String.format("SELECT artifact_id FROM %s WHERE owner_id=%s;",
                 DEFAULT_TABLE, ownerId);
-        dao = new TemporaryManager();
         Map<Artifact,Integer> inventory = new HashMap<>();
         List<String[]> dataCollection = dao.getData(query);
         if (dataCollection.size() > 0) {
-            artifactDAO = new ArtifactDAO();
+            ActiveModelDAO<Artifact> artifactDao = new ArtifactDAO(connection);
             Artifact artifact;
             int ID_INDEX = 0;
             List<Integer> usedArtifactsId = new ArrayList<>(5);
             for (String[] data : dataCollection) {
                 int artifactId = Integer.parseInt(data[ID_INDEX]);
                 if (!usedArtifactsId.contains(artifactId)) {
-                    artifact = artifactDAO.getObjectById(artifactId);
+                    artifact = artifactDao.getModelById(artifactId);
                     inventory.put(artifact, 1);
                 } else {
                     Set<Artifact> items = inventory.keySet();
@@ -44,9 +48,8 @@ public abstract class InventoryDAO implements PassiveModelDAO<Inventory> {
         return inventory;
     }
 
-    public void save(Inventory inventory) {
+    public void save(T inventory) {
         int ownerId = inventory.getOwnerId();
-        dao = new TemporaryManager();
         String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;", DEFAULT_TABLE, ownerId);
         dao.inputData(clearQuery);
         if (! inventory.isEmpty()) {

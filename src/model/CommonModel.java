@@ -1,6 +1,6 @@
 package model;
 
-import factory.DaoFactory;
+import dao.DaoFactory;
 
 public abstract class CommonModel {
     // parent class of all BO in app
@@ -8,6 +8,6 @@ public abstract class CommonModel {
     @SuppressWarnings("unchecked")
     public void saveObject() {
         String className = getClass().getSimpleName();
-        DaoFactory.get(className).save(this);
+        DaoFactory.getByModel(className).save(this);
     }
 }

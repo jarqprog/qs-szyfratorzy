@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.List;
 
-import factory.AbsObjectFactory;
+import factory.GeneralModelFactory;
 import model.MentorFactoryImpl;
 import model.Admin;
 import model.Mentor;
@@ -63,7 +63,7 @@ public class AdminController extends UserControllerImpl{
         String firstName = view.getUserInput("Enter first name: ");
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
-        Mentor mentor = AbsObjectFactory.get(MentorFactoryImpl.class)
+        Mentor mentor = GeneralModelFactory.get(MentorFactoryImpl.class)
                                 .create(firstName, lastName, password);
         view.clearScreen();
         view.displayMessageInNextLine("Mentor created: \n");
