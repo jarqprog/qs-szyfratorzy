@@ -39,11 +39,11 @@ public class SchoolController {
     }
 
     public static List<String> getGroupNames() {
-        return new SchoolDAO().getStudentsSetsNames(Table.GROUPS.getName());
+        return DaoFactory.getSchoolDAO().getGroupNames();
     }
 
     public static List<String> getTeamNames() {
-        return new SchoolDAO().getStudentsSetsNames(Table.TEAMS.getName());
+        return DaoFactory.getSchoolDAO().getTeamNames();
     }
 
     public static void assignMentorToGroup(Mentor mentor){
