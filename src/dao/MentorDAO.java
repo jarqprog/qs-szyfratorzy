@@ -1,11 +1,14 @@
 package dao;
 
+import factory.GeneralModelFactory;
 import managers.ResultSetManager;
+import model.GroupFactoryImpl;
 import model.Mentor;
 import enums.Table;
 import model.Group;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
 
@@ -35,9 +38,13 @@ public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
         password = record[PASSWORD_INDEX];
         groupId = Integer.parseInt(record[GROUP_INDEX]);
 
-        final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
-        GroupDAO groupDAO = new GroupDAO(connection);
-        Group group = groupDAO.getOneObject(groupQuery);
+        Group group = GeneralModelFactory.get(GroupFactoryImpl.class).createUndefined();
+
+        try {
+            group = DaoFactory.getByType(GroupDAO.class).getModelById(groupId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return new Mentor(mentorId, firstName, lastName, email, password, group);
     }
