@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class DataTool {
 
@@ -81,5 +82,15 @@ public class DataTool {
             }
         }
         return false;
+    }
+
+    public static <T> List<T> flattenNestedCollectionList(List<T[]> collectionList) {
+        List<T> outputData = new ArrayList<>();
+        if (collectionList != null) {
+            for (T[] table : collectionList) {
+                Collections.addAll(outputData, table);
+            }
+        }
+        return outputData;
     }
 }

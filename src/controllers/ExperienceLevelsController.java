@@ -29,7 +29,7 @@ public class ExperienceLevelsController {
 
     public ExperienceLevels getExperienceLevels() {
         if (experienceLevels == null){
-            return GeneralModelFactory.get(ExpLevelsFactoryImpl.class).create();
+            return GeneralModelFactory.getByType(ExpLevelsFactoryImpl.class).create();
         }
         return experienceLevels;
     }

@@ -5,11 +5,9 @@ import managers.ResultSetManager;
 import model.Attendance;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
 
@@ -27,13 +25,13 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
         int DATE_INDEX = 0;
         int ATTENDANCE_INDEX = 1;
         Map<LocalDate,Boolean> attendance = new HashMap<>();
-        final String query = String.format("SELECT date, attendance FROM %s WHERE owner_id=%s;",
-                DEFAULT_TABLE, ownerId);
-        List<String[]> dataCollection = dao.getData(query);
-        for(String[] data : dataCollection){
-            date = LocalDate.parse(data[DATE_INDEX]);
-            wasPresent = data[ATTENDANCE_INDEX].equals("1");
-            attendance.put(date, wasPresent);
+        List<String[]> dataCollection = getAttendanceData(ownerId);
+        if(dataCollection.size() > 0) {
+            for (String[] data : dataCollection) {
+                date = LocalDate.parse(data[DATE_INDEX]);
+                wasPresent = data[ATTENDANCE_INDEX].equals("1");
+                attendance.put(date, wasPresent);
+            }
         }
         return attendance;
     }
@@ -66,5 +64,19 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
 
     protected void setDefaultTable(){
         this.DEFAULT_TABLE = Table.ATTENDANCE.getName();
+    }
+
+    private List<String[]> getAttendanceData(int ownerId) {
+        String query = String.format("SELECT date, attendance FROM %s WHERE owner_id=?",
+                DEFAULT_TABLE);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, ownerId);
+            resultSet = preparedStatement.executeQuery();
+            return ResultSetManager.getObjectsDataCollection(resultSet);
+        } catch (SQLException | NullPointerException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 }

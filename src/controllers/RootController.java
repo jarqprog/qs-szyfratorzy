@@ -14,18 +14,18 @@ import view.RootView;
 public class RootController {
 
     private RootView view;
-    private DbManager databaseDao;
+    private DbManager dbManager;
     private boolean shouldExit;
 
     public RootController() {
         view = new RootView();
-        databaseDao = new DbManagerImpl();
+        dbManager = new DbManagerImpl();
         shouldExit = false;
     }
 
     public void runApplication(){
         view.clearScreen();
-        databaseDao.prepareDatabase();
+        dbManager.prepareDatabase();
         view.displayLoadingStars();
         while (! shouldExit){
             handleIntro();
@@ -46,7 +46,7 @@ public class RootController {
                 case "0":
                     shouldExit = true;
                     handleOutro();
-                    databaseDao.closeConnection();
+                    dbManager.closeConnection();
             }
         }
     }
@@ -68,15 +68,15 @@ public class RootController {
 
     private void handleIntro(){
         String introFilePath = FilePath.INTRO.getPath();
-        FileManager dao = new FileManagerImpl(introFilePath);
-        List<String> introData = dao.getData();
+        FileManager manager = new FileManagerImpl(introFilePath);
+        List<String> introData = manager.getData();
         view.displayIntro(introData);
     }
 
     private void handleOutro(){
         String outroFilePath = FilePath.OUTRO.getPath();
-        FileManager dao = new FileManagerImpl(outroFilePath);
-        List<String> outroData = dao.getData();
+        FileManager manager = new FileManagerImpl(outroFilePath);
+        List<String> outroData = manager.getData();
         view.displayOutro(outroData);
     }
 }

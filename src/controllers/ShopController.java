@@ -25,13 +25,7 @@ public class ShopController {
         this.shop = shop;
         this.student = student;
         view = new ShopView();
-        List<Artifact> artifacts = new ArrayList<>();
-        try {
-            artifacts = DaoFactory.getByType(ArtifactDAO.class).getAllObjects();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        shop.setStore(artifacts);
+        shop.setStore(DaoFactory.getByType(ArtifactDAO.class).getAllModels());
     }
 
     public void executeShoppingMenu() {

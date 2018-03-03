@@ -35,9 +35,7 @@ public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
         password = record[PASSWORD_INDEX];
         groupId = Integer.parseInt(record[GROUP_INDEX]);
 
-        final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
-        GroupDAO groupDAO = new GroupDAO(connection);
-        Group group = groupDAO.getOneObject(groupQuery);
+        Group group = DaoFactory.getByType(GroupDAO.class).getModelById(groupId);
 
         return new Mentor(mentorId, firstName, lastName, email, password, group);
     }

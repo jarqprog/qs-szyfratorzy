@@ -18,7 +18,7 @@ public class StudentsQuestsController {
         ActiveModelDAO<Quest> dao;
         view = new UsersView();
         dao = DaoFactory.getByType(QuestDAO.class);
-        List<Quest> quests = dao.getAllObjects();
+        List<Quest> quests = dao.getAllModels();
         view.displayObjects(quests);
         Integer questsId = view.getNotNegativeNumberFromUser("Choose id to pick quest: ");
         Quest pickedQuest = dao.getModelById(questsId);

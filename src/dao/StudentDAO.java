@@ -1,12 +1,11 @@
 package dao;
 
 import managers.ResultSetManager;
-import model.Group;
-import model.Student;
-import model.Team;
+import model.*;
 import enums.Table;
 
 import java.sql.Connection;
+
 
 public class StudentDAO extends ActiveModelDAOImpl<Student> {
 
@@ -46,13 +45,11 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
         teamId = Integer.parseInt(studentData[TEAM_INDEX]);
         groupId = Integer.parseInt(studentData[GROUP_INDEX]);
 
-        final String teamQuery = String.format("SELECT * FROM teams WHERE id=%s;", teamId);
-        TeamDAO teamDAO = new TeamDAO(connection);
-        Team team = teamDAO.getOneObject(teamQuery);
 
-        final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
-        GroupDAO groupDAO = new GroupDAO(connection);
-        Group group = groupDAO.getOneObject(groupQuery);
+        Team team = DaoFactory.getByType(TeamDAO.class).getModelById(teamId);
+
+
+        Group group = DaoFactory.getByType(GroupDAO.class).getModelById(groupId);
 
         return new Student(studentId, firstName, lastName, email, password, wallet, experience,
                 team, group);

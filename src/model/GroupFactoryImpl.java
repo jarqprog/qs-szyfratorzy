@@ -11,4 +11,8 @@ public class GroupFactoryImpl implements StudentSetFactory {
         group.setId(id);
         return group;
     }
+
+    public Group getDefault() {
+        return new Group(1, "undefined");
+    }
 }

@@ -1,8 +1,5 @@
 package controllers;
 
-
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import dao.DaoFactory;
@@ -22,24 +19,12 @@ public abstract class  UserControllerImpl implements UserController {
         view.displayUserWithDetails(user);
     }
 
-    protected List<Artifact> getArtifacts(){
-        List<Artifact> artifacts = new ArrayList<>();
-        try {
-            artifacts = DaoFactory.getByType(ArtifactDAO.class).getAllObjects();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return artifacts;
+    protected List<Artifact> getArtifacts() {
+        return DaoFactory.getByType(ArtifactDAO.class).getAllModels();
     }
 
-    protected List<Quest> getQuests(){
-        List<Quest> quests = new ArrayList<>();
-        try {
-            quests = DaoFactory.getByType(QuestDAO.class).getAllObjects();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return quests;
+    protected List<Quest> getQuests() {
+        return DaoFactory.getByType(QuestDAO.class).getAllModels();
     }
 
     protected void executeNotImplementedInfo() {

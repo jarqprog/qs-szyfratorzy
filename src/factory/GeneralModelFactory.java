@@ -5,7 +5,7 @@ import model.*;
 public class GeneralModelFactory {
 
     @SuppressWarnings("unchecked")
-    public static <T extends ModelFactory> T get(Class<T> type) {
+    public static <T extends ModelFactory> T getByType(Class<T> type) {
 
         ModelFactory factory = null;
         String factoryName = type.getSimpleName();

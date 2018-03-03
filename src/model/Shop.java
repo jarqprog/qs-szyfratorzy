@@ -15,12 +15,7 @@ public class Shop {
         }
 
     public List<Artifact> getStore() {
-        try {
-            store = DaoFactory.getByType(ArtifactDAO.class).getAllObjects();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return store;
+        return DaoFactory.getByType(ArtifactDAO.class).getAllModels();
     }
 
     public void setStore(List<Artifact> store) {this.store = store;}

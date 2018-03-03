@@ -4,7 +4,7 @@ import controllers.UserController;
 import exceptions.LoginFailure;
 
 
-public interface LoginDAO {
+public interface LoginDAO extends SpecialDAO {
 
     UserController getUserControllerByLoginAndPassword(String login, String password) throws LoginFailure;
 }
