@@ -7,10 +7,7 @@ import enums.Table;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> {
@@ -30,18 +27,13 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
         int LEVEL_NAME_INDEX = 0;
         int LEVEL_VALUE_INDEX = 1;
         HashMap<String, Integer> experienceLevels = new HashMap<>();
-        try {
-            List<String[]> dataCollection = getExpLevelsData();
-            if (dataCollection != null) {
-                for (String[] data : dataCollection) {
-                    levelName = data[LEVEL_NAME_INDEX];
-                    levelValue = Integer.parseInt(data[LEVEL_VALUE_INDEX]);
-                    experienceLevels.put(levelName, levelValue);
-                }
+        List<String[]> dataCollection = getExpLevelsData();
+        if (dataCollection.size() > 0) {
+            for (String[] data : dataCollection) {
+                levelName = data[LEVEL_NAME_INDEX];
+                levelValue = Integer.parseInt(data[LEVEL_VALUE_INDEX]);
+                experienceLevels.put(levelName, levelValue);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return experienceLevels;
     }
@@ -68,11 +60,15 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
         this.DEFAULT_TABLE = Table.EXPERIENCE_LEVELS.getName();
     }
 
-    private List<String[]> getExpLevelsData() throws SQLException {
-        String query = String.format("SELECT date, attendance FROM %s",
+    private List<String[]> getExpLevelsData() {
+        String query = String.format("SELECT level_name, level_value FROM %s",
                 DEFAULT_TABLE);
-        preparedStatement = connection.prepareStatement(query);
-        resultSet = preparedStatement.executeQuery();
-        return ResultSetManager.getObjectsDataCollection(resultSet);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            return ResultSetManager.getObjectsDataCollection(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }   return new ArrayList<>();
     }
 }

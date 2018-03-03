@@ -72,8 +72,8 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
     private List<String[]> getQuestStockData(int ownerId) throws SQLException {
         String query = String.format("SELECT quests_id, date FROM %s WHERE owner_id=?",
                 DEFAULT_TABLE);
-        preparedStatement.setInt(1, ownerId);
         preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, ownerId);
         resultSet = preparedStatement.executeQuery();
         return ResultSetManager.getObjectsDataCollection(resultSet);
     }

@@ -26,7 +26,7 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
         int ATTENDANCE_INDEX = 1;
         Map<LocalDate,Boolean> attendance = new HashMap<>();
         List<String[]> dataCollection = getAttendanceData(ownerId);
-        if(dataCollection != null) {
+        if(dataCollection.size() > 0) {
             for (String[] data : dataCollection) {
                 date = LocalDate.parse(data[DATE_INDEX]);
                 wasPresent = data[ATTENDANCE_INDEX].equals("1");
@@ -70,11 +70,11 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
         String query = String.format("SELECT date, attendance FROM %s WHERE owner_id=?",
                 DEFAULT_TABLE);
         try {
-            preparedStatement.setInt(1, ownerId);
             preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, ownerId);
             resultSet = preparedStatement.executeQuery();
             return ResultSetManager.getObjectsDataCollection(resultSet);
-        } catch (SQLException e) {
+        } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
             return new ArrayList<>();
         }

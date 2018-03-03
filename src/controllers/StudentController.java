@@ -4,6 +4,8 @@ import model.*;
 import view.StudentView;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -82,7 +84,9 @@ public class StudentController extends UserControllerImpl {
             int id = view.getIntegerFromUser("Enter artifact id: ");
             StudentInventory inventory = student.getInventory();
             Set<Artifact> artifacts = inventory.getStock().keySet();
-            for(Artifact artifact : artifacts) {
+            List<Artifact> artifactsCopy = new ArrayList<>(artifacts);
+            for (Iterator<Artifact> iterator = artifactsCopy.iterator(); iterator.hasNext();){
+                Artifact artifact = iterator.next();
                 if(id == artifact.getId() && inventory.getStock().get(artifact) == 1) {
                     inventory.removeArtifact(artifact);
                     view.displayMessageInNextLine("- artifact used!");
@@ -130,7 +134,9 @@ public class StudentController extends UserControllerImpl {
             int id = view.getIntegerFromUser("Enter artifact id: ");
             TeamInventory inventory = student.getTeam().getInventory();
             Set<Artifact> artifacts = inventory.getStock().keySet();
-            for(Artifact artifact : artifacts) {
+            List<Artifact> artifactsCopy = new ArrayList<>(artifacts);
+            for (Iterator<Artifact> iterator = artifactsCopy.iterator(); iterator.hasNext();){
+                Artifact artifact = iterator.next();
                 if(id == artifact.getId() && inventory.getStock().get(artifact) == 1) {
                     inventory.removeArtifact(artifact);
                     view.displayMessageInNextLine("- artifact used!");
