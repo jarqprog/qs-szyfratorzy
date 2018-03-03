@@ -54,24 +54,24 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         return collection;
     }
 
-    public List<T> getManyObjects(String query) {
-        dao = new ResultSetManager();
-        List<String[]> dataCollection = dao.getData(query);
-        return getManyObjects(dataCollection);
-    }
+//    public List<T> getManyObjects(String query) {
+//        dao = new ResultSetManager();
+//        List<String[]> dataCollection = dao.getData(query);
+//        return getManyObjects(dataCollection);
+//    }
 
     public abstract T extractModel(String[] data);
 
-    public T getOneObject(String query) {
-        dao = new ResultSetManager();
-        String[] record = dao.getData(query).get(0);
-        try {
-            return extractModel(record);
-        } catch(NullPointerException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
+//    public T getOneObject(String query) {
+//        dao = new ResultSetManager();
+//        String[] record = dao.getData(query).get(0);
+//        try {
+//            return extractModel(record);
+//        } catch(NullPointerException e){
+//            System.out.println(e.getMessage());
+//            return null;
+//        }
+//    }
 
     public abstract void save(T t);
 

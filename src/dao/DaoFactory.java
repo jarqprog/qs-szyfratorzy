@@ -1,8 +1,6 @@
 package dao;
 
 import factory.ConnectionFactory;
-import managers.DbManager;
-import managers.DbManagerImpl;
 
 import java.sql.Connection;
 
@@ -103,6 +101,13 @@ public class DaoFactory {
                 break;
         }
         return (T) dao;
+    }
+
+    public static SchoolDAO getSchoolDAO() {
+
+        connection = ConnectionFactory.getConnection();
+
+        return new SchoolDAOImpl(connection);
     }
 
     public static LoginDAO getLoginDAO() {

@@ -1,26 +1,48 @@
 package dao;
 
+import enums.Table;
 import managers.ResultSetManager;
+import tools.DataTool;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 
-public class SchoolDAO {
+
+public class SchoolDAOImpl implements SchoolDAO {
 
     private Connection connection;
 
-    public SchoolDAO(Connection connection) {
+    SchoolDAOImpl(Connection connection) {
         this.connection = connection;
     }
 
-    public List<String> getStudentsSetsNames(String studentSetTable) {
+    public List<String> getGroupNames() {
+
+        return getStudentsSetsNames(Table.GROUPS);
+    }
+
+    public List<String> getTeamNames() {
+
+        return getStudentsSetsNames(Table.TEAMS);
+    }
+
+    private List<String> getStudentsSetsNames(Table studentSetTable) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
         List<String> names = new ArrayList<>();
-        String query = "SELECT name FROM " + studentSetTable + ";";
-        List<String[]> data = dao.getData(query);
-        int NAME_INDEX = 0;
-        for(String[] table : data){
-            names.add(table[NAME_INDEX]);
+        String query = String.format("SELECT name FROM %s", studentSetTable.getName());
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            List<String[]> dataCollection = ResultSetManager.getObjectsDataCollection(resultSet);
+            names = DataTool.flattenNestedCollectionList(dataCollection);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return names;
     }
