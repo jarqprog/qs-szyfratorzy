@@ -2,15 +2,16 @@ package dao;
 
 import managers.ResultSetManager;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.ArrayList;
 
 public class SchoolDAO {
 
-    private ResultSetManager dao;
+    private Connection connection;
 
-    public SchoolDAO() {
-         dao = new ResultSetManager();
+    public SchoolDAO(Connection connection) {
+        this.connection = connection;
     }
 
     public List<String> getStudentsSetsNames(String studentSetTable) {
