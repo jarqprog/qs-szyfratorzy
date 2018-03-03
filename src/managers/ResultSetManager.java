@@ -28,21 +28,21 @@ public class ResultSetManager {
         }
     }
 
-    public List<String[]> getData(String query){
-
-        connection = ConnectionFactory.getConnection();
-
-        try{
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-
-            return getObjectsDataCollection(resultSet);
-
-        } catch(Exception e){
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            return null;
-        }
-    }
+//    public List<String[]> getData(String query){
+//
+//        connection = ConnectionFactory.getConnection();
+//
+//        try{
+//            Statement statement = connection.createStatement();
+//            ResultSet resultSet = statement.executeQuery(query);
+//
+//            return getObjectsDataCollection(resultSet);
+//
+//        } catch(Exception e){
+//            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+//            return null;
+//        }
+//    }
 
     public static String[] getObjectData(ResultSet resultSet) {
         String[] objectData = new String[0];
