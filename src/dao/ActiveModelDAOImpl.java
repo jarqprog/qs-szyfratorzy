@@ -67,7 +67,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         String[] record = dao.getData(query).get(0);
         try {
             return extractModel(record);
-        } catch(Exception e){
+        } catch(NullPointerException e){
             System.out.println(e.getMessage());
             return null;
         }
