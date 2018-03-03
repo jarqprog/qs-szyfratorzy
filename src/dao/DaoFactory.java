@@ -104,16 +104,14 @@ public class DaoFactory {
     }
 
     public static SchoolDAO getSchoolDAO() {
+        return new SchoolDAOImpl(ConnectionFactory.getConnection());
+    }
 
-        connection = ConnectionFactory.getConnection();
-
-        return new SchoolDAOImpl(connection);
+    public static ShopDAO getShopDAO() {
+        return new ShopDAOImpl(ConnectionFactory.getConnection());
     }
 
     public static LoginDAO getLoginDAO() {
-
-        connection = ConnectionFactory.getConnection();
-
-        return new LoginDAOImpl(connection);
+        return new LoginDAOImpl(ConnectionFactory.getConnection());
     }
 }
