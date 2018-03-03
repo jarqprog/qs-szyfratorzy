@@ -11,19 +11,17 @@ import java.util.*;
 public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAOImpl<T> {
 
     protected String DEFAULT_TABLE;
-    protected ResultSetManager dao;
+    protected ResultSetManager manager;
 
     InventoryDAO(Connection connection) {
         super(connection);
-        dao = new ResultSetManager();
+        manager = new ResultSetManager();
     }
 
     public Map<Artifact,Integer> load(int ownerId) throws SQLException {
-        final String query = String.format("SELECT artifact_id FROM %s WHERE owner_id=%s;",
-                DEFAULT_TABLE, ownerId);
-        Map<Artifact,Integer> inventory = new HashMap<>();
-        List<String[]> dataCollection = dao.getData(query);
-        if (dataCollection.size() > 0) {
+        Map<Artifact, Integer> inventory = new HashMap<>();
+        List<String[]> dataCollection = getArtifactsData(ownerId);
+        if (dataCollection != null) {
             ActiveModelDAO<Artifact> artifactDao = new ArtifactDAO(connection);
             Artifact artifact;
             int ID_INDEX = 0;
@@ -51,7 +49,7 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
     public void save(T inventory) {
         int ownerId = inventory.getOwnerId();
         String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;", DEFAULT_TABLE, ownerId);
-        dao.inputData(clearQuery);
+        manager.inputData(clearQuery);
         if (! inventory.isEmpty()) {
             String query;
             for (Map.Entry<Artifact,Integer> entry : inventory.getStock().entrySet()) {
@@ -60,9 +58,18 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
                 for(int i = 0; i < value; i++) {
                     query = String.format("INSERT INTO %s " +
                             "VALUES(null, %s, %s);", DEFAULT_TABLE, ownerId, artifactId);
-                    dao.inputData(query);
+                    manager.inputData(query);
                 }
             }
         }
+    }
+
+    private List<String[]> getArtifactsData(int ownerId) throws SQLException {
+        String query = String.format("SELECT artifact_id FROM %s WHERE owner_id=?",
+                DEFAULT_TABLE);
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, ownerId);
+        resultSet = preparedStatement.executeQuery();
+        return ResultSetManager.getObjectsDataCollection(resultSet);
     }
 }

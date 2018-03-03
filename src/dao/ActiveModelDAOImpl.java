@@ -55,16 +55,16 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     }
 
 //    public List<T> getManyObjects(String query) {
-//        dao = new ResultSetManager();
-//        List<String[]> dataCollection = dao.getData(query);
+//        manager = new ResultSetManager();
+//        List<String[]> dataCollection = manager.getData(query);
 //        return getManyObjects(dataCollection);
 //    }
 
     public abstract T extractModel(String[] data);
 
 //    public T getOneObject(String query) {
-//        dao = new ResultSetManager();
-//        String[] record = dao.getData(query).get(0);
+//        manager = new ResultSetManager();
+//        String[] record = manager.getData(query).get(0);
 //        try {
 //            return extractModel(record);
 //        } catch(NullPointerException e){
