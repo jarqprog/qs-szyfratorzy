@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements ActiveModelDAO<T> {
+public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements ActiveModelDAO<T>,
+        FilterModelDAO<T> {
 
     protected String DEFAULT_TABLE;
     protected ResultSetManager dao;
@@ -24,28 +25,54 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         setDefaultTable();
     }
 
-    public T getModelById(int id) throws SQLException {
+    public T getModelById(int id)  {
         String query = String.format("Select * from %s WHERE id=?", DEFAULT_TABLE);
-        preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, id);
-        resultSet = preparedStatement.executeQuery();
-        String[] data = ResultSetManager.getObjectData(resultSet);
-        return extractModel(data);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            String[] data = ResultSetManager.getObjectData(resultSet);
+            return extractModel(data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public List<T> getAllObjects() throws SQLException {
+    public List<T> getAllModels() {
         List<T> objects = new ArrayList<>();
         String query = String.format("Select * from %s", DEFAULT_TABLE);
-        preparedStatement = connection.prepareStatement(query);
-        resultSet = preparedStatement.executeQuery();
-        List<String[]> dataCollection = ResultSetManager.getObjectsDataCollection(resultSet);
-        if (dataCollection != null) {
-            objects = getManyObjects(dataCollection);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            List<String[]> dataCollection = ResultSetManager.getObjectsDataCollection(resultSet);
+            if (dataCollection != null) {
+                objects = extractManyModels(dataCollection);
+            }
+            return objects;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
-        return objects;
     }
 
-    private List<T> getManyObjects(List<String[]> dataCollection) {
+    public List<T> getFilteredModelsByIntegerParameter(String sqlTableParameter, int parameterValue) {
+        // sqlTableParameter e.g. "team_id"
+        String query = String.format("SELECT * FROM %s WHERE %s=?",
+                                        DEFAULT_TABLE, sqlTableParameter);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, parameterValue);
+            resultSet = preparedStatement.executeQuery();
+            List<String[]> data = ResultSetManager.getObjectsDataCollection(resultSet);
+            return extractManyModels(data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    protected List<T> extractManyModels(List<String[]> dataCollection) {
         List<T> collection = new ArrayList<>();
         for (String [] record : dataCollection) {
             T object = extractModel(record);
@@ -54,33 +81,9 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         return collection;
     }
 
-//    public List<T> getManyObjects(String query) {
-//        manager = new ResultSetManager();
-//        List<String[]> dataCollection = manager.getData(query);
-//        return getManyObjects(dataCollection);
-//    }
-
-    public abstract T extractModel(String[] data);
-
-//    public T getOneObject(String query) {
-//        manager = new ResultSetManager();
-//        String[] record = manager.getData(query).get(0);
-//        try {
-//            return extractModel(record);
-//        } catch(NullPointerException e){
-//            System.out.println(e.getMessage());
-//            return null;
-//        }
-//    }
+    protected abstract T extractModel(String[] data);
 
     public abstract void save(T t);
-
-    public void saveObjects(List<T> objects) {
-
-        for(T object : objects) {
-            save(object);
-        }
-    }
 
     public int saveObjectAndGetId(T t){
         try {
