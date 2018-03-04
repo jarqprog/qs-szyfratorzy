@@ -3,7 +3,7 @@ package model;
 import dao.DaoFactory;
 import dao.StudentDAO;
 
-public class Group extends StudentSets {
+public class Group extends StudentSet {
 
     public Group(int id, String name) {
         super(id, name);

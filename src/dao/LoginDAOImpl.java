@@ -4,7 +4,7 @@ import controllers.*;
 import enums.Table;
 import exceptions.LoginFailure;
 import factory.UserControllerFactory;
-import managers.ResultSetManager;
+import managers.DbProcessManager;
 import model.User;
 
 import java.sql.Connection;
@@ -32,7 +32,7 @@ public class LoginDAOImpl implements LoginDAO {
                 preparedStatement.setString(2, password);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.isBeforeFirst()) {
-                    String[] userData = ResultSetManager.getObjectData(resultSet);
+                    String[] userData = DbProcessManager.getObjectData(resultSet);
                     user = extractUser(userData, table);
                     if (user != null) {
                         return UserControllerFactory.getController(user);
@@ -49,15 +49,15 @@ public class LoginDAOImpl implements LoginDAO {
         User user = null;
         switch (table) {
             case ("admins"):
-                AdminDAO adDao = new AdminDAO(connection);
+                AdminDAO adDao = DaoFactory.getByType(AdminDAO.class);
                 user = adDao.extractModel(userData);
                 break;
             case ("mentors"):
-                MentorDAO meDao = new MentorDAO(connection);
+                MentorDAO meDao = DaoFactory.getByType(MentorDAO.class);
                 user = meDao.extractModel(userData);
                 break;
             case ("students"):
-                StudentDAO stDao = new StudentDAO(connection);
+                StudentDAO stDao = DaoFactory.getByType(StudentDAO.class);
                 user = stDao.extractModel(userData);
                 break;
         }

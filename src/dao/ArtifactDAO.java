@@ -1,10 +1,11 @@
 package dao;
 
 import enums.Table;
-import managers.ResultSetManager;
+import managers.DbProcessManager;
 import model.Artifact;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
 
@@ -30,25 +31,39 @@ public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
         return new Artifact(id, itemType, itemName, itemDescription, price);
     }
 
-    public void save(Artifact artifact){
+    public boolean save(Artifact artifact){
         String artifactId = String.valueOf(artifact.getId());
         String itemType = String.valueOf(artifact.getType());
         String itemName = artifact.getName();
         String itemDescription = artifact.getDescription();
-        String price = String.valueOf(artifact.getPrice());
-
+        int price = artifact.getPrice();
         String query;
+
         if (artifactId.equals("-1")) {
+
             query = String.format(
                     "INSERT INTO %s " +
-                            "VALUES(null, '%s', '%s', '%s', %s);",
-                    DEFAULT_TABLE, itemName, itemType, itemDescription, price);
+                            "VALUES(null, ?, ?, ?, ?)", DEFAULT_TABLE);
         } else {
-            query = String.format("UPDATE %s SET name='%s' , type='%s', description='%s', price=%s " +
-                    "WHERE id=%s;", DEFAULT_TABLE, itemName, itemType, itemDescription, price, artifactId);
+            query = String.format(
+                    "UPDATE %s SET name=? , type=?, description=?, price=?, " +
+                            "WHERE id=?", DEFAULT_TABLE);
         }
-        ResultSetManager dao = new ResultSetManager();
-        dao.inputData(query);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, itemName);
+            preparedStatement.setString(2, itemType);
+            preparedStatement.setString(3, itemDescription);
+            preparedStatement.setInt(4, price);
+            if(!artifactId.equals("-1")) {
+                preparedStatement.setInt(5, Integer.valueOf(artifactId));
+            }
+            DbProcessManager.executeUpdate(preparedStatement);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     protected void setDefaultTable(){

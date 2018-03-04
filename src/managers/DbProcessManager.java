@@ -1,29 +1,10 @@
 package managers;
 
-import factory.ConnectionFactory;
-
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 
 public class DbProcessManager {
-    // it will be changed or removed (methods delegates to proper DAOs)
-
-//    private Connection connection;
-
-//    public void inputData(String query){
-//
-//        connection = ConnectionFactory.getConnection();
-//        Statement stmt;
-//
-//        try {
-//            stmt = connection.createStatement();
-//            stmt.executeUpdate(query);
-//            stmt.close();
-//        } catch ( Exception e ){
-//            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-//        }
-//    }
 
     public static boolean executeBatch(PreparedStatement preparedStatement) {
         try {

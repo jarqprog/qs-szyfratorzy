@@ -67,8 +67,9 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
                 e.printStackTrace();
                 return false;
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
     protected void setDefaultTable(){

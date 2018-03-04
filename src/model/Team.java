@@ -3,7 +3,7 @@ package model;
 import dao.DaoFactory;
 import dao.StudentDAO;
 
-public class Team extends StudentSets {
+public class Team extends StudentSet {
 
     private TeamInventory inventory;
 

@@ -1,12 +1,11 @@
 package dao;
 
-import managers.ResultSetManager;
 import model.Group;
 import enums.Table;
 
 import java.sql.Connection;
 
-public class GroupDAO extends ActiveModelDAOImpl<Group> {
+public class GroupDAO extends StudentSetDAO<Group> {
 
     GroupDAO(Connection connection) {
         super(connection);
@@ -20,22 +19,6 @@ public class GroupDAO extends ActiveModelDAOImpl<Group> {
         int id = Integer.parseInt(record[ID_INDEX]);
         String name = record[NAME_INDEX];
         return new Group(id, name);
-    }
-
-    public void save(Group group){
-        String group_id = String.valueOf(group.getId());
-        String name = group.getName();
-        String query;
-
-        if(group_id.equals("-1")){
-            query = String.format("INSERT INTO %s VALUES(null, '%s');", DEFAULT_TABLE, name);
-        } else{
-            query = String.format("UPDATE %s SET name='%s' " +
-                    "WHERE id=%s;", DEFAULT_TABLE, name, group_id);
-        }
-
-        dao = new ResultSetManager();
-        dao.inputData(query);
     }
 
     protected void setDefaultTable(){
