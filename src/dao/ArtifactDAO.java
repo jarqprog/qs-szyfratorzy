@@ -31,7 +31,7 @@ public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
         return new Artifact(id, itemType, itemName, itemDescription, price);
     }
 
-    public boolean save(Artifact artifact){
+    public boolean saveModel(Artifact artifact){
         String artifactId = String.valueOf(artifact.getId());
         String itemType = String.valueOf(artifact.getType());
         String itemName = artifact.getName();

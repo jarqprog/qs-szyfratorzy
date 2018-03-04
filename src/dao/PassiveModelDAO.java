@@ -4,5 +4,5 @@ import model.PassiveModel;
 
 public interface PassiveModelDAO<T extends PassiveModel> extends CommonModelDAO<T> {
 
-    boolean save(T t);
+    boolean saveModel(T t);
 }

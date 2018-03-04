@@ -32,7 +32,7 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
         return attendance;
     }
 
-    public boolean save(Attendance attendance) {
+    public boolean saveModel(Attendance attendance) {
 
         Map<LocalDate,Boolean> datesWithAttendance = attendance.getAttendance();
 
@@ -40,8 +40,7 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
             int ownerId = attendance.getOwnerId();
             try {
                 clearAttendance(ownerId);
-                String query = String.format("INSERT OR IGNORE INTO %s VALUES(null, ?, ?) " +
-                                "WHERE owner_id=?", DEFAULT_TABLE);
+                String query = String.format("INSERT INTO %s VALUES(null, ?, ?, ?) ", DEFAULT_TABLE);
                 preparedStatement = connection.prepareStatement(query);
                 Set<LocalDate> dates = datesWithAttendance.keySet();
                 Boolean[] presences = datesWithAttendance.values().toArray(new Boolean[0]);

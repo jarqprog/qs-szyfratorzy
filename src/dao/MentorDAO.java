@@ -41,7 +41,7 @@ public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
         return new Mentor(mentorId, firstName, lastName, email, password, group);
     }
 
-    public boolean save(Mentor mentor){
+    public boolean saveModel(Mentor mentor){
         String mentorId = String.valueOf(mentor.getId());
         firstName = mentor.getFirstName();
         lastName = mentor.getLastName();

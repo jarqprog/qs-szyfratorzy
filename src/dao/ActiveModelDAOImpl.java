@@ -89,12 +89,12 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
 
     protected abstract T extractModel(String[] data);
 
-    public abstract boolean save(T t);
+    public abstract boolean saveModel(T t);
 
     public int saveObjectAndGetId(T t){
         try {
             String[] idsBefore = getCurrentIdCollection();
-            save(t);
+            saveModel(t);
             String[] idsAfter = getCurrentIdCollection();
             String id = getNewId(idsBefore, idsAfter);
             if(id != null) return Integer.parseInt(id);

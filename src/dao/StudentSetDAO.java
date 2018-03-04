@@ -12,7 +12,7 @@ public abstract class StudentSetDAO<T extends StudentSet> extends ActiveModelDAO
         super(connection);
     }
 
-    public boolean save(T studentSet) {
+    public boolean saveModel(T studentSet) {
         String studentSetId = String.valueOf(studentSet.getId());
         String name = studentSet.getName();
         String query;

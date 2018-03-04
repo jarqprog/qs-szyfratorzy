@@ -56,7 +56,7 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
                 team, group);
     }
 
-    public boolean save(Student student){
+    public boolean saveModel(Student student){
         String studentId = String.valueOf(student.getId());
         firstName = student.getFirstName();
         lastName = student.getLastName();

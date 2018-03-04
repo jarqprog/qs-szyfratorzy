@@ -32,7 +32,7 @@ public class QuestDAO extends ActiveModelDAOImpl<Quest> {
         return new Quest(id, itemType, itemName, itemDescription, reward, status);
     }
 
-    public boolean save(Quest quest){
+    public boolean saveModel(Quest quest){
         String id = String.valueOf(quest.getId());
         String type = String.valueOf(quest.getType());
         String name = quest.getName();

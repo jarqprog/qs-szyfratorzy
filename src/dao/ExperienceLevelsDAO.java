@@ -1,6 +1,5 @@
 package dao;
 
-
 import managers.DbProcessManager;
 import model.ExperienceLevels;
 import enums.Table;
@@ -9,12 +8,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
-
 public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> {
 
-    public ExperienceLevelsDAO(Connection connection) {
+    ExperienceLevelsDAO(Connection connection) {
         super(connection);
-        setDefaultTable();
     }
 
     public HashMap<String, Integer> load() {
@@ -34,7 +31,7 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
         return experienceLevels;
     }
 
-    public boolean save(ExperienceLevels experienceLevels) {
+    public boolean saveModel(ExperienceLevels experienceLevels) {
 
         Map<String,Integer> levelsAndValues = experienceLevels.getLevels();
 

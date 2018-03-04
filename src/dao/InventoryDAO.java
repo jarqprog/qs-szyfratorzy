@@ -14,10 +14,10 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
         super(connection);
     }
 
-    public Map<Artifact,Integer> load(int ownerId) throws SQLException {
+    public Map<Artifact,Integer> load(int ownerId) {
         Map<Artifact, Integer> inventory = new HashMap<>();
         List<String[]> dataCollection = getArtifactsData(ownerId);
-        if (dataCollection != null) {
+        if (dataCollection.size() > 0) {
             ActiveModelDAO<Artifact> artifactDao = DaoFactory.getByType(ArtifactDAO.class);
             Artifact artifact;
             int ID_INDEX = 0;
@@ -42,7 +42,7 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
         return inventory;
     }
 
-    public boolean save(T inventory) {
+    public boolean saveModel(T inventory) {
         int ownerId = inventory.getOwnerId();
         if (! inventory.isEmpty()) {
             try {
@@ -70,18 +70,23 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
         return false;
     }
 
-    private List<String[]> getArtifactsData(int ownerId) throws SQLException {
+    private List<String[]> getArtifactsData(int ownerId) {
         String query = String.format("SELECT artifact_id FROM %s WHERE owner_id=?",
                 DEFAULT_TABLE);
-        preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, ownerId);
-        resultSet = preparedStatement.executeQuery();
-        DbProcessManager.closePreparedStatement(preparedStatement);
-        return DbProcessManager.getObjectsDataCollection(resultSet);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, ownerId);
+            resultSet = preparedStatement.executeQuery();
+            DbProcessManager.closePreparedStatement(preparedStatement);
+            return DbProcessManager.getObjectsDataCollection(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     private void clearInventory(int ownerId) throws SQLException {
-        String clearQuery = String.format("DELETE %s WHERE owner_id=?", DEFAULT_TABLE);
+        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", DEFAULT_TABLE);
         preparedStatement = connection.prepareStatement(clearQuery);
         preparedStatement.setInt(1, ownerId);
         DbProcessManager.executeUpdate(preparedStatement);

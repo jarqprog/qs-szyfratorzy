@@ -8,10 +8,7 @@ import model.StudentsQuests;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
 
@@ -19,14 +16,15 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
         super(connection);
     }
 
-    public Map<Quest,LocalDate> load(int ownerId) throws SQLException {
+    public Map<Quest,LocalDate> load(int ownerId) {
         Quest quest;
         LocalDate date;
         int QUEST_ID_INDEX = 0;
         int DATE_INDEX = 1;
         Map<Quest,LocalDate> questsStock = new HashMap<>();
+
         List<String[]> dataCollection = getQuestStockData(ownerId);
-        if (dataCollection != null) {
+        if (dataCollection.size() > 0) {
             for (String[] data : dataCollection) {
                 int questId = Integer.parseInt(data[QUEST_ID_INDEX]);
                 quest = DaoFactory.getByType(QuestDAO.class).getModelById(questId);
@@ -37,7 +35,7 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
         return questsStock;
     }
 
-    public boolean save(StudentsQuests studentsQuests) {
+    public boolean saveModel(StudentsQuests studentsQuests) {
 
         Map<Quest,LocalDate> questsStock  = studentsQuests.getStock();
 
@@ -77,13 +75,18 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
         this.DEFAULT_TABLE = Table.STUDENTS_QUESTS.getName();
     }
 
-    private List<String[]> getQuestStockData(int ownerId) throws SQLException {
+    private List<String[]> getQuestStockData(int ownerId) {
         String query = String.format("SELECT quests_id, date FROM %s WHERE owner_id=?",
                 DEFAULT_TABLE);
-        preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, ownerId);
-        resultSet = preparedStatement.executeQuery();
-        return DbProcessManager.getObjectsDataCollection(resultSet);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, ownerId);
+            resultSet = preparedStatement.executeQuery();
+            return DbProcessManager.getObjectsDataCollection(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     private void clearQuests(int ownerId) throws SQLException {

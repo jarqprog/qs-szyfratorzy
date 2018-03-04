@@ -35,7 +35,7 @@ public class AdminDAO extends ActiveModelDAOImpl<Admin> {
         return new Admin(adminId, firstName, lastName, email, password);
     }
 
-    public boolean save(Admin admin){
+    public boolean saveModel(Admin admin){
         String adminId = String.valueOf(admin.getId());
         firstName = admin.getFirstName();
         lastName = admin.getLastName();
