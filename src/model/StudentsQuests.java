@@ -23,7 +23,7 @@ public class StudentsQuests extends StudentStock {
     public void addItem(Quest quest) {
         LocalDate date = LocalDate.now();
         stock.put(quest, date);
-        saveObject();
+        saveModel();
     }
 
     public Map<Quest,LocalDate> getStock() {

@@ -31,7 +31,7 @@ public abstract class Item extends ActiveModel {
 
     public void setName(String name){
         this.name = name;
-        saveObject();
+        saveModel();
     }
 
     public char getType(){
@@ -40,7 +40,7 @@ public abstract class Item extends ActiveModel {
 
     public void setType(char type){
         this.type = type;
-        saveObject();
+        saveModel();
     }
 
     public String getDescription(){
@@ -54,7 +54,7 @@ public abstract class Item extends ActiveModel {
 
     public void setDescription(String description){
         this.description = description;
-        saveObject();
+        saveModel();
     }
 
     public boolean compare(Item item){

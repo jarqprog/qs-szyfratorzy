@@ -25,7 +25,7 @@ public class Artifact extends Item {
 
     public void setPrice(int newPrice){
         price = newPrice;
-        saveObject();
+        saveModel();
     }
 
     public String toString(){

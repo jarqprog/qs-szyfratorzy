@@ -29,7 +29,7 @@ public class Quest extends Item {
 
     public void setReward(int reward){
         this.reward = reward;
-        saveObject();
+        saveModel();
     }
 
     public String getStatus() {
@@ -38,7 +38,7 @@ public class Quest extends Item {
 
     public void setStatus(String status) {
         this.status = status;
-        saveObject();
+        saveModel();
     }
 
 

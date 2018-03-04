@@ -78,7 +78,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         }
     }
 
-    protected List<T> extractManyModels(List<String[]> dataCollection) {
+    private List<T> extractManyModels(List<String[]> dataCollection) {
         List<T> collection = new ArrayList<>();
         for (String [] record : dataCollection) {
             T object = extractModel(record);

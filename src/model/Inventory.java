@@ -25,27 +25,27 @@ public abstract class Inventory extends StudentStock {
 
     public void addItem(Artifact item) {
         stock.put(item, 1);
-        saveObject();
+        saveModel();
     }
 
     public void removeArtifact(Artifact artifact) {
         Artifact inStockItem = getItem(artifact.getId());
         stock.remove(inStockItem);
-        saveObject();
+        saveModel();
     }
 
     public void modifyQuantity(Artifact artifact) {
         Artifact inStockItem = getItem(artifact.getId());
         Integer value = stock.get(inStockItem);
         stock.put(inStockItem, value + 1);
-        saveObject();
+        saveModel();
     }
 
     public void decreaseQuantity(Artifact artifact) {
         Artifact inStockItem = getItem(artifact.getId());
         Integer value = stock.get(inStockItem);
         stock.put(inStockItem, value - 1);
-        saveObject();
+        saveModel();
     }
 
     public Artifact getItem(int itemId) {

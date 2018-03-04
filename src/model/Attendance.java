@@ -18,7 +18,7 @@ public class Attendance extends PassiveModel {
 
     public void setAttendance(Map<LocalDate, Boolean> attendance) {
         this.attendance = attendance;
-        saveObject();
+        saveModel();
     }
 
     public void setAttendance() {
@@ -27,14 +27,14 @@ public class Attendance extends PassiveModel {
 
     public void clearAttendance() {
         this.attendance.clear();
-        saveObject();
+        saveModel();
     }
 
     public void addAttendance(Boolean attendance) {
         setAttendance();
         LocalDate date = LocalDate.now();
         this.attendance.put(date, attendance);
-        saveObject();
+        saveModel();
     }
 
     public void addAttendance(LocalDate date, Boolean attendance) {

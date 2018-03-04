@@ -26,7 +26,7 @@ public abstract class StudentSet extends ActiveModel {
 
     public void setName(String name){
         this.name = name;
-        saveObject();
+        saveModel();
     }
 
     public List<Student> getStudents(){
