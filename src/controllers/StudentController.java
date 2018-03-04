@@ -106,11 +106,7 @@ public class StudentController extends UserControllerImpl {
     }
     private void pickQuestToAchieve(){
         StudentsQuestsController studentQuestsCtrl = new StudentsQuestsController();
-        try {
-            studentQuestsCtrl.runQuestMenu(student);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        studentQuestsCtrl.runQuestMenu(student);
     }
     private void showMyQuests() {
         if(student.getStudentsQuests().isEmpty()) {
