@@ -8,6 +8,6 @@ public abstract class CommonModel {
     @SuppressWarnings("unchecked")
     public void saveObject() {
         String className = getClass().getSimpleName();
-        DaoFactory.getByModel(className).save(this);
+        DaoFactory.getByModel(className).saveModel(this);
     }
 }

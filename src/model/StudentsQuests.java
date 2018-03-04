@@ -1,6 +1,5 @@
 package model;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,12 +31,7 @@ public class StudentsQuests extends StudentStock {
     }
 
     public void setStock() {
-        StudentsQuestsDAO dao = DaoFactory.getByType(StudentsQuestsDAO.class);
-        try {
-            stock = dao.load(ownerId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        stock = DaoFactory.getByType(StudentsQuestsDAO.class).load(ownerId);
     }
 
     public Quest getItem(int itemId) {
