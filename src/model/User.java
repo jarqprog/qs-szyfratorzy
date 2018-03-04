@@ -30,7 +30,7 @@ public abstract class User extends ActiveModel {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-        saveObject();
+        saveModel();
     }
 
     public String getLastName() {
@@ -43,7 +43,7 @@ public abstract class User extends ActiveModel {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-        saveObject();
+        saveModel();
     }
 
     public String getEmail() {
@@ -52,7 +52,7 @@ public abstract class User extends ActiveModel {
 
     public void setEmail(String email) {
         this.email = email;
-        saveObject();
+        saveModel();
     }
 
     public String getPassword() {
@@ -61,7 +61,7 @@ public abstract class User extends ActiveModel {
 
     public void setPassword(String password) {
         this.password = password;
-        saveObject();
+        saveModel();
     }
 
     public String getRole() {

@@ -6,8 +6,8 @@ public abstract class CommonModel {
     // parent class of all BO in app
 
     @SuppressWarnings("unchecked")
-    public void saveObject() {
+    public void saveModel() {
         String className = getClass().getSimpleName();
-        DaoFactory.getByModel(className).save(this);
+        DaoFactory.getByModel(className).saveModel(this);
     }
 }

@@ -46,7 +46,7 @@ public class Student extends User {
 
     public void setGroup(Group group) {
         this.group = group;
-        saveObject();
+        saveModel();
     }
 
     public void setGroup() {
@@ -60,7 +60,7 @@ public class Student extends User {
 
     public void setTeam(Team team) {
         this.team = team;
-        saveObject();
+        saveModel();
     }
 
     public void setTeam() {
@@ -95,7 +95,7 @@ public class Student extends User {
 
     public void setWallet(int value) {
         this.wallet = value;
-        saveObject();
+        saveModel();
     }
 
     public int getExperience() {
@@ -104,7 +104,7 @@ public class Student extends User {
 
     public void setExperience(int value) {
         this.experience = value;
-        saveObject();
+        saveModel();
     }
 
     public void setExperienceLevel(String level, int experienceToNextLevel) {

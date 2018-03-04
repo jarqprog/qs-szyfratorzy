@@ -1,30 +1,46 @@
 package managers;
 
-import factory.ConnectionFactory;
-
-import java.sql.Connection;
+import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 
-public class ResultSetManager {
-    // it will be changed or removed (methods delegates to proper DAOs)
+public class DbProcessManager {
 
-    private Connection connection;
-
-    public void inputData(String query){
-
-        connection = ConnectionFactory.getConnection();
-        Statement stmt;
-
+    public static boolean executeBatch(PreparedStatement preparedStatement) {
         try {
-            stmt = connection.createStatement();
-            stmt.executeUpdate(query);
-            stmt.close();
-        } catch ( Exception e ){
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (preparedStatement != null) {
+                closePreparedStatement(preparedStatement);
+            }
+        }
+        return true;
+    }
+
+    public static boolean executeUpdate(PreparedStatement preparedStatement) {
+        try {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (preparedStatement != null) {
+                closePreparedStatement(preparedStatement);
+            }
+        }
+        return true;
+    }
+
+    public static void closePreparedStatement(PreparedStatement preparedStatement) {
+        if(preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -27,7 +27,7 @@ public class Mentor extends User {
 
     public void setGroup(Group group) {
         this.group = group;
-        saveObject();
+        saveModel();
     }
 
     public void setGroup() {

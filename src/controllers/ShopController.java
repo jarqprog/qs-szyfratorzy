@@ -123,7 +123,7 @@ public class ShopController {
                         view.displayObject(artifact);
                         break;
                     } else {
-                        view.displayMessageInNextLine("- not enough coolcoins to buy this artifact!");
+                        view.displayMessageInNextLine("- not enough CoolCoins to buy this artifact!");
                     }
                 }
             }

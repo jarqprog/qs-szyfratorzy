@@ -1,11 +1,12 @@
 package dao;
 
-import managers.ResultSetManager;
+import managers.DbProcessManager;
 import model.Mentor;
 import enums.Table;
 import model.Group;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
 
@@ -40,7 +41,7 @@ public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
         return new Mentor(mentorId, firstName, lastName, email, password, group);
     }
 
-    public void save(Mentor mentor){
+    public boolean saveModel(Mentor mentor){
         String mentorId = String.valueOf(mentor.getId());
         firstName = mentor.getFirstName();
         lastName = mentor.getLastName();
@@ -51,15 +52,30 @@ public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
         String query;
         if (mentorId.equals("-1")) {
             query = String.format(
-                            "INSERT INTO %s " +
-                            "VALUES(null, '%s', '%s', '%s', '%s', %s);",
-                    DEFAULT_TABLE, firstName, lastName, email, password, groupId);
+                "INSERT INTO %s " +
+                "VALUES(null, ?, ?, ?, ?, ?)", DEFAULT_TABLE);
         } else {
-            query = String.format("UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', group_id=%s " +
-                    "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, groupId, mentorId);
+            query = String.format(
+                    "UPDATE %s SET first_name=?, last_name=?, email=?, password=?, group_id=?" +
+                            "WHERE id=?", DEFAULT_TABLE);
         }
-        dao = new ResultSetManager();
-        dao.inputData(query);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, password);
+            preparedStatement.setInt(5, groupId);
+            if(!mentorId.equals("-1")) {
+                preparedStatement.setInt(6, Integer.valueOf(mentorId));
+            }
+            DbProcessManager.executeUpdate(preparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 
     protected void setDefaultTable(){

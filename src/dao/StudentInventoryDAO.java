@@ -1,10 +1,11 @@
 package dao;
 
 import enums.Table;
+import model.StudentInventory;
 
 import java.sql.Connection;
 
-public class StudentInventoryDAO extends InventoryDAO {
+public class StudentInventoryDAO extends InventoryDAO<StudentInventory> {
 
     StudentInventoryDAO(Connection connection) {
         super(connection);

@@ -3,18 +3,18 @@ package model;
 import java.util.List;
 import java.util.ArrayList;
 
-public abstract class StudentSets extends ActiveModel {
+public abstract class StudentSet extends ActiveModel {
 
     protected String name;
     protected List<Student> students;
 
-    public StudentSets(int id, String name) {
+    public StudentSet(int id, String name) {
         this(name);
         this.id = id;
         this.students = new ArrayList<>();
     }
 
-    StudentSets(String name) {
+    StudentSet(String name) {
         this.id = -1;
         this.name = name;
         this.students = new ArrayList<>();
@@ -26,7 +26,7 @@ public abstract class StudentSets extends ActiveModel {
 
     public void setName(String name){
         this.name = name;
-        saveObject();
+        saveModel();
     }
 
     public List<Student> getStudents(){

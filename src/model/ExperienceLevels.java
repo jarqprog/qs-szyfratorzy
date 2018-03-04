@@ -18,7 +18,7 @@ public class ExperienceLevels extends PassiveModel {
 
     public void setLevels(Map<String, Integer> levels){
         this.levels = levels;
-        saveObject();
+        saveModel();
     }
 
     public void setLevels(){
@@ -27,7 +27,7 @@ public class ExperienceLevels extends PassiveModel {
 
     public void clearLevels(){
         this.levels.clear();
-        saveObject();
+        saveModel();
     }
 
     public Map<String, Integer> getLevels(){
@@ -38,7 +38,7 @@ public class ExperienceLevels extends PassiveModel {
         setLevels();  // update levels
         if(! levels.containsValue(0)){
             levels.put("basic", 0);  // exp levels always should have level with value 0
-            saveObject();
+            saveModel();
         }
         return levels;
     }
@@ -46,7 +46,7 @@ public class ExperienceLevels extends PassiveModel {
     public void addLevel(String levelName, Integer levelValue) {
         if(! levels.containsValue(levelValue)) {
             this.levels.put(levelName, levelValue);
-            saveObject();
+            saveModel();
         }
     }
 
@@ -64,7 +64,7 @@ public class ExperienceLevels extends PassiveModel {
 
     public void removeLevel(String levelName){
         this.levels.remove (levelName, this.levels.get(levelName));
-        saveObject();
+        saveModel();
     }
 
     public String toString(){
@@ -86,10 +86,10 @@ public class ExperienceLevels extends PassiveModel {
     }
 
     @Override
-    public void saveObject(){
+    public void saveModel(){
         if(! levels.containsValue(0)){
             levels.put("basic", 0);  // exp levels always should have level with value 0
         }
-        super.saveObject();
+        super.saveModel();
     }
 }

@@ -1,6 +1,5 @@
 package model;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,9 +21,11 @@ public class StudentsQuests extends StudentStock {
     }
 
     public void addItem(Quest quest) {
-        LocalDate date = LocalDate.now();
-        stock.put(quest, date);
-        saveObject();
+        if (! containsQuest(quest)) {
+            LocalDate date = LocalDate.now();
+            stock.put(quest, date);
+            saveModel();
+        }
     }
 
     public Map<Quest,LocalDate> getStock() {
@@ -32,12 +33,7 @@ public class StudentsQuests extends StudentStock {
     }
 
     public void setStock() {
-        StudentsQuestsDAO dao = DaoFactory.getByType(StudentsQuestsDAO.class);
-        try {
-            stock = dao.load(ownerId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        stock = DaoFactory.getByType(StudentsQuestsDAO.class).load(ownerId);
     }
 
     public Quest getItem(int itemId) {
@@ -50,10 +46,10 @@ public class StudentsQuests extends StudentStock {
         return null;
     }
 
-    public boolean containsItem(Quest item) {
+    public boolean containsQuest(Quest quest) {
         for (Map.Entry<Quest,LocalDate> entry : stock.entrySet()) {
             Quest inStockItem = entry.getKey();
-            if (inStockItem.getName().equals(item.getName())) {
+            if (inStockItem.getName().equals(quest.getName())) {
                 return true;
             }
         }

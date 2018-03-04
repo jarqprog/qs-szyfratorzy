@@ -4,6 +4,6 @@ import model.CommonModel;
 
 public interface CommonModelDAO<T extends CommonModel> {
 
-    void save(T t);
+    boolean saveModel(T t);
 
 }

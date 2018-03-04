@@ -1,6 +1,6 @@
 package dao;
 
-import managers.ResultSetManager;
+import managers.DbProcessManager;
 import model.Artifact;
 import model.Inventory;
 
@@ -10,19 +10,15 @@ import java.util.*;
 
 public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAOImpl<T> {
 
-    protected String DEFAULT_TABLE;
-    protected ResultSetManager manager;
-
     InventoryDAO(Connection connection) {
         super(connection);
-        manager = new ResultSetManager();
     }
 
-    public Map<Artifact,Integer> load(int ownerId) throws SQLException {
+    public Map<Artifact,Integer> load(int ownerId) {
         Map<Artifact, Integer> inventory = new HashMap<>();
         List<String[]> dataCollection = getArtifactsData(ownerId);
-        if (dataCollection != null) {
-            ActiveModelDAO<Artifact> artifactDao = new ArtifactDAO(connection);
+        if (dataCollection.size() > 0) {
+            ActiveModelDAO<Artifact> artifactDao = DaoFactory.getByType(ArtifactDAO.class);
             Artifact artifact;
             int ID_INDEX = 0;
             List<Integer> usedArtifactsId = new ArrayList<>(5);
@@ -46,30 +42,54 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
         return inventory;
     }
 
-    public void save(T inventory) {
+    public boolean saveModel(T inventory) {
         int ownerId = inventory.getOwnerId();
-        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;", DEFAULT_TABLE, ownerId);
-        manager.inputData(clearQuery);
-        if (! inventory.isEmpty()) {
-            String query;
-            for (Map.Entry<Artifact,Integer> entry : inventory.getStock().entrySet()) {
-                Integer artifactId = entry.getKey().getId();
-                Integer value = entry.getValue();
-                for(int i = 0; i < value; i++) {
-                    query = String.format("INSERT INTO %s " +
-                            "VALUES(null, %s, %s);", DEFAULT_TABLE, ownerId, artifactId);
-                    manager.inputData(query);
+        try {
+            clearInventory(ownerId);
+            if (! inventory.isEmpty()) {
+                String query = String.format("INSERT INTO %s VALUES(null, ?, ?)",
+                                            DEFAULT_TABLE);
+                preparedStatement = connection.prepareStatement(query);
+                for (Map.Entry<Artifact,Integer> entry : inventory.getStock().entrySet()) {
+                    Integer artifactId = entry.getKey().getId();
+                    Integer value = entry.getValue();
+                    for(int i = 0; i < value; i++) {
+                        preparedStatement.setInt(1, ownerId);
+                        preparedStatement.setInt(2, artifactId);
+                        preparedStatement.addBatch();
+                    }
+
                 }
+                DbProcessManager.executeBatch(preparedStatement);
+                return true;
             }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
-    private List<String[]> getArtifactsData(int ownerId) throws SQLException {
+    private List<String[]> getArtifactsData(int ownerId) {
         String query = String.format("SELECT artifact_id FROM %s WHERE owner_id=?",
                 DEFAULT_TABLE);
-        preparedStatement = connection.prepareStatement(query);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, ownerId);
+            resultSet = preparedStatement.executeQuery();
+            return DbProcessManager.getObjectsDataCollection(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DbProcessManager.closePreparedStatement(preparedStatement);
+        }
+        return new ArrayList<>();
+    }
+
+    private void clearInventory(int ownerId) throws SQLException {
+        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", DEFAULT_TABLE);
+        preparedStatement = connection.prepareStatement(clearQuery);
         preparedStatement.setInt(1, ownerId);
-        resultSet = preparedStatement.executeQuery();
-        return ResultSetManager.getObjectsDataCollection(resultSet);
+        DbProcessManager.executeUpdate(preparedStatement);
     }
 }

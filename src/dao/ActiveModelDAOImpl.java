@@ -1,6 +1,6 @@
 package dao;
 
-import managers.ResultSetManager;
+import managers.DbProcessManager;
 import model.ActiveModel;
 
 import java.sql.Connection;
@@ -15,10 +15,10 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         FilterModelDAO<T> {
 
     protected String DEFAULT_TABLE;
-    protected ResultSetManager dao;
+    protected DbProcessManager dao;
     protected Connection connection;
-    private PreparedStatement preparedStatement;
-    private ResultSet resultSet;
+    protected PreparedStatement preparedStatement;
+    protected ResultSet resultSet;
 
     ActiveModelDAOImpl(Connection connection) {
         this.connection = connection;
@@ -31,11 +31,13 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
-            String[] data = ResultSetManager.getObjectData(resultSet);
+            String[] data = DbProcessManager.getObjectData(resultSet);
             return extractModel(data);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        } finally {
+            DbProcessManager.closePreparedStatement(preparedStatement);
         }
     }
 
@@ -45,7 +47,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         try {
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
-            List<String[]> dataCollection = ResultSetManager.getObjectsDataCollection(resultSet);
+            List<String[]> dataCollection = DbProcessManager.getObjectsDataCollection(resultSet);
             if (dataCollection != null) {
                 objects = extractManyModels(dataCollection);
             }
@@ -53,6 +55,8 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         } catch (SQLException e) {
             e.printStackTrace();
             return new ArrayList<>();
+        } finally {
+            DbProcessManager.closePreparedStatement(preparedStatement);
         }
     }
 
@@ -64,15 +68,17 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, parameterValue);
             resultSet = preparedStatement.executeQuery();
-            List<String[]> data = ResultSetManager.getObjectsDataCollection(resultSet);
+            List<String[]> data = DbProcessManager.getObjectsDataCollection(resultSet);
             return extractManyModels(data);
         } catch (SQLException e) {
             e.printStackTrace();
             return new ArrayList<>();
+        } finally {
+            DbProcessManager.closePreparedStatement(preparedStatement);
         }
     }
 
-    protected List<T> extractManyModels(List<String[]> dataCollection) {
+    private List<T> extractManyModels(List<String[]> dataCollection) {
         List<T> collection = new ArrayList<>();
         for (String [] record : dataCollection) {
             T object = extractModel(record);
@@ -83,12 +89,12 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
 
     protected abstract T extractModel(String[] data);
 
-    public abstract void save(T t);
+    public abstract boolean saveModel(T t);
 
     public int saveObjectAndGetId(T t){
         try {
             String[] idsBefore = getCurrentIdCollection();
-            save(t);
+            saveModel(t);
             String[] idsAfter = getCurrentIdCollection();
             String id = getNewId(idsBefore, idsAfter);
             if(id != null) return Integer.parseInt(id);
@@ -105,7 +111,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         String query = String.format("Select %s from %s", "id", DEFAULT_TABLE);
         preparedStatement = connection.prepareStatement(query);
         resultSet = preparedStatement.executeQuery();
-        List<String[]> currentIdsCollection = ResultSetManager.getObjectsDataCollection(resultSet);
+        List<String[]> currentIdsCollection = DbProcessManager.getObjectsDataCollection(resultSet);
 
         if (currentIdsCollection != null) {
             currentIds = new String[currentIdsCollection.size()];
@@ -114,6 +120,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
                 currentIds[i] = currentIdsCollection.get(i)[idIndex];
             }
         }
+        DbProcessManager.closePreparedStatement(preparedStatement);
         return currentIds;
     }
 
