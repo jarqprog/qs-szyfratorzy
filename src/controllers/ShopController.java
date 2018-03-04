@@ -1,7 +1,5 @@
 package controllers;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -55,6 +53,10 @@ public class ShopController {
                     isDone = true;
                     break;
             }
+            if (isDone) {
+                view.clearScreen();
+                view.displayMessageInNextLine("Thank You for Your visit!");
+            }
         }
     }
 
@@ -72,17 +74,16 @@ public class ShopController {
                         pay(artifact);
                         view.displayMessageInNextLine("You've bought " + artifact.getName() + "!\n");
                         view.displayObject(artifact);
+                        view.handlePause();
                         break;
 
                     } else {
                         view.displayMessageInNextLine("- this artifact is to expensive!");
+                        view.handlePause();
                     }
                 }
             }
-            view.handlePause();
         }
-        view.clearScreen();
-        view.displayMessageInNextLine("Thank You for Your visit!");
     }
 
     private void finalizeTransaction(Artifact artifact) {
@@ -121,16 +122,15 @@ public class ShopController {
                         finalizeTeamTransaction(artifact);
                         view.displayMessageInNextLine("- You've bought " + artifact.getName() + "!\n");
                         view.displayObject(artifact);
+                        view.handlePause();
                         break;
                     } else {
                         view.displayMessageInNextLine("- not enough CoolCoins to buy this artifact!");
+                        view.handlePause();
                     }
                 }
             }
-            view.handlePause();
         }
-        view.clearScreen();
-        view.displayMessageInNextLine("Thank You for Your visit!");
     }
 
     private boolean checkTeamResources(Artifact artifact) {
