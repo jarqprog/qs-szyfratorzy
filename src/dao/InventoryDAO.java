@@ -77,10 +77,11 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, ownerId);
             resultSet = preparedStatement.executeQuery();
-            DbProcessManager.closePreparedStatement(preparedStatement);
             return DbProcessManager.getObjectsDataCollection(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DbProcessManager.closePreparedStatement(preparedStatement);
         }
         return new ArrayList<>();
     }
