@@ -6,8 +6,6 @@ import java.io.IOException;
 
 public class AbstractManager {
 
-    protected String filePath;
-
     protected void createNewFile(String filePath){
         try {
             File f = new File(filePath);
