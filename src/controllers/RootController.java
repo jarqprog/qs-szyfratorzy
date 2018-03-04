@@ -28,7 +28,7 @@ public class RootController {
         dbManager.prepareDatabase();
         view.displayLoadingStars();
         while (! shouldExit){
-            handleIntro();
+            executeIntro();
             String[] correctChoices = {"0", "1", "2"};
             view.displayLoginScreen();
             String userInput = view.getMenuChoice(correctChoices);
@@ -41,11 +41,11 @@ public class RootController {
                     }
                     break;
                 case "2":
-                    view.displayAuthors();
+                    showAuthors();
                     break;
                 case "0":
                     shouldExit = true;
-                    handleOutro();
+                    executeOutro();
                     dbManager.closeConnection();
             }
         }
@@ -66,17 +66,26 @@ public class RootController {
         return controller;
     }
 
-    private void handleIntro(){
+    private void executeIntro() {
         String introFilePath = FilePath.INTRO.getPath();
         FileManager manager = new FileManagerImpl(introFilePath);
         List<String> introData = manager.getData();
-        view.displayIntro(introData);
+        view.displayCollectionData(introData);
     }
 
-    private void handleOutro(){
+    private void executeOutro() {
         String outroFilePath = FilePath.OUTRO.getPath();
         FileManager manager = new FileManagerImpl(outroFilePath);
         List<String> outroData = manager.getData();
-        view.displayOutro(outroData);
+        view.displayCollectionData(outroData);
+        view.handlePause();
+    }
+
+    private void showAuthors() {
+        String authorsFilePath = FilePath.AUTHORS.getPath();
+        FileManager manager = new FileManagerImpl(authorsFilePath);
+        List<String> introData = manager.getData();
+        view.displayCollectionData(introData);
+        view.handlePause();
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 public abstract class AbstractView {
 
+    private final String PROGRAM_NAME_AND_VERSION = " Quest Store v3.0 ";
     protected String emptyLines = "\n\n";
     protected String tab = "    ";
     protected String doubleTab = "      ";  // use while displaying collections
@@ -28,22 +29,6 @@ public abstract class AbstractView {
     public <T> void displayObjects(List<T> objects) {
         for (T object : objects){
             displayObject(object);
-        }
-    }
-
-    public void displayHeaderAndElementsOfCollection(String[] collection, String header) {
-        System.out.println(emptyLines + tab + header);
-        for(String element : collection) {
-        System.out.println(tab + element);
-        }
-    }
-
-    public void displayEnumeratedElementsOfCollection(String[] collection) {
-        System.out.println(emptyLines);
-        int number = 0;
-        for(String element : collection){
-        System.out.println(tab + "[" + number + "] " + element);
-        number ++;
         }
     }
 
@@ -153,12 +138,11 @@ public abstract class AbstractView {
 
     private void drawHeading() {
         int terminalWidth = 140;
-        String programName = " Quest Store v2.0 ";
-        int additionalHeadingWidth = (terminalWidth - programName.length()) / 2;
+        int additionalHeadingWidth = (terminalWidth - PROGRAM_NAME_AND_VERSION.length()) / 2;
         String additionalHeading = DataTool.getMultipliedString("=", additionalHeadingWidth);
         String heading = DataTool.getMultipliedString("=", terminalWidth);
         System.out.println(emptyLines + tab + heading);
-        System.out.println(tab + additionalHeading + programName + additionalHeading);
+        System.out.println(tab + additionalHeading + PROGRAM_NAME_AND_VERSION + additionalHeading);
         System.out.println(tab + heading);
         System.out.println(emptyLines);
     }

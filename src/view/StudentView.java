@@ -33,7 +33,7 @@ public class StudentView extends UsersView {
                 "[4] display teammates",
                 "[5] display team inventory",
                 "[6] use team artifact",
-                "[7] display quest to achieve",
+                "[7] achieve quest",
                 "[8] display my quests",
                 "[9] display my attendance",
                 "[0] exit"};
