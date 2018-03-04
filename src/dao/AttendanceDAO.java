@@ -40,7 +40,7 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
             int ownerId = attendance.getOwnerId();
             try {
                 clearAttendance(ownerId);
-                String query = String.format("INSERT INTO %s VALUES(null, ?, ?) " +
+                String query = String.format("INSERT OR IGNORE INTO %s VALUES(null, ?, ?) " +
                                 "WHERE owner_id=?", DEFAULT_TABLE);
                 preparedStatement = connection.prepareStatement(query);
                 Set<LocalDate> dates = datesWithAttendance.keySet();
@@ -62,7 +62,6 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
                     index++;
                 }
                 DbProcessManager.executeBatch(preparedStatement);
-                connection.commit();
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
@@ -91,7 +90,7 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
     }
 
     private void clearAttendance(int ownerId) throws SQLException {
-        String clearQuery = String.format("DELETE %s WHERE owner_id=?", DEFAULT_TABLE);
+        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", DEFAULT_TABLE);
         preparedStatement = connection.prepareStatement(clearQuery);
         preparedStatement.setInt(1, ownerId);
         DbProcessManager.executeUpdate(preparedStatement);

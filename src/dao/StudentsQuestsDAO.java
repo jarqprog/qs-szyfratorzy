@@ -64,7 +64,6 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
                     index++;
                 }
                 DbProcessManager.executeBatch(preparedStatement);
-                connection.commit();
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;

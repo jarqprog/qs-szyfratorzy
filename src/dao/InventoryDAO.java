@@ -61,7 +61,6 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
 
                 }
                 DbProcessManager.executeBatch(preparedStatement);
-                connection.commit();
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;

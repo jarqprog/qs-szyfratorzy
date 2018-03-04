@@ -54,7 +54,6 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
                     index++;
                 }
                 DbProcessManager.executeBatch(preparedStatement);
-                connection.commit();
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
