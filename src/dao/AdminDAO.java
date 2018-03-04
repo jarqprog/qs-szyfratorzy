@@ -1,11 +1,11 @@
 package dao;
 
-
-import managers.ResultSetManager;
+import managers.DbProcessManager;
 import model.Admin;
 import enums.Table;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class AdminDAO extends ActiveModelDAOImpl<Admin> {
 
@@ -35,7 +35,7 @@ public class AdminDAO extends ActiveModelDAOImpl<Admin> {
         return new Admin(adminId, firstName, lastName, email, password);
     }
 
-    public void save(Admin admin){
+    public boolean save(Admin admin){
         String adminId = String.valueOf(admin.getId());
         firstName = admin.getFirstName();
         lastName = admin.getLastName();
@@ -46,16 +46,28 @@ public class AdminDAO extends ActiveModelDAOImpl<Admin> {
 
             query = String.format(
                             "INSERT INTO %s " +
-                            "VALUES(null, '%s', '%s', '%s', '%s');",
-                    DEFAULT_TABLE, firstName, lastName, email, password);
+                            "VALUES(null, ?, ?, ?, ?)", DEFAULT_TABLE);
         } else{
-
             query = String.format(
-                            "UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', " +
-                            "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, adminId);
+                            "UPDATE %s SET first_name=?, last_name=?, email=?, password=?, " +
+                            "WHERE id=?", DEFAULT_TABLE);
         }
-        dao = new ResultSetManager();
-        dao.inputData(query);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, password);
+
+            if(!adminId.equals("-1")) {
+                preparedStatement.setInt(5, Integer.valueOf(adminId));
+            }
+            DbProcessManager.executeUpdate(preparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     protected void setDefaultTable(){

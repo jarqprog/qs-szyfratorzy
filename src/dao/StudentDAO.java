@@ -1,10 +1,11 @@
 package dao;
 
-import managers.ResultSetManager;
+import managers.DbProcessManager;
 import model.*;
 import enums.Table;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 
 public class StudentDAO extends ActiveModelDAOImpl<Student> {
@@ -55,7 +56,7 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
                 team, group);
     }
 
-    public void save(Student student){
+    public boolean save(Student student){
         String studentId = String.valueOf(student.getId());
         firstName = student.getFirstName();
         lastName = student.getLastName();
@@ -70,22 +71,33 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
         if(studentId.equals("-1")){
 
             query = String.format(
-                            "INSERT INTO %s " +
-                            "VALUES(null, '%s', '%s', '%s', '%s', %s, %s, %s, %s);",
-                    DEFAULT_TABLE, firstName, lastName, email, password, wallet,
-                    experience, teamId, groupId);
-
-        } else{
-
+                    "INSERT INTO %s " +
+                    "VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?)", DEFAULT_TABLE);
+        } else {
             query = String.format(
-                            "UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', " +
-                            " wallet=%s, experience=%s, team_id=%s, group_id=%s " +
-                            "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, wallet, experience,
-                            teamId, groupId, studentId);
+                    "UPDATE %s SET first_name=?, last_name=?, email=?, password=?, wallet=?, " +
+                            "experience=?, team_id=?, group_id=? " +
+                            "WHERE id=?", DEFAULT_TABLE);
         }
-
-        dao = new ResultSetManager();
-        dao.inputData(query);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, password);
+            preparedStatement.setInt(5, wallet);
+            preparedStatement.setInt(6, experience);
+            preparedStatement.setInt(7, teamId);
+            preparedStatement.setInt(8, groupId);
+            if(!studentId.equals("-1")) {
+                preparedStatement.setInt(9, Integer.valueOf(studentId));
+            }
+            DbProcessManager.executeUpdate(preparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     protected void setDefaultTable(){
