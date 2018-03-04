@@ -44,9 +44,9 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
 
     public boolean saveModel(T inventory) {
         int ownerId = inventory.getOwnerId();
-        if (! inventory.isEmpty()) {
-            try {
-                clearInventory(ownerId);
+        try {
+            clearInventory(ownerId);
+            if (! inventory.isEmpty()) {
                 String query = String.format("INSERT INTO %s VALUES(null, ?, ?)",
                                             DEFAULT_TABLE);
                 preparedStatement = connection.prepareStatement(query);
@@ -61,13 +61,13 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
 
                 }
                 DbProcessManager.executeBatch(preparedStatement);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
+                return true;
             }
-            return true;
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     private List<String[]> getArtifactsData(int ownerId) {
