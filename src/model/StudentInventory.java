@@ -1,5 +1,8 @@
 package model;
 
+import dao.DaoFactory;
+import dao.StudentInventoryDAO;
+
 public class StudentInventory extends Inventory {
 
 
@@ -8,6 +11,6 @@ public class StudentInventory extends Inventory {
     }
 
     public void setStock() {
-        stock = dao.load(ownerId);
+        stock = DaoFactory.getByType(StudentInventoryDAO.class).load(ownerId);
     }
 }

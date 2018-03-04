@@ -1,8 +1,5 @@
 package model;
 
-import dao.DaoFactory;
-import dao.InventoryDAO;
-
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
@@ -10,13 +7,10 @@ import java.util.Set;
 public abstract class Inventory extends StudentStock {
 
     protected Map<Artifact,Integer> stock;
-    protected InventoryDAO<Inventory> dao;
 
     protected Inventory(int ownerId) {
         super(ownerId);
         stock = new HashMap<>();
-        String className = getClass().getSimpleName();
-        dao = DaoFactory.getByModel(className);
     }
 
     public Map<Artifact,Integer> getStock() {
