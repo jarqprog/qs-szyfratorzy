@@ -1,7 +1,7 @@
 package dao;
 
 
-import managers.ResultSetManager;
+import managers.DbProcessManager;
 import model.ExperienceLevels;
 import enums.Table;
 
@@ -12,13 +12,9 @@ import java.util.*;
 
 public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> {
 
-    private String DEFAULT_TABLE;
-    private ResultSetManager dao;
-
     public ExperienceLevelsDAO(Connection connection) {
         super(connection);
         setDefaultTable();
-        dao = new ResultSetManager();
     }
 
     public HashMap<String, Integer> load() {
@@ -38,22 +34,34 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
         return experienceLevels;
     }
 
-    public void save(ExperienceLevels experienceLevels) {
-        String clearTableQuery = String.format("DELETE FROM %s;", DEFAULT_TABLE);
-        dao.inputData(clearTableQuery);
+    public boolean save(ExperienceLevels experienceLevels) {
+
         Map<String,Integer> levelsAndValues = experienceLevels.getLevels();
+
         if(levelsAndValues.size() > 0) {
-            Set<String> levels = levelsAndValues.keySet();
-            Integer[] values = levelsAndValues.values().toArray(new Integer[0]);
-            int index = 0;
-            for(String level : levels) {
-                int value = values[index];
-                String query = String.format("INSERT INTO %s VALUES(null, '%s', %s);",
-                        DEFAULT_TABLE, level, value);
-                dao.inputData(query);
-                index++;
+            try {
+                clearExpLevels();
+                String query = String.format("INSERT INTO %s VALUES(null, ?, ?) ", DEFAULT_TABLE);
+                preparedStatement = connection.prepareStatement(query);
+                Set<String> levels = levelsAndValues.keySet();
+                Integer[] values = levelsAndValues.values().toArray(new Integer[0]);
+                int index = 0;
+                for(String level : levels) {
+                    int value = values[index];
+                    preparedStatement.setString(1, level);
+                    preparedStatement.setInt(2, value);
+                    preparedStatement.addBatch();
+                    index++;
+                }
+                DbProcessManager.executeBatch(preparedStatement);
+                connection.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
             }
+            return true;
         }
+        return false;
     }
 
     protected void setDefaultTable(){
@@ -66,9 +74,15 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
         try {
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
-            return ResultSetManager.getObjectsDataCollection(resultSet);
+            return DbProcessManager.getObjectsDataCollection(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }   return new ArrayList<>();
+    }
+
+    private void clearExpLevels() throws SQLException {
+        String clearQuery = String.format("DELETE FROM %s", DEFAULT_TABLE);
+        preparedStatement = connection.prepareStatement(clearQuery);
+        DbProcessManager.executeUpdate(preparedStatement);
     }
 }
