@@ -1,5 +1,6 @@
-package dao;
+package model;
 
+import dao.ActiveModelDAOImpl;
 import managers.DbProcessManager;
 import model.Admin;
 import enums.Table;

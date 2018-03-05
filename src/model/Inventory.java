@@ -8,7 +8,7 @@ public abstract class Inventory extends StudentStock {
 
     protected Map<Artifact,Integer> stock;
 
-    protected Inventory(int ownerId) {
+    Inventory(int ownerId) {
         super(ownerId);
         stock = new HashMap<>();
     }

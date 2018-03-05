@@ -1,11 +1,8 @@
 package model;
 
-import dao.DaoFactory;
-import dao.StudentDAO;
-
 public class Group extends StudentSet {
 
-    public Group(int id, String name) {
+    Group(int id, String name) {
         super(id, name);
     }
 
@@ -14,7 +11,7 @@ public class Group extends StudentSet {
     }
 
     public void setStudents() {
-        this.students = DaoFactory.getByType(StudentDAO.class)
+        this.students = ModelDaoFactory.getByType(StudentDAO.class)
                 .getFilteredModelsByIntegerParameter("group_id", id);
     }
 }

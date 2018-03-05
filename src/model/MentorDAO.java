@@ -1,9 +1,8 @@
-package dao;
+package model;
 
+import dao.ActiveModelDAOImpl;
 import managers.DbProcessManager;
-import model.Mentor;
 import enums.Table;
-import model.Group;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -36,7 +35,7 @@ public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
         password = record[PASSWORD_INDEX];
         groupId = Integer.parseInt(record[GROUP_INDEX]);
 
-        Group group = DaoFactory.getByType(GroupDAO.class).getModelById(groupId);
+        Group group = ModelDaoFactory.getByType(GroupDAO.class).getModelById(groupId);
 
         return new Mentor(mentorId, firstName, lastName, email, password, group);
     }

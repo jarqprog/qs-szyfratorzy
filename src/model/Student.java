@@ -24,7 +24,7 @@ public class Student extends User {
         role = Role.STUDENT.getName();
     }
 
-    public Student(int id, String firstName, String lastName, String email,
+    Student(int id, String firstName, String lastName, String email,
                    String password, int wallet, int experience,
                    Team team, Group group) {
 

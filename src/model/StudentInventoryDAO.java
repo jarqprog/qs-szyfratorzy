@@ -1,5 +1,6 @@
-package dao;
+package model;
 
+import dao.InventoryDAO;
 import enums.Table;
 import model.StudentInventory;
 

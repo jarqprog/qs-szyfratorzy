@@ -1,8 +1,6 @@
 package model;
 
-import dao.DaoFactory;
 import tools.DataTool;
-import dao.ExperienceLevelsDAO;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -22,7 +20,7 @@ public class ExperienceLevels extends PassiveModel {
     }
 
     public void setLevels(){
-        this.levels = DaoFactory.getByType(ExperienceLevelsDAO.class).load();
+        this.levels = ModelDaoFactory.getByType(ExperienceLevelsDAO.class).load();
     }
 
     public void clearLevels(){

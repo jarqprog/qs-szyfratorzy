@@ -14,7 +14,7 @@ public class Quest extends Item {
         this.status = QuestsStatus.AVAILABLE.getName();
     }
 
-    public Quest(int id, char type, String name, String description, int reward, String status){
+    Quest(int id, char type, String name, String description, int reward, String status){
         super(name, description);
         this.id = id;
         this.type = type;

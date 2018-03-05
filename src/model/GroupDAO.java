@@ -1,5 +1,6 @@
-package dao;
+package model;
 
+import dao.StudentSetDAO;
 import model.Group;
 import enums.Table;
 

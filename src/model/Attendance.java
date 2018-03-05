@@ -1,8 +1,6 @@
 package model;
 
-import dao.DaoFactory;
 import tools.DataTool;
-import dao.AttendanceDAO;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -22,7 +20,7 @@ public class Attendance extends PassiveModel {
     }
 
     public void setAttendance() {
-        this.attendance = DaoFactory.getByType(AttendanceDAO.class).load(ownerId);
+        this.attendance = ModelDaoFactory.getByType(AttendanceDAO.class).load(ownerId);
     }
 
     public void clearAttendance() {

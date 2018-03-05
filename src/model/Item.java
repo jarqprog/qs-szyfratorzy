@@ -10,7 +10,7 @@ public abstract class Item extends ActiveModel {
     protected String description;
     protected String genre;
 
-    public Item(int id, String name, char type, String description){
+    Item(int id, String name, char type, String description){
         this(name, description);
         this.id = id;
         this.type = type;

@@ -1,8 +1,5 @@
 package model;
 
-import dao.DaoFactory;
-import dao.TeamInventoryDAO;
-
 public class TeamInventory extends Inventory {
 
     TeamInventory(int ownerId) {
@@ -10,6 +7,6 @@ public class TeamInventory extends Inventory {
     }
 
     public void setStock() {
-        stock = DaoFactory.getByType(TeamInventoryDAO.class).load(ownerId);
+        stock = ModelDaoFactory.getByType(TeamInventoryDAO.class).load(ownerId);
     }
 }
