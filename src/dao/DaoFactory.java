@@ -1,6 +1,8 @@
 package dao;
 
 import factory.ConnectionFactory;
+import model.CommonModel;
+import model.Student;
 
 import java.sql.Connection;
 
@@ -55,7 +57,6 @@ public class DaoFactory {
         return (T) dao;
     }
 
-    @SuppressWarnings("unchecked")
     public static <T extends CommonModelDAO> T getByType(Class<T> type) {
 
         connection = ConnectionFactory.getConnection();
@@ -100,7 +101,7 @@ public class DaoFactory {
                 dao = new StudentsQuestsDAO(connection);
                 break;
         }
-        return (T) dao;
+        return type.cast(dao);
     }
 
     public static SchoolDAO getSchoolDAO() {
