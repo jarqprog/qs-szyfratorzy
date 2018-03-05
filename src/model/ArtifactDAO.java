@@ -47,7 +47,7 @@ public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
                             "VALUES(null, ?, ?, ?, ?)", DEFAULT_TABLE);
         } else {
             query = String.format(
-                    "UPDATE %s SET name=? , type=?, description=?, price=?, " +
+                    "UPDATE %s SET name=? , type=?, description=?, price=? " +
                             "WHERE id=?", DEFAULT_TABLE);
         }
         try {
