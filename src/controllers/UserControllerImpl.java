@@ -2,11 +2,11 @@ package controllers;
 
 import java.util.List;
 
-import dao.DaoFactory;
+import model.ModelDaoFactory;
 import model.User;
-import dao.ArtifactDAO;
+import model.ArtifactDAO;
 import model.Artifact;
-import dao.QuestDAO;
+import model.QuestDAO;
 import model.Quest;
 import view.UsersView;
 
@@ -20,11 +20,11 @@ public abstract class  UserControllerImpl implements UserController {
     }
 
     protected List<Artifact> getArtifacts() {
-        return DaoFactory.getByType(ArtifactDAO.class).getAllModels();
+        return ModelDaoFactory.getByType(ArtifactDAO.class).getAllModels();
     }
 
     protected List<Quest> getQuests() {
-        return DaoFactory.getByType(QuestDAO.class).getAllModels();
+        return ModelDaoFactory.getByType(QuestDAO.class).getAllModels();
     }
 
     protected void executeNotImplementedInfo() {

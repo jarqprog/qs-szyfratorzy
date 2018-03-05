@@ -1,9 +1,8 @@
-package dao;
+package model;
 
+import dao.PassiveModelDAOImpl;
 import enums.Table;
 import managers.DbProcessManager;
-import model.Quest;
-import model.StudentsQuests;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -27,7 +26,7 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
         if (dataCollection.size() > 0) {
             for (String[] data : dataCollection) {
                 int questId = Integer.parseInt(data[QUEST_ID_INDEX]);
-                quest = DaoFactory.getByType(QuestDAO.class).getModelById(questId);
+                quest = ModelDaoFactory.getByType(QuestDAO.class).getModelById(questId);
                 date = LocalDate.parse(data[DATE_INDEX]);
                 questsStock.put(quest, date);
             }

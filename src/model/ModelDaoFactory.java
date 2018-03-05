@@ -1,12 +1,11 @@
-package dao;
+package model;
 
+import dao.*;
 import factory.ConnectionFactory;
-import model.CommonModel;
-import model.Student;
 
 import java.sql.Connection;
 
-public class DaoFactory {
+public class ModelDaoFactory {
 
     private static Connection connection;
 
@@ -55,18 +54,6 @@ public class DaoFactory {
                 break;
         }
         return type.cast(dao);
-    }
-
-    public static SchoolDAO getSchoolDAO() {
-        return new SchoolDAOImpl(ConnectionFactory.getConnection());
-    }
-
-    public static ShopDAO getShopDAO() {
-        return new ShopDAOImpl(ConnectionFactory.getConnection());
-    }
-
-    public static LoginDAO getLoginDAO() {
-        return new LoginDAOImpl(ConnectionFactory.getConnection());
     }
 
     @SuppressWarnings("unchecked")

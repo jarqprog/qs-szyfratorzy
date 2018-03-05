@@ -43,15 +43,19 @@ public abstract class AbstractView {
         String userInput = "";
         String delimiter = "\n";
         int minimumUserInputLength = 1;
-        while(userInput.length() < minimumUserInputLength){
+        boolean isDone = false;
+        while(! isDone){
             System.out.print(emptyLines + tab + message);
             scanner.useDelimiter(delimiter);
-            userInput = scanner.next();
+            userInput = DataTool.removeWhitespacesFromString(scanner.next());
+            if(userInput.length() >= minimumUserInputLength) {
+                isDone = true;
+            }
         }
-        return DataTool.removeWhitespacesFromString(userInput);
+        return userInput;
     }
 
-    public String getNumberFromUser(String message) {
+    private String getNumberFromUser(String message) {
         Scanner scanner = new Scanner(System.in);
         String userInput = "";
         String regex = ".*\\d+.*";
@@ -141,7 +145,7 @@ public abstract class AbstractView {
         int additionalHeadingWidth = (terminalWidth - PROGRAM_NAME_AND_VERSION.length()) / 2;
         String additionalHeading = DataTool.getMultipliedString("=", additionalHeadingWidth);
         String heading = DataTool.getMultipliedString("=", terminalWidth);
-        System.out.println(emptyLines + tab + heading);
+        System.out.println("\n" + tab + heading);
         System.out.println(tab + additionalHeading + PROGRAM_NAME_AND_VERSION + additionalHeading);
         System.out.println(tab + heading);
         System.out.println(emptyLines);

@@ -11,7 +11,7 @@ public class Artifact extends Item {
         this.type = 'B';
     }
 
-    public Artifact(int id, char type, String name, String description, int price){
+    Artifact(int id, char type, String name, String description, int price){
         super(name, description);
         this.id = id;
         this.type = type;

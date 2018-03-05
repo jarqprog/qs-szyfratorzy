@@ -20,7 +20,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
     protected PreparedStatement preparedStatement;
     protected ResultSet resultSet;
 
-    ActiveModelDAOImpl(Connection connection) {
+    protected ActiveModelDAOImpl(Connection connection) {
         this.connection = connection;
         setDefaultTable();
     }

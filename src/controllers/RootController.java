@@ -8,6 +8,7 @@ import exceptions.LoginFailure;
 import managers.*;
 import managers.DbManagerImpl;
 import managers.DbManager;
+import model.ModelDaoFactory;
 import view.RootView;
 
 
@@ -55,9 +56,8 @@ public class RootController {
         String login = view.getLogin();
         String password = view.getPassword();
         UserController controller = null;
-        LoginDAO logDao = DaoFactory.getLoginDAO();
         try {
-            controller = logDao.getUserControllerByLoginAndPassword(login, password);
+            controller = SpecialDaoFactory.getByType(LoginDAO.class).getUserControllerByLoginAndPassword(login, password);
         } catch (LoginFailure ex) {
             view.clearScreen();
             view.displayMessage(ex.getMessage());

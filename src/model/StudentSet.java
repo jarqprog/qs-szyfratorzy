@@ -8,7 +8,7 @@ public abstract class StudentSet extends ActiveModel {
     protected String name;
     protected List<Student> students;
 
-    public StudentSet(int id, String name) {
+    StudentSet(int id, String name) {
         this(name);
         this.id = id;
         this.students = new ArrayList<>();
