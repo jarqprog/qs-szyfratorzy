@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDate;
 
 public class Transaction {
-    private LocalDate localDate;
+    private LocalDate date;
     private int studentId;
     private int itemId;
     private int itemPrice;
@@ -12,10 +12,10 @@ public class Transaction {
         this.studentId = studentId;
         this.itemId = itemId;
         this.itemPrice = itemPrice;
-        this.localDate = LocalDate.now();
+        this.date = LocalDate.now();
     }
 
     public String toString() {
-        return String.format("\tDate: %tF, Student: %d, Item: %d, Price: %d", localDate, studentId, itemId, itemPrice);;
+        return String.format("\tDate: %tF, Student: %d, Item: %d, Price: %d", date, studentId, itemId, itemPrice);
     }
 }
