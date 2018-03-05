@@ -1,5 +1,6 @@
 package tools;
 
+import model.ActiveModel;
 import model.Item;
 
 import java.time.LocalDate;
