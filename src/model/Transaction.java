@@ -15,7 +15,7 @@ public class Transaction {
     }
 
     public String toString() {
-        String output = String.format("Date: %tF, Student: %d, Item: %d, Price: %d", localDate.now(), studentId, itemId, itemPrice);
+        String output = String.format("\tDate: %tF, Student: %d, Item: %d, Price: %d", localDate.now(), studentId, itemId, itemPrice);
         return output;
     }
 }

@@ -1,10 +1,17 @@
 package dao;
 
 import enums.Table;
+import model.StudentInventory;
 
-public class StudentInventoryDAO extends InventoryDAO {
+import java.sql.Connection;
 
-    public StudentInventoryDAO(){
+public class StudentInventoryDAO extends InventoryDAO<StudentInventory> {
+
+    StudentInventoryDAO(Connection connection) {
+        super(connection);
+    }
+
+    protected void setDefaultTable(){
         this.DEFAULT_TABLE = Table.STUDENTS_ARTIFACTS.getName();
     }
 }

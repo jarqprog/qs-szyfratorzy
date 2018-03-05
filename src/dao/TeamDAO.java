@@ -3,16 +3,16 @@ package dao;
 import enums.Table;
 import model.Team;
 
-public class TeamDAO extends FactoryDAO {
+import java.sql.Connection;
 
-    private String name;
+public class TeamDAO extends StudentSetDAO<Team> {
 
-    public TeamDAO(){
-        this.DEFAULT_TABLE = Table.TEAMS.getName();
+    TeamDAO(Connection connection) {
+        super(connection);
     }
 
-    public Team getOneObject(String[] teamData) {
-
+    public Team extractModel(String[] teamData) {
+        String name;
         final Integer ID_INDEX = 0;
         final Integer NAME_INDEX = 1;
 
@@ -21,23 +21,7 @@ public class TeamDAO extends FactoryDAO {
 
         return new Team(id, name);
     }
-
-    public <T> void saveObject(T t){
-        Team team = (Team) t;
-        String teamId = String.valueOf(team.getId());
-        name = team.getName();
-        String query;
-        if(teamId.equals("-1")){
-            query = String.format(
-                    "INSERT INTO %s " +
-                            "VALUES(null, '%s');",
-                    DEFAULT_TABLE, name);
-        } else{
-            query = String.format(
-                    "UPDATE %s SET name='%s' " +
-                            "WHERE id=%s;", DEFAULT_TABLE, name, teamId);
-        }
-        dao = new DbManagerDAO();
-        dao.inputData(query);
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.TEAMS.getName();
     }
 }

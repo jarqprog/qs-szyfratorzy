@@ -4,14 +4,14 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+import dao.DaoFactory;
 import dao.StudentsQuestsDAO;
-
 
 public class StudentsQuests extends StudentStock {
 
-    Map<Quest,LocalDate> stock;
+    private Map<Quest,LocalDate> stock;
 
-    public StudentsQuests(int ownerId) {
+    StudentsQuests(int ownerId) {
         super(ownerId);
         stock = new HashMap<>();
     }
@@ -21,9 +21,11 @@ public class StudentsQuests extends StudentStock {
     }
 
     public void addItem(Quest quest) {
-        LocalDate date = LocalDate.now();
-        stock.put(quest, date);
-        saveObject();
+        if (! containsQuest(quest)) {
+            LocalDate date = LocalDate.now();
+            stock.put(quest, date);
+            saveModel();
+        }
     }
 
     public Map<Quest,LocalDate> getStock() {
@@ -31,8 +33,7 @@ public class StudentsQuests extends StudentStock {
     }
 
     public void setStock() {
-        StudentsQuestsDAO dao = new StudentsQuestsDAO();
-        stock = dao.load(ownerId);
+        stock = DaoFactory.getByType(StudentsQuestsDAO.class).load(ownerId);
     }
 
     public Quest getItem(int itemId) {
@@ -45,10 +46,10 @@ public class StudentsQuests extends StudentStock {
         return null;
     }
 
-    public boolean containsItem(Quest item) {
+    public boolean containsQuest(Quest quest) {
         for (Map.Entry<Quest,LocalDate> entry : stock.entrySet()) {
             Quest inStockItem = entry.getKey();
-            if (inStockItem.getName().equals(item.getName())) {
+            if (inStockItem.getName().equals(quest.getName())) {
                 return true;
             }
         }
@@ -60,15 +61,10 @@ public class StudentsQuests extends StudentStock {
         for (Map.Entry<Quest,LocalDate> entry : stock.entrySet()) {
             Quest quest= entry.getKey();
             String date = entry.getValue().toString();
-            stringBuilder.append(String.format("Id: %d, Quest: %s, Date: %s\n",
+            stringBuilder.append(String.format("\tId: %d, Quest: %s, Date: %s\n",
                     quest.getId(), quest.getName(), date));
         }
         return stringBuilder.toString();
-    }
-
-    public void saveObject () {
-        StudentsQuestsDAO dao = new StudentsQuestsDAO();
-        dao.save(this);
     }
 
     public boolean isEmpty () {

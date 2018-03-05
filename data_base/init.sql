@@ -100,11 +100,9 @@ CREATE TABLE IF NOT EXISTS attendance(
   id integer PRIMARY KEY AUTOINCREMENT,
   date text,
   attendance int,
-  student_id int,
-  FOREIGN KEY (student_id) REFERENCES students(id));
+  owner_id int,
+  FOREIGN KEY (owner_id) REFERENCES students(id));
 
-
--- add data
 
   INSERT OR IGNORE INTO groups VALUES(1,'undefined');
   INSERT OR IGNORE INTO teams VALUES(1,'undefined');
@@ -124,7 +122,6 @@ CREATE TABLE IF NOT EXISTS attendance(
   INSERT OR IGNORE INTO mentors VALUES(11,'Dominik','Strazak','pogromca@cc.com','12321', 3);
   INSERT OR IGNORE INTO mentors VALUES(12,'Konrad','Mazina','kondzio999999@cc.com','12321', 3);
 
-  -- attendance:
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-01',1,100);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-02',1,100);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-03',0,100);
@@ -179,7 +176,6 @@ CREATE TABLE IF NOT EXISTS attendance(
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-07',1,105);
   INSERT OR IGNORE INTO attendance VALUES(null,'2018-02-08',1,105);
 
-  -- items (quests and artifacts):
   INSERT OR IGNORE INTO quests VALUES(1,'Exploring a dungeon','B','Finishing a Teamwork week', 100,'Available');
   INSERT OR IGNORE INTO quests VALUES(2,'Solving the magic puzzle','B','Finishing an SI assignment', 100,'Available');
   INSERT OR IGNORE INTO quests VALUES(3,'Slaying a dragon','B','Passing a Checkpoint in the first attempt', 500,'Available');
@@ -205,5 +201,4 @@ CREATE TABLE IF NOT EXISTS attendance(
   INSERT OR IGNORE INTO artifacts VALUES(9,'Coffe','B','brain buff', 5);
 
 DELETE FROM sqlite_sequence;
-
 COMMIT;

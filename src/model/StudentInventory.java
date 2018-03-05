@@ -1,21 +1,16 @@
 package model;
 
+import dao.DaoFactory;
 import dao.StudentInventoryDAO;
 
 public class StudentInventory extends Inventory {
 
 
-    public StudentInventory(int ownerId) {
+    StudentInventory(int ownerId) {
         super(ownerId);
-        dao = new StudentInventoryDAO();
     }
 
     public void setStock() {
-        stock = dao.load(ownerId);
+        stock = DaoFactory.getByType(StudentInventoryDAO.class).load(ownerId);
     }
-
-    protected void saveObject () {
-        dao.save(this);
-    }
-
 }

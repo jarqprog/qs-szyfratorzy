@@ -1,8 +1,9 @@
 package model;
 
-import Interface.CreatableDAO;
 import dao.ArtifactDAO;
+import dao.DaoFactory;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,7 @@ public class Shop {
         }
 
     public List<Artifact> getStore() {
-        CreatableDAO dao = new ArtifactDAO();
-        store = dao.getAllObjects();
-        return store;
+        return DaoFactory.getByType(ArtifactDAO.class).getAllModels();
     }
 
     public void setStore(List<Artifact> store) {this.store = store;}

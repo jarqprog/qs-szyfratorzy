@@ -1,33 +1,33 @@
 package model;
 
+import dao.DaoFactory;
 import tools.DataTool;
 import dao.ExperienceLevelsDAO;
 
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class ExperienceLevels {
+public class ExperienceLevels extends PassiveModel {
 
     private Map<String, Integer> levels;
 
-    public ExperienceLevels() {
+    ExperienceLevels() {
         this.levels = getUpdatedLevels();
         setLevels();
     }
 
     public void setLevels(Map<String, Integer> levels){
         this.levels = levels;
-        saveObject();
+        saveModel();
     }
 
     public void setLevels(){
-        ExperienceLevelsDAO dao = new ExperienceLevelsDAO();
-        this.levels = dao.load();
+        this.levels = DaoFactory.getByType(ExperienceLevelsDAO.class).load();
     }
 
     public void clearLevels(){
         this.levels.clear();
-        saveObject();
+        saveModel();
     }
 
     public Map<String, Integer> getLevels(){
@@ -38,7 +38,7 @@ public class ExperienceLevels {
         setLevels();  // update levels
         if(! levels.containsValue(0)){
             levels.put("basic", 0);  // exp levels always should have level with value 0
-            saveObject();
+            saveModel();
         }
         return levels;
     }
@@ -46,7 +46,7 @@ public class ExperienceLevels {
     public void addLevel(String levelName, Integer levelValue) {
         if(! levels.containsValue(levelValue)) {
             this.levels.put(levelName, levelValue);
-            saveObject();
+            saveModel();
         }
     }
 
@@ -64,7 +64,7 @@ public class ExperienceLevels {
 
     public void removeLevel(String levelName){
         this.levels.remove (levelName, this.levels.get(levelName));
-        saveObject();
+        saveModel();
     }
 
     public String toString(){
@@ -72,7 +72,7 @@ public class ExperienceLevels {
         Map<String,Integer> sorted = DataTool.sortMapByValue(levels); // sort map - result LinkedHashMap
 
         StringBuilder sb = new StringBuilder();
-        sb.append("\n  Experience levels:\n\n\tlevel: required experience\n");
+        sb.append("\n\t\tExperience levels:\n\n\t\tlevel: required experience\n\t\t");
         int lineMultiplier = 45;
         String sign = "-";
         String line = DataTool.getMultipliedString(sign, lineMultiplier) + "\n";
@@ -80,16 +80,16 @@ public class ExperienceLevels {
         for (Entry<String, Integer> entry : sorted.entrySet()) {
             String key = entry.getKey();
             String value = String.valueOf(entry.getValue());
-            sb.append(String.format("\t- %s: %s\n", key, value));
+            sb.append(String.format("\t\t\t- %s: %s\n", key, value));
         }
         return sb.toString();
     }
 
-    private void saveObject(){
+    @Override
+    public void saveModel(){
         if(! levels.containsValue(0)){
             levels.put("basic", 0);  // exp levels always should have level with value 0
         }
-        ExperienceLevelsDAO dao = new ExperienceLevelsDAO();
-        dao.save(this);
+        super.saveModel();
     }
 }

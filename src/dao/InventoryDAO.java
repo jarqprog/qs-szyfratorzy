@@ -1,32 +1,31 @@
 package dao;
 
+import managers.DbProcessManager;
 import model.Artifact;
 import model.Inventory;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
-public abstract class InventoryDAO {
+public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAOImpl<T> {
 
-    protected String DEFAULT_TABLE;
-    protected DbManagerDAO dao;
-    protected ArtifactDAO artifactDAO;
-
+    InventoryDAO(Connection connection) {
+        super(connection);
+    }
 
     public Map<Artifact,Integer> load(int ownerId) {
-        final String query = String.format("SELECT artifact_id FROM %s WHERE owner_id=%s;",
-                DEFAULT_TABLE, ownerId);
-        dao = new DbManagerDAO();
-        Map<Artifact,Integer> inventory = new HashMap<>();
-        List<String[]> dataCollection = dao.getData(query);
+        Map<Artifact, Integer> inventory = new HashMap<>();
+        List<String[]> dataCollection = getArtifactsData(ownerId);
         if (dataCollection.size() > 0) {
-            artifactDAO = new ArtifactDAO();
+            ActiveModelDAO<Artifact> artifactDao = DaoFactory.getByType(ArtifactDAO.class);
             Artifact artifact;
             int ID_INDEX = 0;
             List<Integer> usedArtifactsId = new ArrayList<>(5);
             for (String[] data : dataCollection) {
                 int artifactId = Integer.parseInt(data[ID_INDEX]);
                 if (!usedArtifactsId.contains(artifactId)) {
-                    artifact = artifactDAO.getObjectById(artifactId);
+                    artifact = artifactDao.getModelById(artifactId);
                     inventory.put(artifact, 1);
                 } else {
                     Set<Artifact> items = inventory.keySet();
@@ -43,22 +42,54 @@ public abstract class InventoryDAO {
         return inventory;
     }
 
-    public void save(Inventory inventory) {
+    public boolean saveModel(T inventory) {
         int ownerId = inventory.getOwnerId();
-        dao = new DbManagerDAO();
-        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;", DEFAULT_TABLE, ownerId);
-        dao.inputData(clearQuery);
-        if (! inventory.isEmpty()) {
-            String query;
-            for (Map.Entry<Artifact,Integer> entry : inventory.getStock().entrySet()) {
-                Integer artifactId = entry.getKey().getId();
-                Integer value = entry.getValue();
-                for(int i = 0; i < value; i++) {
-                    query = String.format("INSERT INTO %s " +
-                            "VALUES(null, %s, %s);", DEFAULT_TABLE, ownerId, artifactId);
-                    dao.inputData(query);
+        try {
+            clearInventory(ownerId);
+            if (! inventory.isEmpty()) {
+                String query = String.format("INSERT INTO %s VALUES(null, ?, ?)",
+                                            DEFAULT_TABLE);
+                preparedStatement = connection.prepareStatement(query);
+                for (Map.Entry<Artifact,Integer> entry : inventory.getStock().entrySet()) {
+                    Integer artifactId = entry.getKey().getId();
+                    Integer value = entry.getValue();
+                    for(int i = 0; i < value; i++) {
+                        preparedStatement.setInt(1, ownerId);
+                        preparedStatement.setInt(2, artifactId);
+                        preparedStatement.addBatch();
+                    }
+
                 }
+                DbProcessManager.executeBatch(preparedStatement);
+                return true;
             }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
+    }
+
+    private List<String[]> getArtifactsData(int ownerId) {
+        String query = String.format("SELECT artifact_id FROM %s WHERE owner_id=?",
+                DEFAULT_TABLE);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, ownerId);
+            resultSet = preparedStatement.executeQuery();
+            return DbProcessManager.getObjectsDataCollection(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DbProcessManager.closePreparedStatement(preparedStatement);
+        }
+        return new ArrayList<>();
+    }
+
+    private void clearInventory(int ownerId) throws SQLException {
+        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", DEFAULT_TABLE);
+        preparedStatement = connection.prepareStatement(clearQuery);
+        preparedStatement.setInt(1, ownerId);
+        DbProcessManager.executeUpdate(preparedStatement);
     }
 }

@@ -12,19 +12,23 @@ public class ShopView extends AbstractView {
                 "[3] buy artifact for team",
                 "[0] exit"};
 
-        for(String element : options) {
-            System.out.println(element);
-        }
+        displayElementsOfCollection(options);
     }
 
     public void displayListOfArtifacts(List<Artifact> store) {
-        System.out.format("%-4s | %-3s | %-21s | %-80s | %-9s |\n", "Id", "Type", "Name", "Description", "Price");
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.format(tab + "%-4s | %-3s | %-21s | %-80s | %-9s |\n", "Id", "Type", "Name", "Description", "Price");
+        System.out.println(tab + "---------------------------------------------------------------------------------------------------------------------------------------");
         for (Artifact artifact : store) {
-            System.out.format("%-4d | %-4s | %-21s | %-80s | %-6d cc |\n", artifact.getId(),
+            System.out.format(tab + "%-4d | %-4s | %-21s | %-80s | %-6d cc |\n", artifact.getId(),
                     artifact.getType(), artifact.getName(), artifact.getDescription(), artifact.getPrice());
-            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println(tab + "---------------------------------------------------------------------------------------------------------------------------------------");
         }
+    }
+
+    public void displayStudentWallet(int cash) {
+        System.out.println(emptyLines);
+        System.out.println(tab + "Your cash: " + cash + " cc");
+
     }
 
 }

@@ -1,7 +1,5 @@
 package model;
 
-import dao.InventoryDAO;
-
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
@@ -9,9 +7,8 @@ import java.util.Set;
 public abstract class Inventory extends StudentStock {
 
     protected Map<Artifact,Integer> stock;
-    protected InventoryDAO dao;
 
-    public Inventory(int ownerId) {
+    protected Inventory(int ownerId) {
         super(ownerId);
         stock = new HashMap<>();
     }
@@ -22,27 +19,27 @@ public abstract class Inventory extends StudentStock {
 
     public void addItem(Artifact item) {
         stock.put(item, 1);
-        saveObject();
+        saveModel();
     }
 
     public void removeArtifact(Artifact artifact) {
         Artifact inStockItem = getItem(artifact.getId());
         stock.remove(inStockItem);
-        saveObject();
+        saveModel();
     }
 
     public void modifyQuantity(Artifact artifact) {
         Artifact inStockItem = getItem(artifact.getId());
         Integer value = stock.get(inStockItem);
         stock.put(inStockItem, value + 1);
-        saveObject();
+        saveModel();
     }
 
     public void decreaseQuantity(Artifact artifact) {
         Artifact inStockItem = getItem(artifact.getId());
         Integer value = stock.get(inStockItem);
         stock.put(inStockItem, value - 1);
-        saveObject();
+        saveModel();
     }
 
     public Artifact getItem(int itemId) {
@@ -59,13 +56,18 @@ public abstract class Inventory extends StudentStock {
         return getItem(item.getId()) != null;
     }
 
-    public String toString () {
+    public String toString() {
+        return String.format("Inventory of (owner id): %s", ownerId);  // temp
+    }
+
+    public String getFullDataToString() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<Artifact,Integer> entry : stock.entrySet()) {
             Artifact artifact = entry.getKey();
             Integer quantity = entry.getValue();
-            stringBuilder.append(String.format("Id: %d, Artifact: %s, Quantity: %d\n",
+            stringBuilder.append(String.format("\tId: %d, Artifact: %s, Quantity: %d",
                     artifact.getId(), artifact.getName(), quantity));
+            stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }
@@ -73,8 +75,6 @@ public abstract class Inventory extends StudentStock {
     public boolean isEmpty () {
         return stock.size() == 0;
     }
-
-    protected abstract void saveObject();
 
     public abstract void setStock();
 

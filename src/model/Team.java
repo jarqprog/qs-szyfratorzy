@@ -1,9 +1,9 @@
 package model;
 
-import dao.TeamDAO;
+import dao.DaoFactory;
 import dao.StudentDAO;
 
-public class Team extends StudentSets {
+public class Team extends StudentSet {
 
     private TeamInventory inventory;
 
@@ -12,10 +12,8 @@ public class Team extends StudentSets {
         inventory = new TeamInventory(id);
     }
 
-    public Team(String name) {
+    Team(String name) {
         super(name);
-        this.id = saveNewObjectGetId();
-        inventory = new TeamInventory(id);
     }
 
     public TeamInventory getInventory() {
@@ -27,20 +25,9 @@ public class Team extends StudentSets {
         this.inventory = inventory;
     }
 
-    public int saveNewObjectGetId(){
-        TeamDAO dao = new TeamDAO();
-        return dao.saveObjectAndGetId(this);
-    }
-
     public void setStudents() {
-        StudentDAO dao = new StudentDAO();
-        final String query = String.format("SELECT * FROM students WHERE team_id=%s;", id);
-        this.students = dao.getManyObjects(query);
-    }
-
-    public void saveObject(){
-        TeamDAO dao = new TeamDAO();
-        dao.saveObject(this);
+        this.students = DaoFactory.getByType(StudentDAO.class)
+                .getFilteredModelsByIntegerParameter("team_id", id);
     }
 
     public int size(){

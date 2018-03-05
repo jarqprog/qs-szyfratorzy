@@ -1,28 +1,19 @@
 package dao;
 
-import Interface.CreatableDAO;
 import enums.Table;
+import managers.DbProcessManager;
 import model.Quest;
 import model.StudentsQuests;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public class StudentsQuestsDAO {
+public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
 
-    private String STUDENTS_QUESTS_TABLE;
-    private CreatableDAO questDao;
-    private DbManagerDAO dataBaseDao;
-
-    public StudentsQuestsDAO() {
-
-        STUDENTS_QUESTS_TABLE = Table.STUDENTS_QUESTS.getName();
-        questDao = new QuestDAO();
-        dataBaseDao = new DbManagerDAO();
-
+    StudentsQuestsDAO(Connection connection) {
+        super(connection);
     }
 
     public Map<Quest,LocalDate> load(int ownerId) {
@@ -31,39 +22,77 @@ public class StudentsQuestsDAO {
         int QUEST_ID_INDEX = 0;
         int DATE_INDEX = 1;
         Map<Quest,LocalDate> questsStock = new HashMap<>();
-        final String query = String.format("SELECT quests_id, date FROM %s WHERE owner_id=%s;",
-                STUDENTS_QUESTS_TABLE, ownerId);
-        List<String[]> dataCollection = dataBaseDao.getData(query);
-        for(String[] data : dataCollection){
-            int questId = Integer.parseInt(data[QUEST_ID_INDEX]);
-            quest = questDao.getObjectById(questId);
-            date = LocalDate.parse(data[DATE_INDEX]);
-            questsStock.put(quest, date);
+
+        List<String[]> dataCollection = getQuestStockData(ownerId);
+        if (dataCollection.size() > 0) {
+            for (String[] data : dataCollection) {
+                int questId = Integer.parseInt(data[QUEST_ID_INDEX]);
+                quest = DaoFactory.getByType(QuestDAO.class).getModelById(questId);
+                date = LocalDate.parse(data[DATE_INDEX]);
+                questsStock.put(quest, date);
+            }
         }
         return questsStock;
     }
 
-    public void save(StudentsQuests studentsQuests) {
-        int ownerId = studentsQuests.getOwnerId();
-        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=%s;",
-                STUDENTS_QUESTS_TABLE, ownerId);
+    public boolean saveModel(StudentsQuests studentsQuests) {
+
         Map<Quest,LocalDate> questsStock  = studentsQuests.getStock();
-        dataBaseDao.inputData(clearQuery);
+
         if(questsStock.size() > 0) {
-            Set<Quest> quests = questsStock.keySet();
-            LocalDate[] dates = questsStock.values().toArray(new LocalDate[0]);
-            String date;
-            int questId;
-            int index = 0;
-            for(Quest quest : quests) {
-                questId = quest.getId();
-                LocalDate localDate = dates[index];
-                date = localDate.toString();
-                String query = String.format("INSERT INTO %s VALUES(null, %s, %s, '%s');",
-                        STUDENTS_QUESTS_TABLE, ownerId, questId, date);
-                dataBaseDao.inputData(query);
-                index++;
+            int ownerId = studentsQuests.getOwnerId();
+
+            try {
+                clearQuests(ownerId);
+                String query = String.format("INSERT INTO %s VALUES(null, ?, ?, ?)", DEFAULT_TABLE);
+                preparedStatement = connection.prepareStatement(query);
+                Set<Quest> quests = questsStock.keySet();
+                LocalDate[] dates = questsStock.values().toArray(new LocalDate[0]);
+                String date;
+                int questId;
+                int index = 0;
+                for(Quest quest : quests) {
+                    questId = quest.getId();
+                    LocalDate localDate = dates[index];
+                    date = localDate.toString();
+                    preparedStatement.setInt(1, ownerId);
+                    preparedStatement.setInt(2, questId);
+                    preparedStatement.setString(3, date);
+                    preparedStatement.addBatch();
+                    index++;
+                }
+                DbProcessManager.executeBatch(preparedStatement);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
             }
+            return true;
         }
+        return false;
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.STUDENTS_QUESTS.getName();
+    }
+
+    private List<String[]> getQuestStockData(int ownerId) {
+        String query = String.format("SELECT quests_id, date FROM %s WHERE owner_id=?",
+                DEFAULT_TABLE);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, ownerId);
+            resultSet = preparedStatement.executeQuery();
+            return DbProcessManager.getObjectsDataCollection(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    private void clearQuests(int ownerId) throws SQLException {
+        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", DEFAULT_TABLE);
+        preparedStatement = connection.prepareStatement(clearQuery);
+        preparedStatement.setInt(1, ownerId);
+        DbProcessManager.executeUpdate(preparedStatement);
     }
 }

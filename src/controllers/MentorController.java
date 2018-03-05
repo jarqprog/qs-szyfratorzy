@@ -1,28 +1,27 @@
 package controllers;
 
+import factory.GeneralModelFactory;
+import model.ArtifactFactoryImpl;
+import model.QuestFactoryImpl;
+import model.StudentFactoryImpl;
 import model.Mentor;
 import model.Student;
-import dao.MentorDAO;
-import dao.ArtifactDAO;
 import model.Artifact;
-import dao.QuestDAO;
 import model.Quest;
 import view.MentorView;
 
 import java.util.List;
 
-public class MentorController extends UserController{
-    MentorView view;
-    Mentor mentor;
-    MentorDAO dao;
+public class MentorController extends UserControllerImpl {
+    private MentorView view;
+    private Mentor mentor;
 
     public MentorController(Mentor mentor){
         this.mentor = mentor;
         view = new MentorView();
-        dao = new MentorDAO();
     }
 
-    public void handleMainMenu(){
+    public void executeMainMenu() {
         boolean isDone = false;
         while(! isDone){
             String[] correctChoices = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "0"};
@@ -84,19 +83,22 @@ public class MentorController extends UserController{
     private void createQuest() {
         String name = view.getUserInput("Enter quest name: ");
         String description = view.getUserInput("Enter quest description: ");
-        int reward = view.getValue();
-        Quest quest = new Quest(name, description, reward);
-        view.displayMessage("You've created something new:\n" + quest);
+        int reward = view.getItemValue();
+        Quest quest = GeneralModelFactory.getByType(QuestFactoryImpl.class)
+                                .create(name, description, reward);
+
+        view.clearScreen();
+        view.displayMessage("You've created something new:\n");
+        view.displayItemWithDetails(quest);
     }
 
     private void editQuest() {
-
         List<Quest> quests = getQuests();
         view.displayElementsOfCollection(prepareObjectsToDisplay(quests));
         String input = view.getUserInput("Enter id of quest which you would like to edit: ");
         for(Quest quest : quests) {
             if(String.valueOf(quest.getId()).equals(input)) {
-                handleQuestEditMenu(quest);
+                executeQuestEditMenu(quest);
                 break;
             }
         }
@@ -107,16 +109,23 @@ public class MentorController extends UserController{
         String firstName = view.getUserInput("Enter first name: ");
         String lastName = view.getUserInput("Enter last name: ");
         String password = view.getUserInput("Enter password: ");
-        Student newStudent = new Student(firstName, lastName, password);
-        view.displayMessage("Student created successfully! \n" + newStudent.toString());
+        Student student = GeneralModelFactory.getByType(StudentFactoryImpl.class)
+                                    .create(firstName, lastName, password);
+
+        view.displayMessageInNextLine("Student created successfully! \n");
+        view.displayUserWithDetails(student);
     }
 
     private void createArtifact(){
         String name = view.getUserInput("Enter artifact name: ");
         String description = view.getUserInput("Enter artifact description: ");
-        int price = view.getValue();
-        Artifact artifact = new Artifact(name, description, price);
-        view.displayMessage("You've created something new:\n" + artifact);
+        int price = view.getItemValue();
+        Artifact artifact = GeneralModelFactory.getByType(ArtifactFactoryImpl.class)
+                                        .create(name, description, price);
+
+        view.clearScreen();
+        view.displayMessageInNextLine("You've created something new:\n");
+        view.displayItemWithDetails(artifact);
         }
 
     private void editArtifact(){
@@ -125,21 +134,23 @@ public class MentorController extends UserController{
         String input = view.getUserInput("Enter id of artifact which you would like to edit: ");
         for(Artifact artifact : artifacts) {
             if(String.valueOf(artifact.getId()).equals(input)) {
-                handleArtifactEditMenu(artifact);
+                executeArtifactEditMenu(artifact);
                 break;
             }
         }
     }
 
-    private void handleArtifactEditMenu(Artifact artifact){
+    private void executeArtifactEditMenu(Artifact artifact){
         boolean isDone = false;
         while(! isDone){
             String[] correctChoices = {"1", "2", "3", "4", "0"};
             view.clearScreen();
+            view.displayMessage("Artifact to edit:\n");
+            view.displayItemWithDetails(artifact);
+            view.drawNextLine();
             view.displayArtifactMenu();
             String userChoice = view.getMenuChoice(correctChoices);
-            view.clearScreen();
-            switch(userChoice){
+            switch(userChoice) {
                 case "1":
                     artifact.setName(view.getUserInput("Enter new artifact name: "));
                     break;
@@ -150,30 +161,29 @@ public class MentorController extends UserController{
                     artifact.setDescription(view.getUserInput("Enter new artifact description: "));
                     break;
                 case "4":
-                    artifact.setPrice(view.getValue());
+                    artifact.setPrice(view.getItemValue());
                     break;
                 case "0":
-                    ArtifactDAO dao = new ArtifactDAO();
-                    dao.saveObject(artifact);
                     isDone = true;
                     break;
             }
-            if(! isDone){
-               view.displayMessage(artifact.toString());
-               view.handlePause();
-            }
         }
+        view.clearScreen();
+        view.displayMessageInNextLine("Artifact after changes:\n");
+        view.displayItemWithDetails(artifact);
     }
 
-    private void handleQuestEditMenu(Quest quest){
+    private void executeQuestEditMenu(Quest quest){
         boolean isDone = false;
-        while(! isDone){
+        while(! isDone) {
             String[] correctChoices = {"1", "2", "3", "4", "0"};
             view.clearScreen();
+            view.displayMessage("Quest to edit:\n");
+            view.displayItemWithDetails(quest);
+            view.drawNextLine();
             view.displayQuestMenu();
             String userChoice = view.getMenuChoice(correctChoices);
-            view.clearScreen();
-            switch(userChoice){
+            switch (userChoice) {
                 case "1":
                     quest.setName(view.getUserInput("Enter new quest name: "));
                     break;
@@ -184,26 +194,19 @@ public class MentorController extends UserController{
                     quest.setDescription(view.getUserInput("Enter new quest description: "));
                     break;
                 case "4":
-                    quest.setReward(view.getValue());
+                    quest.setReward(view.getItemValue());
                     break;
                 case "0":
-                    QuestDAO dao = new QuestDAO();
-                    dao.saveObject(quest);
                     isDone = true;
                     break;
             }
-            if(! isDone){
-                view.displayMessage(quest.toString());
-                view.handlePause();
-            }
         }
+        view.clearScreen();
+        view.displayMessageInNextLine("Quest after changes:\n");
+        view.displayItemWithDetails(quest);
     }
 
     private void markStudentQuest() {
-        executeNotImplementedInfo();
-    }
-
-    private void displayStudentWallet() {
         executeNotImplementedInfo();
     }
 
@@ -213,8 +216,8 @@ public class MentorController extends UserController{
 
     private void showStudentsFromMyGroup() {
         List<Student> students = SchoolController.getStudentsByGroup(mentor.getGroup());
-        view.displayMessage("\nYour students:\n");
-        view.displayUsersWithDetails(students);
+        view.displayMessageInNextLine("Your students:\n");
+        view.displayManyUsersWithDetails(students);
     }
 
     private void assignStudentToGroup() {
@@ -222,10 +225,11 @@ public class MentorController extends UserController{
         Student student = SchoolController.pickStudentFromList(students);
         if (student != null){
             SchoolController.assignStudentToGroup(student);
-            view.displayMessage("\nStudent edited:\n");
+            view.clearScreen();
+            view.displayMessageInNextLine("Student edited:\n");
             view.displayUserWithDetails(student);
         } else {
-            view.displayMessage("\nStudent does not exist...");
+            view.displayMessageInNextLine("Student does not exist...");
         }
     }
 
@@ -234,10 +238,11 @@ public class MentorController extends UserController{
         Student student = SchoolController.pickStudentFromList(students);
         if (student != null){
             SchoolController.assignStudentToTeam(student);
-            view.displayMessage("\nStudent edited:\n");
+            view.clearScreen();
+            view.displayMessageInNextLine("Student edited:\n");
             view.displayUserWithDetails(student);
         } else {
-            view.displayMessage("\nStudent does not exist...");
+            view.displayMessageInNextLine("Student does not exist...");
         }
     }
 
@@ -245,12 +250,12 @@ public class MentorController extends UserController{
         Student student = SchoolController.pickStudentFromList(mentor.getGroup().getStudents());
         if (student != null) {
             view.clearScreen();
-            view.displayMessage("\n\n\tDetailed info:\n");
+            view.displayMessageInNextLine("Detailed info:\n");
             view.displayUserWithDetails(student);
             String attendanceInfo = student.getAttendance().getFullDataToString();
             view.displayMessage(attendanceInfo);
         } else {
-            view.displayMessage("   - there is no one to show..");
+            view.displayMessage("- there is no one to show..");
         }
     }
 }

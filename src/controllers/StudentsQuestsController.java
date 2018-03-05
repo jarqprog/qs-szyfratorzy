@@ -2,31 +2,29 @@ package controllers;
 
 import java.util.List;
 
-import Interface.CreatableDAO;
+import dao.DaoFactory;
 import dao.QuestDAO;
-import view.QuestView;
 import model.Quest;
 import model.Student;
+import view.UsersView;
 
 
 public class StudentsQuestsController {
 
-    QuestView view;
-    CreatableDAO dao;
-
-
-    public void runQuestMenu(Student student){
-
-        view = new QuestView();
-        dao = new QuestDAO();
-
-        List<Quest> quests = dao.getAllObjects();
-        view.displayQuests(quests);
-        Integer questsId = view.typeQuestIdInput();
-        Quest pickedQuest = dao.getObjectById(questsId);
-        student.getStudentsQuests().addItem(pickedQuest);
+    public void runQuestMenu(Student student) {
+        UsersView view;
+        view = new UsersView();
+        List<Quest> quests = DaoFactory.getByType(QuestDAO.class).getAllModels();
+        view.displayObjects(quests);
+        Integer questsId = view.getNotNegativeNumberFromUser("Choose id to pick quest: ");
+        Quest pickedQuest = DaoFactory.getByType(QuestDAO.class).getModelById(questsId);
         view.clearScreen();
-        view.displayMessage("\nYou have taken up the task:\n");
-        view.displayObject(pickedQuest);
+        if (!student.getStudentsQuests().containsQuest(pickedQuest)) {
+            student.getStudentsQuests().addItem(pickedQuest);
+            view.displayMessageInNextLine("You have taken up the task:\n");
+            view.displayObject(pickedQuest);
+        } else {
+            view.displayMessageInNextLine("You already have this quest!");
         }
     }
+}

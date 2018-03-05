@@ -1,20 +1,17 @@
 package model;
 
 import enums.QuestsStatus;
-import dao.QuestDAO;
 
 public class Quest extends Item {
 
     private int reward;
     private String status;
 
-    public Quest(String name, String description, int reward){
+    Quest(String name, String description, int reward){
         super(name, description);
-        this.id = -1;
         this.reward = reward;
         this.type = 'B';
         this.status = QuestsStatus.AVAILABLE.getName();
-        this.id = saveNewObjectGetId();
     }
 
     public Quest(int id, char type, String name, String description, int reward, String status){
@@ -32,6 +29,7 @@ public class Quest extends Item {
 
     public void setReward(int reward){
         this.reward = reward;
+        saveModel();
     }
 
     public String getStatus() {
@@ -40,22 +38,15 @@ public class Quest extends Item {
 
     public void setStatus(String status) {
         this.status = status;
+        saveModel();
     }
 
 
     public String toString() {
-        return String.format("\n -id: %d  name: %s\n -description: %s\n -reward: %d -type: %s -status: %s\n\n",
-                            id, name,description, reward, type, status);
+        return String.format(super.toString() + " reward: %d, status: %s", reward, status);
     }
 
-
-    public int saveNewObjectGetId(){
-        QuestDAO dao = new QuestDAO();
-        return dao.saveObjectAndGetId(this);
-    }
-
-    public void saveObject(){
-        QuestDAO dao = new QuestDAO();
-        dao.saveObject(this);
+    public String getFullDataToString() {
+        return  String.format(super.getFullDataToString() + "\n\treward: %s\n\tstatus: %s\n", reward, status);
     }
 }

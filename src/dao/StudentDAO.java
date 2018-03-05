@@ -1,11 +1,14 @@
 package dao;
 
-import model.Group;
-import model.Student;
-import model.Team;
+import managers.DbProcessManager;
+import model.*;
 import enums.Table;
 
-public class StudentDAO extends FactoryDAO {
+import java.sql.Connection;
+import java.sql.SQLException;
+
+
+public class StudentDAO extends ActiveModelDAOImpl<Student> {
 
     private String firstName;
     private String lastName;
@@ -16,11 +19,11 @@ public class StudentDAO extends FactoryDAO {
     private int groupId;
     private int teamId;
 
-    public StudentDAO(){
-        this.DEFAULT_TABLE = Table.STUDENTS.getName();
+    StudentDAO(Connection connection) {
+        super(connection);
     }
 
-    public Student getOneObject(String[] studentData) {
+    public Student extractModel(String[] studentData) {
 
         final Integer ID_INDEX = 0;
         final Integer FIRST_NAME_INDEX = 1;
@@ -43,20 +46,17 @@ public class StudentDAO extends FactoryDAO {
         teamId = Integer.parseInt(studentData[TEAM_INDEX]);
         groupId = Integer.parseInt(studentData[GROUP_INDEX]);
 
-        final String teamQuery = String.format("SELECT * FROM teams WHERE id=%s;", teamId);
-        TeamDAO teamDAO = new TeamDAO();
-        Team team = teamDAO.getOneObject(teamQuery);
 
-        final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
-        GroupDAO groupDAO = new GroupDAO();
-        Group group = groupDAO.getOneObject(groupQuery);
+        Team team = DaoFactory.getByType(TeamDAO.class).getModelById(teamId);
+
+
+        Group group = DaoFactory.getByType(GroupDAO.class).getModelById(groupId);
 
         return new Student(studentId, firstName, lastName, email, password, wallet, experience,
                 team, group);
     }
 
-    public <T> void saveObject(T t){
-        Student student = (Student) t;
+    public boolean saveModel(Student student){
         String studentId = String.valueOf(student.getId());
         firstName = student.getFirstName();
         lastName = student.getLastName();
@@ -71,21 +71,37 @@ public class StudentDAO extends FactoryDAO {
         if(studentId.equals("-1")){
 
             query = String.format(
-                            "INSERT INTO %s " +
-                            "VALUES(null, '%s', '%s', '%s', '%s', %s, %s, %s, %s);",
-                    DEFAULT_TABLE, firstName, lastName, email, password, wallet,
-                    experience, teamId, groupId);
-
-        } else{
-
+                    "INSERT INTO %s " +
+                    "VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?)", DEFAULT_TABLE);
+        } else {
             query = String.format(
-                            "UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', " +
-                            " wallet=%s, experience=%s, team_id=%s, group_id=%s " +
-                            "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, wallet, experience,
-                            teamId, groupId, studentId);
+                    "UPDATE %s SET first_name=?, last_name=?, email=?, password=?, wallet=?, " +
+                            "experience=?, team_id=?, group_id=? " +
+                            "WHERE id=?", DEFAULT_TABLE);
         }
-        dao = new DbManagerDAO();
-        dao.inputData(query);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, password);
+            preparedStatement.setInt(5, wallet);
+            preparedStatement.setInt(6, experience);
+            preparedStatement.setInt(7, teamId);
+            preparedStatement.setInt(8, groupId);
+            if(!studentId.equals("-1")) {
+                preparedStatement.setInt(9, Integer.valueOf(studentId));
+            }
+            DbProcessManager.executeUpdate(preparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.STUDENTS.getName();
     }
 
 }

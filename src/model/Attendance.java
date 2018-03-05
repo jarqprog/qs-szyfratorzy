@@ -1,41 +1,40 @@
 package model;
 
+import dao.DaoFactory;
 import tools.DataTool;
 import dao.AttendanceDAO;
 
 import java.time.LocalDate;
 import java.util.*;
 
-public class Attendance {
+public class Attendance extends PassiveModel {
 
-    private int studentId;
     private Map<LocalDate, Boolean> attendance;
 
-    public Attendance(Integer studentId) {
-        this.studentId = studentId;
+    Attendance(Integer ownerId) {
+        this.ownerId = ownerId;
         this.attendance = new HashMap<>();
     }
 
     public void setAttendance(Map<LocalDate, Boolean> attendance) {
         this.attendance = attendance;
-        saveObject();
+        saveModel();
     }
 
     public void setAttendance() {
-        AttendanceDAO dao = new AttendanceDAO();
-        this.attendance = dao.load(studentId);
+        this.attendance = DaoFactory.getByType(AttendanceDAO.class).load(ownerId);
     }
 
     public void clearAttendance() {
         this.attendance.clear();
-        saveObject();
+        saveModel();
     }
 
     public void addAttendance(Boolean attendance) {
         setAttendance();
         LocalDate date = LocalDate.now();
         this.attendance.put(date, attendance);
-        saveObject();
+        saveModel();
     }
 
     public void addAttendance(LocalDate date, Boolean attendance) {
@@ -51,13 +50,9 @@ public class Attendance {
         return this.attendance;
     }
 
-    public int getStudentId() {
-        return studentId;
-    }
-
     public String getPercentageAttendance() {
         setAttendance();
-        String attendacePercentage = "Attendance (in percent): 100%";
+        String attendancePercentage = "Attendance (in percent): 100%";
         int size = attendance.size();
         if(size > 0) {
             int counter = 0;
@@ -69,9 +64,9 @@ public class Attendance {
             }
             float attendanceFactor = (float) counter / size;
             int percentageValue = (int) (attendanceFactor * 100);
-            attendacePercentage = "Attendance (in percent): " + String.valueOf(percentageValue) + "%";
+            attendancePercentage = "Attendance (in percent): " + String.valueOf(percentageValue) + "%";
         }
-        return attendacePercentage;
+        return attendancePercentage;
     }
 
     public String toString() {
@@ -83,9 +78,9 @@ public class Attendance {
         Map<LocalDate,Boolean> sorted = DataTool.sortDateMap(attendance); // sort map - result LinkedHashMap
         String attendancePercentage = getPercentageAttendance();
         StringBuilder sb = new StringBuilder();
-        sb.append("\n  Attendance:\n\n\t");
+        sb.append("\t");
         sb.append(attendancePercentage);
-        sb.append("\n\n\tdate: attendace\n");
+        sb.append("\n\n\tdate: attendance\n\t");
         int lineMultiplier = 45;
         String sign = "-";
         String line = DataTool.getMultipliedString(sign, lineMultiplier) + "\n";
@@ -98,13 +93,8 @@ public class Attendance {
             } else {
                 attendance = "absent";
             }
-            sb.append(String.format("\t- %s: %s\n", date, attendance));
+            sb.append(String.format("\t\t- %s: %s\n", date, attendance));
         }
         return sb.toString();
-    }
-
-    public void saveObject() {
-        AttendanceDAO dao = new AttendanceDAO();
-        dao.save(this);
     }
 }

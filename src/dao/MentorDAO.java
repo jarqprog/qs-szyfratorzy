@@ -1,10 +1,14 @@
 package dao;
 
+import managers.DbProcessManager;
 import model.Mentor;
 import enums.Table;
 import model.Group;
 
-public class MentorDAO extends FactoryDAO {
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
 
     private String firstName;
     private String lastName;
@@ -12,11 +16,11 @@ public class MentorDAO extends FactoryDAO {
     private String password;
     private int groupId;
 
-    public MentorDAO(){
-        this.DEFAULT_TABLE = Table.MENTORS.getName();
+    MentorDAO(Connection connection) {
+        super(connection);
     }
 
-    public Mentor getOneObject(String[] record) {
+    public Mentor extractModel(String[] record) {
 
         final Integer ID_INDEX = 0;
         final Integer FIRST_NAME_INDEX = 1;
@@ -32,15 +36,12 @@ public class MentorDAO extends FactoryDAO {
         password = record[PASSWORD_INDEX];
         groupId = Integer.parseInt(record[GROUP_INDEX]);
 
-        final String groupQuery = String.format("SELECT * FROM groups WHERE id=%s;", groupId);
-        GroupDAO groupDAO = new GroupDAO();
-        Group group = groupDAO.getOneObject(groupQuery);
+        Group group = DaoFactory.getByType(GroupDAO.class).getModelById(groupId);
 
         return new Mentor(mentorId, firstName, lastName, email, password, group);
     }
 
-    public <T> void saveObject(T t){
-        Mentor mentor = (Mentor) t;
+    public boolean saveModel(Mentor mentor){
         String mentorId = String.valueOf(mentor.getId());
         firstName = mentor.getFirstName();
         lastName = mentor.getLastName();
@@ -51,14 +52,33 @@ public class MentorDAO extends FactoryDAO {
         String query;
         if (mentorId.equals("-1")) {
             query = String.format(
-                            "INSERT INTO %s " +
-                            "VALUES(null, '%s', '%s', '%s', '%s', %s);",
-                    DEFAULT_TABLE, firstName, lastName, email, password, groupId);
+                "INSERT INTO %s " +
+                "VALUES(null, ?, ?, ?, ?, ?)", DEFAULT_TABLE);
         } else {
-            query = String.format("UPDATE %s SET first_name='%s' , last_name='%s', email='%s', password='%s', group_id=%s " +
-                    "WHERE id=%s;", DEFAULT_TABLE, firstName, lastName, email, password, groupId, mentorId);
+            query = String.format(
+                    "UPDATE %s SET first_name=?, last_name=?, email=?, password=?, group_id=?" +
+                            "WHERE id=?", DEFAULT_TABLE);
         }
-        dao = new DbManagerDAO();
-        dao.inputData(query);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, password);
+            preparedStatement.setInt(5, groupId);
+            if(!mentorId.equals("-1")) {
+                preparedStatement.setInt(6, Integer.valueOf(mentorId));
+            }
+            DbProcessManager.executeUpdate(preparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.MENTORS.getName();
     }
 }

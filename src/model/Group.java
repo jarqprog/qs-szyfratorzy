@@ -1,33 +1,20 @@
 package model;
 
-import dao.GroupDAO;
+import dao.DaoFactory;
 import dao.StudentDAO;
 
-public class Group extends StudentSets {
+public class Group extends StudentSet {
 
     public Group(int id, String name) {
         super(id, name);
     }
 
-    public Group(String name) {
+    Group(String name) {
         super(name);
-        this.id = saveNewObjectGetId();
-    }
-
-    public int saveNewObjectGetId(){
-        GroupDAO dao = new GroupDAO();
-        return dao.saveObjectAndGetId(this);
     }
 
     public void setStudents() {
-        StudentDAO dao = new StudentDAO();
-        final String query = String.format("SELECT * FROM students WHERE group_id=%s;", id);
-        this.students = dao.getManyObjects(query);
+        this.students = DaoFactory.getByType(StudentDAO.class)
+                .getFilteredModelsByIntegerParameter("group_id", id);
     }
-
-    public void saveObject(){
-        GroupDAO dao = new GroupDAO();
-        dao.saveObject(this);
-    }
-
 }

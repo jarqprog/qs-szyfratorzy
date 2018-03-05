@@ -3,13 +3,15 @@ package dao;
 import model.Group;
 import enums.Table;
 
-public class GroupDAO extends FactoryDAO {
+import java.sql.Connection;
 
-    public GroupDAO(){
-        this.DEFAULT_TABLE = Table.GROUPS.getName();
+public class GroupDAO extends StudentSetDAO<Group> {
+
+    GroupDAO(Connection connection) {
+        super(connection);
     }
 
-    public Group getOneObject(String [] record){
+    public Group extractModel(String [] record){
 
         final Integer ID_INDEX = 0;
         final Integer NAME_INDEX = 1;
@@ -19,19 +21,7 @@ public class GroupDAO extends FactoryDAO {
         return new Group(id, name);
     }
 
-    public <T> void saveObject(T t){
-        Group group = (Group) t;
-        String group_id = String.valueOf(group.getId());
-        String name = group.getName();
-        String query;
-
-        if(group_id.equals("-1")){
-            query = String.format("INSERT INTO %s VALUES(null, '%s');", DEFAULT_TABLE, name);
-        } else{
-            query = String.format("UPDATE %s SET name='%s' " +
-                    "WHERE id=%s;", DEFAULT_TABLE, name, group_id);
-        }
-        dao = new DbManagerDAO();
-        dao.inputData(query);
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.GROUPS.getName();
     }
 }

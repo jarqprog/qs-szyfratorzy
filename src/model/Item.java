@@ -3,13 +3,12 @@ package model;
 import tools.DataTool;
 
 
-public abstract class Item {
+public abstract class Item extends ActiveModel {
 
     protected char type;
     protected String name;
     protected String description;
     protected String genre;
-    protected int id;
 
     public Item(int id, String name, char type, String description){
         this(name, description);
@@ -18,7 +17,7 @@ public abstract class Item {
         this.genre = "item";
     }
 
-    public Item(String name, String description){
+    Item(String name, String description){
         this.id = -1;
         this.name = name;
         this.type = 'I';
@@ -32,20 +31,16 @@ public abstract class Item {
 
     public void setName(String name){
         this.name = name;
-        saveObject();
+        saveModel();
     }
 
     public char getType(){
         return type;
     }
 
-    public int getId(){
-        return id;
-    }
-
     public void setType(char type){
         this.type = type;
-        saveObject();
+        saveModel();
     }
 
     public String getDescription(){
@@ -53,13 +48,13 @@ public abstract class Item {
     }
 
     public String getShortDescription() {
-        final int MAX_DESCRIPTION_LENGTH = 80;
+        final int MAX_DESCRIPTION_LENGTH = 40;
         return DataTool.getShortText(MAX_DESCRIPTION_LENGTH, description);
     }
 
     public void setDescription(String description){
         this.description = description;
-        saveObject();
+        saveModel();
     }
 
     public boolean compare(Item item){
@@ -81,10 +76,12 @@ public abstract class Item {
     }
 
     public String toString(){
-        return String.format("\n -genre: %s\n -id: %s\n -type: %s\n -item name: %s\n -description: %s\n", this.genre, this.id,
-                            this.type, this.name, this.description);
+        return String.format("id: %s, type: %s, name: %s, desc.: %s", id,
+                            type, name, getShortDescription());
     }
 
-    public abstract void saveObject();
-
+    public String getFullDataToString() {
+        return  String.format("\tid: %s\n\ttype: %s\n\tname: %s\n\tdescription: %s", id,
+                type, name, description);
+    }
 }

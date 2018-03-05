@@ -1,15 +1,20 @@
 package dao;
 
 import enums.Table;
+import managers.DbProcessManager;
 import model.Artifact;
 
-public class ArtifactDAO extends FactoryDAO {
+import java.sql.Connection;
+import java.sql.SQLException;
 
-    public ArtifactDAO(){
-        this.DEFAULT_TABLE = Table.ARTIFACTS.getName();
+public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
+
+    ArtifactDAO(Connection connection) {
+        super(connection);
     }
 
-    public Artifact getOneObject(String[] record) {
+
+    public Artifact extractModel(String[] record) {
 
         final int ID_INDEX = 0;
         final int NAME_INDEX = 1;
@@ -26,25 +31,42 @@ public class ArtifactDAO extends FactoryDAO {
         return new Artifact(id, itemType, itemName, itemDescription, price);
     }
 
-    public <T> void saveObject(T t){
-        Artifact artifact = (Artifact) t;
+    public boolean saveModel(Artifact artifact){
         String artifactId = String.valueOf(artifact.getId());
         String itemType = String.valueOf(artifact.getType());
         String itemName = artifact.getName();
         String itemDescription = artifact.getDescription();
-        String price = String.valueOf(artifact.getPrice());
-
+        int price = artifact.getPrice();
         String query;
+
         if (artifactId.equals("-1")) {
+
             query = String.format(
                     "INSERT INTO %s " +
-                            "VALUES(null, '%s', '%s', '%s', %s);",
-                    DEFAULT_TABLE, itemName, itemType, itemDescription, price);
+                            "VALUES(null, ?, ?, ?, ?)", DEFAULT_TABLE);
         } else {
-            query = String.format("UPDATE %s SET name='%s' , type='%s', description='%s', price=%s " +
-                    "WHERE id=%s;", DEFAULT_TABLE, itemName, itemType, itemDescription, price, artifactId);
+            query = String.format(
+                    "UPDATE %s SET name=? , type=?, description=?, price=?, " +
+                            "WHERE id=?", DEFAULT_TABLE);
         }
-        DbManagerDAO dao = new DbManagerDAO();
-        dao.inputData(query);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, itemName);
+            preparedStatement.setString(2, itemType);
+            preparedStatement.setString(3, itemDescription);
+            preparedStatement.setInt(4, price);
+            if(!artifactId.equals("-1")) {
+                preparedStatement.setInt(5, Integer.valueOf(artifactId));
+            }
+            DbProcessManager.executeUpdate(preparedStatement);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    protected void setDefaultTable(){
+        this.DEFAULT_TABLE = Table.ARTIFACTS.getName();
     }
 }
