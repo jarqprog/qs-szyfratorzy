@@ -4,7 +4,6 @@ import model.*;
 
 public class GeneralModelFactory {
 
-    @SuppressWarnings("unchecked")
     public static <T extends ModelFactory> T getByType(Class<T> type) {
 
         ModelFactory factory = null;
@@ -37,6 +36,6 @@ public class GeneralModelFactory {
                 factory = new ExpLevelsFactoryImpl();
                 break;
         }
-        return (T) factory;
+        return type.cast(factory);
     }
 }
