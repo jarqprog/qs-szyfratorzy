@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public abstract class StudentSetDAO<T extends StudentSet> extends ActiveModelDAOImpl<T>{
 
-    StudentSetDAO(Connection connection) {
+    protected StudentSetDAO(Connection connection) {
         super(connection);
     }
 

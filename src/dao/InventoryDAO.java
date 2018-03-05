@@ -2,7 +2,9 @@ package dao;
 
 import managers.DbProcessManager;
 import model.Artifact;
+import model.ArtifactDAO;
 import model.Inventory;
+import model.ModelDaoFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,7 +12,7 @@ import java.util.*;
 
 public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAOImpl<T> {
 
-    InventoryDAO(Connection connection) {
+    protected InventoryDAO(Connection connection) {
         super(connection);
     }
 
@@ -18,7 +20,7 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
         Map<Artifact, Integer> inventory = new HashMap<>();
         List<String[]> dataCollection = getArtifactsData(ownerId);
         if (dataCollection.size() > 0) {
-            ActiveModelDAO<Artifact> artifactDao = DaoFactory.getByType(ArtifactDAO.class);
+            ActiveModelDAO<Artifact> artifactDao = ModelDaoFactory.getByType(ArtifactDAO.class);
             Artifact artifact;
             int ID_INDEX = 0;
             List<Integer> usedArtifactsId = new ArrayList<>(5);
