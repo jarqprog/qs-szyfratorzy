@@ -49,16 +49,13 @@ public class LoginDAOImpl implements LoginDAO {
         User user = null;
         switch (table) {
             case ("admins"):
-                AdminDAO adDao = DaoFactory.getByType(AdminDAO.class);
-                user = adDao.extractModel(userData);
+                user = DaoFactory.getByType(AdminDAO.class).extractModel(userData);
                 break;
             case ("mentors"):
-                MentorDAO meDao = DaoFactory.getByType(MentorDAO.class);
-                user = meDao.extractModel(userData);
+                user = DaoFactory.getByType(MentorDAO.class).extractModel(userData);
                 break;
             case ("students"):
-                StudentDAO stDao = DaoFactory.getByType(StudentDAO.class);
-                user = stDao.extractModel(userData);
+                user = DaoFactory.getByType(StudentDAO.class).extractModel(userData);
                 break;
         }
         return user;
