@@ -119,6 +119,7 @@ public class ExperienceLevelsController {
                 shouldContinue = experienceLevels.containsGivenValue(levelValue);
                 if(shouldContinue){
                     view.displayMessage("- Chosen value already exists! Type new value..");
+                    view.handlePause();
                 }
             }
             experienceLevels.addLevel(levelName, levelValue);

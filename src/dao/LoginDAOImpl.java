@@ -5,7 +5,7 @@ import enums.Table;
 import exceptions.LoginFailure;
 import factory.UserControllerFactory;
 import managers.DbProcessManager;
-import model.User;
+import model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,16 +49,13 @@ public class LoginDAOImpl implements LoginDAO {
         User user = null;
         switch (table) {
             case ("admins"):
-                AdminDAO adDao = DaoFactory.getByType(AdminDAO.class);
-                user = adDao.extractModel(userData);
+                user = ModelDaoFactory.getByType(AdminDAO.class).extractModel(userData);
                 break;
             case ("mentors"):
-                MentorDAO meDao = DaoFactory.getByType(MentorDAO.class);
-                user = meDao.extractModel(userData);
+                user = ModelDaoFactory.getByType(MentorDAO.class).extractModel(userData);
                 break;
             case ("students"):
-                StudentDAO stDao = DaoFactory.getByType(StudentDAO.class);
-                user = stDao.extractModel(userData);
+                user = ModelDaoFactory.getByType(StudentDAO.class).extractModel(userData);
                 break;
         }
         return user;

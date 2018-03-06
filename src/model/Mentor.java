@@ -12,7 +12,7 @@ public class Mentor extends User {
         role = Role.MENTOR.getName();
     }
 
-    public Mentor(int id, String firstName, String lastName,
+    Mentor(int id, String firstName, String lastName,
                        String email, String password, Group group) {
         super(id, firstName, lastName, email, password);
         this.group = group;

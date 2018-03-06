@@ -7,7 +7,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class DataTool {
 
@@ -74,9 +73,8 @@ public class DataTool {
     }
 
     public static <T extends Item, V> boolean checkIfMapContainsItem(T item, Map<T,V> map) {
-        for (Map.Entry<?,?> entry : map.entrySet()) {
-            @SuppressWarnings("unchecked")
-            T inMapItem = (T) entry.getKey();
+        for (Map.Entry<T,V> entry : map.entrySet()) {
+            T inMapItem = entry.getKey();
             if (inMapItem.getName().equals(item.getName())) {
                 return true;
             }

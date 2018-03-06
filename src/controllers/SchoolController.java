@@ -1,13 +1,9 @@
 package controllers;
 
-import dao.*;
+import dao.SchoolDAO;
+import dao.SpecialDaoFactory;
 import factory.GeneralModelFactory;
-import model.GroupFactoryImpl;
-import model.TeamFactoryImpl;
-import model.Group;
-import model.Mentor;
-import model.Student;
-import model.Team;
+import model.*;
 import view.SchoolView;
 import view.UsersView;
 
@@ -17,19 +13,19 @@ import java.util.List;
 public class SchoolController {
 
     public static List<Group> getGroups() {
-        return DaoFactory.getByType(GroupDAO.class).getAllModels();
+        return ModelDaoFactory.getByType(GroupDAO.class).getAllModels();
     }
 
     public static List<Team> getTeams() {
-        return DaoFactory.getByType(TeamDAO.class).getAllModels();
+        return ModelDaoFactory.getByType(TeamDAO.class).getAllModels();
     }
 
     public static List<String> getGroupNames() {
-        return DaoFactory.getSchoolDAO().getGroupNames();
+        return SpecialDaoFactory.getByType(SchoolDAO.class).getGroupNames();
     }
 
     public static List<String> getTeamNames() {
-        return DaoFactory.getSchoolDAO().getTeamNames();
+        return SpecialDaoFactory.getByType(SchoolDAO.class).getTeamNames();
     }
 
     public static void assignMentorToGroup(Mentor mentor){
@@ -127,11 +123,11 @@ public class SchoolController {
     }
 
     public static List<Student> getAllStudents() {
-        return DaoFactory.getByType(StudentDAO.class).getAllModels();
+        return ModelDaoFactory.getByType(StudentDAO.class).getAllModels();
     }
 
     public static List<Mentor> getAllMentors() {
-        return DaoFactory.getByType(MentorDAO.class).getAllModels();
+        return ModelDaoFactory.getByType(MentorDAO.class).getAllModels();
     }
 
     public static Student pickStudentFromList(List<Student> students) {
@@ -182,6 +178,9 @@ public class SchoolController {
                 view.displayObject(team);
                 isDone = true;
             }
+            if(! isDone) {
+                view.handlePause();
+            }
         }
     }
 
@@ -203,6 +202,9 @@ public class SchoolController {
                 view.displayMessageInNextLine("- group created: \n");
                 view.displayObject(newGroup);
                 isDone = true;
+            }
+            if(! isDone) {
+                view.handlePause();
             }
         }
     }

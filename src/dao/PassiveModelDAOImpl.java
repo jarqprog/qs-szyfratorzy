@@ -13,7 +13,7 @@ public abstract class PassiveModelDAOImpl<T extends PassiveModel> implements Pas
     protected PreparedStatement preparedStatement;
     protected ResultSet resultSet;
 
-    PassiveModelDAOImpl(Connection connection) {
+    protected PassiveModelDAOImpl(Connection connection) {
         this.connection = connection;
         setDefaultTable();
     }

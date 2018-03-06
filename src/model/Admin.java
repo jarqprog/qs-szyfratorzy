@@ -10,7 +10,7 @@ public class Admin extends User {
         role = Role.ADMIN.getName();
     }
 
-    public Admin(int id, String firstName, String lastName, String email, String password) {
+    Admin(int id, String firstName, String lastName, String email, String password) {
         super(id, firstName, lastName, email, password);
         role = Role.ADMIN.getName();
     }

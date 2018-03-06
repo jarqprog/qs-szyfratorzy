@@ -1,13 +1,10 @@
 package model;
 
-import dao.DaoFactory;
-import dao.StudentDAO;
-
 public class Team extends StudentSet {
 
     private TeamInventory inventory;
 
-    public Team(int id, String name) {
+    Team(int id, String name) {
         super(id, name);
         inventory = new TeamInventory(id);
     }
@@ -26,7 +23,7 @@ public class Team extends StudentSet {
     }
 
     public void setStudents() {
-        this.students = DaoFactory.getByType(StudentDAO.class)
+        this.students = ModelDaoFactory.getByType(StudentDAO.class)
                 .getFilteredModelsByIntegerParameter("team_id", id);
     }
 

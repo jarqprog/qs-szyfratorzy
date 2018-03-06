@@ -10,7 +10,7 @@ public abstract class User extends ActiveModel {
     protected String password;
     protected String role;
 
-    public User(int id, String firstName, String lastName, String email, String password) {
+    User(int id, String firstName, String lastName, String email, String password) {
         this(firstName, lastName, password);
         this.id = id;
         this.email = email;
