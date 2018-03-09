@@ -5,28 +5,25 @@ import java.util.List;
 import dao.*;
 import enums.FilePath;
 import exceptions.LoginFailure;
+import factory.ConnectionFactory;
 import managers.*;
-import managers.DbManagerImpl;
-import managers.DbManager;
-import model.ModelDaoFactory;
 import view.RootView;
 
 
 public class RootController {
 
     private RootView view;
-    private DbManager dbManager;
+    private DbFitter dbManager;
     private boolean shouldExit;
 
     public RootController() {
         view = new RootView();
-        dbManager = new DbManagerImpl();
+        dbManager = new DbFitter();
         shouldExit = false;
     }
 
     public void runApplication(){
         view.clearScreen();
-        dbManager.prepareDatabase();
         view.displayLoadingStars();
         while (! shouldExit){
             executeIntro();
@@ -47,7 +44,7 @@ public class RootController {
                 case "0":
                     shouldExit = true;
                     executeOutro();
-                    dbManager.closeConnection();
+                    dbManager.closeConnection(ConnectionFactory.getConnection());
             }
         }
     }

@@ -1,8 +1,9 @@
 package controllers;
 
 import exceptions.DatabaseFailure;
+import factory.ConnectionFactory;
+import managers.DbFitter;
 import managers.DbManager;
-import managers.DbManagerImpl;
 import model.ExpLevelsFactoryImpl;
 import model.ExperienceLevels;
 import tools.DataTool;
@@ -11,6 +12,8 @@ import model.Student;
 import view.SchoolView;
 import factory.GeneralModelFactory;
 
+import java.io.FileNotFoundException;
+import java.sql.Connection;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -163,13 +166,14 @@ public class ExperienceLevelsController {
     }
 
     private void resetExpLevelsFromSqlFile() {
-        DbManager dbManager = new DbManagerImpl();
-        String sqlFilePath = FilePath.UPDATE_EXP_LVL.getPath();
+        DbFitter manager = new DbFitter();
+        FilePath sqlFilePath = FilePath.UPDATE_EXP_LVL;
 
         try {
-            dbManager.updateDatabase(sqlFilePath);
-        } catch (DatabaseFailure databaseFailure) {
-            databaseFailure.printStackTrace();
+            Connection connection = ConnectionFactory.getConnection();
+            manager.updateDatabaseWithSqlFile(sqlFilePath, connection);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
