@@ -61,7 +61,7 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
                     preparedStatement.addBatch();
                     index++;
                 }
-                DbProcessManager.executeBatch(preparedStatement);
+                DbProcessManager.executeBatch(preparedStatement, connection);
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;

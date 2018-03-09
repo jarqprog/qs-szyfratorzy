@@ -6,13 +6,19 @@ import java.util.ArrayList;
 
 public class DbProcessManager {
 
-    public static boolean executeBatch(PreparedStatement preparedStatement) {
+    public static boolean executeBatch(PreparedStatement preparedStatement, Connection connection) {
         try {
+            connection.setAutoCommit(false);
             preparedStatement.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             if (preparedStatement != null) {
                 closePreparedStatement(preparedStatement);
             }
