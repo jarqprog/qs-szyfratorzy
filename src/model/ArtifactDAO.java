@@ -2,8 +2,7 @@ package model;
 
 import dao.ActiveModelDAOImpl;
 import enums.Table;
-import managers.DbProcessManager;
-import model.Artifact;
+import managers.SQLProcessManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -59,7 +58,7 @@ public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
             if(!artifactId.equals("-1")) {
                 preparedStatement.setInt(5, Integer.valueOf(artifactId));
             }
-            DbProcessManager.executeUpdate(preparedStatement);
+            SQLProcessManager.executeUpdate(preparedStatement);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;

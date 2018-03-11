@@ -2,8 +2,7 @@ package model;
 
 import dao.PassiveModelDAOImpl;
 import enums.Table;
-import managers.DbProcessManager;
-import model.Attendance;
+import managers.SQLProcessManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -61,7 +60,7 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
                     preparedStatement.addBatch();
                     index++;
                 }
-                DbProcessManager.executeBatch(preparedStatement, connection);
+                SQLProcessManager.executeBatch(preparedStatement, connection);
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
@@ -82,7 +81,7 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, ownerId);
             resultSet = preparedStatement.executeQuery();
-            return DbProcessManager.getObjectsDataCollection(resultSet);
+            return SQLProcessManager.getObjectsDataCollection(resultSet);
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -93,6 +92,6 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
         String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", DEFAULT_TABLE);
         preparedStatement = connection.prepareStatement(clearQuery);
         preparedStatement.setInt(1, ownerId);
-        DbProcessManager.executeUpdate(preparedStatement);
+        SQLProcessManager.executeUpdate(preparedStatement);
     }
 }

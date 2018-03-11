@@ -1,8 +1,7 @@
 package model;
 
 import dao.PassiveModelDAOImpl;
-import managers.DbProcessManager;
-import model.ExperienceLevels;
+import managers.SQLProcessManager;
 import enums.Table;
 
 import java.sql.Connection;
@@ -51,7 +50,7 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
                     preparedStatement.addBatch();
                     index++;
                 }
-                DbProcessManager.executeBatch(preparedStatement, connection);
+                SQLProcessManager.executeBatch(preparedStatement, connection);
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
@@ -71,7 +70,7 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
         try {
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
-            return DbProcessManager.getObjectsDataCollection(resultSet);
+            return SQLProcessManager.getObjectsDataCollection(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }   return new ArrayList<>();
@@ -80,6 +79,6 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
     private void clearExpLevels() throws SQLException {
         String clearQuery = String.format("DELETE FROM %s", DEFAULT_TABLE);
         preparedStatement = connection.prepareStatement(clearQuery);
-        DbProcessManager.executeUpdate(preparedStatement);
+        SQLProcessManager.executeUpdate(preparedStatement);
     }
 }
