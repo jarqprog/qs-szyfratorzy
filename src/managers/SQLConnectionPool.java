@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
-public class SQLConnectionPool implements SQLConnectionGetter {
+public class SQLConnectionPool implements DatabaseConnectionGetter {
 
     private final static int MIN_ALLOWED_CONNECTION_NUMBER = 3;
     private final static int MAX_ALLOWED_CONNECTION_NUMBER = 10;
@@ -47,7 +47,7 @@ public class SQLConnectionPool implements SQLConnectionGetter {
         this.password = sqlConfig.getPASSWORD();
         this.userName = sqlConfig.getUSER_NAME();
         this.driver = sqlConfig.getDRIVER();
-        this.url = driver + sqlConfig.getDATA_BASE_PATH();
+        this.url = sqlConfig.getURL();
         this.sqlManager = sqlManager;
         setPool();
         sqlManager.updateDatabaseWithSqlFile(sqlUpdateScriptFile, getConnection());
