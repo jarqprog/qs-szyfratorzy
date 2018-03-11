@@ -9,10 +9,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-public class DbFitter extends AbstractManager {
+public class SqliteManager extends AbstractManager implements SQLManager{
 
-    public void prepareDatabase(FilePath databasePath) {
-        prepareFile(databasePath.getPath());
+    public static SqliteManager getManager(FilePath databaseFilePath) {
+        return new SqliteManager(databaseFilePath);
+    }
+
+    private SqliteManager(FilePath databaseFilePath) {
+        prepareFile(databaseFilePath.getPath());
     }
 
     public void closeConnection(Connection connection) {
@@ -32,10 +36,10 @@ public class DbFitter extends AbstractManager {
         }
     }
 
-    public void updateDatabaseWithSqlFile(FilePath sqlScriptPath, Connection connection) throws FileNotFoundException {
+    public void updateDatabaseWithSqlFile(FilePath sqlSetupScriptPath, Connection connection) throws FileNotFoundException {
         String delimiter = ";";
         Scanner scanner;
-        File sqlFile = new File(sqlScriptPath.getPath());
+        File sqlFile = new File(sqlSetupScriptPath.getPath());
         scanner = new Scanner(sqlFile).useDelimiter(delimiter);
         Statement currentStatement = null;
         while(scanner.hasNext()) {

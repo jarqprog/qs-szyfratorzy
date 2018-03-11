@@ -4,7 +4,7 @@ import controllers.*;
 import enums.Table;
 import exceptions.LoginFailure;
 import factory.UserControllerFactory;
-import managers.DbProcessManager;
+import managers.SQLProcessManager;
 import model.*;
 
 import java.sql.Connection;
@@ -32,7 +32,7 @@ public class LoginDAOImpl implements LoginDAO {
                 preparedStatement.setString(2, password);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.isBeforeFirst()) {
-                    String[] userData = DbProcessManager.getObjectData(resultSet);
+                    String[] userData = SQLProcessManager.getObjectData(resultSet);
                     user = extractUser(userData, table);
                     if (user != null) {
                         return UserControllerFactory.getController(user);

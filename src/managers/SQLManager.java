@@ -1,13 +1,14 @@
 package managers;
 
-import exceptions.DatabaseFailure;
+import enums.FilePath;
 
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 
-public interface DbManager {
 
-    void prepareDatabase();
-    Connection getConnection();
-    void closeConnection();
-    void updateDatabase(String sqlScriptPath) throws DatabaseFailure;
+public interface SQLManager {
+
+    boolean validateConnection(Connection connection);
+    void closeConnection(Connection connection);
+    void updateDatabaseWithSqlFile(FilePath sqlSetupScriptPath, Connection connection) throws FileNotFoundException;
 }

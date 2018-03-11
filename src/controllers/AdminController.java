@@ -2,7 +2,10 @@ package controllers;
 
 import java.util.List;
 
+import enums.FilePath;
 import factory.GeneralModelFactory;
+import managers.SQLManager;
+import managers.SqliteManager;
 import model.MentorFactoryImpl;
 import model.Admin;
 import model.Mentor;
@@ -136,7 +139,6 @@ public class AdminController extends UserControllerImpl{
     }
 
     private void runExpLevelManager(){
-        ExperienceLevelsController controller = new ExperienceLevelsController();
-        controller.manageExperienceLevels();
+        ExperienceLevelsController.getInstance().manageExperienceLevels();
     }
 }

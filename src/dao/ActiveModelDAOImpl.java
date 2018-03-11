@@ -1,6 +1,6 @@
 package dao;
 
-import managers.DbProcessManager;
+import managers.SQLProcessManager;
 import model.ActiveModel;
 
 import java.sql.Connection;
@@ -15,7 +15,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         FilterModelDAO<T> {
 
     protected String DEFAULT_TABLE;
-    protected DbProcessManager dao;
+    protected SQLProcessManager dao;
     protected Connection connection;
     protected PreparedStatement preparedStatement;
     protected ResultSet resultSet;
@@ -31,13 +31,13 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
-            String[] data = DbProcessManager.getObjectData(resultSet);
+            String[] data = SQLProcessManager.getObjectData(resultSet);
             return extractModel(data);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         } finally {
-            DbProcessManager.closePreparedStatement(preparedStatement);
+            SQLProcessManager.closePreparedStatement(preparedStatement);
         }
     }
 
@@ -47,7 +47,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         try {
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
-            List<String[]> dataCollection = DbProcessManager.getObjectsDataCollection(resultSet);
+            List<String[]> dataCollection = SQLProcessManager.getObjectsDataCollection(resultSet);
             if (dataCollection != null) {
                 objects = extractManyModels(dataCollection);
             }
@@ -56,7 +56,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
             e.printStackTrace();
             return new ArrayList<>();
         } finally {
-            DbProcessManager.closePreparedStatement(preparedStatement);
+            SQLProcessManager.closePreparedStatement(preparedStatement);
         }
     }
 
@@ -68,13 +68,13 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, parameterValue);
             resultSet = preparedStatement.executeQuery();
-            List<String[]> data = DbProcessManager.getObjectsDataCollection(resultSet);
+            List<String[]> data = SQLProcessManager.getObjectsDataCollection(resultSet);
             return extractManyModels(data);
         } catch (SQLException e) {
             e.printStackTrace();
             return new ArrayList<>();
         } finally {
-            DbProcessManager.closePreparedStatement(preparedStatement);
+            SQLProcessManager.closePreparedStatement(preparedStatement);
         }
     }
 
@@ -111,7 +111,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
         String query = String.format("Select %s from %s", "id", DEFAULT_TABLE);
         preparedStatement = connection.prepareStatement(query);
         resultSet = preparedStatement.executeQuery();
-        List<String[]> currentIdsCollection = DbProcessManager.getObjectsDataCollection(resultSet);
+        List<String[]> currentIdsCollection = SQLProcessManager.getObjectsDataCollection(resultSet);
 
         if (currentIdsCollection != null) {
             currentIds = new String[currentIdsCollection.size()];
@@ -120,7 +120,7 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
                 currentIds[i] = currentIdsCollection.get(i)[idIndex];
             }
         }
-        DbProcessManager.closePreparedStatement(preparedStatement);
+        SQLProcessManager.closePreparedStatement(preparedStatement);
         return currentIds;
     }
 
