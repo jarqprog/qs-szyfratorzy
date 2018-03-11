@@ -100,7 +100,7 @@ public class RootController {
         DatabaseConfiguration dbConfig = DatabaseConfiguration
                 .createSQLiteConfiguration(url, driver, 5, 7);
         DatabaseConnectionGetter databaseConnectionGetter = SQLConnectionGetter
-                .getSqliteConMaker(dbConfig, sqlManager, FilePath.SQL_SCRIPT);
+                .getSqliteConGetter(dbConfig, sqlManager, FilePath.SQL_SCRIPT);
         ConnectionFactory.setSqlConnectionGetter(databaseConnectionGetter);
     }
 }

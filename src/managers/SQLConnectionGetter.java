@@ -16,7 +16,7 @@ public class SQLConnectionGetter implements DatabaseConnectionGetter {
     private SQLManager sqlManager;
     private static Connection connection;
 
-    public static SQLConnectionGetter getSqliteConMaker(DatabaseConfiguration config, SQLManager sqlManager, FilePath sqlUpdateScriptFile) {
+    public static SQLConnectionGetter getSqliteConGetter(DatabaseConfiguration config, SQLManager sqlManager, FilePath sqlUpdateScriptFile) {
         SQLConnectionGetter instance = null;
         try {
             instance = new SQLConnectionGetter(config, sqlManager, sqlUpdateScriptFile);
