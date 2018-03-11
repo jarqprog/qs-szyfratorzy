@@ -16,7 +16,11 @@ public class RootController {
     private DbFitter dbManager;
     private boolean shouldExit;
 
-    public RootController() {
+    public static RootController getInstance() {
+        return new RootController();
+    }
+
+    private RootController() {
         view = new RootView();
         dbManager = new DbFitter();
         shouldExit = false;
