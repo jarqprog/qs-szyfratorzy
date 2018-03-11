@@ -8,50 +8,52 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
-public class SQLConnectionPool {
+public class SQLConnectionPool implements SQLConnectionGetter {
 
-    private final static int MIN_CONNECTION_NUMBER = 5;
+    private final static int MIN_ALLOWED_CONNECTION_NUMBER = 3;
+    private final static int MAX_ALLOWED_CONNECTION_NUMBER = 10;
     private String url;
-    private final int minConQuantity;
+    private String password;  // not used by sqlite
+    private String userName;  // not used by sqlite
+    private String driver;
+    private Integer minConQuantity;
+    private Integer maxConQuantity;
     private ConcurrentLinkedDeque <Connection> pool;
     private static SQLConnectionPool instance;
-    private DbFitter dbFitter;
+    private SQLManager sqlManager;
 
-    public static SQLConnectionPool getSqlConnectionPool(int minConQuantity,
-                                                         String url,
-                                                         DbFitter dbFitter,
-                                                         FilePath sqlUpdaterPath) {
+    public static SQLConnectionPool getSqliteConnectionPool(DatabaseConfiguration config, SQLManager sqlManager, FilePath sqlUpdateScriptFile) {
         try {
             if (instance == null) {
-                instance = new SQLConnectionPool(minConQuantity, url, dbFitter, sqlUpdaterPath);
+                instance = new SQLConnectionPool(config, sqlManager, sqlUpdateScriptFile);
             }
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            System.exit(1);
         }
         return instance;
     }
 
-    private SQLConnectionPool(final int minConQuantity, String url, DbFitter dbFitter, FilePath sqlUpdaterPath)
-            throws IllegalArgumentException, SQLException, FileNotFoundException {
-
-        if (minConQuantity < MIN_CONNECTION_NUMBER) {
-            throw new IllegalArgumentException();
+    private SQLConnectionPool(DatabaseConfiguration sqlConfig, SQLManager sqlManager, FilePath sqlUpdateScriptFile)
+            throws ClassNotFoundException, SQLException, FileNotFoundException {
+        this.minConQuantity = sqlConfig.getMIN_CONNECTIONS();
+        if (minConQuantity < MIN_ALLOWED_CONNECTION_NUMBER) {
+            throw new IllegalArgumentException("too small minimum number of connections in the configuration class");
         }
-        this.minConQuantity = minConQuantity;
-        this.url = url;
-        this.dbFitter = dbFitter;
+        this.maxConQuantity = sqlConfig.getMAX_CONNECTIONS();
+        if (maxConQuantity > MAX_ALLOWED_CONNECTION_NUMBER) {
+            throw new IllegalArgumentException("too big maximum number of connections in the configuration class");
+        }
+        this.password = sqlConfig.getPASSWORD();
+        this.userName = sqlConfig.getUSER_NAME();
+        this.driver = sqlConfig.getDRIVER();
+        this.url = driver + sqlConfig.getDATA_BASE_PATH();
+        this.sqlManager = sqlManager;
         setPool();
-        dbFitter.updateDatabaseWithSqlFile(sqlUpdaterPath, getConnection());
+        sqlManager.updateDatabaseWithSqlFile(sqlUpdateScriptFile, getConnection());
     }
 
-    private void setPool() throws SQLException {
-        this.pool = new ConcurrentLinkedDeque<>();
-        for (int i=0; i<minConQuantity; i++) {
-            pool.add(createConnection());
-        }
-    }
-
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection() throws ClassNotFoundException, SQLException {
         Connection connection;
         if((connection = pool.poll()) == null) {
             connection = createConnection();
@@ -59,13 +61,27 @@ public class SQLConnectionPool {
         return connection;
     }
 
+    public void shutdown() {
+        for (Connection connection : pool) {
+            sqlManager.closeConnection(connection);
+        }
+    }
+
     public void returnConnection(Connection connection) {
-        if(dbFitter.validateConnection(connection)) {
+        if(sqlManager.validateConnection(connection)) {
             pool.offer(connection);
         }
     }
 
-    private Connection createConnection() throws SQLException {
+    private void setPool() throws ClassNotFoundException, SQLException {
+        this.pool = new ConcurrentLinkedDeque<>();
+        for (int i=0; i<minConQuantity; i++) {
+            pool.add(createConnection());
+        }
+    }
+
+    private Connection createConnection() throws ClassNotFoundException, SQLException {
+        Class.forName(driver);
         return DriverManager.getConnection(url);
     }
 }
