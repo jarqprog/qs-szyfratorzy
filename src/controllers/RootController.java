@@ -13,7 +13,6 @@ import view.RootView;
 public class RootController {
 
     private RootView view;
-    private DbFitter dbManager;
     private boolean shouldExit;
 
     public static RootController getInstance() {
@@ -22,8 +21,8 @@ public class RootController {
 
     private RootController() {
         view = new RootView();
-        dbManager = new DbFitter();
         shouldExit = false;
+        setDatabase();
     }
 
     public void runApplication(){
@@ -48,7 +47,7 @@ public class RootController {
                 case "0":
                     shouldExit = true;
                     executeOutro();
-                    dbManager.closeConnection(ConnectionFactory.getConnection());
+                    ConnectionFactory.shutdownConnections();
             }
         }
     }
@@ -88,5 +87,20 @@ public class RootController {
         List<String> introData = manager.getData();
         view.displayCollectionData(introData);
         view.handlePause();
+    }
+
+    private void setDatabase() {
+        setSqliteDatabase();
+    }
+
+    private void setSqliteDatabase() {
+        String url = "jdbc:sqlite:" + FilePath.DATA_BASE.getPath();
+        String driver = "org.sqlite.JDBC";
+        SQLManager sqlManager = SqliteManager.getManager(FilePath.DATA_BASE);
+        DatabaseConfiguration dbConfig = DatabaseConfiguration
+                .createSQLiteConfiguration(url, driver, 5, 7);
+        DatabaseConnectionGetter databaseConnectionGetter = SQLConnectionGetter
+                .getSqliteConMaker(dbConfig, sqlManager, FilePath.SQL_SCRIPT);
+        ConnectionFactory.setSqlConnectionGetter(databaseConnectionGetter);
     }
 }
