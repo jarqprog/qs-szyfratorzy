@@ -7,6 +7,6 @@ public class TeamInventory extends Inventory {
     }
 
     public void setStock() {
-        stock = ModelDaoFactory.getByType(TeamInventoryDAO.class).load(ownerId);
+        setStock(ModelDaoFactory.getByType(TeamInventoryDAO.class).load(getOwnerId()));
     }
 }

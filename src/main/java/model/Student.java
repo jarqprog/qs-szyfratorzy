@@ -21,7 +21,7 @@ public class Student extends User {
         experience = 0;
         team = new Team(1, "undefined");
         group = new Group(1, "undefined");
-        role = Role.STUDENT.getName();
+        setRole(Role.STUDENT.getName());
     }
 
     Student(int id, String firstName, String lastName, String email,
@@ -36,7 +36,7 @@ public class Student extends User {
         this.attendance = new Attendance(id);
         this.inventory = new StudentInventory(id);
         this.studentsQuests = new StudentsQuests(id);
-        role = Role.STUDENT.getName();
+        setRole(Role.STUDENT.getName());
     }
 
     public Group getGroup() {

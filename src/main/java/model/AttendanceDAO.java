@@ -5,6 +5,8 @@ import enums.Table;
 import managers.SQLProcessManager;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
@@ -40,8 +42,8 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
             int ownerId = attendance.getOwnerId();
             try {
                 clearAttendance(ownerId);
-                String query = String.format("INSERT INTO %s VALUES(null, ?, ?, ?) ", DEFAULT_TABLE);
-                preparedStatement = connection.prepareStatement(query);
+                String query = String.format("INSERT INTO %s VALUES(null, ?, ?, ?) ", getDefaultTable());
+                PreparedStatement preparedStatement = getConnection().prepareStatement(query);
                 Set<LocalDate> dates = datesWithAttendance.keySet();
                 Boolean[] presences = datesWithAttendance.values().toArray(new Boolean[0]);
                 String date;
@@ -60,7 +62,7 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
                     preparedStatement.addBatch();
                     index++;
                 }
-                SQLProcessManager.executeBatch(preparedStatement, connection);
+                SQLProcessManager.executeBatch(preparedStatement, getConnection());
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
@@ -71,16 +73,16 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
     }
 
     protected void setDefaultTable(){
-        this.DEFAULT_TABLE = Table.ATTENDANCE.getName();
+        setDefaultTable(Table.ATTENDANCE);
     }
 
     private List<String[]> getAttendanceData(int ownerId) {
         String query = String.format("SELECT date, attendance FROM %s WHERE owner_id=?",
-                DEFAULT_TABLE);
+                getDefaultTable());
         try {
-            preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setInt(1, ownerId);
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             return SQLProcessManager.getObjectsDataCollection(resultSet);
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
@@ -89,8 +91,8 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
     }
 
     private void clearAttendance(int ownerId) throws SQLException {
-        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", DEFAULT_TABLE);
-        preparedStatement = connection.prepareStatement(clearQuery);
+        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", getDefaultTable());
+        PreparedStatement preparedStatement = getConnection().prepareStatement(clearQuery);
         preparedStatement.setInt(1, ownerId);
         SQLProcessManager.executeUpdate(preparedStatement);
     }

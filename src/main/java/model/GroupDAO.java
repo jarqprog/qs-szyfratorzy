@@ -22,6 +22,6 @@ public class GroupDAO extends StudentSetDAO<Group> {
     }
 
     protected void setDefaultTable(){
-        this.DEFAULT_TABLE = Table.GROUPS.getName();
+        setDefaultTable(Table.GROUPS);
     }
 }

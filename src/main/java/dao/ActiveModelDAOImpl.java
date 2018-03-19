@@ -1,5 +1,6 @@
 package dao;
 
+import enums.Table;
 import managers.SQLProcessManager;
 import model.ActiveModel;
 
@@ -14,11 +15,11 @@ import java.util.List;
 public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements ActiveModelDAO<T>,
         FilterModelDAO<T> {
 
-    protected String DEFAULT_TABLE;
-    protected SQLProcessManager dao;
-    protected Connection connection;
-    protected PreparedStatement preparedStatement;
-    protected ResultSet resultSet;
+    private String DEFAULT_TABLE;
+    private SQLProcessManager processManager;
+    private Connection connection;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
 
     protected ActiveModelDAOImpl(Connection connection) {
         this.connection = connection;
@@ -136,4 +137,19 @@ public abstract class ActiveModelDAOImpl<T extends ActiveModel> implements Activ
 
     protected abstract void setDefaultTable();
 
+    protected String getDefault_Table() {
+        return DEFAULT_TABLE;
+    }
+
+    protected SQLProcessManager getProcessManager() {
+        return processManager;
+    }
+
+    protected Connection getConnection() {
+        return connection;
+    }
+
+    protected void setDefaultTable(Table defaultTable) {
+        this.DEFAULT_TABLE = defaultTable.getName();
+    }
 }

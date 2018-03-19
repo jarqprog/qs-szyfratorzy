@@ -5,24 +5,22 @@ import tools.DataTool;
 
 public abstract class Item extends ActiveModel {
 
-    protected char type;
-    protected String name;
-    protected String description;
-    protected String genre;
+    private char type;
+    private String name;
+    private String description;
+    private String genre;
 
     Item(int id, String name, char type, String description){
         this(name, description);
-        this.id = id;
+        setId(id);
         this.type = type;
-        this.genre = "item";
     }
 
     Item(String name, String description){
-        this.id = -1;
+        setId(-1);
         this.name = name;
-        this.type = 'I';
         this.description = description;
-        this.genre = "item";
+        this.type = 'B';
     }
 
     public String getName(){
@@ -61,7 +59,7 @@ public abstract class Item extends ActiveModel {
         if(item == null){
             return false;
         }
-        if(item.getId() == this.id){
+        if(item.getId() == getId()){
             return true;
         }
         return false;
@@ -76,12 +74,16 @@ public abstract class Item extends ActiveModel {
     }
 
     public String toString(){
-        return String.format("id: %s, type: %s, name: %s, desc.: %s", id,
+        return String.format("id: %s, type: %s, name: %s, desc.: %s", getId(),
                             type, name, getShortDescription());
     }
 
     public String getFullDataToString() {
-        return  String.format("\tid: %s\n\ttype: %s\n\tname: %s\n\tdescription: %s", id,
+        return  String.format("\tid: %s\n\ttype: %s\n\tname: %s\n\tdescription: %s", getId(),
                 type, name, description);
+    }
+
+    protected void setGenre(String genre) {
+        this.genre = genre;
     }
 }

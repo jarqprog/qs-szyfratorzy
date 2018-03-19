@@ -5,6 +5,7 @@ import managers.SQLProcessManager;
 import enums.Table;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
@@ -72,15 +73,16 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
 
             query = String.format(
                     "INSERT INTO %s " +
-                    "VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?)", DEFAULT_TABLE);
+                    "VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?)", getDefault_Table());
         } else {
             query = String.format(
                     "UPDATE %s SET first_name=?, last_name=?, email=?, password=?, wallet=?, " +
                             "experience=?, team_id=?, group_id=? " +
-                            "WHERE id=?", DEFAULT_TABLE);
+                            "WHERE id=?", getDefault_Table());
         }
         try {
-            preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement;
+            preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
             preparedStatement.setString(3, email);
@@ -101,7 +103,7 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
     }
 
     protected void setDefaultTable(){
-        this.DEFAULT_TABLE = Table.STUDENTS.getName();
+        setDefaultTable(Table.STUDENTS);
     }
 
 }

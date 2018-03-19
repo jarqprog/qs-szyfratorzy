@@ -1,17 +1,14 @@
 package dao;
 
+import enums.Table;
 import model.PassiveModel;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public abstract class PassiveModelDAOImpl<T extends PassiveModel> implements PassiveModelDAO<T> {
 
-    protected String DEFAULT_TABLE;
-    protected Connection connection;
-    protected PreparedStatement preparedStatement;
-    protected ResultSet resultSet;
+    private String DEFAULT_TABLE;
+    private Connection connection;
 
     protected PassiveModelDAOImpl(Connection connection) {
         this.connection = connection;
@@ -19,4 +16,16 @@ public abstract class PassiveModelDAOImpl<T extends PassiveModel> implements Pas
     }
 
     protected abstract void setDefaultTable();
+
+    protected String getDefaultTable() {
+        return DEFAULT_TABLE;
+    }
+
+    protected Connection getConnection() {
+        return connection;
+    }
+
+    protected void setDefaultTable(Table defaultTable) {
+        this.DEFAULT_TABLE = defaultTable.getName();
+    }
 }

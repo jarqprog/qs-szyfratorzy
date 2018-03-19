@@ -6,7 +6,7 @@ import java.util.Set;
 
 public abstract class Inventory extends StudentStock {
 
-    protected Map<Artifact,Integer> stock;
+    private Map<Artifact,Integer> stock;
 
     Inventory(int ownerId) {
         super(ownerId);
@@ -57,7 +57,7 @@ public abstract class Inventory extends StudentStock {
     }
 
     public String toString() {
-        return String.format("Inventory of (owner id): %s", ownerId);  // temp
+        return String.format("Inventory of (owner id): %s", getOwnerId());
     }
 
     public String getFullDataToString() {
@@ -77,5 +77,9 @@ public abstract class Inventory extends StudentStock {
     }
 
     public abstract void setStock();
+
+    protected void setStock(Map<Artifact,Integer> stock) {
+        this.stock = stock;
+    }
 
 }
