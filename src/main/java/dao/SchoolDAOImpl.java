@@ -1,7 +1,7 @@
 package dao;
 
 import enums.Table;
-import managers.DbProcessManager;
+import managers.SQLProcessManager;
 import tools.DataTool;
 
 import java.sql.Connection;
@@ -39,7 +39,7 @@ public class SchoolDAOImpl implements SchoolDAO {
         try {
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
-            List<String[]> dataCollection = DbProcessManager.getObjectsDataCollection(resultSet);
+            List<String[]> dataCollection = SQLProcessManager.getObjectsDataCollection(resultSet);
             names = DataTool.flattenNestedCollectionList(dataCollection);
         } catch (SQLException e) {
             e.printStackTrace();

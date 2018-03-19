@@ -1,6 +1,6 @@
 package dao;
 
-import managers.DbProcessManager;
+import managers.SQLProcessManager;
 import model.StudentSet;
 
 import java.sql.Connection;
@@ -30,7 +30,7 @@ public abstract class StudentSetDAO<T extends StudentSet> extends ActiveModelDAO
             if(!studentSetId.equals("-1")) {
                 preparedStatement.setInt(2, Integer.valueOf(studentSetId));
             }
-            DbProcessManager.executeUpdate(preparedStatement);
+            SQLProcessManager.executeUpdate(preparedStatement);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;

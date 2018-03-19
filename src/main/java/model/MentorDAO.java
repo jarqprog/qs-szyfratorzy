@@ -1,7 +1,7 @@
 package model;
 
 import dao.ActiveModelDAOImpl;
-import managers.DbProcessManager;
+import managers.SQLProcessManager;
 import enums.Table;
 
 import java.sql.Connection;
@@ -68,7 +68,7 @@ public class MentorDAO extends ActiveModelDAOImpl<Mentor> {
             if(!mentorId.equals("-1")) {
                 preparedStatement.setInt(6, Integer.valueOf(mentorId));
             }
-            DbProcessManager.executeUpdate(preparedStatement);
+            SQLProcessManager.executeUpdate(preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

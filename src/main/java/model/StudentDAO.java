@@ -1,7 +1,7 @@
 package model;
 
 import dao.ActiveModelDAOImpl;
-import managers.DbProcessManager;
+import managers.SQLProcessManager;
 import enums.Table;
 
 import java.sql.Connection;
@@ -92,7 +92,7 @@ public class StudentDAO extends ActiveModelDAOImpl<Student> {
             if(!studentId.equals("-1")) {
                 preparedStatement.setInt(9, Integer.valueOf(studentId));
             }
-            DbProcessManager.executeUpdate(preparedStatement);
+            SQLProcessManager.executeUpdate(preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

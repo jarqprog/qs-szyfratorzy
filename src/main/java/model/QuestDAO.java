@@ -2,7 +2,7 @@ package model;
 
 import dao.ActiveModelDAOImpl;
 import enums.Table;
-import managers.DbProcessManager;
+import managers.SQLProcessManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -58,7 +58,7 @@ public class QuestDAO extends ActiveModelDAOImpl<Quest> {
             if(!id.equals("-1")) {
                 preparedStatement.setInt(6, Integer.valueOf(id));
             }
-            DbProcessManager.executeUpdate(preparedStatement);
+            SQLProcessManager.executeUpdate(preparedStatement);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
