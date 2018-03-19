@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class DbProcessManager {
+public class SQLProcessManager {
 
     public static boolean executeBatch(PreparedStatement preparedStatement, Connection connection) {
         try {

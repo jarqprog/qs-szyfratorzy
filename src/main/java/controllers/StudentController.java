@@ -1,5 +1,6 @@
 package controllers;
 
+import enums.QuestsStatus;
 import model.*;
 import view.StudentView;
 
@@ -8,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import static enums.QuestsStatus.WAITING_FOR_APPROVAL;
 
 public class StudentController extends UserControllerImpl {
     private Student student;
@@ -23,7 +26,7 @@ public class StudentController extends UserControllerImpl {
         boolean isDone = false;
         while(! isDone){
 
-            String[] correctChoices = {"1", "2", "3", "4", "5","6", "7", "8", "9", "0"};
+            String[] correctChoices = {"1", "2", "3", "4", "5","6", "7", "8", "9", "10", "0"};
             view.clearScreen();
             showProfile(student);
             view.displayMenu();
@@ -57,6 +60,9 @@ public class StudentController extends UserControllerImpl {
                     break;
                 case "9":
                     showMyAttendance();
+                    break;
+                case "10":
+                    markQuest();
                     break;
                 case "0":
                     isDone = true;
@@ -142,6 +148,18 @@ public class StudentController extends UserControllerImpl {
                     inventory.decreaseQuantity(artifact);
                     view.displayMessageInNextLine("- artifact used!");
                 }
+            }
+        }
+    }
+
+    private void markQuest(){
+        showMyQuests();
+        List<Quest> quests = new ArrayList<>(student.getStudentsQuests().getStock().keySet());
+        int questId = view.getNotNegativeNumberFromUser("Choose quest: ");
+        for (Quest quest : quests){
+            if (quest.getId() == questId){
+                quest.setStatus(QuestsStatus.WAITING_FOR_APPROVAL.getName());
+                view.displayMessage("Quest status has changed to " + quest.getStatus());
             }
         }
     }

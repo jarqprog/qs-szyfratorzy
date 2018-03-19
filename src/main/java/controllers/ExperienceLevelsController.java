@@ -1,8 +1,8 @@
 package controllers;
 
-import exceptions.DatabaseFailure;
-import managers.DbManager;
-import managers.DbManagerImpl;
+import factory.ConnectionFactory;
+import managers.SQLManager;
+import managers.SqliteManager;
 import model.ExpLevelsFactoryImpl;
 import model.ExperienceLevels;
 import tools.DataTool;
@@ -11,6 +11,8 @@ import model.Student;
 import view.SchoolView;
 import factory.GeneralModelFactory;
 
+import java.io.FileNotFoundException;
+import java.sql.Connection;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +24,11 @@ public class ExperienceLevelsController {
     private ExperienceLevels experienceLevels;
     private boolean shouldExit = false;
 
-    public ExperienceLevelsController() {
+    public static ExperienceLevelsController getInstance() {
+        return new ExperienceLevelsController();
+    }
+
+    private ExperienceLevelsController() {
         view = new SchoolView();
         experienceLevels = getExperienceLevels();
     }
@@ -163,13 +169,12 @@ public class ExperienceLevelsController {
     }
 
     private void resetExpLevelsFromSqlFile() {
-        DbManager dbManager = new DbManagerImpl();
-        String sqlFilePath = FilePath.UPDATE_EXP_LVL.getPath();
-
         try {
-            dbManager.updateDatabase(sqlFilePath);
-        } catch (DatabaseFailure databaseFailure) {
-            databaseFailure.printStackTrace();
+            Connection connection = ConnectionFactory.getConnection();
+            SQLManager sqlManager = SqliteManager.getManager(FilePath.DATA_BASE);
+            sqlManager.updateDatabaseWithSqlFile(FilePath.UPDATE_EXP_LVL, connection);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

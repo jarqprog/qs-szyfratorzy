@@ -1,5 +1,6 @@
 package controllers;
 
+import enums.QuestsStatus;
 import factory.GeneralModelFactory;
 import model.ArtifactFactoryImpl;
 import model.QuestFactoryImpl;
@@ -10,6 +11,7 @@ import model.Artifact;
 import model.Quest;
 import view.MentorView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MentorController extends UserControllerImpl {
@@ -207,7 +209,17 @@ public class MentorController extends UserControllerImpl {
     }
 
     private void markStudentQuest() {
-        executeNotImplementedInfo();
+        List<Student> students = SchoolController.getStudentsByGroup(mentor.getGroup());
+        Student student = SchoolController.pickStudentFromList(students);
+        List<Quest> studentQuests = new ArrayList<>(student.getStudentsQuests().getStock().keySet());
+        view.displayObjects(studentQuests);
+        int questId = view.getNotNegativeNumberFromUser("Choose quest: ");
+        for (Quest quest : studentQuests){
+            if (quest.getId() == questId){
+                quest.setStatus(QuestsStatus.COMPLITED.getName());
+                view.displayMessage("Quest status has changed to " + quest.getStatus());
+            }
+        }
     }
 
     private void markStudentArtifacts() {

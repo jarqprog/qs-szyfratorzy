@@ -1,1 +1,4 @@
-java -cp '.:bin/:lib/sqlite-jdbc-3.21.0.jar' Application
+
+mvn clean package
+
+java -jar target/queststore-szyfratorzy-3.0-SNAPSHOT.jar
