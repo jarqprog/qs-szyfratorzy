@@ -2,7 +2,7 @@ package enums;
 
 public enum QuestsStatus {
 
-    COMPLITED("Complited"), WAITING_FOR_APPROVAL("Waiting for approval"), AVAILABLE ("Available");
+    COMPLETED("Completed"), TO_IMPROVE("To improve"), WAITING_FOR_APPROVAL("Waiting for approval"), AVAILABLE ("Available");
 
     private String name;
 
