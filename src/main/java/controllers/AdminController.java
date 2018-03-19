@@ -1,13 +1,14 @@
 package controllers;
 
+import java.util.List;
+
 import factory.GeneralModelFactory;
+import model.MentorFactoryImpl;
 import model.Admin;
 import model.Mentor;
-import model.MentorFactoryImpl;
 import model.Student;
 import view.AdminView;
 
-import java.util.List;
 
 
 public class AdminController extends UserControllerImpl{
@@ -137,7 +138,6 @@ public class AdminController extends UserControllerImpl{
     }
 
     private void runExpLevelManager(){
-        ExperienceLevelsController controller = new ExperienceLevelsController();
-        controller.manageExperienceLevels();
+        ExperienceLevelsController.getInstance().manageExperienceLevels();
     }
 }

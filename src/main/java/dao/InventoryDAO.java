@@ -1,6 +1,6 @@
 package dao;
 
-import managers.DbProcessManager;
+import managers.SQLProcessManager;
 import model.Artifact;
 import model.ArtifactDAO;
 import model.Inventory;
@@ -62,7 +62,7 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
                     }
 
                 }
-                DbProcessManager.executeBatch(preparedStatement, connection);
+                SQLProcessManager.executeBatch(preparedStatement, connection);
                 return true;
             }
             return false;
@@ -79,11 +79,11 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, ownerId);
             resultSet = preparedStatement.executeQuery();
-            return DbProcessManager.getObjectsDataCollection(resultSet);
+            return SQLProcessManager.getObjectsDataCollection(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DbProcessManager.closePreparedStatement(preparedStatement);
+            SQLProcessManager.closePreparedStatement(preparedStatement);
         }
         return new ArrayList<>();
     }
@@ -92,6 +92,6 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
         String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", DEFAULT_TABLE);
         preparedStatement = connection.prepareStatement(clearQuery);
         preparedStatement.setInt(1, ownerId);
-        DbProcessManager.executeUpdate(preparedStatement);
+        SQLProcessManager.executeUpdate(preparedStatement);
     }
 }

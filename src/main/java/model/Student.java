@@ -112,7 +112,7 @@ public class Student extends User {
     }
 
     public String getExperienceLevel() {
-        new ExperienceLevelsController().setStudentExperienceLevel(this);
+        ExperienceLevelsController.getInstance().setStudentExperienceLevel(this);
         return experienceLevel;
     }
 

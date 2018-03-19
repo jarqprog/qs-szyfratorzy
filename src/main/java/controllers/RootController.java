@@ -5,27 +5,28 @@ import java.util.List;
 import dao.*;
 import enums.FilePath;
 import exceptions.LoginFailure;
+import factory.ConnectionFactory;
 import managers.*;
-import managers.DbManagerImpl;
-import managers.DbManager;
 import view.RootView;
 
 
 public class RootController {
 
     private RootView view;
-    private DbManager dbManager;
     private boolean shouldExit;
 
-    public RootController() {
+    public static RootController getInstance() {
+        return new RootController();
+    }
+
+    private RootController() {
         view = new RootView();
-        dbManager = new DbManagerImpl();
         shouldExit = false;
+        setDatabase();
     }
 
     public void runApplication(){
         view.clearScreen();
-        dbManager.prepareDatabase();
         view.displayLoadingStars();
         while (! shouldExit){
             executeIntro();
@@ -46,7 +47,7 @@ public class RootController {
                 case "0":
                     shouldExit = true;
                     executeOutro();
-                    dbManager.closeConnection();
+                    ConnectionFactory.shutdownConnections();
             }
         }
     }
@@ -86,5 +87,20 @@ public class RootController {
         List<String> introData = manager.getData();
         view.displayCollectionData(introData);
         view.handlePause();
+    }
+
+    private void setDatabase() {
+        setSqliteDatabase();
+    }
+
+    private void setSqliteDatabase() {
+        String url = "jdbc:sqlite:" + FilePath.DATA_BASE.getPath();
+        String driver = "org.sqlite.JDBC";
+        SQLManager sqlManager = SqliteManager.getManager(FilePath.DATA_BASE);
+        DatabaseConfiguration dbConfig = DatabaseConfiguration
+                .createSQLiteConfiguration(url, driver, 5, 7);
+        DatabaseConnectionGetter databaseConnectionGetter = SQLConnectionGetter
+                .getSqliteConGetter(dbConfig, sqlManager, FilePath.SQL_SCRIPT);
+        ConnectionFactory.setSqlConnectionGetter(databaseConnectionGetter);
     }
 }
