@@ -36,6 +36,7 @@ public class StudentView extends UsersView {
                 "[7] achieve quest",
                 "[8] display my quests",
                 "[9] display my attendance",
+                "[10] mark my quests",
                 "[0] exit"};
 
         displayElementsOfCollection(options);

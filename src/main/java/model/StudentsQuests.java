@@ -58,8 +58,8 @@ public class StudentsQuests extends StudentStock {
         for (Map.Entry<Quest,LocalDate> entry : stock.entrySet()) {
             Quest quest= entry.getKey();
             String date = entry.getValue().toString();
-            stringBuilder.append(String.format("\tId: %d, Quest: %s, Date: %s\n",
-                    quest.getId(), quest.getName(), date));
+            stringBuilder.append(String.format("\tId: %d, Quest: %s, Date: %s, Status: %s\n",
+                    quest.getId(), quest.getName(), date, quest.getStatus()));
         }
         return stringBuilder.toString();
     }
