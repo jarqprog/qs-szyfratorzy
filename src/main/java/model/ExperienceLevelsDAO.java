@@ -2,7 +2,6 @@ package model;
 
 import dao.PassiveModelDAOImpl;
 import managers.DbProcessManager;
-import model.ExperienceLevels;
 import enums.Table;
 
 import java.sql.Connection;
@@ -51,7 +50,7 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
                     preparedStatement.addBatch();
                     index++;
                 }
-                DbProcessManager.executeBatch(preparedStatement);
+                DbProcessManager.executeBatch(preparedStatement, connection);
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;

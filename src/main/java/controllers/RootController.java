@@ -8,7 +8,6 @@ import exceptions.LoginFailure;
 import managers.*;
 import managers.DbManagerImpl;
 import managers.DbManager;
-import model.ModelDaoFactory;
 import view.RootView;
 
 

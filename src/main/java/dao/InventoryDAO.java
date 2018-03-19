@@ -62,7 +62,7 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
                     }
 
                 }
-                DbProcessManager.executeBatch(preparedStatement);
+                DbProcessManager.executeBatch(preparedStatement, connection);
                 return true;
             }
             return false;

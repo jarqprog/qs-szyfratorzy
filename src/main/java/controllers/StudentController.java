@@ -3,7 +3,7 @@ package controllers;
 import model.*;
 import view.StudentView;
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

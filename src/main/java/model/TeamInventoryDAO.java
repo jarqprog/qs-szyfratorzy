@@ -2,7 +2,6 @@ package model;
 
 import dao.InventoryDAO;
 import enums.Table;
-import model.TeamInventory;
 
 import java.sql.Connection;
 

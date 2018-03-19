@@ -1,7 +1,6 @@
 package model;
 
 import dao.StudentSetDAO;
-import model.Group;
 import enums.Table;
 
 import java.sql.Connection;

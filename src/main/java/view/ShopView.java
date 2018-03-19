@@ -1,6 +1,7 @@
 package view;
 
 import model.Artifact;
+
 import java.util.List;
 
 public class ShopView extends AbstractView {

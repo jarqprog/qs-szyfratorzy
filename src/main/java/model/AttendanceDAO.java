@@ -3,7 +3,6 @@ package model;
 import dao.PassiveModelDAOImpl;
 import enums.Table;
 import managers.DbProcessManager;
-import model.Attendance;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -61,7 +60,7 @@ public class AttendanceDAO extends PassiveModelDAOImpl<Attendance> {
                     preparedStatement.addBatch();
                     index++;
                 }
-                DbProcessManager.executeBatch(preparedStatement);
+                DbProcessManager.executeBatch(preparedStatement, connection);
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;

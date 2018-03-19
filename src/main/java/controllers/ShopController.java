@@ -1,17 +1,12 @@
 package controllers;
 
+import model.*;
+import view.ShopView;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import model.ModelDaoFactory;
-import model.StudentInventory;
-import model.TeamInventory;
-import model.Shop;
-import view.ShopView;
-import model.ArtifactDAO;
-import model.Artifact;
-import model.Student;
 
 public class ShopController {
 
