@@ -3,7 +3,6 @@ package model;
 import dao.PassiveModelDAOImpl;
 import enums.Table;
 import managers.DbProcessManager;
-import model.Attendance;
 
 import java.sql.Connection;
 import java.sql.SQLException;

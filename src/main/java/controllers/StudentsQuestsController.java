@@ -1,12 +1,12 @@
 package controllers;
 
-import java.util.List;
-
 import model.ModelDaoFactory;
-import model.QuestDAO;
 import model.Quest;
+import model.QuestDAO;
 import model.Student;
 import view.UsersView;
+
+import java.util.List;
 
 
 public class StudentsQuestsController {

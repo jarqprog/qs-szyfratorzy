@@ -3,7 +3,6 @@ package model;
 import dao.ActiveModelDAOImpl;
 import enums.Table;
 import managers.DbProcessManager;
-import model.Artifact;
 
 import java.sql.Connection;
 import java.sql.SQLException;

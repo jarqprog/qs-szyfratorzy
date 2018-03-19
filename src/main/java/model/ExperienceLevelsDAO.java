@@ -2,7 +2,6 @@ package model;
 
 import dao.PassiveModelDAOImpl;
 import managers.DbProcessManager;
-import model.ExperienceLevels;
 import enums.Table;
 
 import java.sql.Connection;
