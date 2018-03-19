@@ -1,1 +1,1 @@
-java -cp ".;bin\;lib\sqlite-jdbc-3.21.0.jar" Application
+java -jar target\queststore-szyfratorzy-3.0-SNAPSHOT.jar
