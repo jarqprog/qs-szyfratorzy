@@ -1,6 +1,6 @@
 package managers;
 
-public class DatabaseConfiguration {
+public class DatabaseConfig {
 
     private final String USER_NAME;
     private final String PASSWORD;
@@ -10,14 +10,14 @@ public class DatabaseConfiguration {
     private final Integer MAX_CONNECTIONS;
 
     // get configuration object via static method - different for varied database engines
-    public static DatabaseConfiguration createSQLiteConfiguration(String URL, String DRIVER,
-                                                                  Integer MIN_CONNECTIONS, Integer MAX_CONNECTIONS) {
-        return new DatabaseConfiguration(null, null, URL, DRIVER, MIN_CONNECTIONS, MAX_CONNECTIONS);
+    public static DatabaseConfig createSQLiteConfiguration(String URL, String DRIVER,
+                                                           Integer MIN_CONNECTIONS, Integer MAX_CONNECTIONS) {
+        return new DatabaseConfig(null, null, URL, DRIVER, MIN_CONNECTIONS, MAX_CONNECTIONS);
     }
 
-    private DatabaseConfiguration(String USER_NAME, String PASSWORD, String URL,
-                                  String DRIVER, Integer MIN_CONNECTIONS,
-                                  Integer MAX_CONNECTIONS) {
+    private DatabaseConfig(String USER_NAME, String PASSWORD, String URL,
+                           String DRIVER, Integer MIN_CONNECTIONS,
+                           Integer MAX_CONNECTIONS) {
         this.USER_NAME = USER_NAME;
         this.PASSWORD = PASSWORD;
         this.URL = URL;
@@ -52,7 +52,7 @@ public class DatabaseConfiguration {
 
     @Override
     public String toString() {
-        return "DatabaseConfiguration{" +
+        return "DatabaseConfig{" +
                 "USER_NAME='" + USER_NAME + '\'' +
                 ", PASSWORD='" + PASSWORD + '\'' +
                 ", DRIVER='" + DRIVER + '\'' +

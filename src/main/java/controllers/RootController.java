@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import dao.*;
+import enums.DatabaseSetup;
 import enums.FilePath;
 import exceptions.LoginFailure;
 import factory.ConnectionFactory;
@@ -94,13 +95,16 @@ public class RootController {
     }
 
     private void setSqliteDatabase() {
-        String url = "jdbc:sqlite:" + FilePath.DATA_BASE.getPath();
-        String driver = "org.sqlite.JDBC";
-        SQLManager sqlManager = SqliteManager.getManager(FilePath.DATA_BASE);
-        DatabaseConfiguration dbConfig = DatabaseConfiguration
-                .createSQLiteConfiguration(url, driver, 5, 7);
-        DatabaseConnectionGetter databaseConnectionGetter = SQLConnectionGetter
+
+        SQLManager sqlManager = SqliteManager.getManager(FilePath.SQLITE_DATABASE);
+        String url = DatabaseSetup.SQLITE_URL.getData();
+        String driver = DatabaseSetup.SQLITE_DRIVER.getData();
+
+
+        DatabaseConfig dbConfig = DatabaseConfig
+                .createSQLiteConfiguration(url, driver, 2, 4);
+        DatabaseConnection databaseConnection = SQLConnectionGetter
                 .getSqliteConGetter(dbConfig, sqlManager, FilePath.SQL_SCRIPT);
-        ConnectionFactory.setSqlConnectionGetter(databaseConnectionGetter);
+        ConnectionFactory.setSqlConnectionGetter(databaseConnection);
     }
 }
