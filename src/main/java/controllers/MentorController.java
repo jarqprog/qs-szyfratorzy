@@ -216,8 +216,18 @@ public class MentorController extends UserControllerImpl {
         int questId = view.getNotNegativeNumberFromUser("Choose quest: ");
         for (Quest quest : studentQuests){
             if (quest.getId() == questId){
-                quest.setStatus(QuestsStatus.COMPLITED.getName());
-                view.displayMessage("Quest status has changed to " + quest.getStatus());
+                int questStatus = view.getNotNegativeNumberFromUser("1. Complete\n" +
+                                                                    "    2. To improve\n" +
+                                                                    "    Choose: ");
+                switch (questStatus){
+                    case 1:
+                        quest.setStatus(QuestsStatus.COMPLETED.getName());
+                        break;
+                    case 2:
+                        quest.setStatus(QuestsStatus.TO_IMPROVE.getName());
+                        break;
+                }
+                view.displayMessage("Actual quest status: " + quest.getStatus());
             }
         }
     }
