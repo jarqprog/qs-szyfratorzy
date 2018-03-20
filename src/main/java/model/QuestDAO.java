@@ -5,6 +5,7 @@ import enums.Table;
 import managers.SQLProcessManager;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
@@ -43,13 +44,13 @@ public class QuestDAO extends ActiveModelDAOImpl<Quest> {
 
         if (id.equals("-1")) {
             query = String.format(
-                    "INSERT INTO %s VALUES(null, ?, ?, ?, ?, ?)", DEFAULT_TABLE);
+                    "INSERT INTO %s VALUES(null, ?, ?, ?, ?, ?)", getDefault_Table());
         } else {
             query = String.format("UPDATE %s SET name=? , type=?, description=?, reward=? , status=? " +
-                    "WHERE id=?", DEFAULT_TABLE);
+                    "WHERE id=?", getDefault_Table());
         }
         try {
-            preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, type);
             preparedStatement.setString(3, description);
@@ -67,6 +68,6 @@ public class QuestDAO extends ActiveModelDAOImpl<Quest> {
 }
 
     protected void setDefaultTable(){
-        this.DEFAULT_TABLE = Table.QUESTS.getName();
+        setDefaultTable(Table.QUESTS);
     }
 }

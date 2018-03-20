@@ -4,6 +4,7 @@ import managers.SQLProcessManager;
 import model.StudentSet;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public abstract class StudentSetDAO<T extends StudentSet> extends ActiveModelDAOImpl<T>{
@@ -19,13 +20,14 @@ public abstract class StudentSetDAO<T extends StudentSet> extends ActiveModelDAO
 
         if(studentSetId.equals("-1")){
             query = String.format(
-                    "INSERT INTO %s VALUES(null, ?)", DEFAULT_TABLE);
+                    "INSERT INTO %s VALUES(null, ?)", getDefault_Table());
         } else{
             query = String.format("UPDATE %s SET name=? " +
-                    "WHERE id=?", DEFAULT_TABLE);
+                    "WHERE id=?", getDefault_Table());
         }
         try {
-            preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement;
+            preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
             if(!studentSetId.equals("-1")) {
                 preparedStatement.setInt(2, Integer.valueOf(studentSetId));

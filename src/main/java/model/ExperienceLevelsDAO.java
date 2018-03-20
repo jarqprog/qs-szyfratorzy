@@ -5,6 +5,8 @@ import managers.SQLProcessManager;
 import enums.Table;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -38,8 +40,8 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
         if(levelsAndValues.size() > 0) {
             try {
                 clearExpLevels();
-                String query = String.format("INSERT INTO %s VALUES(null, ?, ?) ", DEFAULT_TABLE);
-                preparedStatement = connection.prepareStatement(query);
+                String query = String.format("INSERT INTO %s VALUES(null, ?, ?) ", getDefaultTable());
+                PreparedStatement preparedStatement = getConnection().prepareStatement(query);
                 Set<String> levels = levelsAndValues.keySet();
                 Integer[] values = levelsAndValues.values().toArray(new Integer[0]);
                 int index = 0;
@@ -50,7 +52,7 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
                     preparedStatement.addBatch();
                     index++;
                 }
-                SQLProcessManager.executeBatch(preparedStatement, connection);
+                SQLProcessManager.executeBatch(preparedStatement, getConnection());
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
@@ -61,15 +63,15 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
     }
 
     protected void setDefaultTable(){
-        this.DEFAULT_TABLE = Table.EXPERIENCE_LEVELS.getName();
+        setDefaultTable(Table.EXPERIENCE_LEVELS);
     }
 
     private List<String[]> getExpLevelsData() {
         String query = String.format("SELECT level_name, level_value FROM %s",
-                DEFAULT_TABLE);
+                getDefaultTable());
         try {
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
             return SQLProcessManager.getObjectsDataCollection(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,8 +79,8 @@ public class ExperienceLevelsDAO  extends PassiveModelDAOImpl<ExperienceLevels> 
     }
 
     private void clearExpLevels() throws SQLException {
-        String clearQuery = String.format("DELETE FROM %s", DEFAULT_TABLE);
-        preparedStatement = connection.prepareStatement(clearQuery);
+        String clearQuery = String.format("DELETE FROM %s", getDefaultTable());
+        PreparedStatement preparedStatement = getConnection().prepareStatement(clearQuery);
         SQLProcessManager.executeUpdate(preparedStatement);
     }
 }

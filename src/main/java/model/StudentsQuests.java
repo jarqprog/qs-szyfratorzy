@@ -30,7 +30,7 @@ public class StudentsQuests extends StudentStock {
     }
 
     public void setStock() {
-        stock = ModelDaoFactory.getByType(StudentsQuestsDAO.class).load(ownerId);
+        stock = ModelDaoFactory.getByType(StudentsQuestsDAO.class).load(getOwnerId());
     }
 
     public Quest getItem(int itemId) {

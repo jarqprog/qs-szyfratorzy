@@ -7,16 +7,14 @@ public class Artifact extends Item {
     Artifact(String name, String description, int price){
         super(name, description);
         this.price = price;
-        this.genre = "artifact";
-        this.type = 'B';
+        setGenre("artifact");
     }
 
     Artifact(int id, char type, String name, String description, int price){
-        super(name, description);
-        this.id = id;
-        this.type = type;
+        super(id, name, type, description);
         this.price = price;
-        this.genre = "artifact";
+        setGenre("artifact");
+
     }
 
     public int getPrice(){
@@ -24,12 +22,12 @@ public class Artifact extends Item {
     }
 
     public void setPrice(int newPrice){
-        price = newPrice;
+        this.price = newPrice;
         saveModel();
     }
 
     public String toString(){
-        return super.toString() + String.format(" price: %s", getPrice());
+        return super.toString() + String.format(" price: %s", price);
     }
 
     public String getFullDataToString() {

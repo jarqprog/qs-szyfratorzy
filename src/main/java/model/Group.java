@@ -11,7 +11,7 @@ public class Group extends StudentSet {
     }
 
     public void setStudents() {
-        this.students = ModelDaoFactory.getByType(StudentDAO.class)
-                .getFilteredModelsByIntegerParameter("group_id", id);
+        setStudents(ModelDaoFactory.getByType(StudentDAO.class)
+                .getFilteredModelsByIntegerParameter("group_id", getId()));
     }
 }

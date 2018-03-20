@@ -171,7 +171,7 @@ public class ExperienceLevelsController {
     private void resetExpLevelsFromSqlFile() {
         try {
             Connection connection = ConnectionFactory.getConnection();
-            SQLManager sqlManager = SqliteManager.getManager(FilePath.DATA_BASE);
+            SQLManager sqlManager = SqliteManager.getManager(FilePath.SQLITE_DATABASE);
             sqlManager.updateDatabaseWithSqlFile(FilePath.UPDATE_EXP_LVL, connection);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

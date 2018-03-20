@@ -1,20 +1,20 @@
 package factory;
 
-import managers.DatabaseConnectionGetter;
+import managers.DatabaseConnection;
 
 import java.sql.Connection;
 
 public class ConnectionFactory {
 
-    private static DatabaseConnectionGetter databaseConnectionGetter;
+    private static DatabaseConnection databaseConnection;
 
-    public static void setSqlConnectionGetter(DatabaseConnectionGetter connectionGetter) {
-        databaseConnectionGetter = connectionGetter;
+    public static void setSqlConnectionGetter(DatabaseConnection connectionGetter) {
+        databaseConnection = connectionGetter;
     }
 
     public static Connection getConnection() {
         try {
-            return databaseConnectionGetter.getConnection();
+            return databaseConnection.getConnection();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -22,6 +22,6 @@ public class ConnectionFactory {
     }
 
     public static void shutdownConnections() {
-        databaseConnectionGetter.shutdown();
+        databaseConnection.shutdown();
     }
 }

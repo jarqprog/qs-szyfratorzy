@@ -10,7 +10,7 @@ public class Attendance extends PassiveModel {
     private Map<LocalDate, Boolean> attendance;
 
     Attendance(Integer ownerId) {
-        this.ownerId = ownerId;
+        setOwnerId(ownerId);
         this.attendance = new HashMap<>();
     }
 
@@ -20,7 +20,7 @@ public class Attendance extends PassiveModel {
     }
 
     public void setAttendance() {
-        this.attendance = ModelDaoFactory.getByType(AttendanceDAO.class).load(ownerId);
+        this.attendance = ModelDaoFactory.getByType(AttendanceDAO.class).load(getOwnerId());
     }
 
     public void clearAttendance() {

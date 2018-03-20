@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class SQLConnectionGetter implements DatabaseConnectionGetter {
+public class SQLConnectionGetter implements DatabaseConnection {
 
     private String url;
     private String password;  // not used by sqlite
@@ -16,7 +16,7 @@ public class SQLConnectionGetter implements DatabaseConnectionGetter {
     private SQLManager sqlManager;
     private static Connection connection;
 
-    public static SQLConnectionGetter getSqliteConGetter(DatabaseConfiguration config, SQLManager sqlManager, FilePath sqlUpdateScriptFile) {
+    public static SQLConnectionGetter getSqliteConGetter(DatabaseConfig config, SQLManager sqlManager, FilePath sqlUpdateScriptFile) {
         SQLConnectionGetter instance = null;
         try {
             instance = new SQLConnectionGetter(config, sqlManager, sqlUpdateScriptFile);
@@ -31,7 +31,7 @@ public class SQLConnectionGetter implements DatabaseConnectionGetter {
         sqlManager.closeConnection(connection);
     }
 
-    private SQLConnectionGetter(DatabaseConfiguration sqlConfig, SQLManager sqlManager, FilePath sqlUpdateScriptFile)
+    private SQLConnectionGetter(DatabaseConfig sqlConfig, SQLManager sqlManager, FilePath sqlUpdateScriptFile)
             throws ClassNotFoundException, SQLException, FileNotFoundException {
         this.password = sqlConfig.getPASSWORD();
         this.userName = sqlConfig.getUSER_NAME();

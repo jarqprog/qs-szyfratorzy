@@ -9,15 +9,14 @@ public class Mentor extends User {
     Mentor(String firstName, String lastName, String password) {
         super(firstName, lastName, password);
         group = new Group(1,"undefined");
-        role = Role.MENTOR.getName();
+        setRole(Role.MENTOR.getName());
     }
 
     Mentor(int id, String firstName, String lastName,
                        String email, String password, Group group) {
         super(id, firstName, lastName, email, password);
         this.group = group;
-        role = Role.MENTOR.getName();
-
+        setRole(Role.MENTOR.getName());
     }
 
     public Group getGroup() {

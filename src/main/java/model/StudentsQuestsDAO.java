@@ -5,6 +5,8 @@ import enums.Table;
 import managers.SQLProcessManager;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
@@ -43,8 +45,8 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
 
             try {
                 clearQuests(ownerId);
-                String query = String.format("INSERT INTO %s VALUES(null, ?, ?, ?)", DEFAULT_TABLE);
-                preparedStatement = connection.prepareStatement(query);
+                String query = String.format("INSERT INTO %s VALUES(null, ?, ?, ?)", getDefaultTable());
+                PreparedStatement preparedStatement = getConnection().prepareStatement(query);
                 Set<Quest> quests = questsStock.keySet();
                 LocalDate[] dates = questsStock.values().toArray(new LocalDate[0]);
                 String date;
@@ -60,7 +62,7 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
                     preparedStatement.addBatch();
                     index++;
                 }
-                SQLProcessManager.executeBatch(preparedStatement, connection);
+                SQLProcessManager.executeBatch(preparedStatement, getConnection());
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
@@ -71,16 +73,16 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
     }
 
     protected void setDefaultTable(){
-        this.DEFAULT_TABLE = Table.STUDENTS_QUESTS.getName();
+        setDefaultTable(Table.STUDENTS_QUESTS);
     }
 
     private List<String[]> getQuestStockData(int ownerId) {
         String query = String.format("SELECT quests_id, date FROM %s WHERE owner_id=?",
-                DEFAULT_TABLE);
+                getDefaultTable());
         try {
-            preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setInt(1, ownerId);
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             return SQLProcessManager.getObjectsDataCollection(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,8 +91,8 @@ public class StudentsQuestsDAO extends PassiveModelDAOImpl<StudentsQuests> {
     }
 
     private void clearQuests(int ownerId) throws SQLException {
-        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", DEFAULT_TABLE);
-        preparedStatement = connection.prepareStatement(clearQuery);
+        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", getDefaultTable());
+        PreparedStatement preparedStatement = getConnection().prepareStatement(clearQuery);
         preparedStatement.setInt(1, ownerId);
         SQLProcessManager.executeUpdate(preparedStatement);
     }

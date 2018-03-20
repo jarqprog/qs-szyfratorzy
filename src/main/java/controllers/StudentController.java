@@ -159,7 +159,7 @@ public class StudentController extends UserControllerImpl {
         for (Quest quest : quests){
             if (quest.getId() == questId){
                 quest.setStatus(QuestsStatus.WAITING_FOR_APPROVAL.getName());
-                view.displayMessage("Quest status has changed to " + quest.getStatus());
+                view.displayMessage("Actual quest status: " + quest.getStatus());
             }
         }
     }

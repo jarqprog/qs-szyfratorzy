@@ -7,6 +7,8 @@ import model.Inventory;
 import model.ModelDaoFactory;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -50,8 +52,9 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
             clearInventory(ownerId);
             if (! inventory.isEmpty()) {
                 String query = String.format("INSERT INTO %s VALUES(null, ?, ?)",
-                                            DEFAULT_TABLE);
-                preparedStatement = connection.prepareStatement(query);
+                                            getDefaultTable());
+                PreparedStatement preparedStatement;
+                preparedStatement = getConnection().prepareStatement(query);
                 for (Map.Entry<Artifact,Integer> entry : inventory.getStock().entrySet()) {
                     Integer artifactId = entry.getKey().getId();
                     Integer value = entry.getValue();
@@ -62,7 +65,7 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
                     }
 
                 }
-                SQLProcessManager.executeBatch(preparedStatement, connection);
+                SQLProcessManager.executeBatch(preparedStatement, getConnection());
                 return true;
             }
             return false;
@@ -74,9 +77,12 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
 
     private List<String[]> getArtifactsData(int ownerId) {
         String query = String.format("SELECT artifact_id FROM %s WHERE owner_id=?",
-                DEFAULT_TABLE);
+                getDefaultTable());
+        PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet;
+            preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setInt(1, ownerId);
             resultSet = preparedStatement.executeQuery();
             return SQLProcessManager.getObjectsDataCollection(resultSet);
@@ -89,8 +95,8 @@ public abstract class InventoryDAO<T extends Inventory>  extends PassiveModelDAO
     }
 
     private void clearInventory(int ownerId) throws SQLException {
-        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", DEFAULT_TABLE);
-        preparedStatement = connection.prepareStatement(clearQuery);
+        String clearQuery = String.format("DELETE FROM %s WHERE owner_id=?", getDefaultTable());
+        PreparedStatement preparedStatement = getConnection().prepareStatement(clearQuery);
         preparedStatement.setInt(1, ownerId);
         SQLProcessManager.executeUpdate(preparedStatement);
     }

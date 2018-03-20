@@ -2,7 +2,7 @@ package model;
 
 public abstract class ActiveModel extends CommonModel {
 
-    protected int id;
+    private int id;
 
     public int getId()
     {

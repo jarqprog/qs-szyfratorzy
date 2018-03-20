@@ -21,7 +21,8 @@ public class TeamDAO extends StudentSetDAO<Team> {
 
         return new Team(id, name);
     }
+
     protected void setDefaultTable(){
-        this.DEFAULT_TABLE = Table.TEAMS.getName();
+        setDefaultTable(Table.TEAMS);
     }
 }

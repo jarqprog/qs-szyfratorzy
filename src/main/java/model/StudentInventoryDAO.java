@@ -12,6 +12,6 @@ public class StudentInventoryDAO extends InventoryDAO<StudentInventory> {
     }
 
     protected void setDefaultTable(){
-        this.DEFAULT_TABLE = Table.STUDENTS_ARTIFACTS.getName();
+        setDefaultTable(Table.STUDENTS_ARTIFACTS);
     }
 }

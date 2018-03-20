@@ -8,6 +8,6 @@ public class StudentInventory extends Inventory {
     }
 
     public void setStock() {
-        stock = ModelDaoFactory.getByType(StudentInventoryDAO.class).load(ownerId);
+        setStock(ModelDaoFactory.getByType(StudentInventoryDAO.class).load(getOwnerId()));
     }
 }

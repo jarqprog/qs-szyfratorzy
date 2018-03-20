@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
-public class SQLConnectionPool implements DatabaseConnectionGetter {
+public class SQLConnectionPool implements DatabaseConnection {
 
     private final static int MIN_ALLOWED_CONNECTION_NUMBER = 3;
     private final static int MAX_ALLOWED_CONNECTION_NUMBER = 10;
@@ -22,7 +22,7 @@ public class SQLConnectionPool implements DatabaseConnectionGetter {
     private static SQLConnectionPool instance;
     private SQLManager sqlManager;
 
-    public static SQLConnectionPool getSqliteConnectionPool(DatabaseConfiguration config, SQLManager sqlManager, FilePath sqlUpdateScriptFile) {
+    public static SQLConnectionPool getSqliteConnectionPool(DatabaseConfig config, SQLManager sqlManager, FilePath sqlUpdateScriptFile) {
         try {
             if (instance == null) {
                 instance = new SQLConnectionPool(config, sqlManager, sqlUpdateScriptFile);
@@ -34,7 +34,7 @@ public class SQLConnectionPool implements DatabaseConnectionGetter {
         return instance;
     }
 
-    private SQLConnectionPool(DatabaseConfiguration sqlConfig, SQLManager sqlManager, FilePath sqlUpdateScriptFile)
+    private SQLConnectionPool(DatabaseConfig sqlConfig, SQLManager sqlManager, FilePath sqlUpdateScriptFile)
             throws ClassNotFoundException, SQLException, FileNotFoundException {
         this.minConQuantity = sqlConfig.getMIN_CONNECTIONS();
         if (minConQuantity < MIN_ALLOWED_CONNECTION_NUMBER) {

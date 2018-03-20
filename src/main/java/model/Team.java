@@ -23,11 +23,11 @@ public class Team extends StudentSet {
     }
 
     public void setStudents() {
-        this.students = ModelDaoFactory.getByType(StudentDAO.class)
-                .getFilteredModelsByIntegerParameter("team_id", id);
+        setStudents(ModelDaoFactory.getByType(StudentDAO.class)
+                .getFilteredModelsByIntegerParameter("team_id", getId()));
     }
 
     public int size(){
-        return students.size();
+        return getStudents().size();
     }
 }

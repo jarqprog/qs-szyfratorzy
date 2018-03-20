@@ -5,17 +5,17 @@ import java.util.ArrayList;
 
 public abstract class StudentSet extends ActiveModel {
 
-    protected String name;
-    protected List<Student> students;
+    private String name;
+    private List<Student> students;
 
     StudentSet(int id, String name) {
         this(name);
-        this.id = id;
+        setId(id);
         this.students = new ArrayList<>();
     }
 
     StudentSet(String name) {
-        this.id = -1;
+        setId(-1);
         this.name = name;
         this.students = new ArrayList<>();
     }
@@ -50,6 +50,6 @@ public abstract class StudentSet extends ActiveModel {
 
     public String toString(){
         return String.format("Id: %s, name: %s, number of students: %s",
-                this.id, this.name, getStudents().size());
+                getId(), this.name, getStudents().size());
     }
 }

@@ -12,6 +12,6 @@ public class TeamInventoryDAO extends InventoryDAO<TeamInventory> {
     }
 
     protected void setDefaultTable(){
-        this.DEFAULT_TABLE = Table.TEAMS_ARTIFACTS.getName();
+        setDefaultTable(Table.TEAMS_ARTIFACTS);
     }
 }

@@ -5,6 +5,7 @@ import enums.Table;
 import managers.SQLProcessManager;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
@@ -43,14 +44,15 @@ public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
 
             query = String.format(
                     "INSERT INTO %s " +
-                            "VALUES(null, ?, ?, ?, ?)", DEFAULT_TABLE);
+                            "VALUES(null, ?, ?, ?, ?)", getDefault_Table());
         } else {
             query = String.format(
                     "UPDATE %s SET name=? , type=?, description=?, price=? " +
-                            "WHERE id=?", DEFAULT_TABLE);
+                            "WHERE id=?", getDefault_Table());
         }
         try {
-            preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement;
+            preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, itemName);
             preparedStatement.setString(2, itemType);
             preparedStatement.setString(3, itemDescription);
@@ -67,6 +69,6 @@ public class ArtifactDAO extends ActiveModelDAOImpl<Artifact> {
     }
 
     protected void setDefaultTable(){
-        this.DEFAULT_TABLE = Table.ARTIFACTS.getName();
+        setDefaultTable(Table.ARTIFACTS);
     }
 }

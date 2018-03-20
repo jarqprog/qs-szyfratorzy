@@ -10,16 +10,15 @@ public class Quest extends Item {
     Quest(String name, String description, int reward){
         super(name, description);
         this.reward = reward;
-        this.type = 'B';
         this.status = QuestsStatus.AVAILABLE.getName();
+        setGenre("quest");
     }
 
     Quest(int id, char type, String name, String description, int reward, String status){
-        super(name, description);
-        this.id = id;
-        this.type = type;
+        super(id, name, type, description);
         this.reward = reward;
         this.status = status;
+        setGenre("quest");
 
     }
 
