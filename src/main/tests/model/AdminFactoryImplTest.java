@@ -55,7 +55,7 @@ public class AdminFactoryImplTest {
         Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
         Admin expected = new Admin("admin","admin","123");
         Admin actual = adminFactory.create("admin", "admin", "123");
-        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getFullDataToString(), actual.getFullDataToString());
     }
 
 }
