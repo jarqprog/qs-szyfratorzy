@@ -1,5 +1,6 @@
 package tools;
 
+import model.Student;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -50,5 +51,12 @@ public class DataToolTest {
 
     }
 
-    
+    @Test
+    public void isElementInArray(){
+        Integer[] myNewArray = {4,5,32,4,5,7};
+        Integer searchedElement = 32;
+
+        assertTrue(DataTool.checkIfElementInArray(myNewArray,searchedElement));
+    }
+
 }
