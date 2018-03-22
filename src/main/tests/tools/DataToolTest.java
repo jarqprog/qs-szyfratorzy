@@ -2,6 +2,9 @@ package tools;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 public class DataToolTest {
@@ -26,11 +29,26 @@ public class DataToolTest {
 
     @Test
     public void isStringBeingMultiplied(){
-        String expected = "aaa";
-        String actual = "a";
+        String expected = "lodylodylody";
+        String actual = "lody";
         int multiplier = 3;
         actual = DataTool.getMultipliedString(actual,multiplier);
         assertEquals(expected,actual);
     }
+
+    @Test
+    public void isKeyRetrivedByValue(){
+        Integer value = 1;
+        String searchedValue = new String("Yomama");
+
+        Map<String, Integer> mapa = new HashMap<>();
+        mapa.put(searchedValue,value);
+
+
+        String actual = DataTool.getKeyByValue(mapa, value);
+        assertEquals(searchedValue, actual);
+
+    }
+
     
 }
