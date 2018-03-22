@@ -24,5 +24,13 @@ public class DataToolTest {
 
     }
 
-
+    @Test
+    public void isStringBeingMultiplied(){
+        String expected = "aaa";
+        String actual = "a";
+        int multiplier = 3;
+        actual = DataTool.getMultipliedString(actual,multiplier);
+        assertEquals(expected,actual);
+    }
+    
 }
