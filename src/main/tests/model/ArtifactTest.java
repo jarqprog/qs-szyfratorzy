@@ -37,4 +37,19 @@ public class ArtifactTest {
         spy.setPrice(1000);
         assertEquals(expected, spy.getPrice());
     }
+
+    @Test
+    public void artifactShouldNotHaveMinusValue(){
+            Artifact expected = new Artifact("Robienie kupy","wczoraj",0);
+            Artifact actual = new Artifact("Robienie kupy", "wczoraj", -100);
+            assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotBeAbleToChangeToMinus(){
+        Artifact spy = spy(new Artifact("Robienie kupy","wczoraj",0));
+        doNothing().when(spy).saveModel();
+        spy.setPrice(-100);
+        assertEquals(0,spy.getPrice());
+    }
 }
