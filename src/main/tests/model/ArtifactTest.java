@@ -1,18 +1,10 @@
 package model;
 
 import factory.ConnectionFactory;
-import managers.DatabaseConnection;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import java.sql.Connection;
-
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
@@ -21,9 +13,6 @@ public class ArtifactTest {
 
     @InjectMocks
     private Artifact artifact;
-
-    @Mock
-    private Connection connection;
 
     @Mock
     private ConnectionFactory connectionFactory;
