@@ -30,20 +30,14 @@ public class AdminFactoryImplTest {
     private Connection connection;
 
     @Mock
-    private AdminDAO adminDao;
-
-    @Mock
     private PreparedStatement preparedStatement;
 
     @Mock
     private ResultSet resultSet;
 
-    private Admin admin;
 
     @Before
     public void setUp() {
-        adminDao = new AdminDAO(connection);
-        admin = new Admin("admin", "admin", "123");
         adminFactory = new AdminFactoryImpl();
     }
 
