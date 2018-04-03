@@ -18,4 +18,8 @@ public class Transaction {
     public String toString() {
         return String.format("\tDate: %tF, Student: %d, Item: %d, Price: %d", date, studentId, itemId, itemPrice);
     }
+
+    public int getItemPrice() {
+        return this.itemPrice;
+    }
 }
